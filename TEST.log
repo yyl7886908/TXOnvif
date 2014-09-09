@@ -1,0 +1,1214 @@
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0xf5f100)
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0x7fff9fcd2f80 type=36: not found
+source/stdsoap2.c(6725): malloc(1288) = 0xf5f100
+Pointer enter location=0x7fff9fcd2f80 array=(nil) size=0 dim=0 type=36 id=1
+Reference 0x7fff9fcd2f80 type=36 (0 0)
+Lookup location=0x7ea9e9 type=4: not found
+Pointer enter location=0x7ea9e9 array=(nil) size=0 dim=0 type=4 id=2
+Reference 0x7ea9e9 type=4 (0 0)
+Lookup location=0x7fff9fcd2f60 type=42: not found
+Pointer enter location=0x7fff9fcd2f60 array=(nil) size=0 dim=0 type=42 id=3
+Reference 0x7fff9fcd2f60 type=42 (0 0)
+Lookup location=0x7ea9e9 type=4 id=2
+Reference 0x7ea9e9 type=4 (2 2)
+Free namespace stack
+source/stdsoap2.c(9008): malloc(1472) = 0xf601d0
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/stdsoap2.c(10154): malloc(256) = 0xf607a0
+source/stdsoap2.c(7330): malloc(24) = 0xf5f6a0
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/stdsoap2.c(7330): malloc(80) = 0xf608e0
+Connect/reconnect to host='239.255.255.250' path='/' port=3702
+Opening socket 4 to host='239.255.255.250' port=3702
+Calculating the message size with attachments, current count=2926
+New count is 2926 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20045 count=2926)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+source/stdsoap2.c(7330): malloc(24) = 0xf60970
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20045
+End of send phase
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8163): free(0xf607a0)
+source/stdsoap2.c(8180): free(0xf601d0)
+Free pointer hashtable
+source/stdsoap2.c(6654): free(0xf5f100)
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/stdsoap2.c(9008): malloc(1472) = 0xf601d0
+Free ID hashtable
+Read 0 bytes from socket=4/fd=0
+source/stdsoap2.c(7330): malloc(96) = 0xf5f340
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0xf601d0)
+Free pointer hashtable
+Free ID hashtable
+Free all soap_malloc() data
+source/stdsoap2.c(7489): free(0xf5f340)
+source/stdsoap2.c(7489): free(0xf60970)
+source/stdsoap2.c(7489): free(0xf608e0)
+source/stdsoap2.c(7489): free(0xf5f6a0)
+Done with context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Shutdown socket 4 how=2
+Close socket 4
+Free logfiles
+source/stdsoap2.c(5151): free(0xf5f0b0)
+source/stdsoap2.c(5151): free(0xf5f060)
+source/stdsoap2.c(5151): free(0xf5f010)
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0x2877100)
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0x7fff3ebf2630 type=36: not found
+source/stdsoap2.c(6725): malloc(1288) = 0x2877100
+Pointer enter location=0x7fff3ebf2630 array=(nil) size=0 dim=0 type=36 id=1
+Reference 0x7fff3ebf2630 type=36 (0 0)
+Lookup location=0x7ea9e9 type=4: not found
+Pointer enter location=0x7ea9e9 array=(nil) size=0 dim=0 type=4 id=2
+Reference 0x7ea9e9 type=4 (0 0)
+Lookup location=0x7fff3ebf2610 type=42: not found
+Pointer enter location=0x7fff3ebf2610 array=(nil) size=0 dim=0 type=42 id=3
+Reference 0x7fff3ebf2610 type=42 (0 0)
+Lookup location=0x7ea9e9 type=4 id=2
+Reference 0x7ea9e9 type=4 (2 2)
+Free namespace stack
+source/stdsoap2.c(9008): malloc(1472) = 0x28781d0
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/stdsoap2.c(10154): malloc(256) = 0x28787a0
+source/stdsoap2.c(7330): malloc(24) = 0x28776a0
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/stdsoap2.c(7330): malloc(80) = 0x28788e0
+Connect/reconnect to host='239.255.255.250' path='/' port=3702
+Opening socket 4 to host='239.255.255.250' port=3702
+Calculating the message size with attachments, current count=2926
+New count is 2926 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20045 count=2926)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+source/stdsoap2.c(7330): malloc(24) = 0x2878970
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20045
+End of send phase
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8163): free(0x28787a0)
+source/stdsoap2.c(8180): free(0x28781d0)
+Free pointer hashtable
+source/stdsoap2.c(6654): free(0x2877100)
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/stdsoap2.c(9008): malloc(1472) = 0x28781d0
+Free ID hashtable
+Read 0 bytes from socket=4/fd=0
+source/stdsoap2.c(7330): malloc(96) = 0x2877340
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0x28781d0)
+Free pointer hashtable
+Free ID hashtable
+Free all soap_malloc() data
+source/stdsoap2.c(7489): free(0x2877340)
+source/stdsoap2.c(7489): free(0x2878970)
+source/stdsoap2.c(7489): free(0x28788e0)
+source/stdsoap2.c(7489): free(0x28776a0)
+Done with context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Shutdown socket 4 how=2
+Close socket 4
+Free logfiles
+source/stdsoap2.c(5151): free(0x28770b0)
+source/stdsoap2.c(5151): free(0x2877060)
+source/stdsoap2.c(5151): free(0x2877010)
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0x1bd8100)
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0x7fff29f0f0f0 type=36: not found
+source/stdsoap2.c(6725): malloc(1288) = 0x1bd8100
+Pointer enter location=0x7fff29f0f0f0 array=(nil) size=0 dim=0 type=36 id=1
+Reference 0x7fff29f0f0f0 type=36 (0 0)
+Lookup location=0x7ea9e9 type=4: not found
+Pointer enter location=0x7ea9e9 array=(nil) size=0 dim=0 type=4 id=2
+Reference 0x7ea9e9 type=4 (0 0)
+Lookup location=0x7fff29f0f0d0 type=42: not found
+Pointer enter location=0x7fff29f0f0d0 array=(nil) size=0 dim=0 type=42 id=3
+Reference 0x7fff29f0f0d0 type=42 (0 0)
+Lookup location=0x7ea9e9 type=4 id=2
+Reference 0x7ea9e9 type=4 (2 2)
+Free namespace stack
+source/stdsoap2.c(9008): malloc(1472) = 0x1bd91d0
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/stdsoap2.c(10154): malloc(256) = 0x1bd97a0
+source/stdsoap2.c(7330): malloc(24) = 0x1bd86a0
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/stdsoap2.c(7330): malloc(80) = 0x1bd98e0
+Connect/reconnect to host='239.255.255.250' path='/' port=3702
+Opening socket 4 to host='239.255.255.250' port=3702
+Calculating the message size with attachments, current count=2926
+New count is 2926 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20045 count=2926)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+source/stdsoap2.c(7330): malloc(24) = 0x1bd9970
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20045
+End of send phase
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8163): free(0x1bd97a0)
+source/stdsoap2.c(8180): free(0x1bd91d0)
+Free pointer hashtable
+source/stdsoap2.c(6654): free(0x1bd8100)
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/stdsoap2.c(9008): malloc(1472) = 0x1bd91d0
+Free ID hashtable
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0xbdd100)
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0x7fff87c18940 type=36: not found
+source/stdsoap2.c(6725): malloc(1288) = 0xbdd100
+Pointer enter location=0x7fff87c18940 array=(nil) size=0 dim=0 type=36 id=1
+Reference 0x7fff87c18940 type=36 (0 0)
+Lookup location=0x7ea9e9 type=4: not found
+Pointer enter location=0x7ea9e9 array=(nil) size=0 dim=0 type=4 id=2
+Reference 0x7ea9e9 type=4 (0 0)
+Lookup location=0x7fff87c18920 type=42: not found
+Pointer enter location=0x7fff87c18920 array=(nil) size=0 dim=0 type=42 id=3
+Reference 0x7fff87c18920 type=42 (0 0)
+Lookup location=0x7ea9e9 type=4 id=2
+Reference 0x7ea9e9 type=4 (2 2)
+Free namespace stack
+source/stdsoap2.c(9008): malloc(1472) = 0xbde1d0
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/stdsoap2.c(10154): malloc(256) = 0xbde7a0
+source/stdsoap2.c(7330): malloc(24) = 0xbdd6a0
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/stdsoap2.c(7330): malloc(80) = 0xbde8e0
+Connect/reconnect to host='239.255.255.250' path='/' port=3702
+Opening socket 4 to host='239.255.255.250' port=3702
+Calculating the message size with attachments, current count=2926
+New count is 2926 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20045 count=2926)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+source/stdsoap2.c(7330): malloc(24) = 0xbde970
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20045
+End of send phase
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8163): free(0xbde7a0)
+source/stdsoap2.c(8180): free(0xbde1d0)
+Free pointer hashtable
+source/stdsoap2.c(6654): free(0xbdd100)
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/stdsoap2.c(9008): malloc(1472) = 0xbde1d0
+Free ID hashtable
+Read 3159 bytes from socket=4/fd=0
+XML PI <?xml version="1.0" encoding="UTF-8"?>
+Switching to utf-8 encoding
+source/stdsoap2.c(10351): malloc(57) = 0xbdd340
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/stdsoap2.c(10154): malloc(256) = 0xbdd3c0
+source/stdsoap2.c(10406): malloc(256) = 0xbdd500
+source/stdsoap2.c(2734): malloc(35) = 0xbde800
+Push namespace binding (level=0) 'env' 'http://www.w3.org/2003/05/soap-envelope'
+Push OK ('env' matches 'SOAP-ENV' in namespace table)
+source/stdsoap2.c(10351): malloc(61) = 0xbde860
+source/stdsoap2.c(10406): malloc(256) = 0xbdec30
+source/stdsoap2.c(2734): malloc(39) = 0xbded70
+Push namespace binding (level=0) 'soapenc' 'http://www.w3.org/2003/05/soap-encoding'
+Push OK ('soapenc' matches 'SOAP-ENC' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbdedd0
+source/stdsoap2.c(10406): malloc(256) = 0xbdee50
+source/stdsoap2.c(2734): malloc(35) = 0xbdef90
+Push namespace binding (level=0) 'xsi' 'http://www.w3.org/2001/XMLSchema-instance'
+Push OK ('xsi' matches 'xsi' in namespace table)
+source/stdsoap2.c(10351): malloc(56) = 0xbdeff0
+source/stdsoap2.c(10406): malloc(256) = 0xbdf060
+source/stdsoap2.c(2734): malloc(34) = 0xbdf1a0
+Push namespace binding (level=0) 'xs' 'http://www.w3.org/2001/XMLSchema'
+Push OK ('xs' matches 'xsd' in namespace table)
+source/stdsoap2.c(10351): malloc(56) = 0xbdf200
+source/stdsoap2.c(10406): malloc(256) = 0xbdf270
+source/stdsoap2.c(2734): malloc(34) = 0xbdf3b0
+Push namespace binding (level=0) 'tt' 'http://www.onvif.org/ver10/schema'
+Push OK ('tt' matches 'tt' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbdf410
+source/stdsoap2.c(10406): malloc(256) = 0xbdf490
+source/stdsoap2.c(2734): malloc(35) = 0xbdf5d0
+Push namespace binding (level=0) 'tds' 'http://www.onvif.org/ver10/device/wsdl'
+Push OK ('tds' matches 'tds' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbdf630
+source/stdsoap2.c(10406): malloc(256) = 0xbdf6b0
+source/stdsoap2.c(2734): malloc(35) = 0xbdf7f0
+Push namespace binding (level=0) 'trt' 'http://www.onvif.org/ver10/media/wsdl'
+Push OK ('trt' matches 'trt' in namespace table)
+source/stdsoap2.c(10351): malloc(58) = 0xbdf850
+source/stdsoap2.c(10406): malloc(256) = 0xbdf8d0
+source/stdsoap2.c(2734): malloc(36) = 0xbdfa10
+Push namespace binding (level=0) 'timg' 'http://www.onvif.org/ver20/imaging/wsdl'
+Push OK ('timg' matches 'timg' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbdfa70
+source/stdsoap2.c(10406): malloc(256) = 0xbdfaf0
+source/stdsoap2.c(2734): malloc(35) = 0xbdfc30
+Push namespace binding (level=0) 'tev' 'http://www.onvif.org/ver10/events/wsdl'
+Push OK ('tev' matches 'tev' in namespace table)
+source/stdsoap2.c(10351): malloc(58) = 0xbdfc90
+source/stdsoap2.c(10406): malloc(256) = 0xbdfd10
+source/stdsoap2.c(2734): malloc(36) = 0xbdfe50
+Push namespace binding (level=0) 'tptz' 'http://www.onvif.org/ver20/ptz/wsdl'
+Push OK ('tptz' matches 'tptz' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbdfeb0
+source/stdsoap2.c(10406): malloc(256) = 0xbdff30
+source/stdsoap2.c(2734): malloc(35) = 0xbe0070
+Push namespace binding (level=0) 'tan' 'http://www.onvif.org/ver20/analytics/wsdl'
+Push OK ('tan' matches 'tan' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe00d0
+source/stdsoap2.c(10406): malloc(256) = 0xbe0150
+source/stdsoap2.c(2734): malloc(75) = 0xbe0290
+Push namespace binding (level=0) 'tst' 'http://www.onvif.org/ver10/storage/wsdl'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/storage/wsdl' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(57) = 0xbe0320
+source/stdsoap2.c(10406): malloc(256) = 0xbe03a0
+source/stdsoap2.c(2734): malloc(68) = 0xbe04e0
+Push namespace binding (level=0) 'ter' 'http://www.onvif.org/ver10/error'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/error' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(56) = 0xbe0560
+source/stdsoap2.c(10406): malloc(256) = 0xbe05d0
+source/stdsoap2.c(2734): malloc(34) = 0xbe0710
+Push namespace binding (level=0) 'dn' 'http://www.onvif.org/ver10/network/wsdl'
+Push OK ('dn' matches 'tdn' in namespace table)
+source/stdsoap2.c(10351): malloc(58) = 0xbe0770
+source/stdsoap2.c(10406): malloc(256) = 0xbe07f0
+source/stdsoap2.c(2734): malloc(70) = 0xbe0930
+Push namespace binding (level=0) 'tns1' 'http://www.onvif.org/ver10/topics'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/topics' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(57) = 0xbe09b0
+source/stdsoap2.c(10406): malloc(256) = 0xbe0a30
+source/stdsoap2.c(2734): malloc(35) = 0xbe0b70
+Push namespace binding (level=0) 'tmd' 'http://www.onvif.org/ver10/deviceIO/wsdl'
+Push OK ('tmd' matches 'tmd' in namespace table)
+source/stdsoap2.c(10351): malloc(58) = 0xbe0bd0
+source/stdsoap2.c(10406): malloc(256) = 0xbe0c50
+source/stdsoap2.c(2734): malloc(68) = 0xbe0d90
+Push namespace binding (level=0) 'wsdl' 'http://schemas.xmlsoap.org/wsdl'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(61) = 0xbe0e10
+source/stdsoap2.c(10406): malloc(256) = 0xbe0e90
+source/stdsoap2.c(2734): malloc(78) = 0xbe0fd0
+Push namespace binding (level=0) 'wsoap12' 'http://schemas.xmlsoap.org/wsdl/soap12'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/soap12' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(58) = 0xbe1060
+source/stdsoap2.c(10406): malloc(256) = 0xbe10e0
+source/stdsoap2.c(2734): malloc(73) = 0xbe1220
+Push namespace binding (level=0) 'http' 'http://schemas.xmlsoap.org/wsdl/http'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/http' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(55) = 0xbe12b0
+source/stdsoap2.c(10406): malloc(256) = 0xbe1320
+source/stdsoap2.c(2734): malloc(33) = 0xbe1460
+Push namespace binding (level=0) 'd' 'http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Push OK ('d' matches 'wsdd' in namespace table)
+source/stdsoap2.c(10351): malloc(60) = 0xbe14c0
+source/stdsoap2.c(10406): malloc(256) = 0xbe1540
+source/stdsoap2.c(2734): malloc(38) = 0xbe1680
+Push namespace binding (level=0) 'wsadis' 'http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Push OK ('wsadis' matches 'wsa' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe16e0
+source/stdsoap2.c(10406): malloc(256) = 0xbe1760
+source/stdsoap2.c(2734): malloc(35) = 0xbe18a0
+Push namespace binding (level=0) 'xop' 'http://www.w3.org/2004/08/xop/include'
+Push OK ('xop' matches 'xop' in namespace table)
+source/stdsoap2.c(10351): malloc(58) = 0xbe1900
+source/stdsoap2.c(10406): malloc(256) = 0xbe1980
+source/stdsoap2.c(2734): malloc(36) = 0xbe1ac0
+Push namespace binding (level=0) 'wsnt' 'http://docs.oasis-open.org/wsn/b-2'
+Push OK ('wsnt' matches 'wsnt' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe1b20
+source/stdsoap2.c(10406): malloc(256) = 0xbe1ba0
+source/stdsoap2.c(2734): malloc(35) = 0xbe1ce0
+Push namespace binding (level=0) 'wsa' 'http://www.w3.org/2005/08/addressing'
+Push OK ('wsa' matches 'wsa5' in namespace table)
+source/stdsoap2.c(10351): malloc(59) = 0xbe1d40
+source/stdsoap2.c(10406): malloc(256) = 0xbe1dc0
+source/stdsoap2.c(2734): malloc(37) = 0xbe1f00
+Push namespace binding (level=0) 'wstop' 'http://docs.oasis-open.org/wsn/t-1'
+Push OK ('wstop' matches 'wstop' in namespace table)
+source/stdsoap2.c(10351): malloc(61) = 0xbe1f60
+source/stdsoap2.c(10406): malloc(256) = 0xbe1fe0
+source/stdsoap2.c(2734): malloc(39) = 0xbe2120
+Push namespace binding (level=0) 'wsrf-bf' 'http://docs.oasis-open.org/wsrf/bf-2'
+Push OK ('wsrf-bf' matches 'wsrfbf' in namespace table)
+source/stdsoap2.c(10351): malloc(59) = 0xbe2180
+source/stdsoap2.c(10406): malloc(256) = 0xbe2200
+source/stdsoap2.c(2734): malloc(73) = 0xbe2340
+Push namespace binding (level=0) 'wsntw' 'http://docs.oasis-open.org/wsn/bw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsn/bw-2' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(61) = 0xbe23d0
+source/stdsoap2.c(10406): malloc(256) = 0xbe2450
+source/stdsoap2.c(2734): malloc(76) = 0xbe2590
+Push namespace binding (level=0) 'wsrf-rw' 'http://docs.oasis-open.org/wsrf/rw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsrf/rw-2' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(58) = 0xbe2620
+source/stdsoap2.c(10406): malloc(256) = 0xbe26a0
+source/stdsoap2.c(2734): malloc(78) = 0xbe27e0
+Push namespace binding (level=0) 'wsaw' 'http://www.w3.org/2006/05/addressing/wsdl'
+Push NOT OK: no match found for 'http://www.w3.org/2006/05/addressing/wsdl' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(60) = 0xbe2870
+source/stdsoap2.c(10406): malloc(256) = 0xbe28f0
+source/stdsoap2.c(2734): malloc(38) = 0xbe2a30
+Push namespace binding (level=0) 'wsrf-r' 'http://docs.oasis-open.org/wsrf/r-2'
+Push OK ('wsrf-r' matches 'wsrfr' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe2a90
+source/stdsoap2.c(10406): malloc(256) = 0xbe2b10
+source/stdsoap2.c(2734): malloc(35) = 0xbe2c50
+Push namespace binding (level=0) 'trc' 'http://www.onvif.org/ver10/recording/wsdl'
+Push OK ('trc' matches 'trc' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe2cb0
+source/stdsoap2.c(10406): malloc(256) = 0xbe2d30
+source/stdsoap2.c(2734): malloc(35) = 0xbe2e70
+Push namespace binding (level=0) 'tse' 'http://www.onvif.org/ver10/search/wsdl'
+Push OK ('tse' matches 'tse' in namespace table)
+source/stdsoap2.c(10351): malloc(57) = 0xbe2ed0
+source/stdsoap2.c(10406): malloc(256) = 0xbe2f50
+source/stdsoap2.c(2734): malloc(35) = 0xbe3090
+Push namespace binding (level=0) 'trp' 'http://www.onvif.org/ver10/replay/wsdl'
+Push OK ('trp' matches 'trp' in namespace table)
+source/stdsoap2.c(10351): malloc(60) = 0xbe30f0
+source/stdsoap2.c(10406): malloc(256) = 0xbe3170
+source/stdsoap2.c(2734): malloc(81) = 0xbe32b0
+Push namespace binding (level=0) 'tnshik' 'http://www.hikvision.com/2011/event/topics'
+Push NOT OK: no match found for 'http://www.hikvision.com/2011/event/topics' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(60) = 0xbe3340
+source/stdsoap2.c(10406): malloc(256) = 0xbe33c0
+source/stdsoap2.c(2734): malloc(83) = 0xbe3500
+Push namespace binding (level=0) 'hikwsd' 'http://www.onvifext.com/onvif/ext/ver10/wsdl'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/wsdl' in namespace mapping table (added to stack anyway)
+source/stdsoap2.c(10351): malloc(60) = 0xbe3590
+source/stdsoap2.c(10406): malloc(256) = 0xbe3610
+source/stdsoap2.c(2734): malloc(85) = 0xbe3750
+Push namespace binding (level=0) 'hikxsd' 'http://www.onvifext.com/onvif/ext/ver10/schema'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/schema' in namespace mapping table (added to stack anyway)
+Tags and (default) namespaces match: 'env:Envelope' 'SOAP-ENV:Envelope'
+Begin element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+source/stdsoap2.c(14904): malloc(40) = 0xbe37e0
+Tags and (default) namespaces match: 'env:Header' 'SOAP-ENV:Header'
+Begin element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Enter id='' type=29 loc=(nil) size=128 level=0
+source/stdsoap2.c(7330): malloc(152) = 0xbe3840
+Tags and (default) namespaces match: 'wsadis:MessageID' 'wsa:MessageID'
+Begin element found (level=3) 'wsadis:MessageID'='wsa:MessageID'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(64) = 0xbe3910
+Enter id='' type=4 loc=0xbe3910 size=8 level=0
+End element found (level=3) 'wsadis:MessageID'='wsa:MessageID'
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Reverting to last element 'wsadis:RelatesTo' (level=2)
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Enter id='' type=11 loc=(nil) size=24 level=0
+source/stdsoap2.c(7330): malloc(48) = 0xbe3990
+Reverting to last element 'wsadis:RelatesTo' (level=2)
+source/stdsoap2.c(7330): malloc(24) = 0xbe3a00
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(56) = 0xbe3a50
+Enter id='' type=4 loc=0xbe3a50 size=8 level=0
+End element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Tags and (default) namespaces match: 'wsadis:To' 'wsa:To'
+Begin element found (level=3) 'wsadis:To'='wsa:To'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(88) = 0xbe3ac0
+Enter id='' type=4 loc=0xbe3ac0 size=8 level=0
+End element found (level=3) 'wsadis:To'='wsa:To'
+Tags and (default) namespaces match: 'wsadis:Action' 'wsa:Action'
+Begin element found (level=3) 'wsadis:Action'='wsa:Action'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(80) = 0xbe3b50
+Enter id='' type=4 loc=0xbe3b50 size=8 level=0
+End element found (level=3) 'wsadis:Action'='wsa:Action'
+source/stdsoap2.c(10351): malloc(58) = 0xbe3be0
+source/stdsoap2.c(10406): malloc(256) = 0xbe3c60
+source/stdsoap2.c(10351): malloc(61) = 0xbe3da0
+source/stdsoap2.c(10406): malloc(256) = 0xbe3e20
+Tags and (default) namespaces match: 'd:AppSequence' 'wsdd:AppSequence'
+Begin element found (level=2) 'd:AppSequence'='wsdd:AppSequence'
+Reverting to last element 'd:AppSequence' (level=2)
+Tags and (default) namespaces match: 'd:AppSequence' 'wsdd:AppSequence'
+Begin element found (level=2) 'd:AppSequence'='wsdd:AppSequence'
+Enter id='' type=45 loc=(nil) size=24 level=0
+source/stdsoap2.c(7330): malloc(48) = 0xbe3f60
+Tags match: 'InstanceId' 'InstanceId'
+Tags match: 'MessageNumber' 'MessageNumber'
+End element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Tags and (default) namespaces match: 'env:Body' 'SOAP-ENV:Body'
+Begin element found (level=2) 'env:Body'='SOAP-ENV:Body'
+Enter id='' type=68 loc=0x7fff87c18930 size=8 level=0
+Tags and (default) namespaces match: 'd:ProbeMatches' 'wsdd:ProbeMatches'
+Begin element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+Reverting to last element 'd:ProbeMatches' (level=2)
+Tags and (default) namespaces match: 'd:ProbeMatches' 'wsdd:ProbeMatches'
+Begin element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+Enter id='' type=37 loc=(nil) size=16 level=0
+source/stdsoap2.c(7330): malloc(40) = 0xbe3fd0
+Tags and (default) namespaces match: 'd:ProbeMatch' 'wsdd:ProbeMatch'
+Begin element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+New block sequence (prev=(nil))
+source/stdsoap2.c(2127): malloc(24) = 0xbe4030
+Push block of 96 bytes (96 bytes total)
+source/stdsoap2.c(2149): malloc(112) = 0xbe4080
+Reverting to last element 'd:ProbeMatch' (level=3)
+Tags and (default) namespaces match: 'd:ProbeMatch' 'wsdd:ProbeMatch'
+Begin element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+Enter id='' type=38 loc=0xbe4090 size=96 level=0
+Tags and (default) namespaces match: 'wsadis:EndpointReference' 'wsa:EndpointReference'
+Begin element found (level=5) 'wsadis:EndpointReference'='wsa:EndpointReference'
+Enter id='' type=7 loc=0xbe4090 size=64 level=0
+source/stdsoap2.c(7330): malloc(24) = 0xbe4130
+Tags and (default) namespaces match: 'wsadis:Address' 'wsa:Address'
+Begin element found (level=6) 'wsadis:Address'='wsa:Address'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(64) = 0xbe4180
+Enter id='' type=4 loc=0xbe4180 size=8 level=0
+End element found (level=6) 'wsadis:Address'='wsa:Address'
+End element found (level=5) 'wsadis:EndpointReference'='wsa:EndpointReference'
+Tags and (default) namespaces match: 'd:Types' 'wsdd:Types'
+Begin element found (level=5) 'd:Types'='wsdd:Types'
+Reading string content, flag=2
+source/stdsoap2.c(7330): malloc(56) = 0xbe4200
+Normalized namespace(s) of QNames 'dn:NetworkVideoTransmitter tds:Device'source/stdsoap2.c(7330): malloc(64) = 0xbe4270
+ into 'tdn:NetworkVideoTransmitter tds:Device'
+Enter id='' type=46 loc=0xbe4270 size=8 level=0
+End element found (level=5) 'd:Types'='wsdd:Types'
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Reverting to last element 'd:Scopes' (level=4)
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Enter id='' type=42 loc=(nil) size=16 level=0
+source/stdsoap2.c(7330): malloc(40) = 0xbe42f0
+Reverting to last element 'd:Scopes' (level=4)
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Reading string content, flag=1
+Enlarging look-aside buffer to append data, old size=256, new size=512
+source/stdsoap2.c(10154): malloc(512) = 0xbe4350
+source/stdsoap2.c(10162): free(0xbdd3c0)
+source/stdsoap2.c(7330): malloc(344) = 0xbe4590
+Enter id='' type=47 loc=0xbe4590 size=8 level=0
+End element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Tags and (default) namespaces match: 'd:XAddrs' 'wsdd:XAddrs'
+Begin element found (level=5) 'd:XAddrs'='wsdd:XAddrs'
+Reading string content, flag=1
+source/stdsoap2.c(7330): malloc(120) = 0xbdd3f0
+Enter id='' type=47 loc=0xbdd3f0 size=8 level=0
+End element found (level=5) 'd:XAddrs'='wsdd:XAddrs'
+Tags and (default) namespaces match: 'd:MetadataVersion' 'wsdd:MetadataVersion'
+Begin element found (level=5) 'd:MetadataVersion'='wsdd:MetadataVersion'
+Enter id='' type=27 loc=0xbe40e8 size=4 level=0
+Element content value='10'
+End element found (level=5) 'd:MetadataVersion'='wsdd:MetadataVersion'
+End element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+source/stdsoap2.c(7330): malloc(120) = 0xbe46f0
+Save all blocks in contiguous memory space of 96 bytes (0xbe4080->0xbe46f0)
+First block
+Copy 96 bytes from 0xbe4090 to 0xbe46f0
+Next block
+source/stdsoap2.c(2410): free(0xbe4080)
+End of block sequence, free all remaining blocks
+source/stdsoap2.c(2456): free(0xbe4030)
+End element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+End element found (level=2) 'env:Body'='SOAP-ENV:Body'
+End element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+End of receive message ok
+Resolving forwarded data
+Resolution phase
+Resolution done
+Free namespace stack
+source/stdsoap2.c(8205): free(0xbe3750)
+source/stdsoap2.c(8205): free(0xbe3500)
+source/stdsoap2.c(8205): free(0xbe32b0)
+source/stdsoap2.c(8205): free(0xbe3090)
+source/stdsoap2.c(8205): free(0xbe2e70)
+source/stdsoap2.c(8205): free(0xbe2c50)
+source/stdsoap2.c(8205): free(0xbe2a30)
+source/stdsoap2.c(8205): free(0xbe27e0)
+source/stdsoap2.c(8205): free(0xbe2590)
+source/stdsoap2.c(8205): free(0xbe2340)
+source/stdsoap2.c(8205): free(0xbe2120)
+source/stdsoap2.c(8205): free(0xbe1f00)
+source/stdsoap2.c(8205): free(0xbe1ce0)
+source/stdsoap2.c(8205): free(0xbe1ac0)
+source/stdsoap2.c(8205): free(0xbe18a0)
+source/stdsoap2.c(8205): free(0xbe1680)
+source/stdsoap2.c(8205): free(0xbe1460)
+source/stdsoap2.c(8205): free(0xbe1220)
+source/stdsoap2.c(8205): free(0xbe0fd0)
+source/stdsoap2.c(8205): free(0xbe0d90)
+source/stdsoap2.c(8205): free(0xbe0b70)
+source/stdsoap2.c(8205): free(0xbe0930)
+source/stdsoap2.c(8205): free(0xbe0710)
+source/stdsoap2.c(8205): free(0xbe04e0)
+source/stdsoap2.c(8205): free(0xbe0290)
+source/stdsoap2.c(8205): free(0xbe0070)
+source/stdsoap2.c(8205): free(0xbdfe50)
+source/stdsoap2.c(8205): free(0xbdfc30)
+source/stdsoap2.c(8205): free(0xbdfa10)
+source/stdsoap2.c(8205): free(0xbdf7f0)
+source/stdsoap2.c(8205): free(0xbdf5d0)
+source/stdsoap2.c(8205): free(0xbdf3b0)
+source/stdsoap2.c(8205): free(0xbdf1a0)
+source/stdsoap2.c(8205): free(0xbdef90)
+source/stdsoap2.c(8205): free(0xbded70)
+source/stdsoap2.c(8205): free(0xbde800)
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8157): free(0xbe3e20)
+source/stdsoap2.c(8158): free(0xbe3da0)
+source/stdsoap2.c(8157): free(0xbe3c60)
+source/stdsoap2.c(8158): free(0xbe3be0)
+source/stdsoap2.c(8157): free(0xbdd500)
+source/stdsoap2.c(8158): free(0xbdd340)
+source/stdsoap2.c(8157): free(0xbdec30)
+source/stdsoap2.c(8158): free(0xbde860)
+source/stdsoap2.c(8157): free(0xbdee50)
+source/stdsoap2.c(8158): free(0xbdedd0)
+source/stdsoap2.c(8157): free(0xbdf060)
+source/stdsoap2.c(8158): free(0xbdeff0)
+source/stdsoap2.c(8157): free(0xbdf270)
+source/stdsoap2.c(8158): free(0xbdf200)
+source/stdsoap2.c(8157): free(0xbdf490)
+source/stdsoap2.c(8158): free(0xbdf410)
+source/stdsoap2.c(8157): free(0xbdf6b0)
+source/stdsoap2.c(8158): free(0xbdf630)
+source/stdsoap2.c(8157): free(0xbdf8d0)
+source/stdsoap2.c(8158): free(0xbdf850)
+source/stdsoap2.c(8157): free(0xbdfaf0)
+source/stdsoap2.c(8158): free(0xbdfa70)
+source/stdsoap2.c(8157): free(0xbdfd10)
+source/stdsoap2.c(8158): free(0xbdfc90)
+source/stdsoap2.c(8157): free(0xbdff30)
+source/stdsoap2.c(8158): free(0xbdfeb0)
+source/stdsoap2.c(8157): free(0xbe0150)
+source/stdsoap2.c(8158): free(0xbe00d0)
+source/stdsoap2.c(8157): free(0xbe03a0)
+source/stdsoap2.c(8158): free(0xbe0320)
+source/stdsoap2.c(8157): free(0xbe05d0)
+source/stdsoap2.c(8158): free(0xbe0560)
+source/stdsoap2.c(8157): free(0xbe07f0)
+source/stdsoap2.c(8158): free(0xbe0770)
+source/stdsoap2.c(8157): free(0xbe0a30)
+source/stdsoap2.c(8158): free(0xbe09b0)
+source/stdsoap2.c(8157): free(0xbe0c50)
+source/stdsoap2.c(8158): free(0xbe0bd0)
+source/stdsoap2.c(8157): free(0xbe0e90)
+source/stdsoap2.c(8158): free(0xbe0e10)
+source/stdsoap2.c(8157): free(0xbe10e0)
+source/stdsoap2.c(8158): free(0xbe1060)
+source/stdsoap2.c(8157): free(0xbe1320)
+source/stdsoap2.c(8158): free(0xbe12b0)
+source/stdsoap2.c(8157): free(0xbe1540)
+source/stdsoap2.c(8158): free(0xbe14c0)
+source/stdsoap2.c(8157): free(0xbe1760)
+source/stdsoap2.c(8158): free(0xbe16e0)
+source/stdsoap2.c(8157): free(0xbe1980)
+source/stdsoap2.c(8158): free(0xbe1900)
+source/stdsoap2.c(8157): free(0xbe1ba0)
+source/stdsoap2.c(8158): free(0xbe1b20)
+source/stdsoap2.c(8157): free(0xbe1dc0)
+source/stdsoap2.c(8158): free(0xbe1d40)
+source/stdsoap2.c(8157): free(0xbe1fe0)
+source/stdsoap2.c(8158): free(0xbe1f60)
+source/stdsoap2.c(8157): free(0xbe2200)
+source/stdsoap2.c(8158): free(0xbe2180)
+source/stdsoap2.c(8157): free(0xbe2450)
+source/stdsoap2.c(8158): free(0xbe23d0)
+source/stdsoap2.c(8157): free(0xbe26a0)
+source/stdsoap2.c(8158): free(0xbe2620)
+source/stdsoap2.c(8157): free(0xbe28f0)
+source/stdsoap2.c(8158): free(0xbe2870)
+source/stdsoap2.c(8157): free(0xbe2b10)
+source/stdsoap2.c(8158): free(0xbe2a90)
+source/stdsoap2.c(8157): free(0xbe2d30)
+source/stdsoap2.c(8158): free(0xbe2cb0)
+source/stdsoap2.c(8157): free(0xbe2f50)
+source/stdsoap2.c(8158): free(0xbe2ed0)
+source/stdsoap2.c(8157): free(0xbe3170)
+source/stdsoap2.c(8158): free(0xbe30f0)
+source/stdsoap2.c(8157): free(0xbe33c0)
+source/stdsoap2.c(8158): free(0xbe3340)
+source/stdsoap2.c(8157): free(0xbe3610)
+source/stdsoap2.c(8158): free(0xbe3590)
+source/stdsoap2.c(8163): free(0xbe4350)
+source/stdsoap2.c(8174): free(0xbe37e0)
+source/stdsoap2.c(8180): free(0xbde1d0)
+Free pointer hashtable
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/stdsoap2.c(9008): malloc(1472) = 0xbde1d0
+Free ID hashtable
+Read 0 bytes from socket=4/fd=0
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/stdsoap2.c(8180): free(0xbde1d0)
+Free pointer hashtable
+Free ID hashtable
+Free all soap_malloc() data
+source/stdsoap2.c(7489): free(0xbe46f0)
+source/stdsoap2.c(7489): free(0xbdd3f0)
+source/stdsoap2.c(7489): free(0xbe4590)
+source/stdsoap2.c(7489): free(0xbe42f0)
+source/stdsoap2.c(7489): free(0xbe4270)
+source/stdsoap2.c(7489): free(0xbe4200)
+source/stdsoap2.c(7489): free(0xbe4180)
+source/stdsoap2.c(7489): free(0xbe4130)
+source/stdsoap2.c(7489): free(0xbe3fd0)
+source/stdsoap2.c(7489): free(0xbe3f60)
+source/stdsoap2.c(7489): free(0xbe3b50)
+source/stdsoap2.c(7489): free(0xbe3ac0)
+source/stdsoap2.c(7489): free(0xbe3a50)
+source/stdsoap2.c(7489): free(0xbe3a00)
+source/stdsoap2.c(7489): free(0xbe3990)
+source/stdsoap2.c(7489): free(0xbe3910)
+source/stdsoap2.c(7489): free(0xbe3840)
+source/stdsoap2.c(7489): free(0xbde970)
+source/stdsoap2.c(7489): free(0xbde8e0)
+source/stdsoap2.c(7489): free(0xbdd6a0)
+Done with context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Shutdown socket 4 how=2
+Close socket 4
+Free logfiles
+source/stdsoap2.c(5151): free(0xbdd0b0)
+source/stdsoap2.c(5151): free(0xbdd060)
+source/stdsoap2.c(5151): free(0xbdd010)

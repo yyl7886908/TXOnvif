@@ -1,0 +1,16 @@
+./objects/soapClient.o: ./source/soapClient.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/sha1.o: ./source/sha1.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/stdsoap2.o: ./source/stdsoap2.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/discovery.o: ./source/discovery.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/main.o: ./source/main.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/base64.o: ./source/base64.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/duration.o: ./source/duration.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/soapC.o: ./source/soapC.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^

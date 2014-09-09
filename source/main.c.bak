@@ -1,0 +1,3547 @@
+/*
+ * =====================================================================================
+ *
+ *       Filename:  main.c
+ *    Description:  简单例程测试:客户端通过ONVIF协议搜索前端设备,
+ *        Created:  2013年12月26日 12时17分48秒
+ *       Compiler:  gcc
+ *         Author:  max_min_, 
+ *
+ * =====================================================================================
+ */
+#include "wsdd.h"
+#include <stdio.h>
+#include "base64.h"
+#include "sha1.h"
+
+
+#define USERNAME "felixfb"
+#define PASSWORD "68b996dc"
+
+#if 0
+#define DEVICE_IP "192.168.33.88"
+#define DEVICE_PORT 8888
+#else
+#define DEVICE_IP "192.168.33.99"
+#define DEVICE_PORT 80
+#endif
+
+typedef struct
+{
+    char username[64];
+    char password[32];
+}UserInfo_S;
+
+static void ONVIF_GenrateDigest(unsigned char *pwddigest_out, unsigned char *pwd, char *nonc, char *time)
+{
+    const unsigned char *tdist;
+    unsigned char dist[1024] = {0};
+    char tmp[1024] = {0};
+    unsigned char bout[1024] = {0};
+    strcpy(tmp,nonc);
+    base64_64_to_bits((char*)bout, tmp);
+    sprintf(tmp,"%s%s%s",bout,time,pwd);
+    sha1_hash(tmp,dist);
+    tdist = dist;
+    memset(bout,0x0,1024);
+    base64_bits_to_64(bout,tdist,(int)strlen((const char*)tdist));
+    strcpy((char *)pwddigest_out,(const char*)bout);
+}
+
+
+static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To, const char *was_Action, int timeout, UserInfo_S *pUserInfo)
+{
+	struct soap *soap = NULL; 
+	unsigned char macaddr[6];
+	char _HwId[1024];
+	unsigned int Flagrand;
+	soap = soap_new();
+	if(soap == NULL)
+	{
+		printf("[%d]soap = NULL\n", __LINE__);
+		return NULL;
+	}
+	 soap_set_namespaces( soap, namespaces);
+	//超过5秒钟没有数据就退出
+	if (timeout > 0)
+	{
+		soap->recv_timeout = timeout;
+		soap->send_timeout = timeout;
+		soap->connect_timeout = timeout;
+	}
+	else
+	{
+		//如果外部接口没有设备默认超时时间的话，我这里给了一个默认值10s
+		soap->recv_timeout    = 10;
+		soap->send_timeout    = 10;
+		soap->connect_timeout = 10;
+	}
+	soap_default_SOAP_ENV__Header(soap, header);
+
+	// 为了保证每次搜索的时候MessageID都是不相同的！因为简单，直接取了随机值
+	srand((int)time(0));
+	Flagrand = rand()%9000 + 1000; //保证四位整数
+	macaddr[0] = 0x1; macaddr[1] = 0x2; macaddr[2] = 0x3; macaddr[3] = 0x4; macaddr[4] = 0x5; macaddr[5] = 0x6;
+	sprintf(_HwId,"urn:uuid:%ud68a-1dd2-11b2-a105-%02X%02X%02X%02X%02X%02X", 
+			Flagrand, macaddr[0], macaddr[1], macaddr[2], macaddr[3], macaddr[4], macaddr[5]);
+	header->wsa__MessageID =(char *)malloc( 100);
+	memset(header->wsa__MessageID, 0, 100);
+	strncpy(header->wsa__MessageID, _HwId, strlen(_HwId));
+
+    
+	if( pUserInfo != NULL )
+	{
+	    header->wsse__Security = (struct _wsse__Security *)malloc(sizeof(struct _wsse__Security));
+	    memset(header->wsse__Security, 0 , sizeof(struct _wsse__Security));
+
+	    header->wsse__Security->UsernameToken = (struct _wsse__UsernameToken *)calloc(1,sizeof(struct _wsse__UsernameToken));
+	    header->wsse__Security->UsernameToken->Username = (char *)malloc(64);
+	    memset(header->wsse__Security->UsernameToken->Username, '\0', 64);
+
+	    header->wsse__Security->UsernameToken->Nonce = (char*)malloc(64);
+	    memset(header->wsse__Security->UsernameToken->Nonce, '\0', 64);
+	    strcpy(header->wsse__Security->UsernameToken->Nonce,"LKqI6G/AikKCQrN0zqZFlg=="); //\u6ce8\u610f\u8fd9\u91cc
+
+	    header->wsse__Security->UsernameToken->wsu__Created = (char*)malloc(64);
+	    memset(header->wsse__Security->UsernameToken->wsu__Created, '\0', 64);
+	    strcpy(header->wsse__Security->UsernameToken->wsu__Created,"2010-09-16T07:50:45Z");
+
+	    strcpy(header->wsse__Security->UsernameToken->Username, pUserInfo->username);
+	    header->wsse__Security->UsernameToken->Password = (struct _wsse__Password *)malloc(sizeof(struct _wsse__Password));
+	    header->wsse__Security->UsernameToken->Password->Type = (char*)malloc(128);
+	    memset(header->wsse__Security->UsernameToken->Password->Type, '\0', 128);
+	    strcpy(header->wsse__Security->UsernameToken->Password->Type,\
+	            "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest");
+	    header->wsse__Security->UsernameToken->Password->__item = (char*)malloc(128);
+	    ONVIF_GenrateDigest((unsigned char*)header->wsse__Security->UsernameToken->Password->__item,\
+	            (unsigned char*)pUserInfo->password,header->wsse__Security->UsernameToken->Nonce,header->wsse__Security->UsernameToken->wsu__Created);
+
+	}
+
+
+
+	if (was_Action != NULL)
+	{
+		header->wsa__Action =(char *)malloc(1024);
+		memset(header->wsa__Action, '\0', 1024);
+		strncpy(header->wsa__Action, was_Action, 1024);//"http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe";
+	}
+	if (was_To != NULL)
+	{
+		header->wsa__To =(char *)malloc(1024);
+		memset(header->wsa__To, '\0', 1024);
+		strncpy(header->wsa__To,  was_To, 1024);//"urn:schemas-xmlsoap-org:ws:2005:04:discovery";	
+	}
+	soap->header = header;
+	return soap;
+} 
+int ONVIF_ClientDiscovery( )
+{
+	int HasDev = 0;
+	int retval = SOAP_OK;
+	wsdd__ProbeType req;       
+	struct __wsdd__ProbeMatches resp;
+	wsdd__ScopesType sScope;
+	struct SOAP_ENV__Header header;
+	struct soap* soap;
+	
+
+	const char *was_To = "urn:schemas-xmlsoap-org:ws:2005:04:discovery";
+	const char *was_Action = "http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe";
+	//这个就是传递过去的组播的ip地址和对应的端口发送广播信息	
+	const char *soap_endpoint = "soap.udp://239.255.255.250:3702/";
+
+	//这个接口填充一些信息并new返回一个soap对象，本来可以不用额外接口，
+	// 但是后期会作其他操作，此部分剔除出来后面的操作就相对简单了,只是调用接口就好
+	soap = ONVIF_Initsoap(&header, was_To, was_Action, 5,NULL);
+	
+	soap_default_SOAP_ENV__Header(soap, &header);
+	soap->header = &header;
+
+	soap_default_wsdd__ScopesType(soap, &sScope);
+	sScope.__item = "";
+	soap_default_wsdd__ProbeType(soap, &req);
+	req.Scopes = &sScope;
+	req.Types = ""; //"dn:NetworkVideoTransmitter";
+    
+	retval = soap_send___wsdd__Probe(soap, soap_endpoint, NULL, &req);		
+	//发送组播消息成功后，开始循环接收各位设备发送过来的消息
+	while (retval == SOAP_OK)
+    {
+		retval = soap_recv___wsdd__ProbeMatches(soap, &resp);
+        if (retval == SOAP_OK) 
+        {
+            if (soap->error)
+            {
+                printf("[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); 
+			    retval = soap->error;
+            }
+            else //成功接收某一个设备的消息
+			{
+				HasDev ++;
+				if (resp.wsdd__ProbeMatches->ProbeMatch != NULL && resp.wsdd__ProbeMatches->ProbeMatch->XAddrs != NULL)
+				{
+					printf(" ################  recv  %d devices info #### \n", HasDev );
+					printf("Target Service Address  : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->XAddrs);	
+					printf("Target EP Address       : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->wsa__EndpointReference.Address);  
+					printf("Target Type             : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->Types);  
+					printf("Target Metadata Version : %d\r\n", resp.wsdd__ProbeMatches->ProbeMatch->MetadataVersion);  
+					sleep(1);
+				}
+			}
+		}
+		else if (soap->error)  
+		{  
+			if (HasDev == 0)
+			{
+				printf("[%s][%s][Line:%d] Thers Device discovery or soap error: %d, %s, %s \n",__FILE__, __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); 
+				retval = soap->error;  
+			}
+			else 
+			{
+				printf(" [%s]-[%d] Search end! It has Searched %d devices! \n", __func__, __LINE__, HasDev);
+				retval = 0;
+			}
+			break;
+		}  
+    }
+
+    soap_destroy(soap); 
+    soap_end(soap); 
+    soap_free(soap);
+	
+	return retval;
+}
+
+
+
+//
+static int ONVIF_SystemDateAndTime()
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct SOAP_ENV__Header header;	
+
+    struct _tds__GetSystemDateAndTime sdat_req;
+    struct _tds__GetSystemDateAndTimeResponse sdat_resp;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    const char *soap_action ="http://www.onvif.org/ver10/device/wsdl/GetSystemDateAndTime";
+
+    do
+    {	
+        soap_call___tds__GetSystemDateAndTime(soap,soap_endpoint,soap_action,&sdat_req,&sdat_resp);
+
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {   
+              printf("[%s][%d] Get system date and time success !\n", __func__, __LINE__);
+              printf("local time is %04d-%02d-%02d %02d:%02d:%02d\n",sdat_resp.SystemDateAndTime->LocalDateTime->Date->Year,
+               sdat_resp.SystemDateAndTime->LocalDateTime->Date->Month,
+               sdat_resp.SystemDateAndTime->LocalDateTime->Date->Day,
+               sdat_resp.SystemDateAndTime->LocalDateTime->Time->Hour,
+               sdat_resp.SystemDateAndTime->LocalDateTime->Time->Minute,
+               sdat_resp.SystemDateAndTime->LocalDateTime->Time->Second);
+        }        
+    }while(0); 
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;    
+}
+
+static int ONVIF_NetworkInterfaces()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetNetworkInterfaces net_req;
+    struct _tds__GetNetworkInterfacesResponse net_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+   sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetNetworkInterfaces";
+
+    do
+    {
+        soap_call___tds__GetNetworkInterfaces(soap, soap_endpoint, soap_action, &net_req, &net_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d            
+              printf("[%s][%d] Get networkInterfaces success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+
+static int ONVIF_SystemBackup()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetSystemBackup sys_req;
+    struct _tds__GetSystemBackupResponse sys_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetSystemBackup";
+
+    do
+    {
+        soap_call___tds__GetSystemBackup(soap, soap_endpoint, soap_action, &sys_req, &sys_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get systembackup success !\n", __func__, __LINE__);
+              printf("sys_resp.__sizeBackupFiles is %d\n",sys_resp.__sizeBackupFiles);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_Users()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetUsers users_req;
+    struct _tds__GetUsersResponse users_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetUsers";
+
+    do
+    {
+        soap_call___tds__GetUsers(soap, soap_endpoint, soap_action, &users_req, &users_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get users success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_CreateUsers()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__CreateUsers cusers_req;
+    struct _tds__CreateUsersResponse cusers_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, "admin");
+    strcpy(stUserInfo.password, "12345");
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/CreateUsers";
+
+    cusers_req.__sizeUser=1;
+    cusers_req.User =  (struct tt__User *)soap_malloc(soap, sizeof(struct tt__User));
+    cusers_req.User->UserLevel = tt__UserLevel__Administrator;
+    cusers_req.User->Username = "felixfb";
+    cusers_req.User->Password = "68b996dc";
+
+    do
+    {
+        soap_call___tds__CreateUsers(soap, soap_endpoint, soap_action, &cusers_req, &cusers_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Create users success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_NetworkProtocols()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetNetworkProtocols net_req;
+    struct _tds__GetNetworkProtocolsResponse net_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetNetworkProtocols";
+
+    do
+    {
+        soap_call___tds__GetNetworkProtocols(soap, soap_endpoint, soap_action, &net_req, &net_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get NetworkProtocols success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+#if 0
+static int ONVIF_StreamUri()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _trt__GetStreamUri stream_req;
+    struct _trt__GetStreamUriResponse stream_resp;
+   
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);	;
+
+    const char * soap_action = "http://www.onvif.org/ver10/media/wsdl/GetStreamUri";
+    
+    stream_req.StreamSetup = (struct tt__StreamSetup *)soap_malloc(soap, sizeof(struct tt__StreamSetup));
+    stream_req.StreamSetup->Stream = tt__StreamType__RTP_Unicast;
+    stream_req.StreamSetup->Transport =  (struct tt__Transport *)soap_malloc(soap, sizeof(struct tt__Transport));
+    stream_req.StreamSetup->Transport->Protocol = tt__TransportProtocol__RTSP;
+    stream_req.StreamSetup->Transport->Tunnel = NULL;
+    stream_req.StreamSetup->__size = 1;
+    stream_req.StreamSetup->__any = NULL;
+    stream_req.StreamSetup->__anyAttribute = NULL;
+    stream_req.ProfileToken = "Profile_1";
+
+    do
+    {
+        soap_call___trt__GetStreamUri(soap, soap_endpoint, soap_action, &stream_req, &stream_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else
+        {         
+              printf("[%s][%d] Get StreamUri success !\n", __func__, __LINE__);
+              printf(" uri is %s\n",stream_resp.MediaUri->Uri);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+#else
+
+static int ONVIF_StreamUri()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    int i =0;
+    struct soap *soap = NULL;
+    const char *soap_action;
+    struct _trt__GetStreamUri stream_req;
+    struct _trt__GetStreamUriResponse stream_resp;
+
+    
+    struct _trt__GetProfiles pro_req;
+    struct _trt__GetProfilesResponse pro_resq;
+
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);
+
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__Media;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
+
+
+    do
+    {
+        soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    
+
+    printf("Media endpoint is %s\n",capa_resp.Capabilities->Media->XAddr);
+ 
+    if(capa_resp.Capabilities->Media->XAddr==NULL)
+    {
+        retval = soap->error;
+        return retval;
+    }
+        
+    strcpy(soap_endpoint,capa_resp.Capabilities->Media->XAddr);
+
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfiles";
+
+    do
+    {
+        soap_call___trt__GetProfiles(soap, soap_endpoint, soap_action, &pro_req, &pro_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
+        }
+    }while(0);
+    
+
+    soap_destroy(soap);
+
+    printf(" profile's size is %d\n",pro_resq.__sizeProfiles);
+
+  
+    for(i = 0 ;i <pro_resq.__sizeProfiles;i++)
+    {
+        strcpy(soap_endpoint,capa_resp.Capabilities->Media->XAddr);
+        memset(&header,0,sizeof(header));
+        soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+        soap_action = "http://www.onvif.org/ver10/media/wsdl/GetStreamUri";
+        stream_req.StreamSetup = (struct tt__StreamSetup *)soap_malloc(soap, sizeof(struct tt__StreamSetup));
+        stream_req.StreamSetup->Stream = tt__StreamType__RTP_Unicast;
+        stream_req.StreamSetup->Transport =  (struct tt__Transport *)soap_malloc(soap, sizeof(struct tt__Transport));
+        stream_req.StreamSetup->Transport->Protocol = tt__TransportProtocol__RTSP;
+        stream_req.StreamSetup->Transport->Tunnel = NULL;
+        stream_req.StreamSetup->__size = 1;
+        stream_req.StreamSetup->__any = NULL;
+        stream_req.StreamSetup->__anyAttribute = NULL;
+        stream_req.ProfileToken = pro_resq.Profiles[i].token;
+
+         do
+        {
+            soap_call___trt__GetStreamUri(soap, soap_endpoint, soap_action, &stream_req, &stream_resp);
+            if (soap->error)
+            {
+                    printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                    retval = soap->error;
+                    return retval;
+            }
+            else
+            {         
+                  printf("[%s][%d] Get StreamUri success !\n", __func__, __LINE__);
+                  //printf(" uri is %s\n",stream_resp.MediaUri->Uri);
+            }
+        }while(0);       
+
+        soap_destroy(soap);
+        printf("Profile <%s> has a stream:\n%s\n",pro_resq.Profiles[i].Name,stream_resp.MediaUri->Uri);
+    }
+    
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    //soap_destroy(soap);
+    return retval;
+}
+#endif
+
+static int ONVIF_Profiles()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetProfiles pro_req;
+    struct _trt__GetProfilesResponse pro_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfiles";
+
+    do
+    {
+        soap_call___trt__GetProfiles(soap, soap_endpoint, soap_action, &pro_req, &pro_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_PTZConfigurations()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfigurations ptzconfigs_req;
+    struct _tptz__GetConfigurationsResponse ptzconfigs_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfigurations";
+
+
+    do
+    {
+        soap_call___tptz__GetConfigurations(soap, soap_endpoint, soap_action, &ptzconfigs_req, &ptzconfigs_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_PTZConfiguration()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfiguration ptzconfig_req;
+    struct _tptz__GetConfigurationResponse ptzconfig_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfiguration";
+
+
+    ptzconfig_req.PTZConfigurationToken="1";
+
+    do
+    {
+        soap_call___tptz__GetConfiguration(soap, soap_endpoint, soap_action, &ptzconfig_req, &ptzconfig_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfiguration success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_PTZNodes()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetNodes ptznodes_req;
+    struct _tptz__GetNodesResponse ptznodes_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetNodes";
+
+    do
+    {
+        soap_call___tptz__GetNodes(soap, soap_endpoint, soap_action, &ptznodes_req, &ptznodes_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZNodes success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_PTZConfigurationOptions()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfigurationOptions ptzconfigop_req;
+    struct _tptz__GetConfigurationOptionsResponse ptzconfigop_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	;
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfigurationOptions";
+
+
+    ptzconfigop_req.ConfigurationToken="0";
+
+    do
+    {
+        soap_call___tptz__GetConfigurationOptions(soap, soap_endpoint, soap_action, &ptzconfigop_req, &ptzconfigop_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfigurationOptions success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_Services()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetServices srv_req;
+    struct _tds__GetServicesResponse srv_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	;
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetServices";
+
+    srv_req.IncludeCapability = xsd__boolean__true_;
+
+    do
+    {
+        soap_call___tds__GetServices(soap, soap_endpoint, soap_action, &srv_req, &srv_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetServices success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_ServiceCapabilities()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetServiceCapabilities srvcap_req;
+    struct _tds__GetServiceCapabilitiesResponse srvcap_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetServiceCapabilities";
+
+
+    do
+    {
+        soap_call___tds__GetServiceCapabilities(soap, soap_endpoint, soap_action, &srvcap_req, &srvcap_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetServiceCapabilities success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_Hostname()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetHostname host_req;
+    struct _tds__GetHostnameResponse host_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetHostname";
+
+
+    do
+    {
+        soap_call___tds__GetHostname(soap, soap_endpoint, soap_action, &host_req, &host_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetHostname success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_SetHostname()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__SetHostname host_req;
+    struct _tds__SetHostnameResponse host_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/SetHostname";
+
+    host_req.Name = "felixfb-ipcamera";
+
+    do
+    {
+        soap_call___tds__SetHostname(soap, soap_endpoint, soap_action, &host_req, &host_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  SetHostname success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_DNS()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDNS dns_req;
+    struct _tds__GetDNSResponse dns_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDNS";
+
+    do
+    {
+        soap_call___tds__GetDNS(soap, soap_endpoint, soap_action, &dns_req, &dns_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetDNS success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_NTP()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetNTP ntp_req;
+    struct _tds__GetNTPResponse ntp_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetNTP";
+
+    do
+    {
+        soap_call___tds__GetNTP(soap, soap_endpoint, soap_action, &ntp_req, &ntp_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetNTP success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+
+static int ONVIF_DynamicDNS()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDynamicDNS ddns_req;
+    struct _tds__GetDynamicDNSResponse ddns_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDynamicDNS";
+
+    do
+    {
+        soap_call___tds__GetDynamicDNS(soap, soap_endpoint, soap_action, &ddns_req, &ddns_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetDDNS success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_NetworkDefaultGateway()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetNetworkDefaultGateway gw_req;
+    struct _tds__GetNetworkDefaultGatewayResponse gw_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetNetworkDefaultGateway";
+
+    do
+    {
+        soap_call___tds__GetNetworkDefaultGateway(soap, soap_endpoint, soap_action, &gw_req, &gw_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetNetworkDefaultGateway success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+
+static int ONVIF_ZeroConfiguration()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetZeroConfiguration zero_req;
+    struct _tds__GetZeroConfigurationResponse zero_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetZeroConfiguration";
+
+    do
+    {
+        soap_call___tds__GetZeroConfiguration(soap, soap_endpoint, soap_action, &zero_req, &zero_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetZeroConfiguration success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_IPAddressFilter()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetIPAddressFilter ipf_req;
+    struct _tds__GetIPAddressFilterResponse ipf_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+   sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetIPAddressFilter";
+
+    do
+    {
+        soap_call___tds__GetIPAddressFilter(soap, soap_endpoint, soap_action, &ipf_req, &ipf_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetIPAddressFilter success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_DeviceInformation()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDeviceInformation devinfo_req;
+    struct _tds__GetDeviceInformationResponse devinfo_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDeviceInformation";
+
+    do
+    {
+        soap_call___tds__GetDeviceInformation(soap, soap_endpoint, soap_action, &devinfo_req, &devinfo_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetDeviceInformation success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_SystemUris()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetSystemUris sysuri_req;
+    struct _tds__GetSystemUrisResponse sysuri_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetSystemUris";
+
+    do
+    {
+        soap_call___tds__GetSystemUris(soap, soap_endpoint, soap_action, &sysuri_req, &sysuri_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetSystemUris success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_SystemLog()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetSystemLog syslog_req;
+    struct _tds__GetSystemLogResponse syslog_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetSystemLog";
+
+    syslog_req.LogType = tt__SystemLogType__System;
+
+    do
+    {
+        soap_call___tds__GetSystemLog(soap, soap_endpoint, soap_action, &syslog_req, &syslog_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetSystemLog success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_Scopes()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetScopes scopes_req;
+    struct _tds__GetScopesResponse scopes_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	;
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetScopes";
+
+
+    do
+    {
+        soap_call___tds__GetScopes(soap, soap_endpoint, soap_action, &scopes_req, &scopes_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetScopes success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_DiscoveryMode()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDiscoveryMode dismode_req;
+    struct _tds__GetDiscoveryModeResponse dismode_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDiscoveryMode";
+
+
+    do
+    {
+        soap_call___tds__GetDiscoveryMode(soap, soap_endpoint, soap_action, &dismode_req, &dismode_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetDiscoveryMode success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_AccessPolicy()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetAccessPolicy accp_req;
+    struct _tds__GetAccessPolicyResponse accp_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetAccessPolicy";
+
+
+    do
+    {
+        soap_call___tds__GetAccessPolicy(soap, soap_endpoint, soap_action, &accp_req, &accp_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetAccessPolicy success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_ClientCertificateMode()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetClientCertificateMode cc_req;
+    struct _tds__GetClientCertificateModeResponse cc_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetClientCertificateMode";
+
+
+    do
+    {
+        soap_call___tds__GetClientCertificateMode(soap, soap_endpoint, soap_action, &cc_req, &cc_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetClientCertificateMode success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_RelayOutputs()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetRelayOutputs ro_req;
+    struct _tds__GetRelayOutputsResponse ro_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetRelayOutputs";
+
+
+    do
+    {
+        soap_call___tds__GetRelayOutputs(soap, soap_endpoint, soap_action, &ro_req, &ro_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetRelayOutputs success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_RemoteDiscoveryMode()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetRemoteDiscoveryMode rdm_req;
+    struct _tds__GetRemoteDiscoveryModeResponse rdm_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetRemoteDiscoveryMode";
+
+
+    do
+    {
+        soap_call___tds__GetRemoteDiscoveryMode(soap, soap_endpoint, soap_action, &rdm_req, &rdm_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetRemoteDiscoveryMode success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_DPAddresses()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDPAddresses dpa_req;
+    struct _tds__GetDPAddressesResponse dpa_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDPAddresses";
+
+
+    do
+    {
+        soap_call___tds__GetDPAddresses(soap, soap_endpoint, soap_action, &dpa_req, &dpa_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetDPAddresses success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_GetStatus()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetStatus status_req;
+    struct _tptz__GetStatusResponse status_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/ptz_service", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetStatus";
+
+    status_req.ProfileToken = "0";
+
+    do
+    {
+        soap_call___tptz__GetStatus(soap, soap_endpoint, soap_action, &status_req, &status_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetStatus success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_AbsoluteMove()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__AbsoluteMove absmove_req;
+    struct _tptz__AbsoluteMoveResponse absmove_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/ptz_service", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/AbsoluteMove";
+
+    absmove_req.ProfileToken="0";
+    absmove_req.Position =  (struct tt__PTZVector *)soap_malloc(soap, sizeof(struct tt__PTZVector));
+    absmove_req.Speed=NULL;
+    absmove_req.Position->PanTilt=NULL;
+    absmove_req.Position->Zoom = (struct tt__Vector1D *)soap_malloc(soap, sizeof(struct tt__Vector1D));
+    absmove_req.Position->Zoom->x=0.1;
+    absmove_req.Position->Zoom->space = "http://www.onvif.org/ver10/tptz/ZoomSpaces/PositionGenericSpace";
+    
+
+    do
+    {
+        soap_call___tptz__AbsoluteMove(soap, soap_endpoint, soap_action, &absmove_req, &absmove_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  AbsoluteMove success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_GetSnapshotUri()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetSnapshotUri snapuri_req;
+    struct _trt__GetSnapshotUriResponse snapuri_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetSnapshotUri";
+
+    snapuri_req.ProfileToken = "Profile_1";
+
+    do
+    {
+        soap_call___trt__GetSnapshotUri(soap, soap_endpoint, soap_action, &snapuri_req, &snapuri_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetSnapshotUri success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoSources()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSources vs_req;
+    struct _trt__GetVideoSourcesResponse vs_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSources";
+
+
+    do
+    {
+        soap_call___tmd__GetVideoSources(soap, soap_endpoint, soap_action, &vs_req, &vs_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoSources success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetAudioSources()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetAudioSources as_req;
+    struct _trt__GetAudioSourcesResponse as_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetAudioSources";
+
+
+    do
+    {
+        soap_call___tmd__GetAudioSources(soap, soap_endpoint, soap_action, &as_req, &as_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetAudioSources success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetAudioOutputs()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetAudioOutputs ao_req;
+    struct _trt__GetAudioOutputsResponse ao_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetAudioOutputs";
+
+
+    do
+    {
+        soap_call___trt__GetAudioOutputs(soap, soap_endpoint, soap_action, &ao_req, &ao_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetAudioOutputs success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoSourceModes()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSourceModes vsm_req;
+    struct _trt__GetVideoSourceModesResponse vsm_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSourceModes";
+
+
+    vsm_req.VideoSourceToken = "VS_0";
+
+    do
+    {
+        soap_call___trt__GetVideoSourceModes(soap, soap_endpoint, soap_action, &vsm_req, &vsm_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoSourceModes success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_CreateProfile()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__CreateProfile cp_req;
+    struct _trt__CreateProfileResponse cp_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/CreateProfile";
+
+    cp_req.Name = "profile_2";
+    cp_req.Token = "2";
+
+    do
+    {
+        soap_call___trt__CreateProfile(soap, soap_endpoint, soap_action, &cp_req, &cp_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  CreateProfile success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+
+static int ONVIF_GetVideoSourceConfigurations()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSourceConfigurations vsc_req;
+    struct _trt__GetVideoSourceConfigurationsResponse vsc_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfigurations";
+
+
+    do
+    {
+        soap_call___trt__GetVideoSourceConfigurations(soap, soap_endpoint, soap_action, &vsc_req, &vsc_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoSourceConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoSourceConfiguration()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSourceConfiguration vsc_req;
+    struct _trt__GetVideoSourceConfigurationResponse vsc_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfiguration";
+
+    vsc_req.ConfigurationToken="1";
+
+
+    do
+    {
+        soap_call___trt__GetVideoSourceConfiguration(soap, soap_endpoint, soap_action, &vsc_req, &vsc_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoSourceConfiguration success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetCompatibleVideoSourceConfigurations()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetCompatibleVideoSourceConfigurations cvsc_req;
+    struct _trt__GetCompatibleVideoSourceConfigurationsResponse cvsc_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoSourceConfigurations";
+
+    cvsc_req.ProfileToken="0";
+
+
+    do
+    {
+        soap_call___trt__GetCompatibleVideoSourceConfigurations(soap, soap_endpoint, soap_action, &cvsc_req, &cvsc_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetCompatibleVideoSourceConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoSourceConfigurationOptions()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSourceConfigurationOptions vsco_req;
+    struct _trt__GetVideoSourceConfigurationOptionsResponse vsco_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfigurationOptions";
+
+    vsco_req.ConfigurationToken = "1";
+    vsco_req.ProfileToken = "0";
+
+
+    do
+    {
+        soap_call___trt__GetVideoSourceConfigurationOptions(soap, soap_endpoint, soap_action, &vsco_req, &vsco_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoSourceConfigurationOptions success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoEncoderConfigurations()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoEncoderConfigurations vec_req;
+    struct _trt__GetVideoEncoderConfigurationsResponse vec_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurations";
+
+
+    do
+    {
+        soap_call___trt__GetVideoEncoderConfigurations(soap, soap_endpoint, soap_action, &vec_req, &vec_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoEncoderConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetVideoEncoderConfiguration()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoEncoderConfiguration vec_req;
+    struct _trt__GetVideoEncoderConfigurationResponse vec_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfiguration";
+
+    vec_req.ConfigurationToken = "1";
+
+    do
+    {
+        soap_call___trt__GetVideoEncoderConfiguration(soap, soap_endpoint, soap_action, &vec_req, &vec_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoEncoderConfiguration success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetCompatibleVideoEncoderConfigurations()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetCompatibleVideoEncoderConfigurations cvec_req;
+    struct _trt__GetCompatibleVideoEncoderConfigurationsResponse cvec_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetCompatibleVideoEncoderConfigurations";
+
+    cvec_req.ProfileToken = "1";
+
+    do
+    {
+        soap_call___trt__GetCompatibleVideoEncoderConfigurations(soap, soap_endpoint, soap_action, &cvec_req, &cvec_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetCompatibleVideoEncoderConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+static int ONVIF_GetVideoEncoderConfigurationOptions()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoEncoderConfigurationOptions veco_req;
+    struct _trt__GetVideoEncoderConfigurationOptionsResponse veco_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurationOptions";
+
+
+    veco_req.ConfigurationToken = "1";
+    veco_req.ProfileToken = "1";
+
+    do
+    {
+        soap_call___trt__GetVideoEncoderConfigurationOptions(soap, soap_endpoint, soap_action, &veco_req, &veco_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetVideoEncoderConfigurationOptions success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetGuaranteedNumberOfVideoEncoderInstances()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetGuaranteedNumberOfVideoEncoderInstances gnovei_req;
+    struct _trt__GetGuaranteedNumberOfVideoEncoderInstancesResponse gnovei_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetGuaranteedNumberOfVideoEncoderInstances";
+
+    gnovei_req.ConfigurationToken = "1";
+
+    do
+    {
+        soap_call___trt__GetGuaranteedNumberOfVideoEncoderInstances(soap, soap_endpoint, soap_action, &gnovei_req, &gnovei_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetGuaranteedNumberOfVideoEncoderInstances success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+static int ONVIF_GetServiceCapabilities()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tev__GetServiceCapabilities sc_req;
+    struct _tev__GetServiceCapabilitiesResponse sc_resq;
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__Events;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
+
+    do
+    {
+        soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d            
+              printf("[%s][%d] Get capabilities success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+
+    soap_destroy(soap);
+    printf("Event endpoint is %s\n",capa_resp.Capabilities->Events->XAddr);
+
+    if(capa_resp.Capabilities->Events->XAddr==NULL)
+    {
+        retval = soap->error;
+        return retval;
+    }
+
+    strcpy(soap_endpoint,capa_resp.Capabilities->Events->XAddr);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilities";
+
+    do
+    {
+        soap_call___ns7__GetServiceCapabilities(soap, soap_endpoint, soap_action, &sc_req, &sc_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetServiceCapabilities success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}
+
+
+static int ONVIF_GetEventProperties()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tev__GetEventProperties ep_req;
+    struct _tev__GetEventPropertiesResponse ep_resq;
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__Events;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
+
+    do
+    {
+        soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d            
+              printf("[%s][%d] Get capabilities success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+
+    soap_destroy(soap);
+    printf("Event endpoint is %s\n",capa_resp.Capabilities->Events->XAddr);
+
+    if(capa_resp.Capabilities->Events->XAddr==NULL)
+    {
+        retval = soap->error;
+        return retval;
+    }
+
+    strcpy(soap_endpoint,capa_resp.Capabilities->Events->XAddr);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetEventPropertiesRequest";
+
+    do
+    {
+        soap_call___ns7__GetEventProperties(soap, soap_endpoint, soap_action, &ep_req, &ep_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetEventProperties success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}
+
+
+static int ONVIF_Capabilities()  //\u83b7\u53d6\u8bbe\u5907\u80fd\u529b\u63a5\u53e3
+{
+        
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__All;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
+
+    do
+    {
+        soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d            
+              printf("[%s][%d] Get capabilities success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+int main(void )
+{
+	//组播接口 
+	
+	if (ONVIF_ClientDiscovery() != 0 )
+	{
+		printf("discovery failed!\n");
+		return -1;
+	}
+
+#if 0
+
+        if(ONVIF_SystemDateAndTime() != 0)
+        {
+		printf("get system date and time failed!\n");
+		return -1;	            
+        }
+
+
+        if(ONVIF_SystemBackup() != 0)
+        {
+ 		printf("get systembackup failed!\n");
+		return -1;	              
+        }
+  
+
+	if(ONVIF_Capabilities() != 0)
+	{
+		printf("get capabilities failed!\n");
+		return -1;		
+	}
+	
+        if(ONVIF_StreamUri() != 0)
+        {
+  		printf("get streamuri failed!\n");
+		return -1;	                          
+        }
+
+
+        if(ONVIF_Profiles() != 0)
+        {
+  		printf("get profiles failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_PTZConfigurations() != 0)
+        {
+  		printf("get ptzconfigurations failed!\n");
+		return -1;	              
+        }    
+
+        if(ONVIF_PTZConfiguration() != 0)
+        {
+  		printf("get ptzconfiguration failed!\n");
+		return -1;	              
+        }   
+  
+        if(ONVIF_PTZNodes() != 0)
+        {
+   		printf("get ptznodes failed!\n");
+		return -1;	            
+        }
+        
+        if(ONVIF_PTZConfigurationOptions() != 0)
+        {
+    		printf("get ptzconfigurationoptions failed!\n");
+		return -1;	              
+        }
+
+
+        if(ONVIF_Services() != 0)
+        {
+    		printf("get services failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_ServiceCapabilities() != 0)
+        {
+    		printf("get servicecapabilities failed!\n");
+		return -1;	              
+        }         
+
+        if(ONVIF_SetHostname() != 0)
+        {
+    		printf("set hostname failed!\n");
+		return -1;	              
+        }  
+
+        if(ONVIF_Hostname() != 0)
+        {
+    		printf("get hostname failed!\n");
+		return -1;	              
+        }     
+
+
+         if(ONVIF_DNS() != 0)
+        {
+    		printf("get dns failed!\n");
+		return -1;	              
+        }   
+       
+        if(ONVIF_NTP() != 0)
+        {
+    		printf("get ntp failed!\n");
+		return -1;	              
+        }  
+  
+        if(ONVIF_DynamicDNS() != 0)
+        {
+    		printf("get ddns failed!\n");
+		return -1;	              
+        }             
+      
+        if(ONVIF_NetworkInterfaces() != 0)
+        {
+    		printf("get network interfaces failed!\n");
+		return -1;	              
+        }    
+
+ 
+
+        if(ONVIF_NetworkProtocols() != 0)
+        {
+ 		printf("get networks failed!\n");
+		return -1;	               
+        }
+ 
+
+        if(ONVIF_NetworkDefaultGateway() != 0)
+        {
+ 		printf("get NetworkDefaultGateway failed!\n");
+		return -1;	               
+        }      
+
+
+        if(ONVIF_ZeroConfiguration() != 0)
+        {
+ 		printf("get ZeroConfiguration failed!\n");
+		return -1;	               
+        }      
+
+        if(ONVIF_IPAddressFilter() != 0)
+        {
+ 		printf("get IPAddressFilter failed!\n");
+		return -1;	               
+        }    
+
+        if(ONVIF_DeviceInformation() != 0)
+        {
+ 		printf("get DeviceInformation failed!\n");
+		return -1;	               
+        }   
+   
+        if(ONVIF_SystemUris() != 0)
+        {
+ 		printf("get SystemUris failed!\n");
+		return -1;	               
+        }
+  
+        if(ONVIF_SystemLog() != 0)
+        {
+ 		printf("get SystemLog failed!\n");
+		return -1;	               
+        } 
+ 
+        if(ONVIF_Scopes() != 0)
+        {
+ 		printf("get Scopes failed!\n");
+		return -1;	               
+        }
+ 
+        if(ONVIF_DiscoveryMode() != 0)
+        {
+ 		printf("get DiscoveryMode failed!\n");
+		return -1;	               
+        }        
+
+        if(ONVIF_CreateUsers() != 0)
+        {
+ 		printf("create users failed!\n");
+		return -1;	             
+        }
+
+        if(ONVIF_AccessPolicy() != 0)
+        {
+ 		printf("get AccessPolicy failed!\n");
+		return -1;	               
+        }
+
+        if(ONVIF_ClientCertificateMode() != 0)
+        {
+ 		printf("get ClientCertificateMode failed!\n");
+		return -1;	             
+        } 
+
+        if(ONVIF_Users() != 0)
+        {
+ 		printf("get users failed!\n");
+		return -1;	             
+        } 
+
+
+        if(ONVIF_RelayOutputs() != 0)
+        {
+ 		printf("get RelayOutputs failed!\n");
+		return -1;	             
+        }
+
+        if(ONVIF_RemoteDiscoveryMode() != 0)
+        {
+ 		printf("get RemoteDiscoveryMode failed!\n");
+		return -1;	             
+        } 
+
+     
+        if(ONVIF_DPAddresses() != 0)
+        {
+ 		printf("get DPAddresses failed!\n");
+		return -1;	             
+        }  
+
+        if(ONVIF_GetStatus() != 0)
+        {
+ 		printf("get Status failed!\n");
+		return -1;	             
+        }  
+
+        if(ONVIF_AbsoluteMove() != 0)
+        {
+ 		printf("AbsoluteMove failed!\n");
+		return -1;	             
+        } 
+
+        if(ONVIF_GetVideoSources() != 0)
+        {
+  		printf("get VideoSources failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetAudioSources() != 0)
+        {
+  		printf("get AudioSources failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetAudioOutputs() != 0)
+        {
+  		printf("get AudioOutputs failed!\n");
+		return -1;	              
+        }
+      
+        if(ONVIF_GetVideoSourceModes() != 0)
+        {
+  		printf("get VideoSourceModes failed!\n");
+		return -1;	              
+        } 
+    
+        if(ONVIF_CreateProfile() != 0)
+        {
+  		printf("CreateProfile failed!\n");
+		return -1;	              
+        }  
+        
+        if(ONVIF_GetVideoSourceConfigurations() != 0)
+        {
+  		printf("GetVideoSourceConfigurations failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetSnapshotUri() != 0)
+        {
+  		printf("GetSnapshotUri failed!\n");
+		return -1;	              
+        }
+        if(ONVIF_GetVideoSourceConfiguration() != 0)
+        {
+  		printf("GetVideoSourceConfiguration failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetCompatibleVideoSourceConfigurations() != 0)
+        {
+  		printf("GetCompatibleVideoSourceConfigurations failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetVideoSourceConfigurationOptions() != 0)
+        {
+  		printf("GetVideoSourceConfigurationOptions failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetVideoEncoderConfigurations() != 0)
+        {
+  		printf("GetVideoEncoderConfigurations failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetVideoEncoderConfiguration() != 0)
+        {
+  		printf("GetVideoEncoderConfiguration failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetCompatibleVideoEncoderConfigurations() != 0)
+        {
+  		printf("GetCompatibleVideoEncoderConfigurations failed!\n");
+		return -1;	              
+        }  
+
+        if(ONVIF_GetVideoEncoderConfigurationOptions() != 0)
+        {
+  		printf("GetVideoEncoderConfigurationOptions failed!\n");
+		return -1;	              
+        }
+
+        if(ONVIF_GetGuaranteedNumberOfVideoEncoderInstances() != 0)
+        {
+  		printf("GetGuaranteedNumberOfVideoEncoderInstances failed!\n");
+		return -1;	              
+        } 
+        if(ONVIF_GetServiceCapabilities() != 0)
+        {
+  		printf("GetServiceCapabilities failed!\n");
+		return -1;	              
+        }
+        if(ONVIF_GetEventProperties() != 0)
+        {
+  		printf("GetEventProperties failed!\n");
+		return -1;	              
+        }           
+
+        if(ONVIF_GetEventProperties() != 0)
+        {
+  		printf("GetEventProperties failed!\n");
+		return -1;	              
+		}   
+#endif
+		return 0;
+}
