@@ -20,10 +20,9 @@ bool TX_ONVIF_TERM()
     return true;
 }
 
-int TX_ONVIF_Discovery(char *ip,  int  port, int *deviceNum)
+int TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum)
 {
-    printf("tx_onvif_sdk.c ip = %s, port = %d, deviceNum = %d\n", ip, port, *deviceNum);
-    int ret = ONVIF_Discovery(ip, port, deviceNum);
+    int ret = ONVIF_Discovery(ip, port, RearchDeviceSet, deviceNum);
     return ret;
 }
 

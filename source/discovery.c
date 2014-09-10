@@ -117,10 +117,10 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 } 
 
 
-int ONVIF_Discovery(char *ip, int port,  int *deviceNum) 
+int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum) 
 {
-    printf("dicovery.c ip = %s, port = %d, deviceNum = %d ---------------------------->\n", ip, port, *deviceNum);
-     *deviceNum  = 0;
+
+    *deviceNum  = 0;
     int HasDev = 0;
 	int retval = SOAP_OK;
 	wsdd__ProbeType req;       
@@ -133,7 +133,9 @@ int ONVIF_Discovery(char *ip, int port,  int *deviceNum)
 	const char *was_To = "urn:schemas-xmlsoap-org:ws:2005:04:discovery";
 	const char *was_Action = "http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe";
 	//这个就是传递过去的组播的ip地址和对应的端口发送广播信息	
-	const char *soap_endpoint = "soap.udp://239.255.255.250:3702/";
+    char soap_endpoint[128] = {0};
+	sprintf(soap_endpoint,"soap.udp://%s:%d",ip, port); 
+	/* const char *soap_endpoint = "soap.udp://239.255.255.250:3702/"; */
 
 	//这个接口填充一些信息并new返回一个soap对象，本来可以不用额外接口，
 	// 但是后期会作其他操作，此部分剔除出来后面的操作就相对简单了,只是调用接口就好
@@ -163,7 +165,6 @@ int ONVIF_Discovery(char *ip, int port,  int *deviceNum)
             else //成功接收某一个设备的消息
 			{
 				HasDev ++;
-                (*deviceNum) += 1;
 				if (resp.wsdd__ProbeMatches->ProbeMatch != NULL && resp.wsdd__ProbeMatches->ProbeMatch->XAddrs != NULL)
 				{
 					printf(" ################  recv  %d devices info #### \n", HasDev );
@@ -171,6 +172,14 @@ int ONVIF_Discovery(char *ip, int port,  int *deviceNum)
 					printf("Target EP Address       : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->wsa__EndpointReference.Address);  
 					printf("Target Type             : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->Types);  
 					printf("Target Metadata Version : %d\r\n", resp.wsdd__ProbeMatches->ProbeMatch->MetadataVersion);  
+                    /* 给设备结构体数组附值 */
+
+                    strcpy(RearchDeviceSet[*deviceNum].XAddrs,  resp.wsdd__ProbeMatches->ProbeMatch->XAddrs);
+                    strcpy(RearchDeviceSet[*deviceNum].Address,  resp.wsdd__ProbeMatches->ProbeMatch->wsa__EndpointReference.Address);
+                    strcpy(RearchDeviceSet[*deviceNum].Types,  resp.wsdd__ProbeMatches->ProbeMatch->Types);
+                    RearchDeviceSet[*deviceNum].MetadataVersion =  resp.wsdd__ProbeMatches->ProbeMatch->MetadataVersion;
+                    
+                    (*deviceNum) += 1;
 					sleep(1);
 				}
 			}

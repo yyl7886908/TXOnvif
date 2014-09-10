@@ -32,6 +32,7 @@ typedef struct
 	char Types[128];
 	char Address[128];
 	char item[1024];
+    int MetadataVersion;
 }
 TX_ONVIF_REARCH_DEVICEINFO,*LPTX_ONVIF_REARCH_DEVICEINFO;
 
