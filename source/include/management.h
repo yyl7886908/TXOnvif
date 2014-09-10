@@ -15,7 +15,7 @@ extern "C" {
 
 int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo);
 
-
+int ONVIF_GetDeviceInfo(char *endpoints, LPTX_ONVIF_DEVICE_INFO deviceInfo);
 
 #ifdef __cplusplus
 }

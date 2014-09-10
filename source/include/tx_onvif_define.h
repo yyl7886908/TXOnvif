@@ -57,6 +57,13 @@ typedef enum
 	capability_ptz = 6
 } TX_Capability_Type;
 
-
+typedef struct 
+{
+	char manufacturer[64];	
+	char model[64];	
+	char firmwareVersion[64];
+	char serialNumber[64];	
+	char hardwareId[64];
+}TX_ONVIF_DEVICE_INFO, *LPTX_ONVIF_DEVICE_INFO;
 
 #endif

@@ -42,6 +42,17 @@ int TX_ONVIF_GetCapabilities( TX_Capability_Type txAbilityType, char *deviceServ
     return ret;
 }
 
+int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    int ret = ONVIF_GetDeviceInfo(deviceService, deviceInfo);
+    return ret;
+    
+}
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -29,14 +29,29 @@ void onvif_getCapabilities()
     
 	memset(&capabilityInfo, 0, sizeof(TX_ONVIF_CAPABILITY_URI));
 	int ret=TX_ONVIF_GetCapabilities( capability_all, deviceService, &capabilityInfo);
-    printf("onvif_getCapabilities = %d\n", ret);
-
-    printf(">>>>>>>>>>>>>>>main  \n capabilityInfo\n analytics = %s\n device = %s\n events = %s\n imaging = %s\n media = %s\n ptz = %s\n",  capabilityInfo.analytics, capabilityInfo.device, capabilityInfo.events, capabilityInfo.imaging, capabilityInfo.media, capabilityInfo.ptz);
+    printf("onvif_getCapabilities ret= %d\n", ret);
+    printf("---------------------------------------------------->\n");
+    printf("capabilityInfo\n analytics = %s\n device = %s\n events = %s\n imaging = %s\n media = %s\n ptz = %s\n",  capabilityInfo.analytics, capabilityInfo.device, capabilityInfo.events, capabilityInfo.imaging, capabilityInfo.media, capabilityInfo.ptz);
 }
+
+
+void onvif_getDeviceInfo()
+{
+    int ret ;
+    TX_ONVIF_DEVICE_INFO deviceInfo;
+    char *deviceService = "http://192.168.1.106:80/onvif/device_service";
+	memset(&deviceInfo, 0, sizeof(TX_ONVIF_DEVICE_INFO));
+	ret = TX_ONVIF_GetDeviceInfo(deviceService, &deviceInfo);
+    printf("onvif_getDeviceInfo ret = %d\n", ret);
+    printf("---------------------------------------------------->\n");
+    printf("onvif_getDeviceInfo \n manufacturer = %s\n model = %s\n firmwareVersion = %s\n serialNumber = %s\n hardwareId = %s\n", deviceInfo.manufacturer, deviceInfo.model, deviceInfo.firmwareVersion, deviceInfo.serialNumber, deviceInfo.hardwareId);
+}
+
 
 int main()
 {
     printf("start main---------------->\n");
     /* onvif_discovery(); */
-    onvif_getCapabilities();
+    /* onvif_getCapabilities(); */
+    onvif_getDeviceInfo();
 }
