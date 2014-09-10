@@ -14,10 +14,10 @@
 #define PASSWORD "12345"
 
 #if 0
-#define DEVICE_IP "192.168.1.102"
+#define DEVICE_IP "192.168.1.106"
 #define DEVICE_PORT 8888
 #else
-#define DEVICE_IP "192.168.1.102"
+#define DEVICE_IP "192.168.1.106"
 #define DEVICE_PORT 80
 #endif
 
@@ -132,8 +132,13 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 	return soap;
 } 
 
-int ONVIF_GetCapabilities()
+int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
 {
+
+#ifdef DEBUG
+    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+
    int retval = 0;
     struct soap *soap = NULL;
     struct _tds__GetCapabilities capa_req;
@@ -153,7 +158,8 @@ int ONVIF_GetCapabilities()
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
     //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
-    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+    /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	 */
+   sprintf(soap_endpoint, deviceService); 
 
     capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
     capa_req.__sizeCategory = 1;
@@ -181,13 +187,23 @@ int ONVIF_GetCapabilities()
                     printf("Get Capabilities fauled !  Capabilities == NULL");
                 }
             else{
+
+#ifdef DEBUG
                 printf("[%s][%d] Get capabilities success !\n", __func__, __LINE__);
                 printf("Capabilities->Media->XAddr = %s\n", capa_resp.Capabilities->Media->XAddr);
                 printf("Capabilities->Imaging->XAddr = %s\n", capa_resp.Capabilities->Imaging->XAddr);
                 printf("Capabilities->Events->XAddr = %s\n", capa_resp.Capabilities->Events->XAddr);
                 printf("Capabilities->PTX->XAddr = %s\n", capa_resp.Capabilities->PTZ->XAddr);
-                printf("Capabilities->Extension->DeviceIO = %s\n", capa_resp.Capabilities->Extension->DeviceIO);
-
+             
+#endif
+                
+                /* 给capability结构体赋值 */
+                strcpy(capabilityInfo->analytics, capa_resp.Capabilities->Analytics->XAddr);
+                strcpy(capabilityInfo->device, capa_resp.Capabilities->Device->XAddr);
+                strcpy(capabilityInfo->events, capa_resp.Capabilities->Events->XAddr);
+                strcpy(capabilityInfo->imaging,  capa_resp.Capabilities->Imaging->XAddr);
+                strcpy(capabilityInfo->media,  capa_resp.Capabilities->Media->XAddr);
+                strcpy(capabilityInfo->ptz, capa_resp.Capabilities->PTZ->XAddr);
             }
              
         }

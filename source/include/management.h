@@ -13,7 +13,7 @@ extern "C" {
 
 #include "tx_onvif_define.h"
 
-int ONVIF_GetCapabilities();
+int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo);
 
 
 

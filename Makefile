@@ -39,3 +39,4 @@ clean:
 	rm -fr $(OBJSDIR)/*.o
 	rm -fr $(DEPFILE)
 	rm -fr $(EXENAME)
+	rm *.log
