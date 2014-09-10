@@ -116,10 +116,12 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 	return soap;
 } 
 
-int ONVIF_Discoverty() 
+
+int ONVIF_Discovery(char *ip, int port,  int *deviceNum) 
 {
-    printf("ONVIF_DISCOVERY start now ---------------------------->\n");
-    	int HasDev = 0;
+    printf("dicovery.c ip = %s, port = %d, deviceNum = %d ---------------------------->\n", ip, port, *deviceNum);
+     *deviceNum  = 0;
+    int HasDev = 0;
 	int retval = SOAP_OK;
 	wsdd__ProbeType req;       
 	struct __wsdd__ProbeMatches resp;
@@ -161,6 +163,7 @@ int ONVIF_Discoverty()
             else //成功接收某一个设备的消息
 			{
 				HasDev ++;
+                (*deviceNum) += 1;
 				if (resp.wsdd__ProbeMatches->ProbeMatch != NULL && resp.wsdd__ProbeMatches->ProbeMatch->XAddrs != NULL)
 				{
 					printf(" ################  recv  %d devices info #### \n", HasDev );

@@ -12,7 +12,7 @@ extern "C" {
 #endif
 
 
-int ONVIF_Discoverty() ;
+int ONVIF_Discovery(char *ip, int port,  int *deviceNum) ;
 
 
 #ifdef __cplusplus
