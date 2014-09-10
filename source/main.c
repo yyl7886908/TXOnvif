@@ -3,9 +3,9 @@
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT     3702
 
-int main()
+
+void onvif_discovery()
 {
-    printf("start main---------------->\n");
     TX_ONVIF_REARCH_DEVICEINFO struDiscoveryDeviceInfos[16];
     int deviceNum = 0;
     int ret = TX_ONVIF_Discovery(MULTICAST_IP,  MULTICAST_PORT, struDiscoveryDeviceInfos,  &deviceNum) ;
@@ -16,4 +16,10 @@ int main()
    {
        printf("i = %d\n, Address = %s\n , XAddrs = %s\n, MetadataVersion = %d\n", i, struDiscoveryDeviceInfos[i].XAddrs,struDiscoveryDeviceInfos[i].Address, struDiscoveryDeviceInfos[i].MetadataVersion);
    }
+}
+
+int main()
+{
+    printf("start main---------------->\n");
+    onvif_discovery();
 }

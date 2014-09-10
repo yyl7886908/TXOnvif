@@ -20,7 +20,11 @@ bool TX_ONVIF_Init();
 
 bool TX_ONVIF_Term();
 
-int  TX_ONVIF_Discovery(char *ip,  int  port,LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum);
+/* device discovery */
+int  TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum);
+
+/* media manager */
+int TX_ONVIF_GetCapabilities();
 
 
 #ifdef __cplusplus

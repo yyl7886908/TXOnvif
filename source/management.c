@@ -1,12 +1,25 @@
-#include "discovery.h"
+/************************************************
+  Des:   This is the file for onvif devices manage
+  Time: 2014-09-10
+  Author: Yu Yun Long
+ ************************************************/
 
-#include "wsdd.h"
-#include <stdio.h>
-#include "base64.h"
-#include "sha1.h"
+#include "management.h"
+#include "soapH.h"
+
+#include "soapStub.h"
+#include "stdsoap2.h"
 
 #define USERNAME "admin"
 #define PASSWORD "12345"
+
+#if 0
+#define DEVICE_IP "192.168.1.102"
+#define DEVICE_PORT 8888
+#else
+#define DEVICE_IP "192.168.1.102"
+#define DEVICE_PORT 80
+#endif
 
 
 typedef struct
@@ -14,7 +27,6 @@ typedef struct
     char username[64];
     char password[32];
 }UserInfo_S;
-
 
 static void ONVIF_GenrateDigest(unsigned char *pwddigest_out, unsigned char *pwd, char *nonc, char *time)
 {
@@ -33,7 +45,7 @@ static void ONVIF_GenrateDigest(unsigned char *pwddigest_out, unsigned char *pwd
 }
 
 
-struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To, const char *was_Action, int timeout, UserInfo_S *pUserInfo)
+static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To, const char *was_Action, int timeout, UserInfo_S *pUserInfo)
 {
 	struct soap *soap = NULL; 
 	unsigned char macaddr[6];
@@ -45,7 +57,7 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 		printf("[%d]soap = NULL\n", __LINE__);
 		return NULL;
 	}
-	 soap_set_namespaces( soap, namespaces);
+	 /* soap_set_namespaces( soap, namespaces); */
 	//超过5秒钟没有数据就退出
 	if (timeout > 0)
 	{
@@ -120,93 +132,69 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 	return soap;
 } 
 
-
-int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum) 
+int ONVIF_GetCapabilities()
 {
+   int retval = 0;
+    struct soap *soap = NULL;
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+        
+    struct SOAP_ENV__Header header;
 
-    *deviceNum  = 0;
-    int HasDev = 0;
-	int retval = SOAP_OK;
-	wsdd__ProbeType req;       
-	struct __wsdd__ProbeMatches resp;
-	wsdd__ScopesType sScope;
-	struct SOAP_ENV__Header header;
-	struct soap* soap;
-	
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
 
-	const char *was_To = "urn:schemas-xmlsoap-org:ws:2005:04:discovery";
-	const char *was_Action = "http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe";
-	//这个就是传递过去的组播的ip地址和对应的端口发送广播信息	
-    char soap_endpoint[128] = {0};
-	sprintf(soap_endpoint,"soap.udp://%s:%d",ip, port); 
-	/* const char *soap_endpoint = "soap.udp://239.255.255.250:3702/"; */
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__All;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
 
-	//这个接口填充一些信息并new返回一个soap对象，本来可以不用额外接口，
-	// 但是后期会作其他操作，此部分剔除出来后面的操作就相对简单了,只是调用接口就好
-	soap = ONVIF_Initsoap(&header, was_To, was_Action, 5,NULL);
-    
-	soap_default_SOAP_ENV__Header(soap, &header);
-	soap->header = &header;
-
-	soap_default_wsdd__ScopesType(soap, &sScope);
-	sScope.__item = "";
-	soap_default_wsdd__ProbeType(soap, &req);
-	req.Scopes = &sScope;
-	req.Types = ""; //"dn:NetworkVideoTransmitter";
-    
-	retval = soap_send___wsdd__Probe(soap, soap_endpoint, NULL, &req);		
-	//发送组播消息成功后，开始循环接收各位设备发送过来的消息
-	while (retval == SOAP_OK)
+    do
     {
-		retval = soap_recv___wsdd__ProbeMatches(soap, &resp);
-        if (retval == SOAP_OK) 
+        int ret = soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        printf("soap call caabilities, ret = %d======>\n", ret);
+        if (soap->error)
         {
-            if (soap->error)
-            {
-                printf("[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); 
-			    retval = soap->error;
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                break;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d   
+
+            if(capa_resp.Capabilities == NULL)
+                {
+                    printf("Get Capabilities fauled !  Capabilities == NULL");
+                }
+            else{
+                printf("[%s][%d] Get capabilities success !\n", __func__, __LINE__);
+                printf("Capabilities->Media->XAddr = %s\n", capa_resp.Capabilities->Media->XAddr);
+                printf("Capabilities->Imaging->XAddr = %s\n", capa_resp.Capabilities->Imaging->XAddr);
+                printf("Capabilities->Events->XAddr = %s\n", capa_resp.Capabilities->Events->XAddr);
+                printf("Capabilities->PTX->XAddr = %s\n", capa_resp.Capabilities->PTZ->XAddr);
+                printf("Capabilities->Extension->DeviceIO = %s\n", capa_resp.Capabilities->Extension->DeviceIO);
+
             }
-            else //成功接收某一个设备的消息
-			{
-				HasDev ++;
-				if (resp.wsdd__ProbeMatches->ProbeMatch != NULL && resp.wsdd__ProbeMatches->ProbeMatch->XAddrs != NULL)
-				{
-					printf(" ################  recv  %d devices info #### \n", HasDev );
-					printf("Target Service Address  : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->XAddrs);	
-					printf("Target EP Address       : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->wsa__EndpointReference.Address);  
-					printf("Target Type             : %s\r\n", resp.wsdd__ProbeMatches->ProbeMatch->Types);  
-					printf("Target Metadata Version : %d\r\n", resp.wsdd__ProbeMatches->ProbeMatch->MetadataVersion);  
-                    /* 给设备结构体数组附值 */
+             
+        }
+    }while(0);
 
-                    strcpy(RearchDeviceSet[*deviceNum].XAddrs,  resp.wsdd__ProbeMatches->ProbeMatch->XAddrs);
-                    strcpy(RearchDeviceSet[*deviceNum].Address,  resp.wsdd__ProbeMatches->ProbeMatch->wsa__EndpointReference.Address);
-                    strcpy(RearchDeviceSet[*deviceNum].Types,  resp.wsdd__ProbeMatches->ProbeMatch->Types);
-                    RearchDeviceSet[*deviceNum].MetadataVersion =  resp.wsdd__ProbeMatches->ProbeMatch->MetadataVersion;
-                    
-                    (*deviceNum) += 1;
-					sleep(1);
-				}
-			}
-		}
-		else if (soap->error)  
-		{  
-			if (HasDev == 0)
-			{
-				printf("[%s][%s][Line:%d] Thers Device discovery or soap error: %d, %s, %s \n",__FILE__, __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); 
-				retval = soap->error;  
-			}
-			else 
-			{
-				printf(" [%s]-[%d] Search end! It has Searched %d devices! \n", __func__, __LINE__, HasDev);
-				retval = 0;
-			}
-			break;
-		}  
-    }
-
-    soap_destroy(soap); 
-    soap_end(soap); 
-    soap_free(soap);
-	
-	return retval;
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
 }

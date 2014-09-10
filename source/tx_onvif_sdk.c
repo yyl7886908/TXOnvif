@@ -20,7 +20,9 @@ bool TX_ONVIF_TERM()
     return true;
 }
 
-int TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum)
+/* device discovery */
+
+int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet,  int *deviceNum) 
 {
     int ret = ONVIF_Discovery(ip, port, RearchDeviceSet, deviceNum);
     return ret;
