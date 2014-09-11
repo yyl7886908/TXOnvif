@@ -14,10 +14,10 @@
 #define PASSWORD "12345"
 
 #if 0
-#define DEVICE_IP "192.168.1.106"
+#define DEVICE_IP "192.168.1.100"
 #define DEVICE_PORT 8888
 #else
-#define DEVICE_IP "192.168.1.106"
+#define DEVICE_IP "192.168.1.100"
 #define DEVICE_PORT 80
 #endif
 
@@ -288,3 +288,65 @@ int ONVIF_GetDeviceInfo(char *endpoints, LPTX_ONVIF_DEVICE_INFO deviceInfo)
     return retval;
     
 }
+
+int ONVIF_DeviceReboot(char* inBuffer)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d] Search end!  inBuffer = %s \n", __func__, __LINE__,  inBuffer);
+#endif
+    
+    return 0;
+}
+
+
+/* int ONVIF_GetSysDataTime(char *deviceService, STime &time) */
+/* { */
+/*     int retval = 0; */
+/*     struct soap *soap = NULL; */
+/*     struct SOAP_ENV__Header header;	 */
+
+/*     struct _tds__GetSystemDateAndTime sdat_req; */
+/*     struct _tds__GetSystemDateAndTimeResponse sdat_resp; */
+
+/*     UserInfo_S stUserInfo; */
+/*     memset(&stUserInfo, 0, sizeof(UserInfo_S)); */
+ 
+/*     //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801 */
+/*     strcpy(stUserInfo.username, USERNAME); */
+/*     strcpy(stUserInfo.password, PASSWORD); */
+
+/*     soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo); */
+/*     char *soap_endpoint = (char *)malloc(256); */
+/*     memset(soap_endpoint, '\0', 256); */
+/*     //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f */
+/*     sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	 */
+
+/*     const char *soap_action ="http://www.onvif.org/ver10/device/wsdl/GetSystemDateAndTime"; */
+
+/*     do */
+/*     {	 */
+/*         soap_call___tds__GetSystemDateAndTime(soap,soap_endpoint,soap_action,&sdat_req,&sdat_resp); */
+
+/*         if (soap->error) */
+/*         { */
+/*                 printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); */
+/*                 retval = soap->error; */
+/*                 break; */
+/*         } */
+/*         else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f */
+/*         {    */
+/*               printf("[%s][%d] Get system date and time success !\n", __func__, __LINE__); */
+/*               printf("local time is %04d-%02d-%02d %02d:%02d:%02d\n",sdat_resp.SystemDateAndTime->LocalDateTime->Date->Year, */
+/*                sdat_resp.SystemDateAndTime->LocalDateTime->Date->Month, */
+/*                sdat_resp.SystemDateAndTime->LocalDateTime->Date->Day, */
+/*                sdat_resp.SystemDateAndTime->LocalDateTime->Time->Hour, */
+/*                sdat_resp.SystemDateAndTime->LocalDateTime->Time->Minute, */
+/*                sdat_resp.SystemDateAndTime->LocalDateTime->Time->Second); */
+/*         }         */
+/*     }while(0);  */
+
+/*     free(soap_endpoint); */
+/*     soap_endpoint = NULL; */
+/*     soap_destroy(soap); */
+/*     return retval;     */
+/* } */

@@ -1,6 +1,6 @@
 /************************************************
   Des:   This is the file for onvif sdk
-  Time: 2014-09-010
+  Time: 2014-09-10
   Author: Yu Yun Long
  ************************************************/
 
@@ -65,5 +65,19 @@ typedef struct
 	char serialNumber[64];	
 	char hardwareId[64];
 }TX_ONVIF_DEVICE_INFO, *LPTX_ONVIF_DEVICE_INFO;
+
+typedef struct  
+{
+	int size;
+	char token[3][32];
+	char name[3][32];
+	
+	char VSCToken[3][32];
+	char VSCName[3][32];
+	char videoSourceToken[3][32];
+	
+	char VECToken[3][32];
+	char VECName[3][32];
+}TX_ONVIF_PROFILES_INFO, *LPTX_ONVIF_PROFILES_INFO;
 
 #endif

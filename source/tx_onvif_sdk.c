@@ -5,6 +5,7 @@
 
 #include "discovery.h" 
 #include "management.h"
+#include "media.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -52,6 +53,16 @@ int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInf
     
 }
 
+
+/* media manager */
+int TX_ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
+{
+    #ifdef DEBUG
+    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    int ret = ONVIF_GetProfiles(deviceService, profilesInfo);
+    return ret;
+}
 
 #ifdef __cplusplus
 }
