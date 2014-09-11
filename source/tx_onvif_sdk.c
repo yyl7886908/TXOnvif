@@ -24,7 +24,7 @@ bool TX_ONVIF_TERM()
     return true;
 }
 
-/* device discovery */
+/* 设备发现 */
 
 int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet,  int *deviceNum) 
 {
@@ -32,7 +32,7 @@ int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDe
     return ret;
 }
 
-/* media manager */
+/* 设备管理 */
 int TX_ONVIF_GetCapabilities( TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
 {
 #ifdef DEBUG
@@ -54,7 +54,7 @@ int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInf
 }
 
 
-/* media manager */
+/* 媒体控制 */
 int TX_ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
 {
 #ifdef DEBUG
@@ -72,6 +72,16 @@ int TX_ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
 
     int ret = ONVIF_GetStreamURI(deviceService, streamURI);
     return ret;
+}
+
+int TX_ONVIF_StartRtspStream(char *stremURI)
+{
+    return 0;
+}
+
+int TX_ONVIF_StopRtspStream()
+{
+    return 0;
 }
 
 #ifdef __cplusplus
