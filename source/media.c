@@ -202,14 +202,14 @@ int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInf
 /* #endif */
 
                       /* 给prfofileInfo结构体赋值 */
-                      printf(" Profiles  info token = %s\n", (pro_resq.Profiles+i)->token);
-                      printf("Profiles  info size = %d\n", profilesInfo->size);
-                      printf("Profiles  info name = %s\n", (pro_resq.Profiles+i)->Name);
-                      printf("Profiles  info VideoSourceConfiguration token = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->token);
-                      printf("Profiles  info VideoSourceConfiguration name = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->Name);
-                      printf("Profiles  info VideoSourceConfiguration SourceToken = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->SourceToken);
-                       printf("Profiles  info VideoEncoderConfiguration  name = %s\n", (pro_resq.Profiles+i)->VideoEncoderConfiguration->Name);
-                        printf("Profiles  info VideoEncoderConfiguration  token = %s\n", (pro_resq.Profiles+i)->VideoEncoderConfiguration->token);
+                      /* printf(" Profiles  info token = %s\n", (pro_resq.Profiles+i)->token); */
+                      /* printf("Profiles  info size = %d\n", profilesInfo->size); */
+                      /* printf("Profiles  info name = %s\n", (pro_resq.Profiles+i)->Name); */
+                      /* printf("Profiles  info VideoSourceConfiguration token = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->token); */
+                      /* printf("Profiles  info VideoSourceConfiguration name = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->Name); */
+                      /* printf("Profiles  info VideoSourceConfiguration SourceToken = %s\n", (pro_resq.Profiles+i)->VideoSourceConfiguration->SourceToken); */
+                      /*  printf("Profiles  info VideoEncoderConfiguration  name = %s\n", (pro_resq.Profiles+i)->VideoEncoderConfiguration->Name); */
+                      /*   printf("Profiles  info VideoEncoderConfiguration  token = %s\n", (pro_resq.Profiles+i)->VideoEncoderConfiguration->token); */
 
 
                       sprintf(profilesInfo->token[profilesInfo->size], (pro_resq.Profiles + i)->token);
@@ -229,4 +229,151 @@ int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInf
     soap_endpoint = NULL;
     soap_destroy(soap);
     return retval;
+}
+
+/* get stream uri */
+int ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+
+    int retval = 0;
+    int i =0;
+    struct soap *soap = NULL;
+    const char *soap_action;
+    struct _trt__GetStreamUri stream_req;
+    struct _trt__GetStreamUriResponse stream_resp;
+
+    
+    struct _trt__GetProfiles pro_req;
+    struct _trt__GetProfilesResponse pro_resq;
+
+    struct _tds__GetCapabilities capa_req;
+    struct _tds__GetCapabilitiesResponse capa_resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);
+
+    capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
+    capa_req.__sizeCategory = 1;
+    *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__Media;
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
+
+
+    do
+    {
+        soap_call___tds__GetCapabilities(soap, soap_endpoint, soap_action, &capa_req, &capa_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    
+
+    printf("Media endpoint is %s\n",capa_resp.Capabilities->Media->XAddr);
+ 
+    if(capa_resp.Capabilities->Media->XAddr==NULL)
+    {
+        retval = soap->error;
+        return retval;
+    }
+        
+    strcpy(soap_endpoint,capa_resp.Capabilities->Media->XAddr);
+
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfiles";
+
+    do
+    {
+        soap_call___trt__GetProfiles(soap, soap_endpoint, soap_action, &pro_req, &pro_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
+        }
+    }while(0);
+    
+
+    soap_destroy(soap);
+
+    printf(" profile's size is %d\n",pro_resq.__sizeProfiles);
+
+  
+    for(i = 0 ;i <pro_resq.__sizeProfiles;i++)
+    {
+        strcpy(soap_endpoint,capa_resp.Capabilities->Media->XAddr);
+        memset(&header,0,sizeof(header));
+        soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+        soap_action = "http://www.onvif.org/ver10/media/wsdl/GetStreamUri";
+        stream_req.StreamSetup = (struct tt__StreamSetup *)soap_malloc(soap, sizeof(struct tt__StreamSetup));
+        stream_req.StreamSetup->Stream = tt__StreamType__RTP_Unicast;
+        stream_req.StreamSetup->Transport =  (struct tt__Transport *)soap_malloc(soap, sizeof(struct tt__Transport));
+        stream_req.StreamSetup->Transport->Protocol = tt__TransportProtocol__RTSP;
+        stream_req.StreamSetup->Transport->Tunnel = NULL;
+        stream_req.StreamSetup->__size = 1;
+        stream_req.StreamSetup->__any = NULL;
+        stream_req.StreamSetup->__anyAttribute = NULL;
+        stream_req.ProfileToken = pro_resq.Profiles[i].token;
+
+         do
+        {
+            soap_call___trt__GetStreamUri(soap, soap_endpoint, soap_action, &stream_req, &stream_resp);
+            if (soap->error)
+            {
+                    printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                    retval = soap->error;
+                    return retval;
+            }
+            else
+            {         
+                  printf("[%s][%d] Get StreamUri success !\n", __func__, __LINE__);
+                  //printf(" uri is %s\n",stream_resp.MediaUri->Uri);
+            }
+        }while(0);       
+
+        soap_destroy(soap);
+        printf("Profile <%s> has a stream:\n%s\n", pro_resq.Profiles[i].Name,stream_resp.MediaUri->Uri);
+        sprintf(streamURI->name[streamURI->size], pro_resq.Profiles[i].Name);
+        sprintf(streamURI->streamURI[streamURI->size], stream_resp.MediaUri->Uri);
+        streamURI->size ++;
+    }
+    
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+
 }

@@ -68,11 +68,32 @@ void onvif_getProfiles()
     }
 }
 
+
+void onvif_getStreamUri()
+{
+     printf("---------------------------------------------------->\n");
+    int ret;
+    TX_ONVIF_STREAM_URI streamURI;
+    memset(&streamURI, 0, sizeof(TX_ONVIF_STREAM_URI));
+    char *deviceService = "http://192.168.1.100:80/onvif/Media";
+    ret = TX_ONVIF_GetStreamURI(deviceService, &streamURI);
+    printf("onvif_getStreamUri  ret = %d\n", ret);
+    printf("---------------------------------------------------->\n");
+    int i;
+    printf("streamURI.size = %d\n", streamURI.size);
+    for(i = 0; i< streamURI.size; i++ )
+    {
+         printf(" streamURI[%d] name = %s\n", i, streamURI.name[i]);
+        printf(" streamURI[%d] streamURI = %s\n", i, streamURI.streamURI[i]);
+    }
+}
+
 int main()
 {
     printf("start main---------------->\n");
     /* onvif_discovery();  */
     /* onvif_getCapabilities();  */
     /* onvif_getDeviceInfo(); */
-    onvif_getProfiles();
+    /* onvif_getProfiles(); */
+    onvif_getStreamUri();
 }

@@ -44,7 +44,8 @@ typedef struct
 	char imaging[128];
 	char media[128];
 	char ptz[128];
-} TX_ONVIF_CAPABILITY_URI, *LPTX_ONVIF_CAPABILITY_URI;
+} 
+TX_ONVIF_CAPABILITY_URI, *LPTX_ONVIF_CAPABILITY_URI;
 
 typedef enum
 {
@@ -78,6 +79,15 @@ typedef struct
 	
 	char VECToken[3][32];
 	char VECName[3][32];
-}TX_ONVIF_PROFILES_INFO, *LPTX_ONVIF_PROFILES_INFO;
+}
+TX_ONVIF_PROFILES_INFO, *LPTX_ONVIF_PROFILES_INFO;
+
+typedef struct
+{
+    int size;
+    char name[2][128];
+    char streamURI[2][128];
+}TX_ONVIF_STREAM_URI, *LPTX_ONVIF_STREAM_URI;
+
 
 #endif
