@@ -132,7 +132,7 @@ int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService,
 {
 
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+    printf(" [%s]-[%d]  management.c!  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
 
    int retval = 0;
@@ -155,7 +155,7 @@ int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService,
     memset(soap_endpoint, '\0', 256);
     //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
     /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	 */
-   sprintf(soap_endpoint, deviceService); 
+    sprintf(soap_endpoint, deviceService); 
 
     capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
     capa_req.__sizeCategory = 1;

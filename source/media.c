@@ -227,7 +227,7 @@ int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo
 int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
+    printf(" [%s]-[%d] media.c !  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
 
     int retval = 0;

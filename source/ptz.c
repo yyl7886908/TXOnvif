@@ -13,14 +13,6 @@
 #define USERNAME "admin"
 #define PASSWORD "12345"
 
-#if 0
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 8888
-#else
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 80
-#endif
-
 
 
 typedef struct
@@ -116,8 +108,6 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 
 	}
 
-
-
 	if (was_Action != NULL)
 	{
 		header->wsa__Action =(char *)malloc(1024);
@@ -133,3 +123,222 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 	soap->header = header;
 	return soap;
 } 
+
+
+int ONVIF_PTZ_Stop(char *ptzService, TX_PTZ_Type type) 
+{ 
+
+#ifdef DEBUG
+    printf(" [%s]-[%d] ptz.c!  ptzService = %s \n", __func__, __LINE__, ptzService);
+#endif
+    
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__Stop ptz_stop_req;
+    struct _tptz__StopResponse ptz_stop_resp;
+
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+
+
+    memset(&header, 0, sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    sprintf(soap_endpoint,  ptzService);
+
+    printf("soap_endpoint = %s\n", soap_endpoint);
+    
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/Stop";
+    ptz_stop_req.ProfileToken = "Profile_1";
+    do
+    {
+    printf("befor call ptz stop inteface.\n");
+    soap_call___tptz__Stop(soap, soap_endpoint, soap_action, &ptz_stop_req, &ptz_stop_resp);
+    printf("after call ptz stop interface\n");
+    if(soap->error)
+    {
+        printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+        retval = soap->error;
+        return retval;
+    }else{
+        printf("[%s][%d] Get PTZ STOP success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+/* configuration fuctions */
+int ONVIF_PTZ_GetConfiguration(char *ptzService)
+{
+     int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfiguration ptzconfig_req;
+    struct _tptz__GetConfigurationResponse ptzconfig_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	 */
+    sprintf(soap_endpoint, ptzService);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfiguration";
+
+
+    ptzconfig_req.PTZConfigurationToken="1";
+
+    do
+    {
+        soap_call___tptz__GetConfiguration(soap, soap_endpoint, soap_action, &ptzconfig_req, &ptzconfig_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfiguration success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+int ONVIF_PTZ_GetConfigurationOptions(char *ptzService)
+{
+     int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfigurationOptions ptzconfigop_req;
+    struct _tptz__GetConfigurationOptionsResponse ptzconfigop_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	; */
+    sprintf(soap_endpoint, ptzService);	
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfigurationOptions";
+
+
+    ptzconfigop_req.ConfigurationToken="0";
+
+    do
+    {
+        soap_call___tptz__GetConfigurationOptions(soap, soap_endpoint, soap_action, &ptzconfigop_req, &ptzconfigop_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfigurationOptions success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_PTZ_GetConfigurations(char *ptzService)
+{
+     int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__GetConfigurations ptzconfigs_req;
+    struct _tptz__GetConfigurationsResponse ptzconfigs_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, USERNAME);
+    strcpy(stUserInfo.password, PASSWORD);
+        
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT); */
+    sprintf(soap_endpoint, ptzService);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver20/ptz/wsdl/GetConfigurations";
+
+
+    do
+    {
+        soap_call___tptz__GetConfigurations(soap, soap_endpoint, soap_action, &ptzconfigs_req, &ptzconfigs_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d] Get PTZConfigurations success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}

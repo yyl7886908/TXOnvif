@@ -40,6 +40,22 @@ int TX_ONVIF_StartRtspStream(char *stremURI);
 int TX_ONVIF_StopRtspStream();
 
 
+
+/* 云台控制 */
+/* configuration fuctions */
+int TX_ONVIF_PTZ_GetConfiguration(char *ptzService);
+
+int TX_ONVIF_PTZ_GetConfigurations(char *ptzService);
+
+int TX_ONVIF_PTZ_GetConfigurationOptions(char *ptzService);
+
+
+/* move functions */
+int TX_ONVIF_PTZ_Stop(char *ptzService, TX_PTZ_Type type);
+
+
+
+
 #ifdef __cplusplus
 }
 #endif

@@ -10,11 +10,14 @@
 /* char mediaService[128] = "http://192.168.1.101/onvif/Media"; */
 char deviceService[128];
 char mediaService[128];
+char ptzService[128];
 
 void varInit()
 {
     memset(deviceService, 0, sizeof(deviceService));
     memset(mediaService, 0, sizeof(mediaService));
+    memset(ptzService, 0, sizeof(ptzService));
+
     printf("var init OK!\n");
     printf("---------------------------------------------------->\n");
 }
@@ -43,10 +46,11 @@ void onvif_discovery()
         break;
     }
     printf("deviceService = %s", deviceService);
-    printf("---------------------------------------------------->\n");
+    printf("---------------------------------------------------->\n\n\n");
 }
 
 
+/* 设备测试 */
 void onvif_getCapabilities()
 {
     TX_ONVIF_CAPABILITY_URI capabilityInfo; 
@@ -55,8 +59,10 @@ void onvif_getCapabilities()
     printf("=============>onvif_getCapabilities ret= %d\n", ret);
     printf("capabilityInfo\n analytics = %s\n device = %s\n events = %s\n imaging = %s\n media = %s\n ptz = %s\n",  capabilityInfo.analytics, capabilityInfo.device, capabilityInfo.events, capabilityInfo.imaging, capabilityInfo.media, capabilityInfo.ptz);
     sprintf(mediaService, capabilityInfo.media);
+    sprintf(ptzService, capabilityInfo.ptz);
     printf("mediaService = %s\n", mediaService);
-    printf("---------------------------------------------------->\n");
+    printf("ptzService = %s\n", ptzService);
+    printf("---------------------------------------------------->\n\n\n");
 }
 
 
@@ -67,8 +73,11 @@ void onvif_getDeviceInfo()
 	int ret = TX_ONVIF_GetDeviceInfo(deviceService, &deviceInfo);
     printf("=========>onvif_getDeviceInfo ret = %d\n", ret);
     printf("onvif_getDeviceInfo \n manufacturer = %s\n model = %s\n firmwareVersion = %s\n serialNumber = %s\n hardwareId = %s\n", deviceInfo.manufacturer, deviceInfo.model, deviceInfo.firmwareVersion, deviceInfo.serialNumber, deviceInfo.hardwareId);
-    printf("---------------------------------------------------->\n");
+    printf("---------------------------------------------------->\n\n\n");
 }
+
+
+/* media测试 */
 
 void onvif_getProfiles()
 {
@@ -83,7 +92,7 @@ void onvif_getProfiles()
         printf(" ProfilesInfo [%d] token = %s\n", i, profilesInfo.token[i]);
         printf(" ProfilesInfo [%d] name = %s\n", i, profilesInfo.name[i]);
     }
-     printf("---------------------------------------------------->\n");
+     printf("---------------------------------------------------->\n\n\n");
 }
 
 
@@ -100,16 +109,66 @@ void onvif_getStreamUri()
          printf(" streamURI[%d] name = %s\n", i, streamURI.name[i]);
         printf(" streamURI[%d] streamURI = %s\n", i, streamURI.streamURI[i]);
     }
-    printf("---------------------------------------------------->\n");
+    printf("---------------------------------------------------->\n\n\n");
 }
 
+
+/* 云台测试 */
+/* configuration functions */
+void onvif_ptz_getConfigurations()
+{
+    int ret = TX_ONVIF_PTZ_GetConfigurations(ptzService);
+    printf("=======>TX_ONVIF_PTZ_GetConfiguration  ret = %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
+void onvif_ptz_getConfiguration()
+{
+    int ret = TX_ONVIF_PTZ_GetConfiguration(ptzService);
+    printf("=======>TX_ONVIF_PTZ_GetConfigurations  ret = %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
+void onvif_ptz_getConfigurationOptions()
+{
+    int ret = TX_ONVIF_PTZ_GetConfigurationOptions(ptzService);
+    printf("=======>TX_ONVIF_PTZ_GetConfigurationOptions  ret = %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
+/* move functions */
+void onvif_ptz_stop()
+{
+    /* char *ptz = " http://192.168.1.101/onvif/PTZ"; */
+    int ret = TX_ONVIF_PTZ_Stop(ptzService, ptz_move);
+    printf("========>onvif_ptz_stop ret = %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
+
+void onvif_sleep()
+{
+    sleep(2);
+}
 int main()
 {
     printf("start main---------------->\n");
     varInit();
     onvif_discovery();
+    onvif_sleep();
     onvif_getCapabilities();
+    onvif_sleep();
     onvif_getDeviceInfo();
+    onvif_sleep();
     onvif_getProfiles();
+    onvif_sleep();
     onvif_getStreamUri();
+    onvif_sleep();
+    onvif_ptz_getConfiguration();
+    onvif_sleep();
+    onvif_ptz_getConfigurations();
+    onvif_sleep();
+    onvif_ptz_getConfigurationOptions();
+    onvif_sleep();
+    onvif_ptz_stop();
 }

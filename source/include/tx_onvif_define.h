@@ -24,6 +24,13 @@
 #define COMMON_ERROR				(-1)
 
 
+typedef enum
+{
+    ptz_move = 0,
+    ptz_zoom = 1,
+}TX_PTZ_Type;
+
+
 /* struct define */
 
 typedef struct 

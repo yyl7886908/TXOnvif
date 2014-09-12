@@ -14,6 +14,16 @@ extern "C"{
 
 #include "tx_onvif_define.h"
 
+/* configuration fuctions */
+int ONVIF_PTZ_GetConfiguration(char *ptzService);
+
+int ONVIF_PTZ_GetConfigurations(char *ptzService);
+
+int ONVIF_PTZ_GetConfigurationOptions(char *ptzService);
+
+/* move functions */
+int ONVIF_PTZ_Stop(char *ptzService, TX_PTZ_Type type);
+
 
 
 
