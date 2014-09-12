@@ -55,22 +55,22 @@ int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInf
 
 
 /* 媒体控制 */
-int TX_ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
+int TX_ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+    printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
-    int ret = ONVIF_GetProfiles(deviceService, profilesInfo);
+    int ret = ONVIF_GetProfiles(mediaService, profilesInfo);
     return ret;
 }
 
-int TX_ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
+int TX_ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+    printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
 
-    int ret = ONVIF_GetStreamURI(deviceService, streamURI);
+    int ret = ONVIF_GetStreamURI(mediaService, streamURI);
     return ret;
 }
 

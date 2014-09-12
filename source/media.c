@@ -13,14 +13,6 @@
 #define USERNAME "admin"
 #define PASSWORD "12345"
 
-#if 0
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 8888
-#else
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 80
-#endif
-
 
 typedef struct
 {
@@ -134,10 +126,10 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 } 
 
 
-int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
+int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+    printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
     int retval = 0;
     struct soap *soap = NULL;
@@ -164,7 +156,7 @@ int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInf
     memset(soap_endpoint, '\0', 256);
     //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
     /* sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);	  */
-    sprintf(soap_endpoint, deviceService);	
+    sprintf(soap_endpoint, mediaService);	
 
     //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
     const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfiles";
@@ -232,10 +224,10 @@ int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInf
 }
 
 /* get stream uri */
-int ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
+int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
+    printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
 
     int retval = 0;
@@ -268,7 +260,7 @@ int ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
 
-    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);
+    sprintf(soap_endpoint, mediaService);
 
     capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
     capa_req.__sizeCategory = 1;
@@ -350,6 +342,7 @@ int ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
 
          do
         {
+            printf("endpoint = %s\n", soap_endpoint);
             soap_call___trt__GetStreamUri(soap, soap_endpoint, soap_action, &stream_req, &stream_resp);
             if (soap->error)
             {

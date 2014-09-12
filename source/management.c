@@ -13,13 +13,6 @@
 #define USERNAME "admin"
 #define PASSWORD "12345"
 
-#if 0
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 8888
-#else
-#define DEVICE_IP "192.168.1.100"
-#define DEVICE_PORT 80
-#endif
 
 
 typedef struct
@@ -219,11 +212,11 @@ int ONVIF_GetCapabilities(TX_Capability_Type txAbilityType, char *deviceService,
 }
 
 /* get device info */
-int ONVIF_GetDeviceInfo(char *endpoints, LPTX_ONVIF_DEVICE_INFO deviceInfo)
+int ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo)
 {
    
 #ifdef DEBUG
-    printf(" [%s]-[%d] Search end!  endpoints = %s \n", __func__, __LINE__, endpoints);
+    printf(" [%s]-[%d] Search end!  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
     int retval = 0;
     struct soap *soap = NULL;
@@ -247,7 +240,7 @@ int ONVIF_GetDeviceInfo(char *endpoints, LPTX_ONVIF_DEVICE_INFO deviceInfo)
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
     //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
-    sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	
+    sprintf(soap_endpoint, deviceService);	
 
     //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
     const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDeviceInformation";

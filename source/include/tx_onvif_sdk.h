@@ -31,7 +31,7 @@ int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInf
 
 
 /* 媒体 控制*/
-int TX_ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
+int TX_ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
 
 int TX_ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI);
 

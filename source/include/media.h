@@ -13,9 +13,9 @@ extern "C" {
 
 #include "tx_onvif_define.h"
 
-int ONVIF_GetProfiles(char *deviceService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
+int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
 
-int ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI);
+int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI);
 
 #ifdef __cplusplus
 }
