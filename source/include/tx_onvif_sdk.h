@@ -108,6 +108,21 @@ int TX_ONVIF_DEVICE_GetDot11Status(char *username, char *password, char *deviceS
 
 int TX_ONVIF_DEVICE_GetSystemUris(char *username, char *password, char *deviceService);
 
+/* device end */
+
+/* imaging */
+int TX_ONVIF_IMAGING_GetServiceCapabilities(char *username, char *password, char *imagingService);
+
+int TX_ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS20 imagingSettings);
+
+
+
+
+
+
+
+
+
 
 
 

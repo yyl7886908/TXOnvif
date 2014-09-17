@@ -9,6 +9,7 @@
 #include "ptz.h"
 #include "search.h"
 #include "device.h"
+#include "imaging.h"
 
 
 #ifdef __cplusplus
@@ -381,6 +382,28 @@ int TX_ONVIF_DEVICE_GetSystemUris(char *username, char *password, char *deviceSe
 #endif
     return ONVIF_DEVICE_GetSystemUris(username, password, deviceService);   
 }
+
+/* device end */
+
+/* imaging */
+int TX_ONVIF_IMAGING_GetServiceCapabilities(char *username, char *password, char *imagingService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetServiceCapabilities(username, password, imagingService);    
+}
+
+int TX_ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS20 imagingSettings)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetImagingSettings(username, password, imagingService, videoSourceToken, imagingSettings);    
+}
+
+
+
 
 
 

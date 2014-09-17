@@ -6,14 +6,17 @@
 
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT     3702
-#define USERNAME                  "admin"
-#define PASSWORD                 "12345"
+#define   USERNAME                  "admin"
+#define   PASSWORD                 "12345"
 
 
 char searchService[128];
 char deviceService[128];
 char mediaService[128];
 char ptzService[128];
+char imagingService[128];
+char videoSourceToken[128];
+
 
 void varInit()
 {
@@ -66,6 +69,7 @@ void onvif_getCapabilities()
     sprintf(mediaService, capabilityInfo.media);
     sprintf(ptzService, capabilityInfo.ptz);
     sprintf(deviceService, capabilityInfo.device);
+    sprintf(imagingService, capabilityInfo.imaging);
     printf("---------------------------------------------------->\n\n\n");
 }
 
@@ -77,6 +81,17 @@ void onvif_getDeviceInfo()
 	int ret = TX_ONVIF_GetDeviceInfo(deviceService, &deviceInfo);
     printf("=========>onvif_getDeviceInfo ret = %d\n", ret);
     printf("onvif_getDeviceInfo \n manufacturer = %s\n model = %s\n firmwareVersion = %s\n serialNumber = %s\n hardwareId = %s\n", deviceInfo.manufacturer, deviceInfo.model, deviceInfo.firmwareVersion, deviceInfo.serialNumber, deviceInfo.hardwareId);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
+void onvif_getProfiles()
+{
+    TX_ONVIF_PROFILES_INFO profileInfo;
+    memset(&profileInfo, 0, sizeof(TX_ONVIF_PROFILES_INFO));
+	int ret = TX_ONVIF_GetProfiles(mediaService, &profileInfo);
+    sprintf(videoSourceToken, profileInfo.videoSourceToken[0]);
+    printf("=========>videoSourceToken = %s\n", videoSourceToken);
+    printf("=========>onvif_TX_ONVIF_GetProfiles ret = %d\n", ret);
     printf("---------------------------------------------------->\n\n\n");
 }
 
@@ -158,7 +173,7 @@ void onvif_device_SetHostnameFromDHCP()
 
 void onvif_device_GetDNS()
 {
-     int ret=TX_ONVIF_DEVICE_GetDNS(USERNAME, PASSWORD, deviceService);
+    int ret=TX_ONVIF_DEVICE_GetDNS(USERNAME, PASSWORD, deviceService);
     printf("=============> ret= %d\n", ret);
     printf("---------------------------------------------------->\n\n\n"); 
 }
@@ -181,6 +196,30 @@ void main_device_test()
 }
 
 
+/* imaging */
+void onvif_imaging_GetServiceCapabilities()
+{
+    int ret=TX_ONVIF_IMAGING_GetServiceCapabilities(USERNAME, PASSWORD, imagingService);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_imaging_GetImagingSettings()
+{
+    TX_ONVIF_IMAGING_SETTINGS20 imagingSettings;
+    memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS20));
+    int ret=TX_ONVIF_IMAGING_GetImagingSettings(USERNAME, PASSWORD, imagingService, videoSourceToken, imagingSettings);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void main_imaging_test()
+{
+    onvif_imaging_GetServiceCapabilities();
+    onvif_imaging_GetImagingSettings();
+}
+
+
 int main()
 {
     printf("start main---------------->\n");
@@ -191,5 +230,7 @@ int main()
     onvif_sleep();
     onvif_getDeviceInfo();
     onvif_sleep();
-    main_device_test();
+    onvif_getProfiles();
+    onvif_sleep();
+    main_imaging_test();
 }
