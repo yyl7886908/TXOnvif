@@ -7,6 +7,9 @@
 #include "management.h"
 #include "media.h"
 #include "ptz.h"
+#include "search.h"
+#include "device.h"
+
 
 #ifdef __cplusplus
 extern "C" {
@@ -24,6 +27,252 @@ bool TX_ONVIF_TERM()
 {
     return true;
 }
+
+/* search */
+int TX_ONVIF_SEARCH_GetServiceCapabilities(char *username, char *password, char *searchService)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d]  tx onvif sdk!  deviceService = %s \n", __func__, __LINE__, searchService);
+#endif
+
+    return ONVIF_SEARCH_GetServiceCapabilities(username, password, searchService);
+}
+
+
+
+
+
+/* device */
+int TX_ONVIF_DEVICE_GetServices(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d]  tx onvif sdk!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+
+    return ONVIF_DEVICE_GetServices(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetServiceCapabilities(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf(" [%s]-[%d]  tx onvif sdk!  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+
+    return ONVIF_DEVICE_GetServiceCapabilities(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+
+    return ONVIF_DEVICE_GetDeviceInformation(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetSystemDateAndTime(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetSystemDateAndTime(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_SetSystemFactoryDefault(char *username, char *password, char *deviceService, TX_FACTORY_DEFAULT_TYPE type)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_SetSystemFactoryDefault(username, password, deviceService, type); 
+}
+
+int TX_ONVIF_DEVICE_SystemReboot(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_SystemReboot(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetSystemLog(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetSystemLog(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetSystemSupportInformation(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetSystemSupportInformation(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetScopes(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetScopes(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetDiscoveryMode(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetDiscoveryMode(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetRemoteDiscoveryMode(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetRemoteDiscoveryMode(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetDPAddresses(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetDPAddresses(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetEndpointReference(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetEndpointReference(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetRemoteUser(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetRemoteUser(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetUsers(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetUsers(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_CreateUsers(char *username, char *password, char *deviceService, char *new_username, char *new_password, TX_FACTORY_DEFAULT_TYPE new_userlevel)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_CreateUsers(username, password, deviceService, new_username, new_password, new_userlevel); 
+}
+
+int TX_ONVIF_DEVICE_DeleteUsers(char *username, char *password, char *deviceService, char* del_username)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_DeleteUsers(username, password, deviceService, del_username);   
+}
+
+int TX_ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetWsdlUrl(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetCapabilities(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetCapabilities(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetHostname(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetHostname(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_SetHostname(char *username, char *password, char *deviceService, char* new_hostname)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_SetHostname(username, password, deviceService, new_hostname);   
+}
+
+int TX_ONVIF_DEVICE_SetHostnameFromDHCP(char *username, char *password, char *deviceService,TX_ONVIF_BOOLEAN fromDHCP)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_SetHostnameFromDHCP(username, password, deviceService, fromDHCP);   
+}
+
+int TX_ONVIF_DEVICE_GetDNS(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetDNS(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetNTP(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetNTP(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetDynamicDNS(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetDynamicDNS(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetNetworkInterfaces(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetNetworkInterfaces(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetNetworkProtocols(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetNetworkProtocols(username, password, deviceService);   
+}
+
+int TX_ONVIF_DEVICE_GetNetworkDefaultGateway(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif
+    return ONVIF_DEVICE_GetNetworkDefaultGateway(username, password, deviceService);   
+}
+
+
+
+
 
 
 /* 设备发现 */

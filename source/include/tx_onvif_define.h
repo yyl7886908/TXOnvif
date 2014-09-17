@@ -23,6 +23,31 @@
 #define OK										(0)
 #define COMMON_ERROR				(-1)
 
+/* device */
+typedef enum
+    {
+        tx_factory_default_type_hard = 0,
+        tx_factory_default_type_soft = 1,
+    }
+    TX_FACTORY_DEFAULT_TYPE;
+
+typedef enum
+    {
+        tx_user_level_administrator = 0,
+        tx_user_level_operator = 1,
+        tx_user_level_user = 2,
+        tx_user_level_anonymous = 3,
+        tx_user_level_extended = 4,
+    }
+    TX_USER_LEVEL;
+
+typedef enum
+    {
+        tx_onvif_false = 0,
+        tx_onvif_true = 1,
+    }
+    TX_ONVIF_BOOLEAN;
+
 
 typedef enum
 {

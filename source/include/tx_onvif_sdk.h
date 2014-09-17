@@ -20,8 +20,79 @@ bool TX_ONVIF_Init();
 
 bool TX_ONVIF_Term();
 
-/* 设备发现 */
+/* search */
+int TX_ONVIF_SEARCH_GetServiceCapabilities(char *username, char *password, char *searchService);
 
+/* device */
+int TX_ONVIF_DEVICE_GetServices(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetServiceCapabilities(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetSystemDateAndTime(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_SetSystemFactoryDefault(char *username, char *password, char *deviceService, TX_FACTORY_DEFAULT_TYPE type);
+
+int TX_ONVIF_DEVICE_SystemReboot(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetSystemLog(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetSystemSupportInformation(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetScopes(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDiscoveryMode(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetRemoteDiscoveryMode(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDPAddresses(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetEndpointReference(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetRemoteUser(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetUsers(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_CreateUsers(char *username, char *password, char *deviceService, char *new_username, char *new_password, TX_FACTORY_DEFAULT_TYPE new_userlevel);
+
+int TX_ONVIF_DEVICE_DeleteUsers(char *username, char *password, char *deviceService, char* del_username);
+
+int TX_ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetCapabilities(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetHostname(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_SetHostname(char *username, char *password, char *deviceService, char *new_hostname);
+
+int TX_ONVIF_DEVICE_SetHostnameFromDHCP(char *username, char *password, char *deviceService,TX_ONVIF_BOOLEAN fromDHCP);
+
+int TX_ONVIF_DEVICE_GetDNS(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetNTP(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDynamicDNS(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetNetworkInterfaces(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetNetworkProtocols(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetNetworkDefaultGateway(char *username, char *password, char *deviceService);
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* 设备发现 */
 int  TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum);
 
 /* 设备管理 */
