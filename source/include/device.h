@@ -107,9 +107,77 @@ int ONVIF_DEVICE_GetNetworkDefaultGateway(char *username, char *password, char *
 
 int ONVIF_DEVICE_SetNetworkDefaultGateway(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
 
+int ONVIF_DEVICE_GetZeroConfiguration(char *username, char *password, char *deviceService);
 
+int ONVIF_DEVICE_SetZeroConfiguration(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
 
+int ONVIF_DEVICE_GetIPAddressFilter(char *username, char *password, char *deviceService);
 
+int ONVIF_DEVICE_SetIPAddressFilter(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_AddIPAddressFilter(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_RemoveIPAddressFilter(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetAccessPolicy(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_SetAccessPolicy(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetCertificates(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_CreateCertificate(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_DeleteCertificates(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetCertificatesStatus(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_SetCertificatesStatus(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetPkcs10Request(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_LoadCertificates(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetClientCertificateMode(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_SetClientCertificateMode(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetRelayOutputs(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_SetRelayOutputSettings(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_SetRelayOutputState(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_SendAuxiliaryCommand(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetCACertificates(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_LoadCertificateWithPrivateKey(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetCertificateInformation(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_LoadCACertificates(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetDot1XConfiguration(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_GetDot1XConfigurations(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_CreateDot1XConfiguration(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_SetDot1XConfiguration(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_DeleteDot1XConfiguration(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetDot11Capabilities(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_GetDot11Status(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_ScanAvailableDot11Networks(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_GetSystemUris(char *username, char *password, char *deviceService);
+
+int ONVIF_DEVICE_StartFirmwareUpgrade(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
+
+int ONVIF_DEVICE_StartSystemRestore(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
 
 #ifdef __cplusplus
 }

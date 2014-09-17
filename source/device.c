@@ -1420,3 +1420,678 @@ int ONVIF_DEVICE_GetNetworkDefaultGateway(char *username, char *password, char *
     soap_destroy(soap);
     return retval;
 }
+
+int ONVIF_DEVICE_GetZeroConfiguration(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetZeroConfiguration device_GetZeroConfiguration_req;
+    struct _tds__GetZeroConfigurationResponse device_GetZeroConfiguration_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetZeroConfiguration";
+
+    do
+    {
+        soap_call___tds__GetZeroConfiguration(soap, soap_endpoint, soap_action, &device_GetZeroConfiguration_req, &device_GetZeroConfiguration_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetIPAddressFilter(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetIPAddressFilter device_GetIPAddressFilter_req;
+    struct _tds__GetIPAddressFilterResponse device_GetIPAddressFilter_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetIPAddressFilter";
+
+    do
+    {
+        soap_call___tds__GetIPAddressFilter(soap, soap_endpoint, soap_action, &device_GetIPAddressFilter_req, &device_GetIPAddressFilter_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetAccessPolicy(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetIPAddressFilter device_GetIPAddressFilter_req;
+    struct _tds__GetIPAddressFilterResponse device_GetIPAddressFilter_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetIPAddressFilter";
+
+    do
+    {
+        soap_call___tds__GetIPAddressFilter(soap, soap_endpoint, soap_action, &device_GetIPAddressFilter_req, &device_GetIPAddressFilter_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetCertificates(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetCertificates device_GetCertificates_req;
+    struct _tds__GetCertificatesResponse device_GetCertificates_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCertificates";
+
+    do
+    {
+        soap_call___tds__GetCertificates(soap, soap_endpoint, soap_action, &device_GetCertificates_req, &device_GetCertificates_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetCertificatesStatus(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetCertificatesStatus device_GetCertificatesStatus_req;
+    struct _tds__GetCertificatesStatusResponse device_GetCertificatesStatus_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCertificatesStatus";
+
+    do
+    {
+        soap_call___tds__GetCertificatesStatus(soap, soap_endpoint, soap_action, &device_GetCertificatesStatus_req, &device_GetCertificatesStatus_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetPkcs10Request(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetPkcs10Request device_GetPkcs10Request_req;
+    struct _tds__GetPkcs10RequestResponse device_GetPkcs10Request_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetPkcs10Request";
+
+    do
+    {
+        soap_call___tds__GetPkcs10Request(soap, soap_endpoint, soap_action, &device_GetPkcs10Request_req, &device_GetPkcs10Request_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetClientCertificateMode(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetClientCertificateMode device_GetClientCertificateMode_req;
+    struct _tds__GetClientCertificateModeResponse device_GetClientCertificateMode_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetPkcs10Request";
+
+    do
+    {
+        soap_call___tds__GetClientCertificateMode(soap, soap_endpoint, soap_action, &device_GetClientCertificateMode_req, &device_GetClientCertificateMode_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetRelayOutputs(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetRelayOutputs device_GetRelayOutputs_req;
+    struct _tds__GetRelayOutputsResponse device_GetRelayOutputs_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetRelayOutputs";
+
+    do
+    {
+        soap_call___tds__GetRelayOutputs(soap, soap_endpoint, soap_action, &device_GetRelayOutputs_req, &device_GetRelayOutputs_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetCACertificates(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetCACertificates device_GetCACertificates_req;
+    struct _tds__GetCACertificatesResponse device_GetCACertificates_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCACertificates";
+
+    do
+    {
+        soap_call___tds__GetCACertificates(soap, soap_endpoint, soap_action, &device_GetCACertificates_req, &device_GetCACertificates_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetCertificateInformation(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetCertificateInformation device_GetCertificateInformation_req;
+    struct _tds__GetCertificateInformationResponse device_GetCertificateInformation_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCertificateInformation";
+
+    do
+    {
+        soap_call___tds__GetCertificateInformation(soap, soap_endpoint, soap_action, &device_GetCertificateInformation_req, &device_GetCertificateInformation_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetDot1XConfiguration(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDot1XConfiguration device_GetDot1XConfiguration_req;
+    struct _tds__GetDot1XConfigurationResponse device_GetDot1XConfiguration_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDot1XConfiguration";
+
+    do
+    {
+        soap_call___tds__GetDot1XConfiguration(soap, soap_endpoint, soap_action, &device_GetDot1XConfiguration_req, &device_GetDot1XConfiguration_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetDot1XConfigurations(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDot1XConfigurations device_GetDot1XConfigurations_req;
+    struct _tds__GetDot1XConfigurationsResponse device_GetDot1XConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDot1XConfigurations";
+
+    do
+    {
+        soap_call___tds__GetDot1XConfigurations(soap, soap_endpoint, soap_action, &device_GetDot1XConfigurations_req, &device_GetDot1XConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetDot11Capabilities(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDot11Capabilities device_GetDot11Capabilities_req;
+    struct _tds__GetDot11CapabilitiesResponse device_GetDot11Capabilities_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDot11Capabilities";
+
+    do
+    {
+        soap_call___tds__GetDot11Capabilities(soap, soap_endpoint, soap_action, &device_GetDot11Capabilities_req, &device_GetDot11Capabilities_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetDot11Status(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetDot11Status device_GetDot11Status_req;
+    struct _tds__GetDot11StatusResponse device_GetDot11Status_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetDot11Status";
+
+    do
+    {
+        soap_call___tds__GetDot11Status(soap, soap_endpoint, soap_action, &device_GetDot11Status_req, &device_GetDot11Status_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_DEVICE_GetSystemUris(char *username, char *password, char *deviceService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tds__GetSystemUris device_GetSystemUris_req;
+    struct _tds__GetSystemUrisResponse device_GetSystemUris_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, deviceService);
+    const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetSystemUris";
+
+    do
+    {
+        soap_call___tds__GetSystemUris(soap, soap_endpoint, soap_action, &device_GetSystemUris_req, &device_GetSystemUris_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}

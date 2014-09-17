@@ -80,10 +80,33 @@ int TX_ONVIF_DEVICE_GetNetworkProtocols(char *username, char *password, char *de
 
 int TX_ONVIF_DEVICE_GetNetworkDefaultGateway(char *username, char *password, char *deviceService);
 
+int TX_ONVIF_DEVICE_GetZeroConfiguration(char *username, char *password, char *deviceService);
 
+int TX_ONVIF_DEVICE_GetIPAddressFilter(char *username, char *password, char *deviceService);
 
+int TX_ONVIF_DEVICE_GetCertificates(char *username, char *password, char *deviceService);
 
+int TX_ONVIF_DEVICE_GetCertificatesStatus(char *username, char *password, char *deviceService);
+    
+int TX_ONVIF_DEVICE_GetPkcs10Request(char *username, char *password, char *deviceService);
 
+int TX_ONVIF_DEVICE_GetClientCertificateMode(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetRelayOutputs(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetCACertificates(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetCertificateInformation(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDot1XConfiguration(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDot1XConfigurations(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDot11Capabilities(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetDot11Status(char *username, char *password, char *deviceService);
+
+int TX_ONVIF_DEVICE_GetSystemUris(char *username, char *password, char *deviceService);
 
 
 
