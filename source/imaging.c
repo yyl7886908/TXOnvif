@@ -211,3 +211,142 @@ int ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *imagi
     soap_destroy(soap);
     return retval;
 }
+
+int ONVIF_IMAGING_GetOptions(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _timg__GetOptions imaging_GetOptions_req;
+    struct _timg__GetOptionsResponse imaging_GetOptions_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, imagingService);
+    const char *soap_action = "http://www.onvif.org/ver10/imaging/wsdl/GetOptions";
+    imaging_GetOptions_req.VideoSourceToken = videoSourceToken;
+    printf("videoSourceToken = %s\n", videoSourceToken);
+    do
+    {
+        soap_call___timg__GetOptions(soap, soap_endpoint, soap_action, &imaging_GetOptions_req, &imaging_GetOptions_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_IMAGING_GetStatus(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _timg__GetStatus imaging_GetStatus_req;
+    struct _timg__GetStatusResponse imaging_GetStatus_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, imagingService);
+    const char *soap_action = "http://www.onvif.org/ver10/imaging/wsdl/GetStatus";
+    imaging_GetStatus_req.VideoSourceToken = videoSourceToken;
+    printf("videoSourceToken = %s\n", videoSourceToken);
+    do
+    {
+        soap_call___timg__GetStatus(soap, soap_endpoint, soap_action, &imaging_GetStatus_req, &imaging_GetStatus_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+int ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _timg__GetMoveOptions imaging_GetMoveOptions_req;
+    struct _timg__GetMoveOptionsResponse imaging_GetMoveOptions_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, imagingService);
+    const char *soap_action = "http://www.onvif.org/ver10/imaging/wsdl/GetMoveOptions";
+    imaging_GetMoveOptions_req.VideoSourceToken = videoSourceToken;
+    printf("videoSourceToken = %s\n", videoSourceToken);
+    do
+    {
+        soap_call___timg__GetStatus(soap, soap_endpoint, soap_action, &imaging_GetMoveOptions_req, &imaging_GetMoveOptions_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}

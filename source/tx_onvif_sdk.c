@@ -402,10 +402,29 @@ int TX_ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *im
     return ONVIF_IMAGING_GetImagingSettings(username, password, imagingService, videoSourceToken, imagingSettings);    
 }
 
+int TX_ONVIF_IMAGING_GetOptions(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetOptions(username, password, imagingService, videoSourceToken);    
+}
 
+int TX_ONVIF_IMAGING_GetStatus(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetStatus(username, password, imagingService, videoSourceToken);    
+}
 
-
-
+int TX_ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagingService, char* videoSourceToken)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetMoveOptions(username, password, imagingService, videoSourceToken);    
+}
 
 
 
