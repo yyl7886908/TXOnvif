@@ -10,9 +10,6 @@
 #include "soapStub.h"
 #include "stdsoap2.h"
 
-#define USERNAME "admin"
-#define PASSWORD "12345"
-
 
 typedef struct
 {
@@ -125,8 +122,7 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 	return soap;
 } 
 
-
-int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
+int ONVIF_MEDIA_GetProfiles(char *username, char *password,char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo)
 {
 #ifdef DEBUG
     printf(" [%s]-[%d] Search end!  mediaService = %s \n", __func__, __LINE__, mediaService);
@@ -143,22 +139,18 @@ int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo
     UserInfo_S stUserInfo;
     memset(&stUserInfo, 0, sizeof(UserInfo_S));
  
-    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
-    strcpy(stUserInfo.username, USERNAME);
-    strcpy(stUserInfo.password, PASSWORD);
-        
-    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+           
     memset(&header,0,sizeof(header));
-    /* printf("get profiles , before init soap=======\n"); */
+   
     soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
-    /* printf("get profiles , after init soap=======\n"); */
+   
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
-    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
-    /* sprintf(soap_endpoint, "http://%s:%d/onvif/Media", DEVICE_IP, DEVICE_PORT);	  */
+   
     sprintf(soap_endpoint, mediaService);	
 
-    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
     const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfiles";
 
     do
@@ -223,11 +215,10 @@ int ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo
     return retval;
 }
 
-/* get stream uri */
-int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
+int ONVIF_MEDIA_GetStreamURI(char *username, char *password, char *deviceService, LPTX_ONVIF_STREAM_URI streamURI)
 {
 #ifdef DEBUG
-    printf(" [%s]-[%d] media.c !  mediaService = %s \n", __func__, __LINE__, mediaService);
+    printf(" [%s]-[%d] media.c !  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
 
     int retval = 0;
@@ -250,22 +241,20 @@ int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
     UserInfo_S stUserInfo;
     memset(&stUserInfo, 0, sizeof(UserInfo_S));
  
-    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
-    strcpy(stUserInfo.username, USERNAME);
-    strcpy(stUserInfo.password, PASSWORD);
-        
-    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+       
     memset(&header,0,sizeof(header));
     soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
 
-    sprintf(soap_endpoint, mediaService);
+    sprintf(soap_endpoint, deviceService);
 
     capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
     capa_req.__sizeCategory = 1;
     *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__Media;
-    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+   
     soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
 
 
@@ -278,7 +267,7 @@ int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
                 retval = soap->error;
                 return retval;
         }
-        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        else  
         {         
               printf("[%s][%d] Get GetProfiles success !\n", __func__, __LINE__);
         }
@@ -369,4 +358,410 @@ int ONVIF_GetStreamURI(char *mediaService, LPTX_ONVIF_STREAM_URI streamURI)
     soap_destroy(soap);
     return retval;
 
+}
+
+int ONVIF_MEDIA_GetServiceCapabilities(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetServiceCapabilities media_GetServiceCapabilities_req;
+    struct _trt__GetServiceCapabilitiesResponse media_GetServiceCapabilities_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetServiceCapabilities";
+
+    do
+    {
+        soap_call___trt__GetServiceCapabilities(soap, soap_endpoint, soap_action, &media_GetServiceCapabilities_req, &media_GetServiceCapabilities_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetVideoSources(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSources media_GetVideoSources_req;
+    struct _trt__GetVideoSourcesResponse media_GetVideoSources_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSources";
+
+    do
+    {
+        soap_call___trt__GetVideoSources(soap, soap_endpoint, soap_action, &media_GetVideoSources_req, &media_GetVideoSources_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetAudioSources(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetAudioSources media_GetAudioSources_req;
+    struct _trt__GetAudioSourcesResponse media_GetAudioSources_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetAudioSources";
+
+    do
+    {
+        soap_call___trt__GetAudioSources(soap, soap_endpoint, soap_action, &media_GetAudioSources_req, &media_GetAudioSources_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetProfile(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetProfile media_GetProfile_req;
+    struct _trt__GetProfileResponse media_GetProfile_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetProfile";
+
+    do
+    {
+        soap_call___trt__GetProfile(soap, soap_endpoint, soap_action, &media_GetProfile_req, &media_GetProfile_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+
+int ONVIF_MEDIA_GetVideoSourceConfigurations(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoSourceConfigurations media_GetVideoSourceConfigurations_req;
+    struct _trt__GetVideoSourceConfigurationsResponse media_GetVideoSourceConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoSourceConfigurations";
+
+    do
+    {
+        soap_call___trt__GetVideoSourceConfigurations(soap, soap_endpoint, soap_action, &media_GetVideoSourceConfigurations_req, &media_GetVideoSourceConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetVideoEncoderConfigurations(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoEncoderConfigurations media_GetVideoEncoderConfigurations_req;
+    struct _trt__GetVideoEncoderConfigurationsResponse media_GetVideoEncoderConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoEncoderConfigurations";
+
+    do
+    {
+        soap_call___trt__GetVideoEncoderConfigurations(soap, soap_endpoint, soap_action, &media_GetVideoEncoderConfigurations_req, &media_GetVideoEncoderConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetAudioSourceConfigurations(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetAudioSourceConfigurations media_GetAudioSourceConfigurations_req;
+    struct _trt__GetAudioSourceConfigurationsResponse media_GetAudioSourceConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfigurations";
+
+    do
+    {
+        soap_call___trt__GetAudioSourceConfigurations(soap, soap_endpoint, soap_action, &media_GetAudioSourceConfigurations_req, &media_GetAudioSourceConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetAudioEncoderConfigurations(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetAudioEncoderConfigurations media_GetAudioEncoderConfigurations_req;
+    struct _trt__GetAudioEncoderConfigurationsResponse media_GetAudioEncoderConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetAudioSourceConfigurations";
+
+    do
+    {
+        soap_call___trt__GetAudioEncoderConfigurations(soap, soap_endpoint, soap_action, &media_GetAudioEncoderConfigurations_req, &media_GetAudioEncoderConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_MEDIA_GetVideoAnalyticsConfigurations(char *username, char *password, char *mediaService)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _trt__GetVideoAnalyticsConfigurations media_GetVideoAnalyticsConfigurations_req;
+    struct _trt__GetVideoAnalyticsConfigurationsResponse media_GetVideoAnalyticsConfigurations_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, mediaService);
+    const char *soap_action = "http://www.onvif.org/ver10/media/wsdl/GetVideoAnalyticsConfigurations";
+
+    do
+    {
+        soap_call___trt__GetVideoAnalyticsConfigurations(soap, soap_endpoint, soap_action, &media_GetVideoAnalyticsConfigurations_req, &media_GetVideoAnalyticsConfigurations_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
 }

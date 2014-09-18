@@ -15,7 +15,9 @@ char deviceService[128];
 char mediaService[128];
 char ptzService[128];
 char imagingService[128];
+char deviceioService[128];
 char videoSourceToken[128];
+char profileToken[128];
 
 
 void varInit()
@@ -24,6 +26,8 @@ void varInit()
     memset(mediaService, 0, sizeof(mediaService));
     memset(ptzService, 0, sizeof(ptzService));
     memset(searchService, 0, sizeof(searchService));
+    memset(profileToken, 0, sizeof(profileToken));
+    memset(deviceioService, 0, sizeof(deviceioService));
     printf("var init OK!\n");
     printf("---------------------------------------------------->\n");
 }
@@ -70,6 +74,8 @@ void onvif_getCapabilities()
     sprintf(ptzService, capabilityInfo.ptz);
     sprintf(deviceService, capabilityInfo.device);
     sprintf(imagingService, capabilityInfo.imaging);
+    sprintf(deviceioService, capabilityInfo.deviceio);
+    printf("deviceioService = %s\n", deviceioService);
     printf("---------------------------------------------------->\n\n\n");
 }
 
@@ -84,12 +90,13 @@ void onvif_getDeviceInfo()
     printf("---------------------------------------------------->\n\n\n");
 }
 
-void onvif_getProfiles()
+void onvif_media_getProfiles()
 {
     TX_ONVIF_PROFILES_INFO profileInfo;
     memset(&profileInfo, 0, sizeof(TX_ONVIF_PROFILES_INFO));
-	int ret = TX_ONVIF_GetProfiles(mediaService, &profileInfo);
+	int ret = TX_ONVIF_MEDIA_GetProfiles(USERNAME, PASSWORD, mediaService, &profileInfo);
     sprintf(videoSourceToken, profileInfo.videoSourceToken[0]);
+    sprintf(profileToken, profileInfo.token[0]);
     printf("=========>videoSourceToken = %s\n", videoSourceToken);
     printf("=========>onvif_TX_ONVIF_GetProfiles ret = %d\n", ret);
     printf("---------------------------------------------------->\n\n\n");
@@ -213,10 +220,98 @@ void onvif_imaging_GetImagingSettings()
     printf("---------------------------------------------------->\n\n\n"); 
 }
 
+
+void onvif_media_getStreamURI()
+{
+    TX_ONVIF_STREAM_URI streamURI;
+    memset(&streamURI, 0, sizeof(TX_ONVIF_STREAM_URI));
+	int ret = TX_ONVIF_MEDIA_GetStreamURI(USERNAME, PASSWORD, deviceService, &streamURI);
+    printf("=========>onvif_TX_ONVIF_getStreamURI ret = %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n");
+}
+
 void main_imaging_test()
 {
     onvif_imaging_GetServiceCapabilities();
-    onvif_imaging_GetImagingSettings();
+    /* onvif_imaging_GetImagingSettings(); */
+}
+
+/* ptz */
+void onvif_ptz_GetServiceCapabilities()
+{
+    int ret=TX_ONVIF_PTZ_GetServiceCapabilities(USERNAME, PASSWORD, ptzService);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_ptz_GotoHomePosition()
+{
+    int ret=TX_ONVIF_PTZ_GotoHomePosition(USERNAME, PASSWORD, ptzService, profileToken);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_ptz_ContinuousMove()
+{
+    float x = 0.6;
+    float y = 0;
+    float z = 0;
+    int ret=TX_ONVIF_PTZ_ContinuousMove(USERNAME, PASSWORD, ptzService, profileToken,  tx_onvif_ptz_move, x, y, z);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_ptz_Stop()
+{
+    int ret=TX_ONVIF_PTZ_Stop(USERNAME, PASSWORD, ptzService, profileToken, tx_onvif_ptz_move);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void main_ptz_test()
+{
+    /* onvif_ptz_GetServiceCapabilities();     */
+    /* onvif_ptz_GotoHomePosition(); */
+    onvif_ptz_Stop();
+    onvif_ptz_ContinuousMove();
+}
+
+
+
+/* deviceio */
+
+void onvif_deviceio_GetServiceCapabilities()
+{
+     int ret=TX_ONVIF_DEVICEIO_GetServiceCapabilities(USERNAME, PASSWORD, deviceioService);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void main_deviceio_test()
+{
+    onvif_deviceio_GetServiceCapabilities();
+}
+
+
+/* media */
+void onvif_media_GetServiceCapabilities()
+{
+    int ret=TX_ONVIF_MEDIA_GetServiceCapabilities(USERNAME, PASSWORD, mediaService);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_media_GetVideoSources()
+{
+ int ret=TX_ONVIF_MEDIA_GetVideoSources(USERNAME, PASSWORD, mediaService);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void main_media_test()
+{
+    onvif_media_GetServiceCapabilities();
+    onvif_media_GetVideoSources();
 }
 
 
@@ -230,7 +325,9 @@ int main()
     onvif_sleep();
     onvif_getDeviceInfo();
     onvif_sleep();
-    onvif_getProfiles();
+    onvif_media_getProfiles();
     onvif_sleep();
-    main_imaging_test();
+    onvif_media_getStreamURI();
+    /* onvif_sleep(); */
+    /* main_media_test(); */
 }

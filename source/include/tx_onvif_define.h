@@ -51,9 +51,9 @@ typedef enum
 
 typedef enum
 {
-    ptz_move = 0,
-    ptz_zoom = 1,
-}TX_PTZ_Type;
+    tx_onvif_ptz_move = 0,
+    tx_onvif_ptz_zoom = 1,
+}TX_ONVIF_PTZ_Type;
 
 
 /* struct define */
@@ -76,6 +76,7 @@ typedef struct
 	char imaging[128];
 	char media[128];
 	char ptz[128];
+    char deviceio[128];
 } 
 TX_ONVIF_CAPABILITY_URI, *LPTX_ONVIF_CAPABILITY_URI;
 
@@ -87,7 +88,8 @@ typedef enum
 	capability_event = 3,
 	capability_imaging = 4,
 	capability_media = 5,
-	capability_ptz = 6
+	capability_ptz = 6,
+    capability_deviceio = 7
 } TX_Capability_Type;
 
 typedef struct 
@@ -143,8 +145,6 @@ typedef enum
         tx_onvif_exposure_priority_framerate = 1,
     }
     TX_ONIVF_EXPOSURE_PRIORITY;
-
-
 
 typedef struct
 {
@@ -203,6 +203,7 @@ typedef struct
     /* struct tt__FocusConfiguration20Extension */
 }
     TX_ONVIF_FOCUS_CONFIGURATION20;
+
 typedef enum
     {
         tx_onvif_wide_dynamic_mode_on = 0,
@@ -223,6 +224,7 @@ typedef enum
         tx_onvif_white_balance_mode_manual = 1,
     }
     TX_ONVIF_WHITE_BALANCE_MODE;
+
 typedef struct 
 {
     enum  TX_ONVIF_WHITE_BALANCE_MODE *mode;
@@ -231,6 +233,7 @@ typedef struct
     /* struct tt__WhiteBalance20Extension*  Extension */
 }
     TX_ONVIF_WHITE_BALANCE20;
+
 typedef struct 
 {
     struct TX_ONVIF_BACKLIGHT_COMPENSATION20 *backlight_compensation;
@@ -246,6 +249,10 @@ typedef struct
     /* struct tt__ImagingSettingsExtension20*  Extension */
 }
     TX_ONVIF_IMAGING_SETTINGS20, LPTX_ONVIF_IMAGING_SETTINGS20;
+
+
+
+/* ptz */
 
 
 

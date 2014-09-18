@@ -332,7 +332,7 @@ int ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagingSe
     printf("videoSourceToken = %s\n", videoSourceToken);
     do
     {
-        soap_call___timg__GetStatus(soap, soap_endpoint, soap_action, &imaging_GetMoveOptions_req, &imaging_GetMoveOptions_resp);
+        soap_call___timg__GetMoveOptions(soap, soap_endpoint, soap_action, &imaging_GetMoveOptions_req, &imaging_GetMoveOptions_resp);
         if (soap->error)
         {
                 printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));

@@ -123,8 +123,49 @@ int TX_ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagin
 
 
 
+/* ptz */
+int TX_ONVIF_PTZ_GetServiceCapabilities(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetConfigurations(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetPresets(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetStatus(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetConfiguration(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetNodes(char *username, char *password, char *ptzService);
+
+int TX_ONVIF_PTZ_GetNode(char *username, char *password, char *ptzService, char *nodeToken);
+
+int TX_ONVIF_PTZ_GotoHomePosition(char *username, char *password, char *ptzService, char *profileToken);
+
+int TX_ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type, float x, float y, float z);
+
+int TX_ONVIF_PTZ_Stop(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type);
+
+/* deviceio */
+int TX_ONVIF_DEVICEIO_GetServiceCapabilities(char *username, char *password, char *deviceioService);
 
 
+/* media */
+int TX_ONVIF_MEDIA_GetServiceCapabilities(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetVideoSources(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetAudioSources(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetProfile(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetProfiles(char *username, char *password, char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
+
+int TX_ONVIF_MEDIA_GetStreamURI(char *username, char *password,char *deviceService, LPTX_ONVIF_STREAM_URI streamURI);
+
+int TX_ONVIF_MEDIA_GetVideoSourceConfigurations(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetVideoEncoderConfigurations(char *username, char *password, char *mediaService);
+
+int TX_ONVIF_MEDIA_GetAudioSourceConfigurations(char *username, char *password, char *mediaService);
 
 
 
@@ -138,31 +179,9 @@ int TX_ONVIF_GetCapabilities( TX_Capability_Type txAbilityType, char *deviceServ
 
 int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo);
 
-
-/* 媒体 控制*/
-int TX_ONVIF_GetProfiles(char *mediaService,  LPTX_ONVIF_PROFILES_INFO profilesInfo);
-
-int TX_ONVIF_GetStreamURI(char *deviceService, LPTX_ONVIF_STREAM_URI streamURI);
-
 int TX_ONVIF_StartRtspStream(char *stremURI);
 
 int TX_ONVIF_StopRtspStream();
-
-
-
-/* 云台控制 */
-/* configuration fuctions */
-int TX_ONVIF_PTZ_GetConfiguration(char *ptzService);
-
-int TX_ONVIF_PTZ_GetConfigurations(char *ptzService);
-
-int TX_ONVIF_PTZ_GetConfigurationOptions(char *ptzService);
-
-
-/* move functions */
-int TX_ONVIF_PTZ_Stop(char *ptzService, TX_PTZ_Type type);
-
-
 
 
 #ifdef __cplusplus
