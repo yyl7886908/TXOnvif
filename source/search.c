@@ -4,7 +4,7 @@
   Author: Yu Yun Long
  ************************************************/
 
-#include "search.h"
+#include "include/search.h"
 #include "soapH.h"
 
 #include "soapStub.h"

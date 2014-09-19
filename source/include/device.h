@@ -18,7 +18,7 @@ int ONVIF_DEVICE_GetServices(char *username, char *password, char *deviceService
 
 int ONVIF_DEVICE_GetServiceCapabilities(char *username, char *password, char *deviceService);
 
-int ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService);
+int ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo);
 
 int ONVIF_DEVICE_GetSystemDateAndTime(char *username, char *password, char *deviceService);
 
@@ -72,7 +72,7 @@ int ONVIF_DEVICE_SetUser(char *username, char *password, char *deviceService);/*
 
 int ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceService);
 
-int ONVIF_DEVICE_GetCapabilities(char *username, char *password, char *deviceService);
+int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo);
 
 int ONVIF_DEVICE_SetDPAddresses(char *username, char *password, char *deviceService);/* 此接口暂时不封装 */
 

@@ -67,7 +67,7 @@ void onvif_getCapabilities()
 {
     TX_ONVIF_CAPABILITY_URI capabilityInfo; 
 	memset(&capabilityInfo, 0, sizeof(TX_ONVIF_CAPABILITY_URI));
-	int ret=TX_ONVIF_GetCapabilities( capability_all, deviceService, &capabilityInfo);
+	int ret=TX_ONVIF_DEVICE_GetCapabilities( USERNAME, PASSWORD, capability_all, deviceService, &capabilityInfo);
     printf("=============>onvif_getCapabilities ret= %d\n", ret);
     printf("capabilityInfo\n analytics = %s\n device = %s\n events = %s\n imaging = %s\n media = %s\n ptz = %s\n",  capabilityInfo.analytics, capabilityInfo.device, capabilityInfo.events, capabilityInfo.imaging, capabilityInfo.media, capabilityInfo.ptz);
     sprintf(mediaService, capabilityInfo.media);
@@ -84,7 +84,7 @@ void onvif_getDeviceInfo()
 {
     TX_ONVIF_DEVICE_INFO deviceInfo;
 	memset(&deviceInfo, 0, sizeof(TX_ONVIF_DEVICE_INFO));
-	int ret = TX_ONVIF_GetDeviceInfo(deviceService, &deviceInfo);
+	int ret = TX_ONVIF_DEVICE_GetDeviceInformation(USERNAME, PASSWORD,deviceService, &deviceInfo);
     printf("=========>onvif_getDeviceInfo ret = %d\n", ret);
     printf("onvif_getDeviceInfo \n manufacturer = %s\n model = %s\n firmwareVersion = %s\n serialNumber = %s\n hardwareId = %s\n", deviceInfo.manufacturer, deviceInfo.model, deviceInfo.firmwareVersion, deviceInfo.serialNumber, deviceInfo.hardwareId);
     printf("---------------------------------------------------->\n\n\n");

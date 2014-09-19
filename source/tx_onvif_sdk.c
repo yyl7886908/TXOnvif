@@ -1,15 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "tx_onvif_sdk.h"
-#include "tx_onvif_define.h"
+#include "include/tx_onvif_sdk.h"
+#include "include/tx_onvif_define.h"
 
-#include "discovery.h" 
-#include "management.h"
-#include "media.h"
-#include "ptz.h"
-#include "search.h"
-#include "device.h"
-#include "imaging.h"
+#include "include/discovery.h"
+#include "include/media.h"
+#include "include/ptz.h"
+#include "include/search.h"
+#include "include/device.h"
+#include "include/imaging.h"
 
 
 #ifdef __cplusplus
@@ -62,13 +61,13 @@ int TX_ONVIF_DEVICE_GetServiceCapabilities(char *username, char *password, char 
     return ONVIF_DEVICE_GetServiceCapabilities(username, password, deviceService);   
 }
 
-int TX_ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService)
+int TX_ONVIF_DEVICE_GetDeviceInformation(char *username, char *password, char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo)
 {
 #ifdef DEBUG
     printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
 
-    return ONVIF_DEVICE_GetDeviceInformation(username, password, deviceService);   
+    return ONVIF_DEVICE_GetDeviceInformation(username, password, deviceService, deviceInfo);   
 }
 
 int TX_ONVIF_DEVICE_GetSystemDateAndTime(char *username, char *password, char *deviceService)
@@ -191,13 +190,14 @@ int TX_ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceServi
     return ONVIF_DEVICE_GetWsdlUrl(username, password, deviceService);   
 }
 
-int TX_ONVIF_DEVICE_GetCapabilities(char *username, char *password, char *deviceService)
+int TX_ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
 {
 #ifdef DEBUG
     printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
-    return ONVIF_DEVICE_GetCapabilities(username, password, deviceService);   
+    return ONVIF_DEVICE_GetCapabilities(username, password, txAbilityType, deviceService, capabilityInfo);   
 }
+
 
 int TX_ONVIF_DEVICE_GetHostname(char *username, char *password, char *deviceService)
 {
@@ -606,42 +606,6 @@ int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDe
     return ret;
 }
 
-
-
-/* 设备管理 */
-int TX_ONVIF_GetCapabilities( TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
-{
-#ifdef DEBUG
-    printf(" [%s]-[%d]  tx onvif sdk!  deviceService = %s \n", __func__, __LINE__, deviceService);
-#endif
-
-    int ret = ONVIF_GetCapabilities(txAbilityType, deviceService, capabilityInfo);
-    return ret;
-}
-
-int TX_ONVIF_GetDeviceInfo(char *deviceService, LPTX_ONVIF_DEVICE_INFO deviceInfo)
-{
-#ifdef DEBUG
-    printf(" [%s]-[%d]  tx onvif sdk!  deviceService = %s \n", __func__, __LINE__, deviceService);
-#endif
-    int ret = ONVIF_GetDeviceInfo(deviceService, deviceInfo);
-    return ret;
-    
-}
-
-
-
-/* 媒体控制 */
-
-int TX_ONVIF_StartRtspStream(char *stremURI)
-{
-    return 0;
-}
-
-int TX_ONVIF_StopRtspStream()
-{
-    return 0;
-}
 
 
 #ifdef __cplusplus

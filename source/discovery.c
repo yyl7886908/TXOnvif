@@ -1,4 +1,4 @@
-#include "discovery.h"
+#include "include/discovery.h"
 
 #include "wsdd.h"
 #include <stdio.h>
