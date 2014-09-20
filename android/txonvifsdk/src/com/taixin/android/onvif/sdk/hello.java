@@ -1,9 +1,19 @@
 package com.taixin.android.onvif.sdk;
 
 public class hello {
-	private native String sayHello();
 	
+	public String pHello(){
+		System.out.println("before native sayHello");
+		return sayhello();
+	}
+	
+	public native String sayhello();
+
 	static{
-		System.out.println("hello");
+		try {  
+            System.loadLibrary("hello");  
+        } catch (UnsatisfiedLinkError ule) {  
+            System.err.println("WARNING: Could not load library!");  
+        }  
 	}
 }

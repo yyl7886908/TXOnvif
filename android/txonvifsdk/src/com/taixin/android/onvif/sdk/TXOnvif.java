@@ -1,17 +1,24 @@
 package com.taixin.android.onvif.sdk;
 
+
 public class TXOnvif implements SimpleOnvif{
 		
 	@Override
 	public void discoverDevices() {
-		 _discoverDevices();
+		 String var = _discoverDevices();
+		 System.out.println("java back var = "+var);
 	}
 	/**
 	 * discover devices
 	 */
-	public native String _discoverDevices();
+	public static native String _discoverDevices();
 	
 	static{
-		System.loadLibrary("txonvif");
+		try{  
+			System.loadLibrary("txonvif-jni");  
+			System.loadLibrary("txonvif");
+		} catch (UnsatisfiedLinkError ule) {  
+			System.err.println("WARNING: Could not load library!");  
+        }  
 	}
 }

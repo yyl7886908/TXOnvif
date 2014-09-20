@@ -5,15 +5,15 @@
 #include <jni.h>
 #include <assert.h>
 
-#define JNIREG_CLASS "com/taixin/android/onvif/sdk/TXOnvif"
-JNIEXPORT jstring JNICALL _discoverDevices(JNIEnv *env, jclass clazz)
+#define JNIREG_CLASS "com/taixin/android/onvif/sdk/hello"
+JNIEXPORT jstring JNICALL sayhello(JNIEnv *env, jclass clazz)
 {
-    __android_log_print(ANDROID_LOG_ERROR, "TXONVIF", "call native _discoverDevices in java");
-    return (*env)->NewStringUTF(env, "TXONVIF NATIVE SUCCESS.");;
+    __android_log_print(ANDROID_LOG_ERROR, "tag", "call <native_hello> in java");
+    return NULL;
 }
 
 static JNINativeMethod gMethods[] = {
-    {"_discoverDevices", "()Ljava/lang/String;", (void*)_discoverDevices},
+    {"sayhello", "()Ljava/lang/String;", (void*)sayhello},
 };
 
 static int registerNativeMethods(JNIEnv* env, const char* className,
