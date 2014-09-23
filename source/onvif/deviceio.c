@@ -43,7 +43,7 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 		printf("[%d]soap = NULL\n", __LINE__);
 		return NULL;
 	}
-	 /* soap_set_namespaces( soap, namespaces); */
+	 /* soap_set_namespaces( soap, ); */
 	//超过5秒钟没有数据就退出
 	if (timeout > 0)
 	{

@@ -2,14 +2,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "../loghelp.h"
 #include "wsdd.h"
 #include "base64.h"
 #include "sha1.h"
 #include "base64.h"
 
-#define USERNAME "admin"
-#define PASSWORD "12345"
-
+#define TAG 			"TX_DISCOVERY"
 
 typedef struct
 {
@@ -139,9 +138,9 @@ int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDevic
 	const char *was_To = "urn:schemas-xmlsoap-org:ws:2005:04:discovery";
 	const char *was_Action = "http://schemas.xmlsoap.org/ws/2005/04/discovery/Probe";
 	//这个就是传递过去的组播的ip地址和对应的端口发送广播信息	
-    char soap_endpoint[128] = {0};
-	sprintf(soap_endpoint,"soap.udp://%s:%d",ip, port); 
-	/* const char *soap_endpoint = "soap.udp://239.255.255.250:3702/"; */
+    /* char soap_endpoint[128] = {0}; */
+	/* sprintf(soap_endpoint,"soap.udp://%s:%d",ip, port);  */
+	const char *soap_endpoint = "soap.udp://239.255.255.250:3702/";
 
 	//这个接口填充一些信息并new返回一个soap对象，本来可以不用额外接口，
 	// 但是后期会作其他操作，此部分剔除出来后面的操作就相对简单了,只是调用接口就好
@@ -155,17 +154,18 @@ int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDevic
 	soap_default_wsdd__ProbeType(soap, &req);
 	req.Scopes = &sScope;
 	req.Types = ""; //"dn:NetworkVideoTransmitter";
-    
 	retval = soap_send___wsdd__Probe(soap, soap_endpoint, NULL, &req);		
 	//发送组播消息成功后，开始循环接收各位设备发送过来的消息
 	while (retval == SOAP_OK)
     {
+        ALOG(TX_LOG_DEBUG, TAG, "(retval == SOAP_OK)");
 		retval = soap_recv___wsdd__ProbeMatches(soap, &resp);
         if (retval == SOAP_OK) 
         {
             if (soap->error)
             {
-                printf("[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); 
+                /* printf("[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));  */
+                ALOG(TX_LOG_DEBUG, TAG, "[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
 			    retval = soap->error;
             }
             else //成功接收某一个设备的消息

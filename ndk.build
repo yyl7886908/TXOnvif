@@ -1,0 +1,5 @@
+#/bin/bash
+
+cd android/txonvifsdk/jni/
+
+ndk-build -j10

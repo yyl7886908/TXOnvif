@@ -1,0 +1,30 @@
+./objects/tx_onvif_sdk.o: ./onvif/tx_onvif_sdk.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/soapClient.o: ./onvif/soapClient.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/deviceio.o: ./onvif/deviceio.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/sha1.o: ./onvif/sha1.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/stdsoap2.o: ./onvif/stdsoap2.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/main.o: ./onvif/main.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/ptz.o: ./onvif/ptz.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/discovery.o: ./onvif/discovery.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/device.o: ./onvif/device.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/imaging.o: ./onvif/imaging.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/base64.o: ./onvif/base64.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/duration.o: ./onvif/duration.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/media.o: ./onvif/media.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/soapC.o: ./onvif/soapC.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+./objects/search.o: ./onvif/search.c
+	gcc -DDEBUG $(CFLAGS) -c -o $@ $^

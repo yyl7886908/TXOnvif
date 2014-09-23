@@ -74,6 +74,8 @@ A commercial use license is available from Genivia, Inc., contact@genivia.com
 #  pragma warning(disable : 4996) /* disable deprecation warnings */
 # endif
 #endif
+//yyl
+#define WITH_NONAMESPACES
 
 #ifdef __cplusplus
 SOAP_SOURCE_STAMP("@(#) stdsoap2.cpp ver 2.8.8 2012-02-20 00:00:00 GMT")

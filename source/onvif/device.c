@@ -13,6 +13,9 @@
 #include "soapStub.h"
 #include "stdsoap2.h"
 #include "sha1.h"
+#include "../loghelp.h"
+
+#define TAG 			"TX_DEVICE"
 
 typedef struct
 {
@@ -994,7 +997,7 @@ int ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceService)
 
 int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
 {
-
+	  ALOG(TX_LOG_DEBUG, TAG, "username = %s\n password = %s\n deviceService = %s\n", username, password, deviceService);
 #ifdef DEBUG
     printf(" [%s]-[%d]  management.c!  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
@@ -1009,19 +1012,22 @@ int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_T
     UserInfo_S stUserInfo;
     memset(&stUserInfo, 0, sizeof(UserInfo_S));
 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
     strcpy(stUserInfo.username, username);
     strcpy(stUserInfo.password, password);
-        
+
+    //\u6b64\u63a5\u53e3\u4e2d\u4f5c\u9a8c\u8bc1\u5904\u7406\uff0c \u5982\u679c\u4e0d\u9700\u8981\u9a8c\u8bc1\u7684\u8bdd\uff0cstUserInfo\u586b\u7a7a\u5373\u53ef
     soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
     char *soap_endpoint = (char *)malloc(256);
     memset(soap_endpoint, '\0', 256);
-   
+    //\u6d77\u5eb7\u7684\u8bbe\u5907\uff0c\u56fa\u5b9aip\u8fde\u63a5\u8bbe\u5907\u83b7\u53d6\u80fd\u529b\u503c ,\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c"172.18.14.22"\u5730\u5740\u4ee5\u53ca80\u7aef\u53e3\u53f7\u9700\u8981\u586b\u5199\u5728\u52a8\u6001\u641c\u7d22\u5230\u7684\u5177\u4f53\u4fe1\u606f
+    /* sprintf(soap_endpoint, "http://%s:%d/onvif/device_service", DEVICE_IP, DEVICE_PORT);	 */
     sprintf(soap_endpoint, "%s", deviceService);
 
     capa_req.Category = (enum tt__CapabilityCategory *)soap_malloc(soap, sizeof(int));
     capa_req.__sizeCategory = 1;
     *(capa_req.Category) = (enum tt__CapabilityCategory)tt__CapabilityCategory__All;
-   
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
     const char *soap_action = "http://www.onvif.org/ver10/device/wsdl/GetCapabilities";
 
     do
@@ -1034,8 +1040,11 @@ int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_T
                 retval = soap->error;
                 break;
         }
-        else 
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
         {
+            // \u8d70\u5230\u8fd9\u91cc\u7684\u65f6\u5019\uff0c\u5df2\u7ecf\u5c31\u662f\u9a8c\u8bc1\u6210\u529f\u4e86\uff0c\u53ef\u4ee5\u83b7\u53d6\u5230\u53c2\u6570\u4e86\uff0c
+            // \u5728\u5b9e\u9645\u5f00\u53d1\u7684\u65f6\u5019\uff0c\u53ef\u4ee5\u628acapa_resp\u7ed3\u6784\u4f53\u7684\u90a3\u4e9b\u9700\u8981\u7684\u503c\u5339\u914d\u5230\u81ea\u5df1\u7684\u79c1\u6709\u534f\u8bae\u4e2d\u53bb\uff0c\u7b80\u5355\u7684\u8d4b\u503c\u64cd\u4f5c\u5c31\u597d
+
             if(capa_resp.Capabilities == NULL)
                 {
                     printf("Get Capabilities fauled !  Capabilities == NULL");

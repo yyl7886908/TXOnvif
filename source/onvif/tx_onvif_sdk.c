@@ -2,56 +2,46 @@
 #include <stdlib.h>
 #include "include/tx_onvif_sdk.h"
 #include "include/tx_onvif_define.h"
-
 #include "include/discovery.h"
 #include "include/media.h"
 #include "include/ptz.h"
 #include "include/search.h"
 #include "include/device.h"
 #include "include/imaging.h"
+#include "../loghelp.h"
 
 #define	MULTICAST_IP           "239.255.255.250"
-#define	MULTICAST_PORT     3702
+#define	MULTICAST_PORT      3702
+#define   TAG 							"TX_ONVIF_SDK"
 
+#if defined(__ANDROID__)
+#define printf(...) ALOGD(__VA_ARGS__)
+#endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-//for test
-void onvif_discovery()
-{
-    TX_ONVIF_REARCH_DEVICEINFO struDiscoveryDeviceInfos[16];
-    int deviceNum = 0;
-    int ret = TX_ONVIF_Discovery(MULTICAST_IP,  MULTICAST_PORT, struDiscoveryDeviceInfos,  &deviceNum) ;
-    printf("============>onvif_discovery ret = %d\n", ret);
-    printf("deviceNum = %d\n", deviceNum);
-    int i;
-    for(i = 0; i< deviceNum; i++)
-   {
-       printf("i = %d\n Address = %s\n XAddrs = %s\n MetadataVersion = %d\n", i, struDiscoveryDeviceInfos[i].Address, struDiscoveryDeviceInfos[i].XAddrs, struDiscoveryDeviceInfos[i].MetadataVersion);
-   }
-    char *s = " ";
-    char *p;
-    p = strtok( struDiscoveryDeviceInfos[0].XAddrs, s);
-    while(p)
-    {
-        printf( "p = %s\n ",p);
-        break;
-    }
-    printf("---------------------------------------------------->\n\n\n");
-}
+
 /* 初始化 */
 
 bool TX_ONVIF_INIT()
 {
-	  onvif_discovery();
+	  ALOG(TX_LOG_INFO, TAG, "TX_ONVIF_INIT----");
 	  return true;
 }
 
 bool TX_ONVIF_TERM()
 {
     return true;
+}
+
+/* 设备发现 */
+
+int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet,  int *deviceNum)
+{
+    int ret = ONVIF_Discovery(ip, port, RearchDeviceSet, deviceNum);
+    return ret;
 }
 
 /* search */
@@ -63,9 +53,6 @@ int TX_ONVIF_SEARCH_GetServiceCapabilities(char *username, char *password, char 
 
     return ONVIF_SEARCH_GetServiceCapabilities(username, password, searchService);
 }
-
-
-
 
 
 /* device */
@@ -618,19 +605,6 @@ int TX_ONVIF_MEDIA_GetAudioSourceConfigurations(char *username, char *password, 
     printf("[%s]-[%d]  mediaService = %s \n", __func__, __LINE__, mediaService);
 #endif
     return ONVIF_MEDIA_GetAudioSourceConfigurations(username, password, mediaService);    
-}
-
-
-
-
-
-/* 设备发现 */
-
-int TX_ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet,  int *deviceNum) 
-{
-//    int ret = ONVIF_Discovery(ip, port, RearchDeviceSet, deviceNum);
-//    return ret;
-			return -1;
 }
 
 

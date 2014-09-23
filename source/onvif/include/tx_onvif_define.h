@@ -53,7 +53,8 @@ typedef enum
 {
     tx_onvif_ptz_move = 0,
     tx_onvif_ptz_zoom = 1,
-}TX_ONVIF_PTZ_Type;
+}
+	TX_ONVIF_PTZ_Type;
 
 
 /* struct define */
@@ -76,7 +77,7 @@ typedef struct
 	char imaging[128];
 	char media[128];
 	char ptz[128];
-    char deviceio[128];
+  char deviceio[128];
 } 
 TX_ONVIF_CAPABILITY_URI, *LPTX_ONVIF_CAPABILITY_URI;
 
@@ -89,7 +90,7 @@ typedef enum
 	capability_imaging = 4,
 	capability_media = 5,
 	capability_ptz = 6,
-    capability_deviceio = 7
+  capability_deviceio = 7
 } TX_Capability_Type;
 
 typedef struct 
