@@ -74,8 +74,6 @@ A commercial use license is available from Genivia, Inc., contact@genivia.com
 #  pragma warning(disable : 4996) /* disable deprecation warnings */
 # endif
 #endif
-//yyl
-#define WITH_NONAMESPACES
 
 #ifdef __cplusplus
 SOAP_SOURCE_STAMP("@(#) stdsoap2.cpp ver 2.8.8 2012-02-20 00:00:00 GMT")
@@ -3638,7 +3636,7 @@ tcp_gethost(struct soap *soap, const char *addr, struct in_addr *inaddr)
     soap->errnum = h_errno;
   }
 #elif defined(HAVE_GETHOSTBYNAME_R)
-  host = gethostbyname_r(addr, &hostent, soap->buf, SOAP_BUFLEN, &host, &soap->errnum);
+  host = gethostbyname_r(addr, &hostent, soap->buf, SOAP_BUFLEN, &soap->errnum);
 #elif defined(VXWORKS)
   /* If the DNS resolver library resolvLib has been configured in the vxWorks
    * image, a query for the host IP address is sent to the DNS server, if the

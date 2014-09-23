@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../loghelp.h"
+/* #include "../loghelp.h" */
 #include "wsdd.h"
 #include "base64.h"
 #include "sha1.h"
@@ -158,14 +158,14 @@ int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDevic
 	//发送组播消息成功后，开始循环接收各位设备发送过来的消息
 	while (retval == SOAP_OK)
     {
-        ALOG(TX_LOG_DEBUG, TAG, "(retval == SOAP_OK)");
+        /* ALOG(TX_LOG_DEBUG, TAG, "(retval == SOAP_OK)"); */
 		retval = soap_recv___wsdd__ProbeMatches(soap, &resp);
         if (retval == SOAP_OK) 
         {
             if (soap->error)
             {
                 /* printf("[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));  */
-                ALOG(TX_LOG_DEBUG, TAG, "[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                /* ALOG(TX_LOG_DEBUG, TAG, "[%d]: recv soap error :%d, %s, %s\n", __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap)); */
 			    retval = soap->error;
             }
             else //成功接收某一个设备的消息

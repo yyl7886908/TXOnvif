@@ -8,7 +8,7 @@
 #include "include/search.h"
 #include "include/device.h"
 #include "include/imaging.h"
-#include "../loghelp.h"
+/* #include "../loghelp.h" */
 
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT      3702
@@ -27,7 +27,7 @@ extern "C" {
 
 bool TX_ONVIF_INIT()
 {
-	  ALOG(TX_LOG_INFO, TAG, "TX_ONVIF_INIT----");
+	  /* ALOG(TX_LOG_INFO, TAG, "TX_ONVIF_INIT----"); */
 	  return true;
 }
 
@@ -523,13 +523,13 @@ int TX_ONVIF_PTZ_Stop(char *username, char *password, char *ptzService, char *pr
 
 ///* deviceio */
 //
-//int TX_ONVIF_DEVICEIO_GetServiceCapabilities(char *username, char *password, char *deviceioService)
-//{
-//#ifdef DEBUG
-//    printf("[%s]-[%d]  deviceioService = %s \n", __func__, __LINE__, deviceioService);
-//#endif
-//    return ONVIF_DEVICEIO_GetServiceCapabilities(username, password, deviceioService);
-//}
+int TX_ONVIF_DEVICEIO_GetServiceCapabilities(char *username, char *password, char *deviceioService)
+{
+#ifdef DEBUG
+   printf("[%s]-[%d]  deviceioService = %s \n", __func__, __LINE__, deviceioService);
+#endif
+   return ONVIF_DEVICEIO_GetServiceCapabilities(username, password, deviceioService);
+}
 
 /* media */
 int TX_ONVIF_MEDIA_GetServiceCapabilities(char *username, char *password, char *mediaService)

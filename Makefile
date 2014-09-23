@@ -1,9 +1,9 @@
 #onvif ¹¤³ÌmakefileÄ¿Â¼
 PROJDIR = .
 OBJSDIR = $(PROJDIR)/objects
-INCSDIR = $(PROJDIR)/onvif/include 
+INCSDIR = $(PROJDIR)/source/onvif/include 
 
-SRCS  += $(wildcard $(PROJDIR)/onvif/*.c)
+SRCS  += $(wildcard $(PROJDIR)/source/onvif/*.c)
 OBJS  := $(addprefix $(OBJSDIR)/, $(addsuffix .o, $(basename $(notdir $(SRCS)))))
 INCS  += -I$(INCSDIR)
 

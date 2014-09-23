@@ -13,7 +13,7 @@
 #include "soapStub.h"
 #include "stdsoap2.h"
 #include "sha1.h"
-#include "../loghelp.h"
+/* #include "../loghelp.h" */
 
 #define TAG 			"TX_DEVICE"
 
@@ -997,7 +997,7 @@ int ONVIF_DEVICE_GetWsdlUrl(char *username, char *password, char *deviceService)
 
 int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_Type txAbilityType, char *deviceService, LPTX_ONVIF_CAPABILITY_URI capabilityInfo)
 {
-	  ALOG(TX_LOG_DEBUG, TAG, "username = %s\n password = %s\n deviceService = %s\n", username, password, deviceService);
+	  /* ALOG(TX_LOG_DEBUG, TAG, "username = %s\n password = %s\n deviceService = %s\n", username, password, deviceService); */
 #ifdef DEBUG
     printf(" [%s]-[%d]  management.c!  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
