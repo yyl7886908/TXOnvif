@@ -308,6 +308,8 @@ void onvif_media_GetVideoSources()
     printf("---------------------------------------------------->\n\n\n"); 
 }
 
+
+
 void main_media_test()
 {
     onvif_media_GetServiceCapabilities();
@@ -315,6 +317,45 @@ void main_media_test()
 }
 
 
+/* recording test */
+void onvif_recoding_GetServiceCapabilities()
+{
+    int ret=TX_ONVIF_RECORDING_GetServiceCapabilities(USERNAME, PASSWORD, "http://192.168.1.111/onvif/recording");
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_recoding_GetRecordings()
+{
+    int ret=TX_ONVIF_RECORDING_GetRecordings(USERNAME, PASSWORD, "http://192.168.1.111/onvif/recording");
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_recording_GetRecordingConfiguration()
+{
+    char *recordToken = "OnvifRecordingToken";
+    int ret=TX_ONVIF_RECORDING_GetRecordingConfiguration(USERNAME, PASSWORD, "http://192.168.1.111/onvif/recording", recordToken);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onfi_recording_GetTrackConfiguration()
+{
+    char *recordToken = "OnvifRecordingToken";
+    char *trackToken = "videotrack_token";
+    int ret=TX_ONVIF_RECORDING_GetTrackConfiguration(USERNAME, PASSWORD, "http://192.168.1.111/onvif/recording", recordToken, trackToken);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void main_recording_test()
+{
+    onvif_recoding_GetServiceCapabilities();
+    onvif_recoding_GetRecordings();
+    onvif_recording_GetRecordingConfiguration();
+    onfi_recording_GetTrackConfiguration();
+}
 int main()
 {
     printf("start main---------------->\n");
@@ -322,11 +363,13 @@ int main()
     onvif_discovery1();
     onvif_sleep();
     onvif_getCapabilities();
-    onvif_sleep();
-    onvif_getDeviceInfo();
+    /* onvif_sleep(); */
+    /* onvif_getDeviceInfo(); */
     onvif_sleep();
     onvif_media_getProfiles();
     onvif_sleep();
+    /* main_recording_test(); */
+    /* onvif_sleep(); */
     onvif_media_getStreamURI();
     /* onvif_sleep(); */
     /* main_media_test(); */

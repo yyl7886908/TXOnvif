@@ -13,7 +13,7 @@
 #include "base64.h"
 #include "soapStub.h"
 #include "stdsoap2.h"
-
+/* #include "../loghelp.h" */
 
 typedef struct
 {
@@ -224,7 +224,6 @@ int ONVIF_MEDIA_GetStreamURI(char *username, char *password, char *deviceService
 #ifdef DEBUG
     printf(" [%s]-[%d] media.c !  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif
-
     int retval = 0;
     int i =0;
     struct soap *soap = NULL;

@@ -7,6 +7,10 @@ public class DeviceCapability {
 	private String imagingService;
 	private String mediaService;
 	private String ptzService;
+	
+	public DeviceCapability(){
+		
+	}
 	public String getAnalytics() {
 		return analytics;
 	}

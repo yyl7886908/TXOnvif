@@ -8,6 +8,8 @@
 #include "include/search.h"
 #include "include/device.h"
 #include "include/imaging.h"
+#include "include/deviceio.h"
+#include "include/recording.h"
 /* #include "../loghelp.h" */
 
 #define	MULTICAST_IP           "239.255.255.250"
@@ -607,7 +609,39 @@ int TX_ONVIF_MEDIA_GetAudioSourceConfigurations(char *username, char *password, 
     return ONVIF_MEDIA_GetAudioSourceConfigurations(username, password, mediaService);    
 }
 
+/* recording */
 
+int TX_ONVIF_RECORDING_GetServiceCapabilities(char *username, char *password, char *recordingService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  recordingService = %s \n", __func__, __LINE__, recordingService);
+#endif
+    return ONVIF_RECORDING_GetServiceCapabilities(username, password, recordingService);    
+}
+
+int TX_ONVIF_RECORDING_GetRecordings(char *username, char *password, char *recordingService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  recordingService = %s \n", __func__, __LINE__, recordingService);
+#endif
+    return ONVIF_RECORDING_GetRecordings(username, password, recordingService);    
+}
+
+int TX_ONVIF_RECORDING_GetRecordingConfiguration(char *username, char *password, char *recordingService, char* recordToken)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  recordingService = %s \n", __func__, __LINE__, recordingService);
+#endif
+    return ONVIF_RECORDING_GetRecordingConfiguration(username, password, recordingService, recordToken);    
+}
+
+int TX_ONVIF_RECORDING_GetTrackConfiguration(char *username, char *password, char *recordingService, char* recordToken, char* trackToken)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  recordingService = %s \n", __func__, __LINE__, recordingService);
+#endif
+    return ONVIF_RECORDING_GetTrackConfiguration(username, password, recordingService, recordToken, trackToken);    
+}
 
 #ifdef __cplusplus
 }

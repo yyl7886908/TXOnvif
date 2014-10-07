@@ -9,6 +9,7 @@ LOCAL_PATH := $(call my-dir)
 include $(CLEAR_VARS)
 
 LOCAL_CFLAGS += -std=c99
+LOCAL_CFLAGS += -D__ANDROID__
 LOCAL_LDLIBS += -llog -landroid
 #LOCAL_ALLOW_UNDEFINED_SYMBOLS := true
 
@@ -27,6 +28,7 @@ LOCAL_SRC_FILES += ptz.c
 LOCAL_SRC_FILES += search.c
 LOCAL_SRC_FILES += device.c
 LOCAL_SRC_FILES += imaging.c
+LOCAL_SRC_FILES += deviceio.c
 
 LOCAL_SRC_FILES += tx_onvif_sdk.c
 

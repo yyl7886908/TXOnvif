@@ -4,5 +4,11 @@ public interface SimpleOnvif {
 
 	public void discoverDevices();
 	
-	public void getDeviceCapabilities(String username, String password, String deviceService);
+	public void getDeviceCapabilities();
+	
+	public void getDeviceInfo();
+	
+	public void getMediaProfiles();
+	
+	public void getMediaStreamUri();
 }

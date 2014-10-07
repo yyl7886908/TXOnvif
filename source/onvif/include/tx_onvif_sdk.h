@@ -168,8 +168,15 @@ int TX_ONVIF_MEDIA_GetVideoEncoderConfigurations(char *username, char *password,
 int TX_ONVIF_MEDIA_GetAudioSourceConfigurations(char *username, char *password, char *mediaService);
 
 
+/* recording */
 
+int TX_ONVIF_RECORDING_GetServiceCapabilities(char *username, char *password, char *recordingService);
 
+int TX_ONVIF_RECORDING_GetRecordings(char *username, char *password, char *recordingService);
+
+int TX_ONVIF_RECORDING_GetRecordingConfiguration(char *username, char *password, char *recordingService, char* recordToken);
+
+int TX_ONVIF_RECORDING_GetTrackConfiguration(char *username, char *password, char *recordingService, char* recordToken, char* trackToken);
 
 /* 设备发现 */
 int  TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum);

@@ -1,63 +1,43 @@
 package com.taixin.android.onvif.sdk.obj;
 
 public class DeviceInfo {
-	
-	private String XAddrs;
-	private String Types;
-	private String Address;
-	private String item;
-	private int 	 MetadataVersion;
-	
+	private String manufacturer;
+	private String model;
+	private String firmwareVersion;
+	private String serialNumber;
+	private String hardwareId;
 	public DeviceInfo(){
 		
 	}
-	
-	public DeviceInfo(String XAddrs){
-		this.XAddrs = XAddrs;
+	public String getManufacturer() {
+		return manufacturer;
+	}
+	public void setManufacturer(String manufacturer) {
+		this.manufacturer = manufacturer;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public String getFirmwareVersion() {
+		return firmwareVersion;
+	}
+	public void setFirmwareVersion(String firmwareVersion) {
+		this.firmwareVersion = firmwareVersion;
+	}
+	public String getSerialNumber() {
+		return serialNumber;
+	}
+	public void setSerialNumber(String serialNumber) {
+		this.serialNumber = serialNumber;
+	}
+	public String getHardwareId() {
+		return hardwareId;
+	}
+	public void setHardwareId(String hardwareId) {
+		this.hardwareId = hardwareId;
 	}
 	
-	public DeviceInfo(String XAddrs, String Types, String Address, String item, int MetadataVersion)
-	{
-		this.Address = Address;
-		this.XAddrs = XAddrs;
-		this.Types = Types;
-		this.item = item;
-		this.MetadataVersion = MetadataVersion;
-	}
-	
-	public String getXAddrs() {
-		return XAddrs;
-	}
-	public void setXAddrs(String xAddrs) {
-		XAddrs = xAddrs;
-	}
-	
-	public String getTypes() {
-		return Types;
-	}
-
-	public void setTypes(String types) {
-		Types = types;
-	}
-
-	public String getAddress() {
-		return Address;
-	}
-	public void setAddress(String address) {
-		Address = address;
-	}
-	public String getItem() {
-		return item;
-	}
-	public void setItem(String item) {
-		this.item = item;
-	}
-	public int getMetadataVersion() {
-		return MetadataVersion;
-	}
-	public void setMetadataVersion(int metadataVersion) {
-		MetadataVersion = metadataVersion;
-	}
-		
-		
 }
