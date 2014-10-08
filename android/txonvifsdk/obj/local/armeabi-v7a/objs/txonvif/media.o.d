@@ -84,9 +84,7 @@
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm/fcntl.h \
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/asm-generic/fcntl.h \
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/math.h \
- /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/base64.h \
- /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/../loghelp.h \
- /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/log.h
+ /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/base64.h
 
 /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/media.h:
 
@@ -257,7 +255,3 @@
 /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/math.h:
 
 /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/base64.h:
-
-/home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/../loghelp.h:
-
-/home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/log.h:

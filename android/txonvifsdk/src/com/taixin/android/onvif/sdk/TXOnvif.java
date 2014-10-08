@@ -2,6 +2,9 @@ package com.taixin.android.onvif.sdk;
 
 import java.util.ArrayList;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.DeviceCapability;
 import com.taixin.android.onvif.sdk.obj.DeviceInfo;
@@ -13,6 +16,10 @@ public class TXOnvif implements SimpleOnvif{
 		
 	public String deviceService;
 	public String mediaService;
+	public Context context;
+	public TXOnvif(Context context){
+		this.context = context;
+	}
 	@Override
 	public void discoverDevices() {
 		ArrayList<Device> deviceList = _discoverDevices();
@@ -20,6 +27,7 @@ public class TXOnvif implements SimpleOnvif{
 		System.out.println("deviceService = "+deviceList.get(0).getXAddrs());
 		String a[] = deviceList.get(0).getXAddrs().split(" "); 
 		System.out.println("a 0 = "+a[0]);
+		Toast.makeText(context, "找到"+deviceList.size()+"个设备!!", Toast.LENGTH_LONG).show();
 		deviceService = a[0];
 		getDeviceCapabilities();
 	}
@@ -66,9 +74,10 @@ public class TXOnvif implements SimpleOnvif{
 	public native DeviceInfo											_getDeviceInfomation(String username, String password, String deviceService);
 	
 	static{
-		try{  
-			System.loadLibrary("txonvif-jni");  
+		try{  	 
 			System.loadLibrary("txonvif");
+			System.loadLibrary("txonvif-jni"); 
+
 		} catch (UnsatisfiedLinkError ule) {  
 			System.err.println("WARNING: Could not load library!");  
         }  

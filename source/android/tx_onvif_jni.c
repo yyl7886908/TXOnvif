@@ -228,10 +228,11 @@ static int registerNatives(JNIEnv* env)
 
 JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
 {
+	  __android_log_print(ANDROID_LOG_ERROR, "tag", "Jni_Onload");
     JNIEnv* env = NULL;
     jint result = -1;
 
-    if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_1) != JNI_OK) {
+    if ((*vm)->GetEnv(vm, (void**) &env, JNI_VERSION_1_4) != JNI_OK) {
         __android_log_print(ANDROID_LOG_ERROR, "tag", "load library error 1");
         return JNI_ERR;
     }
@@ -241,7 +242,7 @@ JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void* reserved)
         __android_log_print(ANDROID_LOG_ERROR, "tag", "load library error 2");
         return JNI_ERR;
     }
-    result = JNI_VERSION_1_1;
+    result = JNI_VERSION_1_4;
     __android_log_print(ANDROID_LOG_ERROR, "tag", "load library success: %d", result);
     return result;
 }

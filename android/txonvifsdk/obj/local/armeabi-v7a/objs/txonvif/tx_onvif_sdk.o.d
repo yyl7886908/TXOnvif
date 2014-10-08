@@ -32,7 +32,8 @@
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/search.h \
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/device.h \
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/imaging.h \
- /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/deviceio.h
+ /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/deviceio.h \
+ /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/recording.h
 
 /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/stdio.h:
 
@@ -99,3 +100,5 @@
 /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/imaging.h:
 
 /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/deviceio.h:
+
+/home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/include/recording.h:

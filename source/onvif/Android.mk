@@ -29,6 +29,7 @@ LOCAL_SRC_FILES += search.c
 LOCAL_SRC_FILES += device.c
 LOCAL_SRC_FILES += imaging.c
 LOCAL_SRC_FILES += deviceio.c
+LOCAL_SRC_FILES += recording.c
 
 LOCAL_SRC_FILES += tx_onvif_sdk.c
 
