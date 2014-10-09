@@ -21,26 +21,15 @@ public class TXOnvif implements SimpleOnvif{
 		this.context = context;
 	}
 	@Override
-	public void discoverDevices() {
-		ArrayList<Device> deviceList = _discoverDevices();
-		System.out.println("deviceList size = "+deviceList.size());
-		System.out.println("deviceService = "+deviceList.get(0).getXAddrs());
-		String a[] = deviceList.get(0).getXAddrs().split(" "); 
-		System.out.println("a 0 = "+a[0]);
-		Toast.makeText(context, "找到"+deviceList.size()+"个设备!!", Toast.LENGTH_LONG).show();
-		deviceService = a[0];
-		getDeviceCapabilities();
+	public ArrayList<Device> discoverDevices() {
+			ArrayList<Device> deviceList = _discoverDevices();
+			return deviceList;
 	}
 	
 	@Override
-	public void getDeviceCapabilities() {
-		DeviceCapability capa = _getDeviceCapabilities("admin", "12345", deviceService);
-		System.out.println("deviceService ="+capa.getDeviceService());
-		System.out.println("mediaService ="+capa.getMediaService());
-		mediaService = capa.getMediaService();
-		System.out.println("ptzService ="+capa.getPtzService());
-		System.out.println("imageService ="+capa.getImagingService());
-		getDeviceInfo();
+	public DeviceCapability getDeviceCapabilities(String username, String password, String deviceService) {
+		DeviceCapability capa = _getDeviceCapabilities(username, password, deviceService);
+		return capa;
 	}
 	
 	@Override
@@ -54,17 +43,13 @@ public class TXOnvif implements SimpleOnvif{
 	public void getMediaProfiles() {
 		ArrayList<MediaProfilesInfo> profiles= _getMediaProfiles("admin", "12345", mediaService);
 		System.out.println("profiles size = "+profiles.size());
-		getMediaStreamUri();
+		//getMediaStreamUri();
 	}
 	
 	@Override
-	public void getMediaStreamUri() {
-		ArrayList<MediaStreamUri> streamUri= _getMediaStreamUri("admin", "12345", deviceService);
-		System.out.println("streamUri size = "+streamUri.size());
-		for(MediaStreamUri stream : streamUri){
-			System.out.println("stream name = "+stream.getName());
-			System.out.println("stream uri = "+stream.getStreamURI());
-		}
+	public ArrayList<MediaStreamUri> getMediaStreamUri(String username, String password, String deviceService) {
+		ArrayList<MediaStreamUri> streamUri= _getMediaStreamUri(username, password, deviceService);
+		return streamUri;
 	}
 	
 	public native ArrayList<Device>								_discoverDevices();

@@ -22422,3 +22422,609 @@ Content-Type: application/soap+xml; charset=utf-8
 </trt:GetStreamUriResponse>
 </env:Body>
 </env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo>urn:uuid:b9720f7d-7704-4e40-a303-cf1da096b968</wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412787288" MessageNumber="29"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.103/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo>urn:uuid:e19cbe82-6efa-415f-a2a1-a5bfb1481510</wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412843275" MessageNumber="16"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.106/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo>urn:uuid:e19cbe82-6efa-415f-a2a1-a5bfb1481510</wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412843295" MessageNumber="17"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.106/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo>urn:uuid:e19cbe82-6efa-415f-a2a1-a5bfb1481510</wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412847271" MessageNumber="25"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.106/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo>urn:uuid:e19cbe82-6efa-415f-a2a1-a5bfb1481510</wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412847335" MessageNumber="28"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.106/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Header><wsadis:MessageID>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:MessageID>
+<wsadis:RelatesTo></wsadis:RelatesTo>
+<wsadis:To>http://schemas.xmlsoap.org/ws/2004/08/addressing/role/anonymous</wsadis:To>
+<wsadis:Action>http://schemas.xmlsoap.org/ws/2005/04/discovery/ProbeMatches</wsadis:Action>
+<d:AppSequence InstanceId="1412847450" MessageNumber="3"/>
+</env:Header>
+<env:Body><d:ProbeMatches><d:ProbeMatch><wsadis:EndpointReference><wsadis:Address>urn:uuid:38065863-9989-11b4-8329-4419b65ed625</wsadis:Address>
+</wsadis:EndpointReference>
+<d:Types>dn:NetworkVideoTransmitter tds:Device</d:Types>
+<d:Scopes>onvif://www.onvif.org/type/video_encoder onvif://www.onvif.org/Profile/Streaming onvif://www.onvif.org/Profile/G onvif://www.onvif.org/type/audio_encoder onvif://www.onvif.org/type/ptz onvif://www.onvif.org/hardware/DS-2CD3Q10FD-IW onvif://www.onvif.org/name/DS-2CD3Q10FD-IW onvif://www.onvif.org/location/city/hangzhou</d:Scopes>
+<d:XAddrs>http://192.168.1.106/onvif/device_service http://[fe80::4619:b6ff:fe5e:d625]/onvif/device_service</d:XAddrs>
+<d:MetadataVersion>10</d:MetadataVersion>
+</d:ProbeMatch>
+</d:ProbeMatches>
+</env:Body>
+</env:Envelope>
+HTTP/1.1 200 OK
+Date: Thu, 09 Oct 2014 09:37:37 GMT
+Server: App-webs/
+Connection: close
+Content-Length: 5880
+Content-Type: application/soap+xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Body><tds:GetCapabilitiesResponse><tds:Capabilities><tt:Analytics><tt:XAddr>http://192.168.1.106/onvif/Analytics</tt:XAddr>
+<tt:RuleSupport>true</tt:RuleSupport>
+<tt:AnalyticsModuleSupport>true</tt:AnalyticsModuleSupport>
+</tt:Analytics>
+<tt:Device><tt:XAddr>http://192.168.1.106/onvif/device_service</tt:XAddr>
+<tt:Network><tt:IPFilter>true</tt:IPFilter>
+<tt:ZeroConfiguration>true</tt:ZeroConfiguration>
+<tt:IPVersion6>true</tt:IPVersion6>
+<tt:DynDNS>true</tt:DynDNS>
+<tt:Extension><tt:Dot11Configuration>false</tt:Dot11Configuration>
+<tt:Extension><tt:DHCPv6>true</tt:DHCPv6>
+<tt:Dot1XConfigurations>0</tt:Dot1XConfigurations>
+</tt:Extension>
+</tt:Extension>
+</tt:Network>
+<tt:System><tt:DiscoveryResolve>false</tt:DiscoveryResolve>
+<tt:DiscoveryBye>true</tt:DiscoveryBye>
+<tt:RemoteDiscovery>true</tt:RemoteDiscovery>
+<tt:SystemBackup>false</tt:SystemBackup>
+<tt:SystemLogging>false</tt:SystemLogging>
+<tt:FirmwareUpgrade>true</tt:FirmwareUpgrade>
+<tt:SupportedVersions><tt:Major>2</tt:Major>
+<tt:Minor>20</tt:Minor>
+</tt:SupportedVersions>
+<tt:SupportedVersions><tt:Major>2</tt:Major>
+<tt:Minor>10</tt:Minor>
+</tt:SupportedVersions>
+<tt:SupportedVersions><tt:Major>2</tt:Major>
+<tt:Minor>0</tt:Minor>
+</tt:SupportedVersions>
+<tt:Extension><tt:HttpFirmwareUpgrade>true</tt:HttpFirmwareUpgrade>
+<tt:HttpSystemBackup>false</tt:HttpSystemBackup>
+<tt:HttpSystemLogging>false</tt:HttpSystemLogging>
+<tt:HttpSupportInformation>false</tt:HttpSupportInformation>
+</tt:Extension>
+</tt:System>
+<tt:IO><tt:InputConnectors>1</tt:InputConnectors>
+<tt:RelayOutputs>1</tt:RelayOutputs>
+<tt:Extension><tt:Auxiliary>false</tt:Auxiliary>
+<tt:AuxiliaryCommands>nothing</tt:AuxiliaryCommands>
+<tt:Extension/>
+</tt:Extension>
+</tt:IO>
+<tt:Security><tt:TLS1.1>false</tt:TLS1.1>
+<tt:TLS1.2>false</tt:TLS1.2>
+<tt:OnboardKeyGeneration>false</tt:OnboardKeyGeneration>
+<tt:AccessPolicyConfig>false</tt:AccessPolicyConfig>
+<tt:X.509Token>false</tt:X.509Token>
+<tt:SAMLToken>false</tt:SAMLToken>
+<tt:KerberosToken>false</tt:KerberosToken>
+<tt:RELToken>false</tt:RELToken>
+<tt:Extension><tt:TLS1.0>false</tt:TLS1.0>
+<tt:Extension><tt:Dot1X>false</tt:Dot1X>
+<tt:SupportedEAPMethod>0</tt:SupportedEAPMethod>
+<tt:RemoteUserHandling>false</tt:RemoteUserHandling>
+</tt:Extension>
+</tt:Extension>
+</tt:Security>
+</tt:Device>
+<tt:Events><tt:XAddr>http://192.168.1.106/onvif/Events</tt:XAddr>
+<tt:WSSubscriptionPolicySupport>true</tt:WSSubscriptionPolicySupport>
+<tt:WSPullPointSupport>true</tt:WSPullPointSupport>
+<tt:WSPausableSubscriptionManagerInterfaceSupport>false</tt:WSPausableSubscriptionManagerInterfaceSupport>
+</tt:Events>
+<tt:Imaging><tt:XAddr>http://192.168.1.106/onvif/Imaging</tt:XAddr>
+</tt:Imaging>
+<tt:Media><tt:XAddr>http://192.168.1.106/onvif/Media</tt:XAddr>
+<tt:StreamingCapabilities><tt:RTPMulticast>true</tt:RTPMulticast>
+<tt:RTP_TCP>true</tt:RTP_TCP>
+<tt:RTP_RTSP_TCP>true</tt:RTP_RTSP_TCP>
+</tt:StreamingCapabilities>
+<tt:Extension><tt:ProfileCapabilities><tt:MaximumNumberOfProfiles>10</tt:MaximumNumberOfProfiles>
+</tt:ProfileCapabilities>
+</tt:Extension>
+</tt:Media>
+<tt:PTZ><tt:XAddr>http://192.168.1.106/onvif/PTZ</tt:XAddr>
+</tt:PTZ>
+<tt:Extension><hikxsd:hikCapabilities><hikxsd:XAddr>http://192.168.1.106/onvif/hik_ext</hikxsd:XAddr>
+<hikxsd:IOInputSupport>true</hikxsd:IOInputSupport>
+<hikxsd:PrivacyMaskSupport>true</hikxsd:PrivacyMaskSupport>
+<hikxsd:PTZ3DZoomSupport>false</hikxsd:PTZ3DZoomSupport>
+<hikxsd:PTZPatternSupport>true</hikxsd:PTZPatternSupport>
+</hikxsd:hikCapabilities>
+<tt:DeviceIO><tt:XAddr>http://192.168.1.106/onvif/DeviceIO</tt:XAddr>
+<tt:VideoSources>1</tt:VideoSources>
+<tt:VideoOutputs>0</tt:VideoOutputs>
+<tt:AudioSources>1</tt:AudioSources>
+<tt:AudioOutputs>1</tt:AudioOutputs>
+<tt:RelayOutputs>1</tt:RelayOutputs>
+</tt:DeviceIO>
+</tt:Extension>
+</tds:Capabilities>
+</tds:GetCapabilitiesResponse>
+</env:Body>
+</env:Envelope>
+HTTP/1.1 200 OK
+Date: Thu, 09 Oct 2014 09:37:38 GMT
+Server: App-webs/
+Connection: close
+Content-Length: 19252
+Content-Type: application/soap+xml; charset=utf-8
+
+<?xml version="1.0" encoding="UTF-8"?>
+<env:Envelope xmlns:env="http://www.w3.org/2003/05/soap-envelope" xmlns:soapenc="http://www.w3.org/2003/05/soap-encoding" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tt="http://www.onvif.org/ver10/schema" xmlns:tds="http://www.onvif.org/ver10/device/wsdl" xmlns:trt="http://www.onvif.org/ver10/media/wsdl" xmlns:timg="http://www.onvif.org/ver20/imaging/wsdl" xmlns:tev="http://www.onvif.org/ver10/events/wsdl" xmlns:tptz="http://www.onvif.org/ver20/ptz/wsdl" xmlns:tan="http://www.onvif.org/ver20/analytics/wsdl" xmlns:tst="http://www.onvif.org/ver10/storage/wsdl" xmlns:ter="http://www.onvif.org/ver10/error" xmlns:dn="http://www.onvif.org/ver10/network/wsdl" xmlns:tns1="http://www.onvif.org/ver10/topics" xmlns:tmd="http://www.onvif.org/ver10/deviceIO/wsdl" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl" xmlns:wsoap12="http://schemas.xmlsoap.org/wsdl/soap12" xmlns:http="http://schemas.xmlsoap.org/wsdl/http" xmlns:d="http://schemas.xmlsoap.org/ws/2005/04/discovery" xmlns:wsadis="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:wsnt="http://docs.oasis-open.org/wsn/b-2" xmlns:wsa="http://www.w3.org/2005/08/addressing" xmlns:wstop="http://docs.oasis-open.org/wsn/t-1" xmlns:wsrf-bf="http://docs.oasis-open.org/wsrf/bf-2" xmlns:wsntw="http://docs.oasis-open.org/wsn/bw-2" xmlns:wsrf-rw="http://docs.oasis-open.org/wsrf/rw-2" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsrf-r="http://docs.oasis-open.org/wsrf/r-2" xmlns:trc="http://www.onvif.org/ver10/recording/wsdl" xmlns:tse="http://www.onvif.org/ver10/search/wsdl" xmlns:trp="http://www.onvif.org/ver10/replay/wsdl" xmlns:tnshik="http://www.hikvision.com/2011/event/topics" xmlns:hikwsd="http://www.onvifext.com/onvif/ext/ver10/wsdl" xmlns:hikxsd="http://www.onvifext.com/onvif/ext/ver10/schema"><env:Body><trt:GetProfilesResponse><trt:Profiles token="Profile_1" fixed="true"><tt:Name>mainStream</tt:Name>
+<tt:VideoSourceConfiguration token="VideoSourceToken"><tt:Name>VideoSourceConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:SourceToken>VideoSource_1</tt:SourceToken>
+<tt:Bounds x="0" y="0" width="1280" height="720"></tt:Bounds>
+</tt:VideoSourceConfiguration>
+<tt:AudioSourceConfiguration token="AudioSourceConfigToken"><tt:Name>AudioSourceConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:SourceToken>AudioSourceChannel1</tt:SourceToken>
+</tt:AudioSourceConfiguration>
+<tt:VideoEncoderConfiguration token="VideoEncoderToken_1"><tt:Name>VideoEncoder_1</tt:Name>
+<tt:UseCount>1</tt:UseCount>
+<tt:Encoding>H264</tt:Encoding>
+<tt:Resolution><tt:Width>1280</tt:Width>
+<tt:Height>720</tt:Height>
+</tt:Resolution>
+<tt:Quality>3.000000</tt:Quality>
+<tt:RateControl><tt:FrameRateLimit>10</tt:FrameRateLimit>
+<tt:EncodingInterval>1</tt:EncodingInterval>
+<tt:BitrateLimit>512</tt:BitrateLimit>
+</tt:RateControl>
+<tt:H264><tt:GovLength>15</tt:GovLength>
+<tt:H264Profile>Baseline</tt:H264Profile>
+</tt:H264>
+<tt:Multicast><tt:Address><tt:Type>IPv4</tt:Type>
+<tt:IPv4Address>0.0.0.0</tt:IPv4Address>
+</tt:Address>
+<tt:Port>8600</tt:Port>
+<tt:TTL>1</tt:TTL>
+<tt:AutoStart>false</tt:AutoStart>
+</tt:Multicast>
+<tt:SessionTimeout>PT5S</tt:SessionTimeout>
+</tt:VideoEncoderConfiguration>
+<tt:AudioEncoderConfiguration token="MainAudioEncoderToken"><tt:Name>AudioEncoderConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:Encoding>G711</tt:Encoding>
+<tt:Bitrate>64</tt:Bitrate>
+<tt:SampleRate>8</tt:SampleRate>
+<tt:Multicast><tt:Address><tt:Type>IPv4</tt:Type>
+<tt:IPv4Address>0.0.0.0</tt:IPv4Address>
+</tt:Address>
+<tt:Port>8600</tt:Port>
+<tt:TTL>1</tt:TTL>
+<tt:AutoStart>false</tt:AutoStart>
+</tt:Multicast>
+<tt:SessionTimeout>PT5S</tt:SessionTimeout>
+</tt:AudioEncoderConfiguration>
+<tt:VideoAnalyticsConfiguration token="VideoAnalyticsToken"><tt:Name>VideoAnalyticsName</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:AnalyticsEngineConfiguration><tt:AnalyticsModule Name="MyCellMotionModule" Type="tt:CellMotionEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="0"/>
+<tt:ElementItem Name="Layout"><tt:CellLayout Columns="22" Rows="18"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.090909" y="0.111111"/>
+</tt:Transformation>
+</tt:CellLayout>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyLineDetectorModule" Type="tt:LineDetectorEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="50"/>
+<tt:ElementItem Name="Layout"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002000" y="0.002000"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="1000"/>
+<tt:Point x="1000" y="1000"/>
+<tt:Point x="1000" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyFieldDetectorModule" Type="tt:FieldDetectorEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="50"/>
+<tt:ElementItem Name="Layout"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002000" y="0.002000"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="1000"/>
+<tt:Point x="1000" y="1000"/>
+<tt:Point x="1000" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyTamperDetecModule" Type="hikxsd:TamperEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="0"/>
+<tt:ElementItem Name="Transformation"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002841" y="0.003472"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="576"/>
+<tt:Point x="704" y="576"/>
+<tt:Point x="704" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+</tt:AnalyticsEngineConfiguration>
+<tt:RuleEngineConfiguration><tt:Rule Name="MyMotionDetectorRule" Type="tt:CellMotionDetector"><tt:Parameters><tt:SimpleItem Name="MinCount" Value="5"/>
+<tt:SimpleItem Name="AlarmOnDelay" Value="1000"/>
+<tt:SimpleItem Name="AlarmOffDelay" Value="1000"/>
+<tt:SimpleItem Name="ActiveCells" Value="zwA="/>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector1" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector2" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector3" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector4" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector1" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector2" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector3" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector4" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyTamperDetectorRule" Type="hikxsd:TamperDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+</tt:RuleEngineConfiguration>
+</tt:VideoAnalyticsConfiguration>
+<tt:PTZConfiguration token="PTZToken"><tt:Name>PTZ</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:NodeToken>PTZNODETOKEN</tt:NodeToken>
+<tt:DefaultContinuousPanTiltVelocitySpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</tt:DefaultContinuousPanTiltVelocitySpace>
+<tt:DefaultContinuousZoomVelocitySpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace</tt:DefaultContinuousZoomVelocitySpace>
+<tt:DefaultPTZTimeout>PT300S</tt:DefaultPTZTimeout>
+</tt:PTZConfiguration>
+<tt:Extension><tt:AudioOutputConfiguration token="AudioOutputConfigToken"><tt:Name>AudioOutputConfigName</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:OutputToken>AudioOutputToken</tt:OutputToken>
+<tt:SendPrimacy>www.onvif.org/ver20/HalfDuplex/Server</tt:SendPrimacy>
+<tt:OutputLevel>10</tt:OutputLevel>
+</tt:AudioOutputConfiguration>
+<tt:AudioDecoderConfiguration token="AudioDecoderConfigToken"><tt:Name>AudioDecoderConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+</tt:AudioDecoderConfiguration>
+</tt:Extension>
+</trt:Profiles>
+<trt:Profiles token="Profile_2" fixed="true"><tt:Name>subStream</tt:Name>
+<tt:VideoSourceConfiguration token="VideoSourceToken"><tt:Name>VideoSourceConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:SourceToken>VideoSource_1</tt:SourceToken>
+<tt:Bounds x="0" y="0" width="1280" height="720"></tt:Bounds>
+</tt:VideoSourceConfiguration>
+<tt:AudioSourceConfiguration token="AudioSourceConfigToken"><tt:Name>AudioSourceConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:SourceToken>AudioSourceChannel1</tt:SourceToken>
+</tt:AudioSourceConfiguration>
+<tt:VideoEncoderConfiguration token="VideoEncoderToken_2"><tt:Name>VideoEncoder_2</tt:Name>
+<tt:UseCount>1</tt:UseCount>
+<tt:Encoding>H264</tt:Encoding>
+<tt:Resolution><tt:Width>704</tt:Width>
+<tt:Height>576</tt:Height>
+</tt:Resolution>
+<tt:Quality>3.000000</tt:Quality>
+<tt:RateControl><tt:FrameRateLimit>10</tt:FrameRateLimit>
+<tt:EncodingInterval>1</tt:EncodingInterval>
+<tt:BitrateLimit>256</tt:BitrateLimit>
+</tt:RateControl>
+<tt:H264><tt:GovLength>25</tt:GovLength>
+<tt:H264Profile>Baseline</tt:H264Profile>
+</tt:H264>
+<tt:Multicast><tt:Address><tt:Type>IPv4</tt:Type>
+<tt:IPv4Address>0.0.0.0</tt:IPv4Address>
+</tt:Address>
+<tt:Port>8600</tt:Port>
+<tt:TTL>1</tt:TTL>
+<tt:AutoStart>false</tt:AutoStart>
+</tt:Multicast>
+<tt:SessionTimeout>PT5S</tt:SessionTimeout>
+</tt:VideoEncoderConfiguration>
+<tt:AudioEncoderConfiguration token="MainAudioEncoderToken"><tt:Name>AudioEncoderConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:Encoding>G711</tt:Encoding>
+<tt:Bitrate>64</tt:Bitrate>
+<tt:SampleRate>8</tt:SampleRate>
+<tt:Multicast><tt:Address><tt:Type>IPv4</tt:Type>
+<tt:IPv4Address>0.0.0.0</tt:IPv4Address>
+</tt:Address>
+<tt:Port>8600</tt:Port>
+<tt:TTL>1</tt:TTL>
+<tt:AutoStart>false</tt:AutoStart>
+</tt:Multicast>
+<tt:SessionTimeout>PT5S</tt:SessionTimeout>
+</tt:AudioEncoderConfiguration>
+<tt:VideoAnalyticsConfiguration token="VideoAnalyticsToken"><tt:Name>VideoAnalyticsName</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:AnalyticsEngineConfiguration><tt:AnalyticsModule Name="MyCellMotionModule" Type="tt:CellMotionEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="0"/>
+<tt:ElementItem Name="Layout"><tt:CellLayout Columns="22" Rows="18"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.090909" y="0.111111"/>
+</tt:Transformation>
+</tt:CellLayout>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyLineDetectorModule" Type="tt:LineDetectorEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="50"/>
+<tt:ElementItem Name="Layout"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002000" y="0.002000"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="1000"/>
+<tt:Point x="1000" y="1000"/>
+<tt:Point x="1000" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyFieldDetectorModule" Type="tt:FieldDetectorEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="50"/>
+<tt:ElementItem Name="Layout"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002000" y="0.002000"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="1000"/>
+<tt:Point x="1000" y="1000"/>
+<tt:Point x="1000" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+<tt:AnalyticsModule Name="MyTamperDetecModule" Type="hikxsd:TamperEngine"><tt:Parameters><tt:SimpleItem Name="Sensitivity" Value="0"/>
+<tt:ElementItem Name="Transformation"><tt:Transformation><tt:Translate x="-1.000000" y="-1.000000"/>
+<tt:Scale x="0.002841" y="0.003472"/>
+</tt:Transformation>
+</tt:ElementItem>
+<tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="576"/>
+<tt:Point x="704" y="576"/>
+<tt:Point x="704" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:AnalyticsModule>
+</tt:AnalyticsEngineConfiguration>
+<tt:RuleEngineConfiguration><tt:Rule Name="MyMotionDetectorRule" Type="tt:CellMotionDetector"><tt:Parameters><tt:SimpleItem Name="MinCount" Value="5"/>
+<tt:SimpleItem Name="AlarmOnDelay" Value="1000"/>
+<tt:SimpleItem Name="AlarmOffDelay" Value="1000"/>
+<tt:SimpleItem Name="ActiveCells" Value="zwA="/>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector1" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector2" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector3" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyLineDetector4" Type="tt:LineDetector"><tt:Parameters><tt:SimpleItem Name="Direction" Value="Any"/>
+<tt:ElementItem Name="Segments"><tt:Polyline><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polyline>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector1" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector2" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector3" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyFieldDetector4" Type="tt:FieldDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:Polygon><tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+<tt:Point x="0.000000" y="0.000000"/>
+</tt:Polygon>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+<tt:Rule Name="MyTamperDetectorRule" Type="hikxsd:TamperDetector"><tt:Parameters><tt:ElementItem Name="Field"><tt:PolygonConfiguration><tt:Polygon><tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+<tt:Point x="0" y="0"/>
+</tt:Polygon>
+</tt:PolygonConfiguration>
+</tt:ElementItem>
+</tt:Parameters>
+</tt:Rule>
+</tt:RuleEngineConfiguration>
+</tt:VideoAnalyticsConfiguration>
+<tt:PTZConfiguration token="PTZToken"><tt:Name>PTZ</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:NodeToken>PTZNODETOKEN</tt:NodeToken>
+<tt:DefaultContinuousPanTiltVelocitySpace>http://www.onvif.org/ver10/tptz/PanTiltSpaces/VelocityGenericSpace</tt:DefaultContinuousPanTiltVelocitySpace>
+<tt:DefaultContinuousZoomVelocitySpace>http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace</tt:DefaultContinuousZoomVelocitySpace>
+<tt:DefaultPTZTimeout>PT300S</tt:DefaultPTZTimeout>
+</tt:PTZConfiguration>
+<tt:Extension><tt:AudioOutputConfiguration token="AudioOutputConfigToken"><tt:Name>AudioOutputConfigName</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+<tt:OutputToken>AudioOutputToken</tt:OutputToken>
+<tt:SendPrimacy>www.onvif.org/ver20/HalfDuplex/Server</tt:SendPrimacy>
+<tt:OutputLevel>10</tt:OutputLevel>
+</tt:AudioOutputConfiguration>
+<tt:AudioDecoderConfiguration token="AudioDecoderConfigToken"><tt:Name>AudioDecoderConfig</tt:Name>
+<tt:UseCount>2</tt:UseCount>
+</tt:AudioDecoderConfiguration>
+</tt:Extension>
+</trt:Profiles>
+</trt:GetProfilesResponse>
+</env:Body>
+</env:Envelope>

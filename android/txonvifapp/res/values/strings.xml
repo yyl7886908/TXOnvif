@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">txonvifapp</string>
-    <string name="hello_world">Hello world!</string>
-
+    <string name="app_name">泰信摄像头</string>
+    <string name="search">搜索</string>
+		<string name="capability">能力</string>
+		<string name="strema_uri">地址</string>
+		<string name="rtsp_play">播放</string>
+		<string name="up">上</string>
+		<string name="down">下</string>
+		<string name="left">左</string>
+		<string name="right">右</string>
 </resources>
