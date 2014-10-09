@@ -10,7 +10,6 @@
 #include "include/imaging.h"
 #include "include/deviceio.h"
 #include "include/recording.h"
-/* #include "../loghelp.h" */
 
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT      3702
@@ -513,6 +512,14 @@ int TX_ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService
     printf("[%s]-[%d]  ptzService = %s \n", __func__, __LINE__, ptzService);
 #endif
     return ONVIF_PTZ_ContinuousMove(username, password, ptzService, profileToken, type, x, y, z);       
+}
+
+int TX_ONVIF_PTZ_RelativeMove(char *username, char *password, char *ptzService, char* profileToken,  TX_ONVIF_PTZ_Type type,  float x, float y, float z)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  ptzService = %s \n", __func__, __LINE__, ptzService);
+#endif
+    return ONVIF_PTZ_RelativeMove(username, password, ptzService, profileToken, type, x, y, z);   
 }
 
 int TX_ONVIF_PTZ_Stop(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type)

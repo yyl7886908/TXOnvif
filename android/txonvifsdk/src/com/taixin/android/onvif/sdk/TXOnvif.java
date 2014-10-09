@@ -10,6 +10,7 @@ import com.taixin.android.onvif.sdk.obj.DeviceCapability;
 import com.taixin.android.onvif.sdk.obj.DeviceInfo;
 import com.taixin.android.onvif.sdk.obj.MediaProfilesInfo;
 import com.taixin.android.onvif.sdk.obj.MediaStreamUri;
+import com.taixin.android.onvif.sdk.obj.PTZType;
 
 
 public class TXOnvif implements SimpleOnvif{
@@ -33,17 +34,16 @@ public class TXOnvif implements SimpleOnvif{
 	}
 	
 	@Override
-	public void getDeviceInfo() {
-		DeviceInfo info = _getDeviceInfomation("admin", "12345", deviceService);
+	public DeviceInfo getDeviceInfo(String username, String password, String deviceService) {
+		DeviceInfo info = _getDeviceInfomation(username, password, deviceService);
 		System.out.println("info.manufacturer = "+info.getManufacturer());
-		getMediaProfiles();
+		return info;
 	}
 	
 	@Override
-	public void getMediaProfiles() {
-		ArrayList<MediaProfilesInfo> profiles= _getMediaProfiles("admin", "12345", mediaService);
-		System.out.println("profiles size = "+profiles.size());
-		//getMediaStreamUri();
+	public ArrayList<MediaProfilesInfo> getMediaProfiles(String username, String password, String mediaService) {
+		ArrayList<MediaProfilesInfo> profiles= _getMediaProfiles(username, password, mediaService);
+		return profiles;
 	}
 	
 	@Override
@@ -52,11 +52,61 @@ public class TXOnvif implements SimpleOnvif{
 		return streamUri;
 	}
 	
+	@Override
+	public int ptzContinuousMove(String username, String password,
+			String ptzService, String profileToken, PTZType type, float x,
+			float y, float z) {
+		int ptzType = 0;
+		switch(type){
+		case PTZ_MOVE:
+			ptzType = 0;
+			break;
+		case PTZ_ZOOM:
+			ptzType = 1;
+			break;
+		}
+		return _ptzContinuousMove(username, password, ptzService, profileToken, ptzType, x, y, z);
+	}
+	
+	@Override
+	public int ptzRelativeMove(String username, String password,
+			String ptzService, String profileToken, PTZType type, float x,
+			float y, float z) {
+		int ptzType = 0;
+		switch(type){
+		case PTZ_MOVE:
+			ptzType = 0;
+			break;
+		case PTZ_ZOOM:
+			ptzType = 1;
+			break;
+		}
+		return _ptzRelativeMove(username, password, ptzService, profileToken, ptzType, x, y, z);
+	}
+
+	
+	@Override
+	public int ptzStop(String username, String password, String ptzService, String profileToken, PTZType type) {
+		int ptzType = 0;
+		switch(type){
+		case PTZ_MOVE:
+			ptzType = 0;
+			break;
+		case PTZ_ZOOM:
+			ptzType = 1;
+			break;
+		}
+		return _ptzStop(username, password, ptzService, profileToken, ptzType);
+	}
+	
 	public native ArrayList<Device>								_discoverDevices();
 	public native DeviceCapability 								_getDeviceCapabilities(String username, String password, String deviceService);
 	public native ArrayList<MediaProfilesInfo>	 	_getMediaProfiles(String username, String password, String mediaService);
 	public native ArrayList<MediaStreamUri>				_getMediaStreamUri(String username, String password, String deviceService);
 	public native DeviceInfo											_getDeviceInfomation(String username, String password, String deviceService);
+	public native int 														_ptzStop(String username, String password, String ptzService, String profileToken, int ptzType);
+	public native int 														_ptzContinuousMove(String username, String password,String ptzService, String profileToken, int type, float x, float y, float z);
+	public native int 														_ptzRelativeMove(String username, String password,String ptzService, String profileToken, int type, float x, float y, float z);
 	
 	static{
 		try{  	 
@@ -67,6 +117,5 @@ public class TXOnvif implements SimpleOnvif{
 			System.err.println("WARNING: Could not load library!");  
         }  
 	}
-
 
 }

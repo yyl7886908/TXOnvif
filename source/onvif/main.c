@@ -373,4 +373,6 @@ int main()
     onvif_media_getStreamURI();
     /* onvif_sleep(); */
     /* main_media_test(); */
+    /* onvif_ptz_GetServiceCapabilities(); */
+    onvif_ptz_Stop();
 }

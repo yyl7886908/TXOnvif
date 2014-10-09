@@ -9,16 +9,6 @@
 #include "../onvif/include/tx_onvif_sdk.h"
 #include "../onvif/include/tx_onvif_define.h"
 
-/* /\* #define	MULTICAST_IP           "239.255.255.250" *\/ */
-/* #define	MULTICAST_PORT      	  3702 */
-/* #define   TAG 								"TX_ONVIF_JNI" */
-
-/* #define JNIREG_CLASS "com/taixin/android/onvif/sdk/TXOnvif" */
-/* #define JNIREG_DEVICE "com/taixin/android/onvif/sdk/obj/Device" */
-/* #define JNIREG_DEVICE_CAPABILITY "com/taixin/android/onvif/sdk/obj/DeviceCapability" */
-/* #define JNIREG_DEVICE_PROFILES "com/taixin/android/onvif/sdk/obj/MediaProfilesInfo" */
-/* #define JNIREG_DEVICE_STREAM_URI "com/taixin/android/onvif/sdk/obj/MediaStreamUri" */
-/* #define JNIREG_DEVICE_STREAM_URI "com/taixin/android/onvif/sdk/obj/MediaStreamUri" */
 
 /*搜寻设备*/
 JNIEXPORT jobject JNICALL _discoverDevices(JNIEnv *env, jclass clazz)
@@ -190,6 +180,30 @@ JNIEXPORT jobject JNICALL _GetMediaStreamUri(JNIEnv *env, jclass clazz, jstring 
     return list_obj;
 }
 
+/* ptz stop */
+JNIEXPORT jint JNICALL  _ptzStop(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring ptzService, jstring profileToken, jint ptzType )
+{
+    int ret = TX_ONVIF_PTZ_Stop((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0),  (char*)(*env)->GetStringUTFChars(env, ptzService, 0),  (char*)(*env)->GetStringUTFChars(env, profileToken, 0), (int)ptzType);
+    ALOG(TX_LOG_INFO, TAG, "ptz stop ret = %d", ret);
+    return (jint)ret;
+}
+
+JNIEXPORT jint JNICALL  _ptzContinuousMove(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring ptzService, jstring profileToken, jint ptzType, jfloat x, jfloat y, jfloat z )
+{
+
+    ALOG(TX_LOG_INFO, TAG, "x y z %f, %f, %f\n",  (float)x, (float)y, (float)z);
+    int ret = TX_ONVIF_PTZ_ContinuousMove((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0),  (char*)(*env)->GetStringUTFChars(env, ptzService, 0),  (char*)(*env)->GetStringUTFChars(env, profileToken, 0), (int)ptzType, (float)x, (float)y, (float)z);
+    ALOG(TX_LOG_INFO, TAG, "ptz PTZType.PTZ_MOVE  ret = %d", ret);
+    return (jint)ret;
+}
+
+JNIEXPORT jint JNICALL  _ptzRelativeMove(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring ptzService, jstring profileToken, jint ptzType, jfloat x, jfloat y, jfloat z )
+{
+    int ret = TX_ONVIF_PTZ_RelativeMove((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0),  (char*)(*env)->GetStringUTFChars(env, ptzService, 0),  (char*)(*env)->GetStringUTFChars(env, profileToken, 0), (int)ptzType, (float)x, (float)y, (float)z);
+    ALOG(TX_LOG_INFO, TAG, "ptz RelativeMove  ret = %d", ret);
+    return (jint)ret;
+}
+
 
 
 /* 虚拟机 */
@@ -200,6 +214,9 @@ static JNINativeMethod gMethods[] = {
     {"_getDeviceInfomation", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/taixin/android/onvif/sdk/obj/DeviceInfo;", (void*)_GetDeviceInfomation},
     {"_getMediaProfiles", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/ArrayList;", (void*)_GetMediaProfiles},
     {"_getMediaStreamUri", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Ljava/util/ArrayList;", (void*)_GetMediaStreamUri},
+    {"_ptzStop", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)I", (void*)_ptzStop},
+    {"_ptzContinuousMove", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IFFF)I", (void*)_ptzContinuousMove},
+    {"_ptzRelativeMove", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IFFF)I", (void*)_ptzRelativeMove},
 
 };
 

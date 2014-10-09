@@ -13,6 +13,11 @@
 #include "stdsoap2.h"
 #include "base64.h"
 #include "sha1.h"
+#ifdef ANDROID
+#include "../loghelp.h"
+#endif
+
+#define TAG "TX_PTZ"
 
 typedef struct
 {
@@ -533,6 +538,9 @@ int ONVIF_PTZ_GotoHomePosition(char *username, char *password, char *ptzService,
 
 int ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type, float x, float y, float z)
 {
+#ifdef ANDROID
+    ALOG(TX_LOG_INFO, TAG, "%s, %s, %s, %s, %d, %f, %f, %f\n", username, password, ptzService, profileToken, type, x, y, z);
+#endif
     int retval = 0;
     struct soap *soap = NULL;
     
@@ -602,8 +610,86 @@ int ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, c
     return retval;   
 }
 
+int ONVIF_PTZ_RelativeMove(char *username, char *password, char *ptzService, char* profileToken, TX_ONVIF_PTZ_Type type, float x, float y, float z)
+{
+#ifdef ANDROID
+    ALOG(TX_LOG_INFO, TAG, " RelativeMove %s, %s, %s, %s, %d, %f, %f, %f\n", username, password, ptzService, profileToken, type, x, y, z);
+#endif
+   int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tptz__RelativeMove ptz_RelativeMove_req;
+    struct _tptz__RelativeMoveResponse ptz_RelativeMove_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, "%s", ptzService);
+    const char *soap_action = "http://www.onvif.org/ver10/ptz/wsdl/RelativeMove";
+    ptz_RelativeMove_req.ProfileToken = profileToken;
+    struct tt__PTZVector vec;
+    struct tt__Vector2D vec2D;
+    struct tt__Vector1D vec1D;
+    struct tt__PTZSpeed velocity;
+    
+    if(type ==  tx_onvif_ptz_move)
+    {
+        vec2D.x =x;
+        vec2D.y = y;
+        vec2D.space = NULL;//= soap_strdup(soap, "http://www.onvif.org/ver10/schema");
+        vec.PanTilt = &vec2D;
+        vec.Zoom = NULL;
+    }
+    else if(type == tx_onvif_ptz_zoom)
+    {
+        vec1D.x = z;
+        vec1D.space =  soap_strdup(soap, "http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace");
+        vec.PanTilt = NULL;
+        vec.Zoom = &vec1D;
+    }
+    else
+    {
+        printf("未知移动模式");
+    }
+    ptz_RelativeMove_req.Translation = &vec;
+    ptz_RelativeMove_req.Speed = 0;
+    printf("profileToken = %s\n", profileToken);
+    do
+    {
+        soap_call___tptz__RelativeMove(soap, soap_endpoint, soap_action, &ptz_RelativeMove_req, &ptz_RelativeMove_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;   
+}
+
 int ONVIF_PTZ_Stop(char *username, char *password, char *ptzService, char* profileToken, TX_ONVIF_PTZ_Type type)
 {
+#ifdef ANDROID
+    ALOG(TX_LOG_INFO, TAG, "%s, %s, %s, %s, %d\n", username, password, ptzService, profileToken, type);
+#endif
     int retval = 0;
     struct soap *soap = NULL;
     

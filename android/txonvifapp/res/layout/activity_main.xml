@@ -24,6 +24,12 @@
            android:layout_weight="1"/>
        
        <Button
+           android:id="@+id/button_profile"
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:text="@string/profile" 
+           android:layout_weight="1"/>
+       <Button
            android:id="@+id/button3"
            android:layout_width="wrap_content"
            android:layout_height="wrap_content"
@@ -96,6 +102,13 @@
            android:layout_width="fill_parent"
            android:layout_height="wrap_content"
            android:text="@string/right" 
+           android:layout_weight="1"/>
+		      
+		      <Button
+           android:id="@+id/buttonstop"
+           android:layout_width="fill_parent"
+           android:layout_height="wrap_content"
+           android:text="@string/stop" 
            android:layout_weight="1"/>
 		    </LinearLayout>
 		    

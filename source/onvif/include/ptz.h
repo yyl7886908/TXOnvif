@@ -44,7 +44,7 @@ int ONVIF_PTZ_SetHomePosition(char *username, char *password, char *ptzService, 
 
 int ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, char* profileToken, TX_ONVIF_PTZ_Type type, float x, float y, float z);
 
-int ONVIF_PTZ_RelativeMove(char *username, char *password, char *ptzService, char* profileToken);/* 此接口暂时未封装 */
+int ONVIF_PTZ_RelativeMove(char *username, char *password, char *ptzService, char* profileToken,  TX_ONVIF_PTZ_Type type,float x, float y, float z);
 
 int ONVIF_PTZ_SendAuxiliaryCommand(char *username, char *password, char *ptzService, char* profileToken);/* 此接口暂时未封装 */
 

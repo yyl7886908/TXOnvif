@@ -142,6 +142,8 @@ int TX_ONVIF_PTZ_GotoHomePosition(char *username, char *password, char *ptzServi
 
 int TX_ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type, float x, float y, float z);
 
+int TX_ONVIF_PTZ_RelativeMove(char *username, char *password, char *ptzService, char* profileToken, TX_ONVIF_PTZ_Type type,  float x, float y, float z);
+
 int TX_ONVIF_PTZ_Stop(char *username, char *password, char *ptzService, char *profileToken, TX_ONVIF_PTZ_Type type);
 
 /* deviceio */
