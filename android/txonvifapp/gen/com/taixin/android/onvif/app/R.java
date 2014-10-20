@@ -10,37 +10,99 @@ package com.taixin.android.onvif.app;
 public final class R {
     public static final class attr {
     }
+    public static final class color {
+        public static final int black=0x7f060004;
+        public static final int end_color=0x7f060003;
+        public static final int title_bg=0x7f060002;
+        public static final int transparency=0x7f060001;
+        public static final int white=0x7f060000;
+    }
+    public static final class dimen {
+        public static final int add_button_padding_left=0x7f070000;
+        public static final int grid_column_width=0x7f070006;
+        public static final int grid_horizontal_spacing=0x7f070004;
+        public static final int grid_padding_left=0x7f070002;
+        public static final int grid_padding_right=0x7f070003;
+        public static final int grid_vertical_spacing=0x7f070005;
+        public static final int home_button_padding_right=0x7f070001;
+    }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
+        public static final int add_button_back=0x7f020000;
+        public static final int camera_default=0x7f020001;
+        public static final int checkbox_normal=0x7f020002;
+        public static final int checkbox_pressed=0x7f020003;
+        public static final int home_button_back=0x7f020004;
+        public static final int ic_launcher=0x7f020005;
+        public static final int my_checkbox=0x7f020006;
+        public static final int selector=0x7f020007;
     }
     public static final class id {
-        public static final int button1=0x7f060000;
-        public static final int button2=0x7f060001;
-        public static final int button3=0x7f060003;
-        public static final int button4=0x7f060004;
-        public static final int button_profile=0x7f060002;
-        public static final int buttondown=0x7f060007;
-        public static final int buttonleft=0x7f060008;
-        public static final int buttonright=0x7f060009;
-        public static final int buttonstop=0x7f06000a;
-        public static final int buttonup=0x7f060006;
-        public static final int video1=0x7f060005;
+        public static final int GridView1=0x7f08001a;
+        public static final int add_device_button=0x7f080018;
+        public static final int button1=0x7f080000;
+        public static final int button2=0x7f080001;
+        public static final int button3=0x7f080003;
+        public static final int button4=0x7f080004;
+        public static final int button5=0x7f080005;
+        public static final int button_profile=0x7f080002;
+        public static final int buttondown=0x7f080008;
+        public static final int buttonimage1=0x7f080010;
+        public static final int buttonimage2=0x7f080011;
+        public static final int buttonimage3=0x7f080012;
+        public static final int buttonimage4=0x7f080013;
+        public static final int buttonimage5=0x7f080014;
+        public static final int buttonleft=0x7f080009;
+        public static final int buttonleftcruise=0x7f08000b;
+        public static final int buttonright=0x7f08000a;
+        public static final int buttonrightcruise=0x7f08000c;
+        public static final int buttonstop=0x7f08000d;
+        public static final int buttonup=0x7f080007;
+        public static final int buttonzoomfar=0x7f08000e;
+        public static final int buttonzoomnear=0x7f08000f;
+        public static final int cb=0x7f080022;
+        public static final int device_list=0x7f08001b;
+        public static final int device_title=0x7f08001e;
+        public static final int device_title_name=0x7f08001d;
+        public static final int device_uuid=0x7f080020;
+        public static final int device_uuid_name=0x7f08001f;
+        public static final int home_button=0x7f080019;
+        public static final int img=0x7f08001c;
+        public static final int seekbar1=0x7f080015;
+        public static final int seekbar2=0x7f080016;
+        public static final int seekbar3=0x7f080017;
+        public static final int service_adderss=0x7f080021;
+        public static final int video1=0x7f080006;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
+        public static final int camera=0x7f030001;
+        public static final int cameras_grid=0x7f030002;
+        public static final int device_list=0x7f030003;
+        public static final int device_list_item=0x7f030004;
     }
     public static final class string {
         public static final int app_name=0x7f040000;
+        public static final int brightness=0x7f040013;
         public static final int capability=0x7f040002;
-        public static final int down=0x7f040007;
-        public static final int left=0x7f040008;
+        public static final int change=0x7f040006;
+        public static final int colorSaturation=0x7f040014;
+        public static final int contrast=0x7f040015;
+        public static final int down=0x7f040008;
+        public static final int image=0x7f040010;
+        public static final int image_param=0x7f040011;
+        public static final int image_set=0x7f040012;
+        public static final int left=0x7f040009;
+        public static final int left_cruise=0x7f04000c;
         public static final int profile=0x7f040003;
-        public static final int right=0x7f040009;
+        public static final int right=0x7f04000a;
+        public static final int right_cruise=0x7f04000b;
         public static final int rtsp_play=0x7f040005;
         public static final int search=0x7f040001;
-        public static final int stop=0x7f04000a;
+        public static final int stop=0x7f04000d;
         public static final int strema_uri=0x7f040004;
-        public static final int up=0x7f040006;
+        public static final int up=0x7f040007;
+        public static final int zoom_far=0x7f04000e;
+        public static final int zoom_near=0x7f04000f;
     }
     public static final class style {
         /** 
@@ -72,17 +134,6 @@ public final class R {
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
-
-        Base application theme for API 11+. This theme completely replaces
-        AppBaseTheme from res/values/styles.xml on API 11+ devices.
-    
- API 11 theme customizations can go here. 
-
-        Base application theme for API 14+. This theme completely replaces
-        AppBaseTheme from BOTH res/values/styles.xml and
-        res/values-v11/styles.xml on API 14+ devices.
-    
- API 14 theme customizations can go here. 
          */
         public static final int AppBaseTheme=0x7f050000;
         /**  Application theme. 
@@ -91,5 +142,9 @@ public final class R {
  All customizations that are NOT specific to a particular API-level can go here. 
          */
         public static final int AppTheme=0x7f050001;
+        public static final int custom_checkbox=0x7f050003;
+        /** 除去背景色
+         */
+        public static final int myDialogTheme=0x7f050002;
     }
 }

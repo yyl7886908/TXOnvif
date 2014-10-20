@@ -577,6 +577,9 @@ int ONVIF_PTZ_ContinuousMove(char *username, char *password, char *ptzService, c
     }
     else if(type == tx_onvif_ptz_zoom)
     {
+#ifdef ANDROID
+    ALOG(TX_LOG_INFO, TAG,"ptz zoom~~~~");
+#endif
         vec1D.x = z;
         vec1D.space =  soap_strdup(soap, "http://www.onvif.org/ver10/tptz/ZoomSpaces/VelocityGenericSpace");
         velocity.PanTilt = NULL;

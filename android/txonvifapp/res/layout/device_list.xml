@@ -1,0 +1,23 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <ListView 
+		  android:id="@+id/device_list" 
+		  android:layout_width="match_parent" 
+		  android:layout_height="match_parent"
+		  android:paddingTop="50dp"
+		  android:paddingLeft="50dp"
+		  android:paddingRight="50dp"
+		  android:cacheColorHint="#00000000"
+		  android:divider="#2A4562"
+		  android:dividerHeight="3px"
+		  android:listSelector="#264365"
+		  android:drawSelectorOnTop="false"
+		  
+		  >
+		</ListView>	
+
+</RelativeLayout>

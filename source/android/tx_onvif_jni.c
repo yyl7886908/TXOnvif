@@ -180,7 +180,7 @@ JNIEXPORT jobject JNICALL _GetMediaStreamUri(JNIEnv *env, jclass clazz, jstring 
     return list_obj;
 }
 
-/* ptz stop */
+/* ptz  */
 JNIEXPORT jint JNICALL  _ptzStop(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring ptzService, jstring profileToken, jint ptzType )
 {
     int ret = TX_ONVIF_PTZ_Stop((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0),  (char*)(*env)->GetStringUTFChars(env, ptzService, 0),  (char*)(*env)->GetStringUTFChars(env, profileToken, 0), (int)ptzType);
@@ -204,6 +204,48 @@ JNIEXPORT jint JNICALL  _ptzRelativeMove(JNIEnv *env, jclass clazz, jstring user
     return (jint)ret;
 }
 
+/* imging */
+JNIEXPORT jobject JNICALL _getImagingSetting(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring imagingService, jstring videoSourceToken)
+{
+    ALOG(TX_LOG_INFO, TAG, "ptz getImagingSetting  videoSourceToken = %s", (char*)(*env)->GetStringUTFChars(env, videoSourceToken, 0));
+    TX_ONVIF_IMAGING_SETTINGS imagingSettings;
+    memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS));
+    int ret=TX_ONVIF_IMAGING_GetImagingSettings2((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0), (char*)(*env)->GetStringUTFChars(env, imagingService, 0), (char*)(*env)->GetStringUTFChars(env, videoSourceToken, 0), &imagingSettings);
+    ALOG(TX_LOG_INFO, TAG, "TX_ONVIF_DEVICE_deviceInfo ret = %d\n", ret);
+
+    jclass    m_cls   = (*env)->FindClass(env, JNIREG_IMAGING_SETTING);
+    jmethodID m_mid   = (*env)->GetMethodID(env, m_cls,"<init>","()V");
+    jfieldID  m_fid_1 = (*env)->GetFieldID(env, m_cls,"brightness","F");
+    jfieldID  m_fid_2 = (*env)->GetFieldID(env, m_cls,"colorSaturation","F");
+    jfieldID  m_fid_3 = (*env)->GetFieldID(env, m_cls,"contrast","F");
+    jobject   m_obj   = (*env)->NewObject(env, m_cls,m_mid);
+    (*env)->SetFloatField(env, m_obj,m_fid_1, (jfloat)imagingSettings.brightness);
+    (*env)->SetFloatField(env, m_obj,m_fid_2, (jfloat)imagingSettings.colorSaturation);
+     (*env)->SetFloatField(env, m_obj,m_fid_3, (jfloat)imagingSettings.contrast);
+     return m_obj;
+}
+
+JNIEXPORT jint JNICALL _setImagingSetting(JNIEnv *env, jclass clazz, jstring username, jstring password, jstring imagingService, jstring videoSourceToken, jobject imgSetting)
+{
+    ALOG(TX_LOG_INFO, TAG, "ptz setImagingSetting  videoSourceToken = %s", (char*)(*env)->GetStringUTFChars(env, videoSourceToken, 0));
+    jclass jcls = (*env)->GetObjectClass(env,  imgSetting );
+    jfieldID jfid1 = (*env)->GetFieldID( env, jcls, "brightness", "F" );
+    jfieldID jfid2 = (*env)->GetFieldID( env, jcls, "colorSaturation", "F" );
+    jfieldID jfid3 = (*env)->GetFieldID( env ,jcls, "contrast", "F" );
+    jfloat brightness = (*env)->GetFloatField(env,  imgSetting, jfid1 );
+    jfloat colorSaturation = (*env)->GetFloatField(env,  imgSetting, jfid2);
+    jfloat contrast = (*env)->GetFloatField(env, imgSetting, jfid3);
+    ALOG(TX_LOG_INFO, TAG, "jfid1 = %f\n", (float)brightness);
+    TX_ONVIF_IMAGING_SETTINGS imagingSettings;
+    memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS));
+    imagingSettings.brightness = (float)brightness;
+    imagingSettings.colorSaturation =  (float)colorSaturation;
+    imagingSettings.contrast =  (float)contrast;
+    int ret=TX_ONVIF_IMAGING_SetImagingSettings((char*)(*env)->GetStringUTFChars(env, username, 0), (char*)(*env)->GetStringUTFChars(env, password, 0), (char*)(*env)->GetStringUTFChars(env, imagingService, 0), (char*)(*env)->GetStringUTFChars(env, videoSourceToken, 0), &imagingSettings);
+    ALOG(TX_LOG_INFO, TAG, "TX_ONVIF_DEVICE_SetImagingSettings ret = %d\n", ret);
+    return (jint)ret;
+}
+
 
 
 /* 虚拟机 */
@@ -217,6 +259,8 @@ static JNINativeMethod gMethods[] = {
     {"_ptzStop", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;I)I", (void*)_ptzStop},
     {"_ptzContinuousMove", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IFFF)I", (void*)_ptzContinuousMove},
     {"_ptzRelativeMove", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;IFFF)I", (void*)_ptzRelativeMove},
+    {"_getImagingSetting", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)Lcom/taixin/android/onvif/sdk/obj/ImagingSetting;", (void*)_getImagingSetting},
+    {"_setImagingSetting", "(Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Lcom/taixin/android/onvif/sdk/obj/ImagingSetting;)I", (void*)_setImagingSetting},
 
 };
 

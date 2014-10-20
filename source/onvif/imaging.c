@@ -118,8 +118,7 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 		memset(header->wsa__To, '\0', 1024);
 		strncpy(header->wsa__To,  was_To, 1024);//"urn:schemas-xmlsoap-org:ws:2005:04:discovery";	
 	}
-	soap->header = header;
-	return soap;
+	soap->header = header;	return soap;
 } 
 
 
@@ -205,8 +204,65 @@ int ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *imagi
         else  
         {         
               printf("[%s][%d]   success !\n", __func__, __LINE__);
-              printf("imaging_GetImagingSettings_resp, brightness = %d\n", imaging_GetImagingSettings_resp.ImagingSettings->ColorSaturation);
+              printf("imaging_GetImagingSettings_resp, brightness = %f\n", *imaging_GetImagingSettings_resp.ImagingSettings->Brightness);
+              printf("imaging_GetImagingSettings_resp, ColorSaturation = %f\n",*imaging_GetImagingSettings_resp.ImagingSettings->ColorSaturation);
+              printf("imaging_GetImagingSettings_resp, Contrast = %f\n", *imaging_GetImagingSettings_resp.ImagingSettings->Contrast);
+
         }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_IMAGING_GetImagingSettings2(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imagingSettings)
+{
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _timg__GetImagingSettings imaging_GetImagingSettings_req;
+    struct _timg__GetImagingSettingsResponse imaging_GetImagingSettings_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, "%s", imagingService);
+    const char *soap_action = "http://www.onvif.org/ver10/imaging/wsdl/GetImagingSettings";
+    imaging_GetImagingSettings_req.VideoSourceToken = videoSourceToken;
+    printf("videoSourceToken = %s\n", videoSourceToken);
+    do
+    {
+        soap_call___timg__GetImagingSettings(soap, soap_endpoint, soap_action, &imaging_GetImagingSettings_req, &imaging_GetImagingSettings_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else  
+        {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+              printf("imaging_GetImagingSettings_resp, brightness = %f\n", *imaging_GetImagingSettings_resp.ImagingSettings->Brightness);
+              printf("imaging_GetImagingSettings_resp, ColorSaturation = %f\n",*imaging_GetImagingSettings_resp.ImagingSettings->ColorSaturation);
+              printf("imaging_GetImagingSettings_resp, Contrast = %f\n", *imaging_GetImagingSettings_resp.ImagingSettings->Contrast);
+
+        }
+
+        imagingSettings->brightness = *imaging_GetImagingSettings_resp.ImagingSettings->Brightness;
+        imagingSettings->colorSaturation = *imaging_GetImagingSettings_resp.ImagingSettings->ColorSaturation;
+        imagingSettings->contrast = *imaging_GetImagingSettings_resp.ImagingSettings->Contrast;
     }while(0);
 
     free(soap_endpoint);
@@ -344,6 +400,74 @@ int ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagingSe
         }
         else  
         {         
+              printf("[%s][%d]   success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    soap_destroy(soap);
+    return retval;
+}
+
+int ONVIF_IMAGING_SetImagingSettings(char *username, char *password, char *imagingService, char *videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imageSetting)
+{
+    printf("brightness = %f\n", imageSetting->brightness);
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _timg__SetImagingSettings imaging_SetImagingSettings_req;
+    struct _timg__SetImagingSettingsResponse imaging_SetImagingSettings_resp;
+
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+        
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+    
+    sprintf(soap_endpoint, "%s", imagingService);
+    const char *soap_action = "http://www.onvif.org/ver10/imaging/wsdl/SetImagingSettings";
+    struct tt__ImagingSettings20 imgSet;
+    imgSet.BacklightCompensation = NULL;
+    imgSet.Brightness = &imageSetting->brightness;
+    imgSet.ColorSaturation = &imageSetting->colorSaturation;
+    imgSet.Contrast = &imageSetting->contrast;
+    imgSet.Exposure = NULL;
+    imgSet.Focus = NULL;
+    printf("1\n");
+    imgSet.IrCutFilter = 0;
+    printf("2\n");
+    imgSet.Sharpness=NULL;
+    printf("3\n");
+    imgSet.WideDynamicRange = NULL;
+    printf("4\n");
+    imgSet.WhiteBalance = NULL;
+    imgSet.Extension = NULL;
+    imgSet.__anyAttribute = NULL;
+    printf("5\n");
+
+    imaging_SetImagingSettings_req.ImagingSettings =&imgSet;
+    imaging_SetImagingSettings_req.VideoSourceToken = videoSourceToken;
+    imaging_SetImagingSettings_req.ForcePersistence = 0;
+    printf("6\n");
+    do
+    {
+        soap_call___timg__SetImagingSettings(soap, soap_endpoint, soap_action, &imaging_SetImagingSettings_req, &imaging_SetImagingSettings_resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else
+        {
               printf("[%s][%d]   success !\n", __func__, __LINE__);
         }
     }while(0);

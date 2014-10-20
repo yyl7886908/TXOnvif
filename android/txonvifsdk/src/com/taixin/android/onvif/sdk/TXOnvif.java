@@ -3,11 +3,11 @@ package com.taixin.android.onvif.sdk;
 import java.util.ArrayList;
 
 import android.content.Context;
-import android.widget.Toast;
 
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.DeviceCapability;
 import com.taixin.android.onvif.sdk.obj.DeviceInfo;
+import com.taixin.android.onvif.sdk.obj.ImagingSetting;
 import com.taixin.android.onvif.sdk.obj.MediaProfilesInfo;
 import com.taixin.android.onvif.sdk.obj.MediaStreamUri;
 import com.taixin.android.onvif.sdk.obj.PTZType;
@@ -17,13 +17,18 @@ public class TXOnvif implements SimpleOnvif{
 		
 	public String deviceService;
 	public String mediaService;
-	public Context context;
-	public TXOnvif(Context context){
-		this.context = context;
-	}
+
 	@Override
 	public ArrayList<Device> discoverDevices() {
 			ArrayList<Device> deviceList = _discoverDevices();
+			for(Device device : deviceList){
+				String Address = device.getAddress();
+				String XAddr = device.getXAddrs();
+				String a[] = XAddr.split(" ");
+				device.setDeviceService(a[0]);
+				String uuids[] = Address.split(":");
+				device.setUuid(uuids[2]);
+			}
 			return deviceList;
 	}
 	
@@ -50,6 +55,18 @@ public class TXOnvif implements SimpleOnvif{
 	public ArrayList<MediaStreamUri> getMediaStreamUri(String username, String password, String deviceService) {
 		ArrayList<MediaStreamUri> streamUri= _getMediaStreamUri(username, password, deviceService);
 		return streamUri;
+	}
+	
+
+	@Override
+	public ImagingSetting getImagingSetting(String username, String password,String imagingService, String videoSourceToken) {
+		ImagingSetting imgSetting = _getImagingSetting(username, password, imagingService, videoSourceToken);
+		return imgSetting;
+	}
+	
+	@Override
+	public int setImagingSetting(String username, String password,String imagingService, String videoSourceToken,ImagingSetting imgSetting) {
+		return _setImagingSetting(username, password, imagingService, videoSourceToken, imgSetting);
 	}
 	
 	@Override
@@ -104,6 +121,8 @@ public class TXOnvif implements SimpleOnvif{
 	public native ArrayList<MediaProfilesInfo>	 	_getMediaProfiles(String username, String password, String mediaService);
 	public native ArrayList<MediaStreamUri>				_getMediaStreamUri(String username, String password, String deviceService);
 	public native DeviceInfo											_getDeviceInfomation(String username, String password, String deviceService);
+	public native ImagingSetting									_getImagingSetting(String username, String password, String imagingService, String videoSourceToken);
+	public native int 														_setImagingSetting(String username, String password,String imagingService, String videoSourceToken,ImagingSetting imgSetting);
 	public native int 														_ptzStop(String username, String password, String ptzService, String profileToken, int ptzType);
 	public native int 														_ptzContinuousMove(String username, String password,String ptzService, String profileToken, int type, float x, float y, float z);
 	public native int 														_ptzRelativeMove(String username, String password,String ptzService, String profileToken, int type, float x, float y, float z);

@@ -211,11 +211,38 @@ void onvif_imaging_GetServiceCapabilities()
     printf("---------------------------------------------------->\n\n\n"); 
 }
 
+void onvif_imaging_SetImagingSettings()
+{
+    TX_ONVIF_IMAGING_SETTINGS imagingSettings;
+    memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS));
+    imagingSettings.brightness = 50.0f;
+    imagingSettings.colorSaturation = 50.0f;
+    imagingSettings.contrast = 50.0f;
+    int ret=TX_ONVIF_IMAGING_SetImagingSettings(USERNAME, PASSWORD, imagingService, videoSourceToken, &imagingSettings);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
 void onvif_imaging_GetImagingSettings()
 {
     TX_ONVIF_IMAGING_SETTINGS20 imagingSettings;
     memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS20));
-    int ret=TX_ONVIF_IMAGING_GetImagingSettings(USERNAME, PASSWORD, imagingService, videoSourceToken, imagingSettings);
+    int ret=TX_ONVIF_IMAGING_GetImagingSettings(USERNAME, PASSWORD, imagingService, videoSourceToken, &imagingSettings);
+    printf("=========>imagingSettings Brightness = %f\n", imagingSettings.brightness);
+    printf("=========>imagingSettings ColorSaturation = %f\n", imagingSettings.colorSaturation);
+    printf("=========>imagingSettings Contrast = %f\n", imagingSettings.contrast);
+    printf("=============> ret= %d\n", ret);
+    printf("---------------------------------------------------->\n\n\n"); 
+}
+
+void onvif_imaging_GetImagingSettings2()
+{
+    TX_ONVIF_IMAGING_SETTINGS imagingSettings;
+    memset(&imagingSettings, 0, sizeof(TX_ONVIF_IMAGING_SETTINGS));
+    int ret=TX_ONVIF_IMAGING_GetImagingSettings2(USERNAME, PASSWORD, imagingService, videoSourceToken, &imagingSettings);
+    printf("=========>imagingSettings Brightness = %f\n", imagingSettings.brightness);
+    printf("=========>imagingSettings ColorSaturation = %f\n", imagingSettings.colorSaturation);
+    printf("=========>imagingSettings Contrast = %f\n", imagingSettings.contrast);
     printf("=============> ret= %d\n", ret);
     printf("---------------------------------------------------->\n\n\n"); 
 }
@@ -363,16 +390,11 @@ int main()
     onvif_discovery1();
     onvif_sleep();
     onvif_getCapabilities();
-    /* onvif_sleep(); */
-    /* onvif_getDeviceInfo(); */
-    onvif_sleep();
     onvif_media_getProfiles();
-    onvif_sleep();
-    /* main_recording_test(); */
-    /* onvif_sleep(); */
+
     onvif_media_getStreamURI();
-    /* onvif_sleep(); */
-    /* main_media_test(); */
-    /* onvif_ptz_GetServiceCapabilities(); */
-    onvif_ptz_Stop();
+    onvif_imaging_GetServiceCapabilities();
+    onvif_imaging_GetImagingSettings2();
+    onvif_imaging_SetImagingSettings();
+    onvif_imaging_GetImagingSettings2();
 }

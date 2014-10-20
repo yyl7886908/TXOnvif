@@ -9,3 +9,5 @@
 #define JNIREG_DEVICE_STREAM_URI "com/taixin/android/onvif/sdk/obj/MediaStreamUri"
 #define JNIREG_DEVICE_STREAM_URI "com/taixin/android/onvif/sdk/obj/MediaStreamUri"
 #define JNIREG_DEVICE_INFO "com/taixin/android/onvif/sdk/obj/DeviceInfo"
+
+#define JNIREG_IMAGING_SETTING "com/taixin/android/onvif/sdk/obj/ImagingSetting"

@@ -416,6 +416,14 @@ int TX_ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *im
     return ONVIF_IMAGING_GetImagingSettings(username, password, imagingService, videoSourceToken, imagingSettings);    
 }
 
+int TX_ONVIF_IMAGING_GetImagingSettings2(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imagingSettings)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_GetImagingSettings2(username, password, imagingService, videoSourceToken, imagingSettings);    
+}
+
 int TX_ONVIF_IMAGING_GetOptions(char *username, char *password, char *imagingService, char* videoSourceToken)
 {
 #ifdef DEBUG
@@ -438,6 +446,14 @@ int TX_ONVIF_IMAGING_GetMoveOptions(char *username, char *password, char *imagin
     printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
 #endif
     return ONVIF_IMAGING_GetMoveOptions(username, password, imagingService, videoSourceToken);    
+}
+
+int TX_ONVIF_IMAGING_SetImagingSettings(char *username, char *password, char *imagingService, char *videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imageSetting)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  imagingService = %s \n", __func__, __LINE__, imagingService);
+#endif
+    return ONVIF_IMAGING_SetImagingSettings(username, password, imagingService, videoSourceToken, imageSetting);    
 }
 
 

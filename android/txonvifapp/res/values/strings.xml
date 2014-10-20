@@ -6,10 +6,21 @@
 		<string name="capability">能力</string>
 		<string name="profile">描述</string>
 		<string name="strema_uri">地址</string>
-		<string name="rtsp_play">播放</string>
+		<string name="rtsp_play">频道1</string>
+		<string name="change">频道2</string>
 		<string name="up">上</string>
 		<string name="down">下</string>
 		<string name="left">左</string>
 		<string name="right">右</string>
+		<string name="right_cruise">右巡航</string>
+		<string name="left_cruise">左巡航</string>
 		<string name="stop">停止</string>
+		<string name="zoom_far">远</string>
+		<string name="zoom_near">近</string>
+		<string name="image">图像</string>
+		<string name="image_param">图像参数</string>
+		<string name="image_set">图像设置</string>
+		<string name="brightness">亮度</string>
+		<string name="colorSaturation">色度</string>
+		<string name="contrast">对比度</string>
 </resources>

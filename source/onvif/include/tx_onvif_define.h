@@ -249,9 +249,15 @@ typedef struct
     struct TX_ONVIF_WHITE_BALANCE20    *white_balance;
     /* struct tt__ImagingSettingsExtension20*  Extension */
 }
-    TX_ONVIF_IMAGING_SETTINGS20, LPTX_ONVIF_IMAGING_SETTINGS20;
+    TX_ONVIF_IMAGING_SETTINGS20, *LPTX_ONVIF_IMAGING_SETTINGS20;
 
-
+typedef struct
+{
+    float brightness;             /* 亮度 */
+    float colorSaturation;     /* 色度 */
+    float contrast;                 /* 对比度 */
+}
+    TX_ONVIF_IMAGING_SETTINGS, *LPTX_ONVIF_IMAGING_SETTINGS;
 
 /* ptz */
 

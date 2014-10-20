@@ -18,7 +18,9 @@ int ONVIF_IMAGING_GetServiceCapabilities(char *username, char *password, char *i
 
 int ONVIF_IMAGING_GetImagingSettings(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS20 imagingSettings);
 
-int ONVIF_IMAGING_SetImagingSettings(char *username, char *password, char *imagingService);/* 此接口暂时未封装 */
+int ONVIF_IMAGING_GetImagingSettings2(char *username, char *password, char *imagingService, char* videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imagingSettings);
+
+int ONVIF_IMAGING_SetImagingSettings(char *username, char *password, char *imagingService, char *videoSourceToken, LPTX_ONVIF_IMAGING_SETTINGS imageSetting);
 
 int ONVIF_IMAGING_GetOptions(char *username, char *password, char *imagingService, char *videoSourceToken);
 

@@ -1,5 +1,8 @@
 package com.taixin.android.onvif.app.data;
 
+/**
+ *摄像头数据管理 
+ */
 public class DataManager {
 	
 	private static DataManager instance;

@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:background="@drawable/selector"
+    android:orientation="horizontal" >
+
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="20dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/device_title_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:text="name："
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" >
+            </TextView>
+            <TextView
+                android:id="@+id/device_title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:gravity="center_vertical"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                android:textStyle="bold" >
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            
+            <TextView
+            android:id="@+id/device_uuid_name"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="uuid："
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" >
+        </TextView>
+        <TextView
+            android:id="@+id/device_uuid"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="38065863-9989-11b4-8329-4419b65ed625"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" >
+        </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+         <TextView
+            android:id="@+id/service_adderss"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="服务地址："
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" >
+        </TextView>
+        <TextView
+            android:id="@+id/service_adderss"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:text="http://192.168.1.106/onvif/device_service"
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:textStyle="bold" >
+        </TextView>
+        
+        </LinearLayout>
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cb"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="300dp"
+        android:checked="false"
+        style="@style/custom_checkbox"
+        android:layout_gravity="center"
+        android:text="已添加" >
+    </CheckBox>
+
+</LinearLayout>
