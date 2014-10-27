@@ -25,6 +25,8 @@
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/alloca.h \
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/strings.h \
  /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/memory.h \
+ /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/../loghelp.h \
+ /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/log.h \
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/wsdd.h \
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/soapH.h \
  /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/soapStub.h \
@@ -136,6 +138,10 @@
 /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/strings.h:
 
 /home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/memory.h:
+
+/home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/../loghelp.h:
+
+/home/yyl/javatool/android-ndk-r9d/platforms/android-19/arch-arm/usr/include/android/log.h:
 
 /home/yyl/github/TXOnvif/android/txonvifsdk/jni/source/onvif/wsdd.h:
 

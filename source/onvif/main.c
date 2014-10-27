@@ -28,6 +28,7 @@ void varInit()
     memset(searchService, 0, sizeof(searchService));
     memset(profileToken, 0, sizeof(profileToken));
     memset(deviceioService, 0, sizeof(deviceioService));
+    /* PASSWORD = ""; */
     printf("var init OK!\n");
     printf("---------------------------------------------------->\n");
 }
@@ -67,6 +68,7 @@ void onvif_getCapabilities()
 {
     TX_ONVIF_CAPABILITY_URI capabilityInfo; 
 	memset(&capabilityInfo, 0, sizeof(TX_ONVIF_CAPABILITY_URI));
+	printf("device_service = %s\n",deviceService);
 	int ret=TX_ONVIF_DEVICE_GetCapabilities( USERNAME, PASSWORD, capability_all, deviceService, &capabilityInfo);
     printf("=============>onvif_getCapabilities ret= %d\n", ret);
     printf("capabilityInfo\n analytics = %s\n device = %s\n events = %s\n imaging = %s\n media = %s\n ptz = %s\n",  capabilityInfo.analytics, capabilityInfo.device, capabilityInfo.events, capabilityInfo.imaging, capabilityInfo.media, capabilityInfo.ptz);
@@ -388,13 +390,13 @@ int main()
     printf("start main---------------->\n");
     varInit();
     onvif_discovery1();
-    onvif_sleep();
+    /* onvif_sleep(); */
     onvif_getCapabilities();
-    onvif_media_getProfiles();
+    onvif_media_getProfiles(); 
 
-    onvif_media_getStreamURI();
-    onvif_imaging_GetServiceCapabilities();
-    onvif_imaging_GetImagingSettings2();
-    onvif_imaging_SetImagingSettings();
-    onvif_imaging_GetImagingSettings2();
+    onvif_media_getStreamURI(); 
+    /* onvif_imaging_GetServiceCapabilities(); */
+    /* onvif_imaging_GetImagingSettings2(); */
+    /* onvif_imaging_SetImagingSettings(); */
+    /* onvif_imaging_GetImagingSettings2(); */
 }

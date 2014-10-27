@@ -7,6 +7,7 @@ public class Device {
 	private String Address;
 	private String item;
 	private int 	 MetadataVersion;
+	/*显示时候使用*/
 	private String uuid;
 	private String deviceService;
 	

@@ -1,0 +1,58 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0000"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="50dp" >
+
+        <ImageButton
+            android:id="@+id/local_videos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/local_videos" />
+
+        <ImageButton
+            android:id="@+id/local_photos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/local_photos" />
+
+        <ImageButton
+            android:id="@+id/local_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/local_setting" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <fragment
+            android:id="@+id/fragement_videos"
+            android:name="com.taixin.android.onvif.app.fragments.LocalVideoFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="10" />
+
+        <fragment
+            android:id="@+id/fragement_photos"
+            android:name="com.taixin.android.onvif.app.fragments.LocalImageFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="10" />
+
+        <fragment
+            android:id="@+id/fragement_setting"
+            android:name="com.taixin.android.onvif.app.fragments.LocalSettingFragment"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
+    </LinearLayout>
+
+</LinearLayout>

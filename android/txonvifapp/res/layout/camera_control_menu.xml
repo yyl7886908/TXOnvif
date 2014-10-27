@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#b0000000"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/local_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/home_default" 
+        android:layout_weight="1"
+        />
+    <ImageButton
+        android:id="@+id/ptz_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ptz_button_selector"
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:background="@color/transparency"/>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/photo_button_selector" 
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:background="@color/transparency"/>
+
+    <ImageButton
+        android:id="@+id/imageButton1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/record_button_selector" 
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:background="@color/transparency"/>
+
+    <ImageButton
+        android:id="@+id/image_setting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/image_button_selector" 
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:background="@color/transparency"/>
+    <ImageButton
+        android:id="@+id/channel_switch_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/stream_button_selector" 
+        android:layout_weight="1"
+        android:paddingTop="2dp"
+        android:background="@color/transparency"/>
+
+</LinearLayout>

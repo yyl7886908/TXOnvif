@@ -13,6 +13,9 @@
 #include "soapStub.h"
 #include "stdsoap2.h"
 #include "sha1.h"
+#ifdef ANDROID
+#include "../loghelp.h"
+#endif
 
 typedef struct
 {
@@ -441,17 +444,12 @@ int ONVIF_IMAGING_SetImagingSettings(char *username, char *password, char *imagi
     imgSet.Contrast = &imageSetting->contrast;
     imgSet.Exposure = NULL;
     imgSet.Focus = NULL;
-    printf("1\n");
     imgSet.IrCutFilter = 0;
-    printf("2\n");
     imgSet.Sharpness=NULL;
-    printf("3\n");
     imgSet.WideDynamicRange = NULL;
-    printf("4\n");
     imgSet.WhiteBalance = NULL;
     imgSet.Extension = NULL;
     imgSet.__anyAttribute = NULL;
-    printf("5\n");
 
     imaging_SetImagingSettings_req.ImagingSettings =&imgSet;
     imaging_SetImagingSettings_req.VideoSourceToken = videoSourceToken;

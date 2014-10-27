@@ -3,6 +3,7 @@ package com.taixin.android.onvif.sdk;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.DeviceCapability;
@@ -17,17 +18,22 @@ public class TXOnvif implements SimpleOnvif{
 		
 	public String deviceService;
 	public String mediaService;
-
+	private String TAG = "TXOnvif";
 	@Override
 	public ArrayList<Device> discoverDevices() {
 			ArrayList<Device> deviceList = _discoverDevices();
+			Log.i(TAG, "deviceList size = "+deviceList.size());
 			for(Device device : deviceList){
 				String Address = device.getAddress();
 				String XAddr = device.getXAddrs();
 				String a[] = XAddr.split(" ");
 				device.setDeviceService(a[0]);
 				String uuids[] = Address.split(":");
-				device.setUuid(uuids[2]);
+				if(uuids.length == 1){
+					device.setUuid(uuids[0]);
+				}else{
+					device.setUuid(uuids[2]);
+				}
 			}
 			return deviceList;
 	}

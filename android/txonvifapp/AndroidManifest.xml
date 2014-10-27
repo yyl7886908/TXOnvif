@@ -24,12 +24,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        
+        <activity android:name="com.taixin.android.onvif.app.DeviceListActivity" >
+        </activity>
+        <activity android:name="com.taixin.android.onvif.app.CameraActivity" >
+        </activity>
         <activity
-            android:name="com.taixin.android.onvif.app.DeviceListActivity">
+            android:name="com.taixin.android.onvif.app.HomeSettingActivity"
+            android:theme="@style/Home_Setting_Style" >
+        </activity>
+        <activity
+            android:name="com.taixin.android.onvif.app.LoginActivity"
+            android:theme="@style/login_dialog" >
         </activity>
     </application>
-
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="WRITE_EXTERNAL_STORAGE" />

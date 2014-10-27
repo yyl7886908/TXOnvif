@@ -2,7 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-/* #include "../loghelp.h" */
+#ifdef ANDROID
+#include "../loghelp.h"
+#endif
 #include "wsdd.h"
 #include "base64.h"
 #include "sha1.h"
@@ -57,9 +59,9 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 	else
 	{
 		//如果外部接口没有设备默认超时时间的话，我这里给了一个默认值10s
-		soap->recv_timeout    = 10;
-		soap->send_timeout    = 10;
-		soap->connect_timeout = 10;
+		soap->recv_timeout    = 5;
+		soap->send_timeout    = 5;
+		soap->connect_timeout = 5;
 	}
 	soap_default_SOAP_ENV__Header(soap, header);
 
@@ -122,6 +124,7 @@ struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *was_To,
 } 
 
 
+
 int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum) 
 {
 
@@ -144,7 +147,7 @@ int ONVIF_Discovery(char *ip, int port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDevic
 
 	//这个接口填充一些信息并new返回一个soap对象，本来可以不用额外接口，
 	// 但是后期会作其他操作，此部分剔除出来后面的操作就相对简单了,只是调用接口就好
-	soap = ONVIF_Initsoap(&header, was_To, was_Action, 5,NULL);
+	soap = ONVIF_Initsoap(&header, was_To, was_Action, 3,NULL);
     
 	soap_default_SOAP_ENV__Header(soap, &header);
 	soap->header = &header;

@@ -8,101 +8,257 @@
 package com.taixin.android.onvif.app;
 
 public final class R {
+    public static final class anim {
+        public static final int popup_enter=0x7f040000;
+        public static final int popup_exit=0x7f040001;
+        public static final int zommout=0x7f040002;
+        public static final int zoomin=0x7f040003;
+    }
     public static final class attr {
     }
     public static final class color {
-        public static final int black=0x7f060004;
-        public static final int end_color=0x7f060003;
-        public static final int title_bg=0x7f060002;
-        public static final int transparency=0x7f060001;
-        public static final int white=0x7f060000;
+        public static final int black=0x7f070004;
+        public static final int dark=0x7f070005;
+        public static final int darkgray=0x7f07000a;
+        public static final int end_color=0x7f070003;
+        public static final int focused=0x7f07000e;
+        public static final int half_transparent_background=0x7f07000f;
+        public static final int login_background=0x7f070007;
+        public static final int ltgray=0x7f07000b;
+        public static final int pressed=0x7f07000c;
+        public static final int red=0x7f070006;
+        public static final int selected=0x7f07000d;
+        public static final int silver=0x7f070009;
+        public static final int title_bg=0x7f070002;
+        public static final int transparency=0x7f070001;
+        public static final int transparent=0x7f070008;
+        public static final int white=0x7f070000;
     }
     public static final class dimen {
-        public static final int add_button_padding_left=0x7f070000;
-        public static final int grid_column_width=0x7f070006;
-        public static final int grid_horizontal_spacing=0x7f070004;
-        public static final int grid_padding_left=0x7f070002;
-        public static final int grid_padding_right=0x7f070003;
-        public static final int grid_vertical_spacing=0x7f070005;
-        public static final int home_button_padding_right=0x7f070001;
+        public static final int add_button_padding_left=0x7f080000;
+        public static final int grid_column_width=0x7f080006;
+        public static final int grid_horizontal_spacing=0x7f080004;
+        public static final int grid_padding_left=0x7f080002;
+        public static final int grid_padding_right=0x7f080003;
+        public static final int grid_vertical_spacing=0x7f080005;
+        public static final int home_button_padding_right=0x7f080001;
     }
     public static final class drawable {
-        public static final int add_button_back=0x7f020000;
-        public static final int camera_default=0x7f020001;
-        public static final int checkbox_normal=0x7f020002;
-        public static final int checkbox_pressed=0x7f020003;
-        public static final int home_button_back=0x7f020004;
-        public static final int ic_launcher=0x7f020005;
-        public static final int my_checkbox=0x7f020006;
-        public static final int selector=0x7f020007;
+        public static final int add_default=0x7f020000;
+        public static final int add_focus=0x7f020001;
+        public static final int add_focus2=0x7f020002;
+        public static final int add_selector=0x7f020003;
+        public static final int bar_dn=0x7f020004;
+        public static final int bar_up=0x7f020005;
+        public static final int bg_bar=0x7f020006;
+        public static final int bg_border=0x7f020007;
+        public static final int camera_default=0x7f020008;
+        public static final int camera_default2=0x7f020009;
+        public static final int checkbox_normal=0x7f02000a;
+        public static final int checkbox_pressed=0x7f02000b;
+        public static final int device_list_selector=0x7f02000c;
+        public static final int grid_back=0x7f02000d;
+        public static final int grid_selector=0x7f02000e;
+        public static final int high_stream_default=0x7f02000f;
+        public static final int high_stream_focus=0x7f020010;
+        public static final int high_stream_selector=0x7f020011;
+        public static final int home_default=0x7f020012;
+        public static final int home_focus=0x7f020013;
+        public static final int home_selector=0x7f020014;
+        public static final int ic_launcher=0x7f020015;
+        public static final int image_button_selector=0x7f020016;
+        public static final int image_default=0x7f020017;
+        public static final int image_focus=0x7f020018;
+        public static final int local_photos=0x7f020019;
+        public static final int local_setting=0x7f02001a;
+        public static final int local_setting_save_button=0x7f02001b;
+        public static final int local_videos=0x7f02001c;
+        public static final int low_stream_default=0x7f02001d;
+        public static final int low_stream_focus=0x7f02001e;
+        public static final int low_stream_selector=0x7f02001f;
+        public static final int main_back=0x7f020020;
+        public static final int mediacontroller_bg=0x7f020021;
+        public static final int mediacontroller_pause01=0x7f020022;
+        public static final int mediacontroller_pause02=0x7f020023;
+        public static final int mediacontroller_pause_button=0x7f020024;
+        public static final int mediacontroller_play01=0x7f020025;
+        public static final int mediacontroller_play02=0x7f020026;
+        public static final int mediacontroller_play_button=0x7f020027;
+        public static final int mediacontroller_seekbar01=0x7f020028;
+        public static final int mediacontroller_seekbar02=0x7f020029;
+        public static final int menu_bg_line=0x7f02002a;
+        public static final int menu_bg_popup=0x7f02002b;
+        public static final int menu_btnshape=0x7f02002c;
+        public static final int middle=0x7f02002d;
+        public static final int middle_stream_default=0x7f02002e;
+        public static final int middle_stream_focus=0x7f02002f;
+        public static final int middle_stream_selector=0x7f020030;
+        public static final int my_checkbox=0x7f020031;
+        public static final int photo_button_selector=0x7f020032;
+        public static final int photo_default=0x7f020033;
+        public static final int photo_focus=0x7f020034;
+        public static final int play_focus=0x7f020035;
+        public static final int ptz_button_selector=0x7f020036;
+        public static final int ptz_default=0x7f020037;
+        public static final int ptz_focus=0x7f020038;
+        public static final int record_button_selector=0x7f020039;
+        public static final int record_default=0x7f02003a;
+        public static final int record_focus=0x7f02003b;
+        public static final int scrubber_control_disabled_holo=0x7f02003c;
+        public static final int scrubber_control_focused_holo=0x7f02003d;
+        public static final int scrubber_control_normal_holo=0x7f02003e;
+        public static final int scrubber_control_pressed_holo=0x7f02003f;
+        public static final int scrubber_control_selector_holo=0x7f020040;
+        public static final int scrubber_primary_holo=0x7f020041;
+        public static final int scrubber_progress_horizontal_holo_dark=0x7f020042;
+        public static final int scrubber_secondary_holo=0x7f020043;
+        public static final int scrubber_track_holo_dark=0x7f020044;
+        public static final int seekbar_thumb=0x7f020045;
+        public static final int seekbar_thumb_normal=0x7f020046;
+        public static final int seekbar_thumb_pressed=0x7f020047;
+        public static final int selector=0x7f020048;
+        public static final int seleted_bg_on=0x7f020049;
+        public static final int slide_half_focus=0x7f02004a;
+        public static final int slide_half_focuss=0x7f02004b;
+        public static final int slide_half_focusu=0x7f02004c;
+        public static final int stream_button_selector=0x7f02004d;
+        public static final int thumb_bar=0x7f02004e;
+        public static final int thumb_dn=0x7f02004f;
+        public static final int thumb_up=0x7f020050;
     }
     public static final class id {
-        public static final int GridView1=0x7f08001a;
-        public static final int add_device_button=0x7f080018;
-        public static final int button1=0x7f080000;
-        public static final int button2=0x7f080001;
-        public static final int button3=0x7f080003;
-        public static final int button4=0x7f080004;
-        public static final int button5=0x7f080005;
-        public static final int button_profile=0x7f080002;
-        public static final int buttondown=0x7f080008;
-        public static final int buttonimage1=0x7f080010;
-        public static final int buttonimage2=0x7f080011;
-        public static final int buttonimage3=0x7f080012;
-        public static final int buttonimage4=0x7f080013;
-        public static final int buttonimage5=0x7f080014;
-        public static final int buttonleft=0x7f080009;
-        public static final int buttonleftcruise=0x7f08000b;
-        public static final int buttonright=0x7f08000a;
-        public static final int buttonrightcruise=0x7f08000c;
-        public static final int buttonstop=0x7f08000d;
-        public static final int buttonup=0x7f080007;
-        public static final int buttonzoomfar=0x7f08000e;
-        public static final int buttonzoomnear=0x7f08000f;
-        public static final int cb=0x7f080022;
-        public static final int device_list=0x7f08001b;
-        public static final int device_title=0x7f08001e;
-        public static final int device_title_name=0x7f08001d;
-        public static final int device_uuid=0x7f080020;
-        public static final int device_uuid_name=0x7f08001f;
-        public static final int home_button=0x7f080019;
-        public static final int img=0x7f08001c;
-        public static final int seekbar1=0x7f080015;
-        public static final int seekbar2=0x7f080016;
-        public static final int seekbar3=0x7f080017;
-        public static final int service_adderss=0x7f080021;
-        public static final int video1=0x7f080006;
+        public static final int GridView1=0x7f09002a;
+        public static final int SecondaryProgress=0x01010000;
+        public static final int add_device_button=0x7f090028;
+        public static final int bright_seekbar=0x7f090040;
+        public static final int btn_login=0x7f090027;
+        public static final int buffering_indicator=0x7f090019;
+        public static final int buffering_msg=0x7f09001a;
+        public static final int buffering_progress=0x7f09001b;
+        public static final int button1=0x7f090000;
+        public static final int button2=0x7f090001;
+        public static final int button3=0x7f090003;
+        public static final int button4=0x7f090004;
+        public static final int button5=0x7f090005;
+        public static final int button_profile=0x7f090002;
+        public static final int buttondown=0x7f090008;
+        public static final int buttonimage1=0x7f090010;
+        public static final int buttonimage2=0x7f090011;
+        public static final int buttonimage3=0x7f090012;
+        public static final int buttonimage4=0x7f090013;
+        public static final int buttonimage5=0x7f090014;
+        public static final int buttonleft=0x7f090009;
+        public static final int buttonleftcruise=0x7f09000b;
+        public static final int buttonright=0x7f09000a;
+        public static final int buttonrightcruise=0x7f09000c;
+        public static final int buttonstop=0x7f09000d;
+        public static final int buttonup=0x7f090007;
+        public static final int buttonzoomfar=0x7f09000e;
+        public static final int buttonzoomnear=0x7f09000f;
+        public static final int cb_auto=0x7f090026;
+        public static final int cb_mima=0x7f090025;
+        public static final int channel_switch_btn=0x7f090020;
+        public static final int chrom_seekbar=0x7f090041;
+        public static final int contrast_seekbar=0x7f090042;
+        public static final int device_checkbox=0x7f090037;
+        public static final int device_img=0x7f090030;
+        public static final int device_list=0x7f09002f;
+        public static final int device_service=0x7f090036;
+        public static final int device_service_name=0x7f090035;
+        public static final int device_title=0x7f090032;
+        public static final int device_title_name=0x7f090031;
+        public static final int device_uuid=0x7f090034;
+        public static final int device_uuid_name=0x7f090033;
+        public static final int et_mima=0x7f090024;
+        public static final int et_zh=0x7f090022;
+        public static final int fragement_photos=0x7f09003d;
+        public static final int fragement_setting=0x7f09003e;
+        public static final int fragement_videos=0x7f09003c;
+        public static final int grid_video_view=0x7f090038;
+        public static final int high_button=0x7f09002c;
+        public static final int home_button=0x7f090029;
+        public static final int imageButton1=0x7f09001e;
+        public static final int image_setting_btn=0x7f09001f;
+        public static final int imgae_save_btn=0x7f090043;
+        public static final int local_image=0x7f09001c;
+        public static final int local_photos=0x7f09003a;
+        public static final int local_setting=0x7f09003b;
+        public static final int local_setting_actual_mode=0x7f090046;
+        public static final int local_setting_auto_play_cb=0x7f090044;
+        public static final int local_setting_fluency_mode=0x7f090047;
+        public static final int local_setting_main_stream=0x7f090049;
+        public static final int local_setting_mode_group=0x7f090045;
+        public static final int local_setting_save_button=0x7f09004b;
+        public static final int local_setting_streams_group=0x7f090048;
+        public static final int local_setting_sub_stream=0x7f09004a;
+        public static final int local_videos=0x7f090039;
+        public static final int low_button=0x7f09002e;
+        public static final int mediacontroller_file_name=0x7f090050;
+        public static final int mediacontroller_play_pause=0x7f09004c;
+        public static final int mediacontroller_seekbar=0x7f09004f;
+        public static final int mediacontroller_time_current=0x7f09004d;
+        public static final int mediacontroller_time_total=0x7f09004e;
+        public static final int middle_button=0x7f09002d;
+        public static final int myVideoView=0x7f09002b;
+        public static final int ptz_button=0x7f09001d;
+        public static final int sedu=0x7f09003f;
+        public static final int seekbar1=0x7f090015;
+        public static final int seekbar2=0x7f090016;
+        public static final int seekbar3=0x7f090017;
+        public static final int tv_mima=0x7f090023;
+        public static final int tv_zh=0x7f090021;
+        public static final int video1=0x7f090006;
+        public static final int video_view=0x7f090018;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int camera=0x7f030001;
-        public static final int cameras_grid=0x7f030002;
-        public static final int device_list=0x7f030003;
-        public static final int device_list_item=0x7f030004;
+        public static final int camera_control_menu=0x7f030002;
+        public static final int camera_login=0x7f030003;
+        public static final int cameras_grid=0x7f030004;
+        public static final int channel_switch_menu=0x7f030005;
+        public static final int device_list=0x7f030006;
+        public static final int device_list_item=0x7f030007;
+        public static final int grid_item=0x7f030008;
+        public static final int home_setting=0x7f030009;
+        public static final int image_setting_menu=0x7f03000a;
+        public static final int local_image_fragment=0x7f03000b;
+        public static final int local_setting_fragment=0x7f03000c;
+        public static final int local_video_fragment=0x7f03000d;
+        public static final int mediacontroller=0x7f03000e;
     }
     public static final class string {
-        public static final int app_name=0x7f040000;
-        public static final int brightness=0x7f040013;
-        public static final int capability=0x7f040002;
-        public static final int change=0x7f040006;
-        public static final int colorSaturation=0x7f040014;
-        public static final int contrast=0x7f040015;
-        public static final int down=0x7f040008;
-        public static final int image=0x7f040010;
-        public static final int image_param=0x7f040011;
-        public static final int image_set=0x7f040012;
-        public static final int left=0x7f040009;
-        public static final int left_cruise=0x7f04000c;
-        public static final int profile=0x7f040003;
-        public static final int right=0x7f04000a;
-        public static final int right_cruise=0x7f04000b;
-        public static final int rtsp_play=0x7f040005;
-        public static final int search=0x7f040001;
-        public static final int stop=0x7f04000d;
-        public static final int strema_uri=0x7f040004;
-        public static final int up=0x7f040007;
-        public static final int zoom_far=0x7f04000e;
-        public static final int zoom_near=0x7f04000f;
+        public static final int app_name=0x7f050000;
+        public static final int brightness=0x7f05001c;
+        public static final int capability=0x7f05000b;
+        public static final int change=0x7f05000f;
+        public static final int colorSaturation=0x7f05001d;
+        public static final int contrast=0x7f05001e;
+        public static final int down=0x7f050011;
+        public static final int image=0x7f050019;
+        public static final int image_param=0x7f05001a;
+        public static final int image_set=0x7f05001b;
+        public static final int left=0x7f050012;
+        public static final int left_cruise=0x7f050015;
+        public static final int mediacontroller_play_pause=0x7f050007;
+        public static final int password=0x7f050009;
+        public static final int profile=0x7f05000c;
+        public static final int right=0x7f050013;
+        public static final int right_cruise=0x7f050014;
+        public static final int rtsp_play=0x7f05000e;
+        public static final int search=0x7f05000a;
+        public static final int stop=0x7f050016;
+        public static final int strema_uri=0x7f05000d;
+        public static final int up=0x7f050010;
+        public static final int username=0x7f050008;
+        public static final int vitamio_init_decoders=0x7f050002;
+        public static final int vitamio_name=0x7f050001;
+        public static final int vitamio_videoview_error_button=0x7f050006;
+        public static final int vitamio_videoview_error_text_invalid_progressive_playback=0x7f050004;
+        public static final int vitamio_videoview_error_text_unknown=0x7f050005;
+        public static final int vitamio_videoview_error_title=0x7f050003;
+        public static final int zoom_far=0x7f050017;
+        public static final int zoom_near=0x7f050018;
     }
     public static final class style {
         /** 
@@ -126,6 +282,17 @@ public final class R {
     
  API 14 theme customizations can go here. 
 
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    
+ API 11 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+
         Base application theme, dependent on API level. This theme is replaced
         by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
     
@@ -134,17 +301,58 @@ public final class R {
             res/values-vXX/styles.xml, while customizations related to
             backward-compatibility can go here.
         
+
+        Base application theme for API 11+. This theme completely replaces
+        AppBaseTheme from res/values/styles.xml on API 11+ devices.
+    
+ API 11 theme customizations can go here. 
+
+        Base application theme for API 14+. This theme completely replaces
+        AppBaseTheme from BOTH res/values/styles.xml and
+        res/values-v11/styles.xml on API 14+ devices.
+    
+ API 14 theme customizations can go here. 
+
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+
+
+
+
+
+    
+
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+
+
+
+
+
+        
          */
-        public static final int AppBaseTheme=0x7f050000;
+        public static final int AppBaseTheme=0x7f060000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
+ Application theme. 
+ All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f050001;
-        public static final int custom_checkbox=0x7f050003;
-        /** 除去背景色
+        public static final int AppTheme=0x7f060001;
+        public static final int Home_Setting_Style=0x7f060008;
+        public static final int MediaController_SeekBar=0x7f060002;
+        public static final int MediaController_Text=0x7f060003;
+        public static final int PopupAnimation=0x7f060007;
+        /**  单选框 
          */
-        public static final int myDialogTheme=0x7f050002;
+        public static final int custom_checkbox=0x7f060005;
+        /**  登陆界面 
+         */
+        public static final int login_dialog=0x7f060006;
+        /**  除去背景色 
+         */
+        public static final int myDialogTheme=0x7f060004;
     }
 }

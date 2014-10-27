@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:paddingTop="50dp" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="播放类型：" />
+
+        <CheckBox
+            android:id="@+id/local_setting_auto_play_cb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:focusable="true"
+            android:text="自动播放"
+            android:textColor="@color/white" >
+        </CheckBox>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="优先类型：" />
+
+        <RadioGroup
+            android:id="@+id/local_setting_mode_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/local_setting_actual_mode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="实时模式" />
+
+            <RadioButton
+                android:id="@+id/local_setting_fluency_mode"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="流畅模式" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="码流类型：" />
+
+        <RadioGroup
+            android:id="@+id/local_setting_streams_group"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/local_setting_main_stream"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="主码流" />
+
+            <RadioButton
+                android:id="@+id/local_setting_sub_stream"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="子码流" />
+        </RadioGroup>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="2"
+        android:orientation="horizontal" >
+
+        <ImageButton
+            android:id="@+id/local_setting_save_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/local_setting_save_button" />
+    </LinearLayout>
+
+</LinearLayout>

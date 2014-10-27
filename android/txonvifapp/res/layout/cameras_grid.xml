@@ -7,34 +7,33 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" >
+        android:orientation="vertical" 
+        android:background="@drawable/grid_back">
 
         <!-- top view layout -->
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="horizontal"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="10dp" >
+            android:layout_weight="1" 
+            android:background="@color/transparency">
 
             <ImageButton
                 android:id="@+id/add_device_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
-                	android:paddingLeft="100dp"
-                android:src="@drawable/add_button_back" />
+                android:layout_marginLeft="75dp"
+                android:src="@drawable/add_selector" 
+                android:background="@color/transparency"/>
 
             <ImageButton
                 android:id="@+id/home_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:layout_weight="1"
-                android:paddingRight="100dp"
-                android:src="@drawable/home_button_back"/>
+                android:layout_marginLeft="950dp"
+                android:src="@drawable/home_selector" 
+                android:background="@color/transparency">
+            </ImageButton>
         </LinearLayout>
 
         <!-- grid view layout -->
@@ -48,9 +47,11 @@
                 android:id="@+id/GridView1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:background="@color/transparency"
                 android:columnWidth="@dimen/grid_column_width"
                 android:gravity="center"
                 android:horizontalSpacing="@dimen/grid_horizontal_spacing"
+                android:listSelector="@drawable/grid_selector"
                 android:numColumns="2"
                 android:paddingLeft="@dimen/grid_padding_left"
                 android:paddingRight="@dimen/grid_padding_right"
@@ -58,5 +59,12 @@
                 android:verticalSpacing="@dimen/grid_vertical_spacing" />
         </LinearLayout>
     </LinearLayout>
+
+    <com.taixin.ffmpeg.widget.VideoView
+        android:id="@+id/myVideoView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:visibility="invisible" />
 
 </RelativeLayout>

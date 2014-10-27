@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<color name="white">#FFFFFFFF</color>
-	<color name="transparency">#00000000</color>
-	<color name="title_bg">#1C86EE</color>
-	<color name="end_color">#A0cfef83</color>
-	<color name="black">#464646</color>
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="transparency">#00000000</color>
+    <color name="title_bg">#1C86EE</color>
+    <color name="end_color">#A0cfef83</color>
+    <color name="black">#464646</color>
+    <color name="dark">#000000</color>
+    <color name="red">#FF0000</color>
+    <color name="login_background">#50000000</color>
+    <color name="transparent">#FFD306</color>
+    <color name="silver">#00ffffff</color>
+    <color name="darkgray">#808080FF</color>
+    <color name="ltgray">#4B8A08</color>
+    <color name="pressed">#fff22fff</color>
+    <color name="selected">#fff33fff</color>
+    <color name="focused">#ffff44ff</color>
+    <color name="half_transparent_background">#464646</color>
+
 </resources>

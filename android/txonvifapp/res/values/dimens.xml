@@ -3,8 +3,8 @@
 
     <dimen name="add_button_padding_left">20dp</dimen>
     <dimen name="home_button_padding_right">20dp</dimen>
-    <dimen name="grid_padding_left">100dp</dimen>
-    <dimen name="grid_padding_right">100dp</dimen>
+    <dimen name="grid_padding_left">110dp</dimen>
+    <dimen name="grid_padding_right">110dp</dimen>
     <dimen name="grid_horizontal_spacing">15dp</dimen>
     <dimen name="grid_vertical_spacing">15dp</dimen>
     <dimen name="grid_column_width">20dip</dimen>
