@@ -29,9 +29,9 @@ import com.taixin.android.onvif.app.GridViewAdapter.GridViewHolder;
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.GridsItemStatus;
 import com.taixin.android.onvif.app.data.LocalCamera;
+import com.taixin.android.onvif.app.logic.IOnvifManager;
+import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.util.SerializableUtil;
-import com.taixin.android.onvif.logic.IOnvifManager;
-import com.taixin.android.onvif.logic.OnvifManager;
 import com.taixin.android.onvif.sdk.obj.Device;
 
 

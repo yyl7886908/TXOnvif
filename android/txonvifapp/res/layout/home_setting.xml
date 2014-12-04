@@ -9,7 +9,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:paddingTop="50dp" >
-
+        <ImageButton
+            android:id="@+id/local_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/local_setting" />
         <ImageButton
             android:id="@+id/local_videos"
             android:layout_width="wrap_content"
@@ -23,10 +27,11 @@
             android:src="@drawable/local_photos" />
 
         <ImageButton
-            android:id="@+id/local_setting"
+            android:id="@+id/local_order_record"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/local_setting" />
+            android:src="@drawable/order_record" />
+        
     </LinearLayout>
 
     <LinearLayout
@@ -35,24 +40,23 @@
         android:layout_gravity="center" >
 
         <fragment
+            android:id="@+id/fragement_setting"
+            android:name="com.taixin.android.onvif.app.fragments.LocalSettingFragment"
+            android:layout_width="wrap_content"
+            android:layout_height="fill_parent" />
+        <fragment
             android:id="@+id/fragement_videos"
             android:name="com.taixin.android.onvif.app.fragments.LocalVideoFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="10" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
         <fragment
             android:id="@+id/fragement_photos"
             android:name="com.taixin.android.onvif.app.fragments.LocalImageFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_weight="10" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
-        <fragment
-            android:id="@+id/fragement_setting"
-            android:name="com.taixin.android.onvif.app.fragments.LocalSettingFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" />
+        
     </LinearLayout>
 
 </LinearLayout>

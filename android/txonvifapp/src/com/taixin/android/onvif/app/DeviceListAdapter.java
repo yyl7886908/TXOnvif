@@ -47,9 +47,9 @@ public class DeviceListAdapter extends BaseAdapter {
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		ViewHolder holder = null;
+		DeviceViewHolder holder = null;
 		if(convertView == null){
-			holder = new ViewHolder();
+			holder = new DeviceViewHolder();
 			convertView = inflater.inflate(R.layout.device_list_item, null);
 			holder.title = (TextView) convertView.findViewById(R.id.device_title);
 			holder.uuid = (TextView) convertView.findViewById(R.id.device_uuid);
@@ -59,21 +59,22 @@ public class DeviceListAdapter extends BaseAdapter {
 			
 			convertView.setTag(holder);
 		}else{
-			holder = (ViewHolder) convertView.getTag();
+			holder = (DeviceViewHolder) convertView.getTag();
 		}
-		holder.title.setText(list.get(position).get("title").toString());
 		holder.uuid.setText(list.get(position).get("uuid").toString());
 		holder.deviceService.setText(list.get(position).get("deviceService").toString());
 		holder.cb.setChecked(list.get(position).get("flag").equals("true"));
-		holder.img.setImageResource(R.drawable.ic_launcher);
+		holder.img.setImageResource(R.drawable.camera);
+		String str[] = list.get(position).get("deviceService").toString().split("/");
+		holder.title.setText(str[2]);
 		return convertView;
 	}
 
-	final class ViewHolder{
-        CheckBox cb;
-        ImageView img;
-        TextView title;
-        TextView uuid;
-        TextView deviceService;
+	public final class DeviceViewHolder{
+		public  CheckBox cb;
+		public   ImageView img;
+		public    TextView title;
+		public    TextView uuid;
+		public    TextView deviceService;
     }
 }

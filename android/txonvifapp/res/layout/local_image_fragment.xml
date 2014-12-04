@@ -2,13 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:paddingTop="30dp" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+    <GridView
+        android:id="@+id/local_images_grid"
+        android:layout_width="800dp"
+        android:layout_height="wrap_content"
+        android:background="@color/black"
+        android:focusable="true"
         android:gravity="center"
-        android:text="这是图片"
-        android:textColor="#000000" />
+        android:numColumns="3" >
+    </GridView>
 
 </LinearLayout>

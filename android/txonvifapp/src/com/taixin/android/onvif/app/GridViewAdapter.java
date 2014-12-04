@@ -56,8 +56,8 @@ public class GridViewAdapter extends BaseAdapter{
 	} 
 
 
-	final class GridViewHolder{
+	public final class GridViewHolder{
 		//ImageView defaltImage;
-		VideoView vv;
+		public VideoView vv;
 	}
 }

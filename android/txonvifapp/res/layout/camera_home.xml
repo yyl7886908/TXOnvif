@@ -1,0 +1,68 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="${packageName}.${activityClass}" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@color/black"
+        android:orientation="vertical" >
+
+        <!-- top view layout -->
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparency" >
+
+            <ImageButton
+                android:id="@+id/home_add_device_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="75dp"
+                android:background="@color/transparency"
+                android:src="@drawable/add_selector" />
+
+            <ImageButton
+                android:id="@+id/home_home_button"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_marginLeft="950dp"
+                android:background="@color/transparency"
+                android:src="@drawable/home_selector" >
+            </ImageButton>
+        </LinearLayout>
+
+        <!-- only one video view layout -->
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@color/transparency"
+            android:paddingTop="10dp" >
+						
+            <com.taixin.ffmpeg.widget.VideoView
+                android:id="@+id/homeVideoView"
+                android:layout_width="900dp"
+                android:layout_height="500dp"
+                android:layout_gravity="center"
+                android:background="@drawable/border_selector"
+                android:gravity="center" />
+            
+        </FrameLayout>
+    </LinearLayout>
+
+    <!-- 小菊花 -->
+
+    <ProgressBar
+        android:id="@+id/loading"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
+</FrameLayout>

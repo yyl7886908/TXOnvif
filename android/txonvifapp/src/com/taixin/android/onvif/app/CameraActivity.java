@@ -1,8 +1,15 @@
 package com.taixin.android.onvif.app;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +22,9 @@ import android.widget.SeekBar;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.data.CameraData;
-import com.taixin.android.onvif.logic.IOnvifManager;
-import com.taixin.android.onvif.logic.OnvifManager;
+import com.taixin.android.onvif.app.logic.IOnvifManager;
+import com.taixin.android.onvif.app.logic.OnvifManager;
+import com.taixin.android.onvif.app.util.Usb;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
 import com.taixin.ffmpeg.widget.VideoView;
 
@@ -36,21 +44,26 @@ public class CameraActivity extends Activity{
 	private String mediaService;
 	private String profileToken;
 	/*控制菜单, 频道切换菜单*/
-	private PopupWindow menu, channelMenu, imageMenu;
+	private PopupWindow menu, channelMenu, imageMenu, fileMenu;
 	private LayoutInflater inflater;	
 	private View layout;
-	private ImageButton channelSwitchBtn, imageBtn, ptzBtn;
+	private ImageButton channelSwitchBtn, imageSetBtn, ptzBtn, photoBtn, recordingBtn, fileBtn;
 	private ImageButton highBtn, middleBtn, lowBtn;
+	private ImageButton picBtn, videoBtn;
 	private SeekBar chromBar, brightBar, constrastbar;
 	private Button imageSaveBtn;
 	/*第几路视频*/
 	private int channelFlag = 0;
 	private boolean isCruising = false;
 	private boolean cruise = true;
+	private String AUTHUri;/*录制的时候使用*/
+	private boolean recordingFlag = false;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
+		//setTheme(R.style.Camera_Show_Style);
 		setContentView(R.layout.camera);
 		initData();
 		initMenu();
@@ -61,16 +74,14 @@ public class CameraActivity extends Activity{
 		mVideoView = (VideoView) findViewById(R.id.video_view);
 		Bundle extras = getIntent().getExtras(); 
 		position = extras.getInt("grid_item_position");
-		System.out.println("~~~~~~~~~position = "+position);
 		onvifMgr.play(position, mVideoView);
 		getDeviceInfo();
 	}
 	/*获取设备的信息*/
 	public void getDeviceInfo(){
-		camera = onvifMgr.getOnvifData().getCameras().get(position);
+		camera = onvifMgr.getOnvifData().getCurrentCameras().get(position);
 		password = camera.getPassword();
 		username = camera.getUsername();
-		System.out.println("username ``````password = "+username+password);
 		deviceService = camera.getDevice().getDeviceService();
 		if(camera.getCapability() == null || camera.getCapability().equals(null)){
 			System.out.println("username password deviceservice-->"+username+password+deviceService);
@@ -82,9 +93,7 @@ public class CameraActivity extends Activity{
 		mediaService = camera.getCapability().getMediaService();
 		ptzService = camera.getCapability().getPtzService();
 		imageService = camera.getCapability().getImagingService();
-		System.out.println("----------"+username+password+mediaService+ptzService+imageService);
 		boolean getProf = onvifMgr.getMediaProfiles(username, password, mediaService);
-		System.out.println("----------"+username+password+mediaService+ptzService+imageService);
 		if(getProf){
 			Toast.makeText(this, "获取profiles成功", Toast.LENGTH_SHORT).show();;
 		}
@@ -93,12 +102,10 @@ public class CameraActivity extends Activity{
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		System.out.println("--------"+username+password+deviceService+ptzService+profileToken);
 		if(username == null || password == null || deviceService == null || ptzService == null || profileToken == null){
 			initData();
 		}
 		if(!menu.isShowing()){
-			System.out.println("menu is not show =====");
 			switch(keyCode){
 			case KeyEvent.KEYCODE_DPAD_LEFT:
 				onvifMgr.ptzLeft(username, password, ptzService, profileToken);
@@ -124,6 +131,7 @@ public class CameraActivity extends Activity{
 	}
 	public void initMenu(){
 		initCtrlMenu();
+		initFileMenu();
 		initChannelMenu();
 		initImageMenu();
 	}
@@ -134,28 +142,43 @@ public class CameraActivity extends Activity{
 		layout = inflater.inflate(R.layout.camera_control_menu, null,false);
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		menu = new PopupWindow(layout, srceenW -200, 100, true);
+		if(srceenW > 1800 && screenH > 1000){
+			menu = new PopupWindow(layout, srceenW -200, 150, true);
+		}else{
+			menu = new PopupWindow(layout, srceenW -200, 100, true);
+		}
 		menu.setFocusable(true);
 		menu.setBackgroundDrawable(new BitmapDrawable());
 		menu.setAnimationStyle(android.R.style.Animation_Dialog);  
 		ctrlMenuOnClickListener listener = new ctrlMenuOnClickListener();
 		channelSwitchBtn = (ImageButton) layout.findViewById(R.id.channel_switch_btn);
 		channelSwitchBtn.setOnClickListener(listener);
-		imageBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
-		imageBtn.setOnClickListener(listener);
+		imageSetBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
+		imageSetBtn.setOnClickListener(listener);
 		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
 		ptzBtn.setOnClickListener(listener);
+		photoBtn = (ImageButton) layout.findViewById(R.id.photo_button);
+		photoBtn.setOnClickListener(listener);
+		recordingBtn = (ImageButton) layout.findViewById(R.id.recording_button);
+		recordingBtn.setOnClickListener(listener);
+		fileBtn = (ImageButton) layout.findViewById(R.id.file_button);
+		fileBtn.setOnClickListener(listener);
 	}
 	/*控制菜单按钮的点击事件*/
 	class ctrlMenuOnClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
-			if(v == channelSwitchBtn){
+			if(v==fileBtn){
+				if(!fileMenu.isShowing())
+					showFileMenu();
+				else
+					fileMenu.dismiss();
+			}else if(v == channelSwitchBtn){
 				if(!channelMenu.isShowing())
 					showChannelMenu();
 				else
 					channelMenu.dismiss();
-			}else if(v == imageBtn){
+			}else if(v == imageSetBtn){
 				if(!imageMenu.isShowing()){
 					String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
 					ImagingSetting setting = onvifMgr.getImagingSetting(username, password, imageService, videoSourceToken);
@@ -171,26 +194,77 @@ public class CameraActivity extends Activity{
 					imageMenu.dismiss();
 			}else if(v == ptzBtn){
 				if(cruise){
-					System.out.println("curising now ---------------");
-					onvifMgr.ptzCruise(username, password, ptzService, profileToken, cruise);
-					System.out.println("aa"+username+password+ptzService+profileToken);
+					//onvifMgr.ptzCruise(username, password, ptzService, profileToken, cruise);
 					cruise = false;
 				}else{
-					System.out.println("stop curising now ---------------");
-					onvifMgr.ptzCruise(username, password, ptzService, profileToken,cruise);
-					System.out.println("xx"+username+password+ptzService+profileToken);
+					//onvifMgr.ptzCruise(username, password, ptzService, profileToken,cruise);
 					cruise = true;
 				}
+			}else if(v == photoBtn){
+				List<String> list = Usb.getUsbDirList();
+				if(list.size()<=0){
+					Toast toast = Toast.makeText(CameraActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					return;
+				}
+				String filename = list.get(0)+"/CameraRecordImages/"+getCurrentTime()+".jpg";
+				System.out.println("java photo file name = "+filename);
+				mVideoView.photoImage(filename);
+			}else if(v == recordingBtn){
+				if(!recordingFlag){
+					List<String> list = Usb.getUsbDirList();
+					if(list.size()<=0){
+						Toast toast = Toast.makeText(CameraActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+						return;
+					}
+					String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
+					System.out.println("java recording file name = "+filename);
+					AUTHUri=onvifMgr.getAuthUriByPosition(position);
+					mVideoView.startRecordingRtspStream(AUTHUri, filename, 0);
+					recordingFlag = true;
+				}else{
+					mVideoView.stopRecordingRtspStream();
+					recordingFlag = false;
+				}
+				
 			}
 		}
 	}
+	/*初始化file弹出框*/
+	public void initFileMenu(){
+		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layout = inflater.inflate(R.layout.file_ctrl_menu, null,false);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			fileMenu = new PopupWindow(layout, srceenW -600, 130, true);
+		}else{
+			fileMenu = new PopupWindow(layout, srceenW -600, 80, true);
+		}
+		fileMenu.setFocusable(true);
+		fileMenu.setBackgroundDrawable(new BitmapDrawable());
+		fileMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
+		picBtn = (ImageButton) layout.findViewById(R.id.pic_button);
+		videoBtn = (ImageButton) layout.findViewById(R.id.video_button);
+		fileMenuOnClickListener listener = new fileMenuOnClickListener();
+		picBtn.setOnClickListener(listener);
+		videoBtn.setOnClickListener(listener);
+	}
+	
 	/*初始化channel弹出框*/
 	public void initChannelMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		layout = inflater.inflate(R.layout.channel_switch_menu, null,false);
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		channelMenu = new PopupWindow(layout, srceenW -600, 80, true);
+		if(srceenW > 1800 && screenH > 1000){
+			channelMenu = new PopupWindow(layout, srceenW -800, 130, true);
+		}else{
+			channelMenu = new PopupWindow(layout, srceenW -700, 80, true);
+		}
 		channelMenu.setFocusable(true);
 		channelMenu.setBackgroundDrawable(new BitmapDrawable());
 		channelMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
@@ -206,8 +280,25 @@ public class CameraActivity extends Activity{
 	private void showCtrlMenu(){
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		menu.showAsDropDown(this.findViewById(R.id.video_view), 100, -screenH/4);  
+		if(srceenW > 1800 && screenH > 1000){
+			menu.showAsDropDown(this.findViewById(R.id.video_view), 100, -screenH/4);  
+		}else{
+			menu.showAsDropDown(this.findViewById(R.id.video_view), 100, -screenH/4);  
+		}
 		menu.update();  
+	}
+	/*控制菜单按钮的点击事件*/
+	class fileMenuOnClickListener implements OnClickListener{
+		@Override
+		public void onClick(View v) {
+			if(v == picBtn){
+				Intent intent = new Intent(CameraActivity.this, CameraImagesGridActivity.class);
+				CameraActivity.this.startActivity(intent);
+			}else if(v == videoBtn){
+				Intent intent = new Intent(CameraActivity.this, CameraVideosListActivity.class);
+				CameraActivity.this.startActivity(intent);
+			}
+		}
 	}
 	/*控制菜单按钮的点击事件*/
 	class channelMenuOnClickListener implements OnClickListener{
@@ -228,12 +319,13 @@ public class CameraActivity extends Activity{
 			}
 		}
 	}
+	
 	/*根据id切换视频流*/
 	public void switchChannelById(int id){
 		String uri = null;
 		int size = camera.getStreamUri().size();
 		if(id<=size-1)
-			 uri =camera.getStreamUri().get(id).getStreamURI();
+			uri =camera.getStreamUri().get(id).getStreamURI();
 		else
 			uri = camera.getStreamUri().get(size-1).getStreamURI();
 		String authUri = getAuthUri(username, password,uri);
@@ -251,13 +343,31 @@ public class CameraActivity extends Activity{
 		//String authUri = "";
 		String uris[] = uri.split("//");
 		String authUri = uris[0]+"//"+username+":"+password+"@"+uris[1];
+		this.AUTHUri = authUri;
 		return authUri;
 	}
 	private void showChannelMenu(){
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
-		int screenH = this.getWindowManager().getDefaultDisplay().getHeight(); 
-		channelMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);  
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			channelMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);    
+		}else{
+			channelMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);   
+		}
+		
 		channelMenu.update(); 
+	}
+	
+	private void showFileMenu(){
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			fileMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);    
+		}else{
+			fileMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);   
+		}
+		
+		fileMenu.update(); 
 	}
 	/**
 	 * 图像处理接口
@@ -268,7 +378,12 @@ public class CameraActivity extends Activity{
 		layout = inflater.inflate(R.layout.image_setting_menu, null,false);
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		imageMenu = new PopupWindow(layout, srceenW -600, 150, true);
+		if(srceenW > 1800 && screenH > 1000){
+			imageMenu = new PopupWindow(layout, srceenW -600, 300, true);;    
+		}else{
+			imageMenu = new PopupWindow(layout, srceenW -600, 250, true);
+		}
+		
 		imageMenu.setFocusable(true);
 		imageMenu.setBackgroundDrawable(new BitmapDrawable());
 		imageMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
@@ -283,10 +398,10 @@ public class CameraActivity extends Activity{
 	private void showImageMenu(){
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		imageMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);  
+		imageMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/3*2);  
 		imageMenu.update();  
 	}
-	
+
 	class ImageMenuOnClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
@@ -295,12 +410,29 @@ public class CameraActivity extends Activity{
 				float chrom = chromBar.getProgress()*10;
 				float constrast = constrastbar.getProgress()*10;
 				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
-				System.out.println("chrom bright constrast = "+chrom+bright+constrast);
 				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
 				if(ret)
 					Toast.makeText(CameraActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
-	
+
+	/*检测U盘安装情况*/
+	public void checkUDisk(){
+		Toast toast;
+		String status=Environment.getExternalStorageState();
+		if(status.equals(Environment.MEDIA_MOUNTED)){
+			System.out.println("check U Disk media mounted");
+		}else{
+			System.out.println("check u Disk no media mounted");
+		}
+	}
+
+	/*获取当前时间*/
+	public String getCurrentTime(){
+		SimpleDateFormat   formatter   =   new   SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");     
+		Date   curDate   =   new   Date(System.currentTimeMillis());//获取当前时间     
+		String   str   =   formatter.format(curDate);
+		return str;
+	}
 }

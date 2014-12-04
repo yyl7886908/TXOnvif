@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="100dp"
+    android:layout_height="50dp"
+    android:background="#b0000000"
+    android:orientation="horizontal" >
+
+   <!--  <ImageButton
+        android:id="@+id/file_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/file_button_selector" 
+        android:paddingTop="2dp"
+        android:layout_weight="1"
+        android:background="@color/transparency"
+        />
+   -->
+   <ImageButton 
+     	 android:id="@+id/record_flag_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/record_flag" 
+        android:paddingTop="2dp"
+        android:layout_weight="1"/>
+
+</LinearLayout>

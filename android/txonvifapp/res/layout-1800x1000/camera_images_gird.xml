@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="1308px"
+    android:layout_height="834px"
+    android:layout_gravity="center"
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/pop_textview"
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:padding="18dp"
+        android:text="@string/app_name"
+        android:textColor="#fff"
+        android:textSize="30sp" />
+
+    <GridView
+        android:id="@+id/camera_images_grid"
+        android:layout_width="match_parent"
+        android:layout_height="750dp"
+        android:layout_above="@+id/pop_linear"
+        android:layout_below="@id/pop_textview"
+        android:layout_marginBottom="3dp"
+        android:divider="@drawable/line"
+        android:fastScrollEnabled="true"
+        android:gravity="center"
+        android:numColumns="3"
+        android:paddingTop="30dp"
+        android:verticalSpacing="10dip" 
+        
+        >
+    </GridView>
+
+    <!--
+    android:descendantFocusability="afterDescendants"
+        android:listSelector="@drawable/item_selector"
+         <LinearLayout
+        android:id="@+id/pop_linear"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/edit_title_back"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/notice"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/pop_list_select"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:layout_marginRight="12dp"
+            android:background="@drawable/edit_btn_selector"
+            android:gravity="center"
+            android:text="@string/select"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/pop_list_delect"
+            android:layout_width="76dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/edit_btn_selector"
+            android:gravity="center"
+            android:text="@string/delect"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+    </LinearLayout>
+ -->
+</RelativeLayout>

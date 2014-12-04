@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+     android:layout_marginLeft="8dp"
+      android:layout_marginRight="8dp"
+      android:layout_marginBottom="8dp"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <FrameLayout android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        
+    <com.taixin.recorder.views.VideoView android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:id="@+id/videoview_play"/>
+
+
+<LinearLayout android:layout_width="match_parent"
+	    android:gravity="right|center_vertical"
+	    android:layout_marginRight="60dp"
+	    android:layout_marginTop="12dp"
+	    android:layout_height="48dp">
+	    <ImageView android:layout_width="115dp"
+	        android:layout_height="match_parent"
+			android:id="@+id/play_back_status"
+	        android:layout_marginRight="10dp"
+	        android:background="@drawable/play_back_icon"/>
+	</LinearLayout>
+    </FrameLayout>
+    <ImageView android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/player_status"
+        android:background="#0000"
+        android:layout_centerInParent="true"
+        android:src="@drawable/pause"/>
+
+	<LinearLayout 
+	    android:id="@+id/player_controller"
+	    android:layout_width="match_parent"
+	    android:layout_height="48dp"
+	    android:background="#0000"
+	    android:visibility="gone"
+	    android:layout_marginLeft="24dp"
+	    android:layout_marginRight="24dp"
+	    android:layout_marginBottom="24dp"
+	    android:layout_alignParentBottom="true"
+	    android:orientation="horizontal"
+	    android:gravity="center">
+	    <TextView 
+	        android:id="@+id/play_current_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="16sp"
+	        android:text="00:00:00"
+	        android:textColor="#fff"/>
+	    <SeekBar 
+	        android:id="@+id/play_seekbar"
+	        android:layout_width="0dp"
+	        android:layout_height="wrap_content"
+	        android:minHeight="15dp"
+	        android:layout_marginLeft="8dp"
+	        android:layout_marginRight="8dp"
+	        android:layout_weight="1"
+	        android:maxHeight="15dp"/>
+	    <TextView 
+	        android:id="@+id/play_taoal_tv"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="16sp"
+	        android:text="00:00:00"
+	        android:textColor="#fff"/>
+	</LinearLayout>
+	<FrameLayout 
+	    android:id="@+id/file_list_view"
+	    android:layout_width="wrap_content"
+	    android:visibility="visible"
+	    android:layout_centerInParent="true"
+	    android:layout_height="wrap_content"
+	    
+	    >
+	</FrameLayout>
+	    <!-- <LinearLayout 
+	        android:id="@+id/play_loading_layout"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent"
+	        android:visibility="invisible"
+	        android:gravity="center|bottom"
+	        android:background="@drawable/default_video">
+	        <TextView android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:textSize="38sp"
+	            android:textColor="#000"
+	            android:layout_marginBottom="60dp"
+	            android:text="loading..."/>
+	    </LinearLayout> -->
+
+</RelativeLayout>

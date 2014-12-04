@@ -13,7 +13,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="播放类型：" />
+            android:text="播放类型："
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/local_setting_auto_play_cb"
@@ -22,7 +24,9 @@
             android:checked="true"
             android:focusable="true"
             android:text="自动播放"
-            android:textColor="@color/white" >
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" >
         </CheckBox>
     </LinearLayout>
 
@@ -30,12 +34,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="20dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="优先类型：" />
+            android:text="优先类型："
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/local_setting_mode_group"
@@ -48,13 +55,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="实时模式" />
+                android:text="实时模式"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/local_setting_fluency_mode"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="流畅模式" />
+                android:text="流畅模式"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RadioGroup>
     </LinearLayout>
 
@@ -62,12 +73,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="20dp" >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="码流类型：" />
+            android:text="码流类型："
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/local_setting_streams_group"
@@ -80,13 +94,17 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="主码流" />
+                android:text="主码流"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
             <RadioButton
                 android:id="@+id/local_setting_sub_stream"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="子码流" />
+                android:text="子码流"
+                android:textSize="20sp"
+                android:textStyle="bold" />
         </RadioGroup>
     </LinearLayout>
 
@@ -94,13 +112,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="2"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingTop="20dp" 
+        android:layout_gravity="center">
 
-        <ImageButton
+       
+             <ImageButton
             android:id="@+id/local_setting_save_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/local_setting_save_button" />
+            android:src="@drawable/local_save_button" />
+       
+
+        <!-- <Button
+            android:id="@+id/local_setting_save_button"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="保存" />
+             -->
     </LinearLayout>
 
 </LinearLayout>

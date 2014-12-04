@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -17,9 +18,9 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.data.LocalCamera;
+import com.taixin.android.onvif.app.logic.IOnvifManager;
+import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.util.SerializableUtil;
-import com.taixin.android.onvif.logic.IOnvifManager;
-import com.taixin.android.onvif.logic.OnvifManager;
 
 public class LoginActivity extends Activity {
 
@@ -54,7 +55,6 @@ public class LoginActivity extends Activity {
 		btn_login.setFocusable(true);
 		// 登录监听事件  现在默认为用户名为：admin 密码：12345  
 		btn_login.setOnClickListener(new OnClickListener() {  
-
 			public void onClick(View v) {  
 				userNameValue = userName.getText().toString();  
 				passwordValue = password.getText().toString();  
@@ -62,6 +62,7 @@ public class LoginActivity extends Activity {
 				String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getDeviceService();
 				boolean isGetCapa = onvifMgr.getDeviceCapabilities(userNameValue, passwordValue, deviceService);
 				boolean auth = onvifMgr.getMediaStreamUri(userNameValue, passwordValue, deviceService);
+				Toast toast;
 				if(isGetCapa && auth){
 					//onvifMgr.getOnvifData().getGridsItemList().get(position).setAuth(true);
 					onvifMgr.getOnvifData().getCurrentCameras().get(position).setAuth(true);
@@ -74,13 +75,21 @@ public class LoginActivity extends Activity {
 					lCamera.setUuid(uuid);
 					lCamera.setPassword(passwordValue);
 					lCamera.setUsername(userNameValue);
-					if(onvifMgr.saveNewCameraToLocal(lCamera))
-						Toast.makeText(LoginActivity.this,"保存成功", Toast.LENGTH_LONG).show(); 
-					else
-						Toast.makeText(LoginActivity.this,"保存失败", Toast.LENGTH_LONG).show(); 
+					if(onvifMgr.saveNewCameraToLocal(lCamera)){
+						toast = Toast.makeText(LoginActivity.this,"保存成功", Toast.LENGTH_LONG); 
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}
+					else{
+						toast = Toast.makeText(LoginActivity.this,"保存成功", Toast.LENGTH_LONG); 
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}
 					finish();
 				}else{
-					Toast.makeText(LoginActivity.this,"用户名或密码错误，请重新登录", Toast.LENGTH_LONG).show();  
+					toast = Toast.makeText(LoginActivity.this,"用户名或密码错误，请重新登录", Toast.LENGTH_LONG); 
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
 				}
 			}  
 		});  
@@ -108,7 +117,7 @@ public class LoginActivity extends Activity {
 			}  
 		});  
 	}
-	
+
 	/*将用户名密码存储本地*/
 	public void storageLocalData(){
 		String uuid = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getUuid();

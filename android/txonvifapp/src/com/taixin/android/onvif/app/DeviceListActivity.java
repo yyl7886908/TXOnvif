@@ -5,22 +5,22 @@ import java.util.HashMap;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ListView;
+import android.widget.Toast;
 
-import com.taixin.android.onvif.app.DeviceListAdapter.ViewHolder;
+import com.taixin.android.onvif.app.DeviceListAdapter.DeviceViewHolder;
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.GridsItemStatus;
-import com.taixin.android.onvif.logic.IOnvifManager;
-import com.taixin.android.onvif.logic.OnvifManager;
+import com.taixin.android.onvif.app.logic.IOnvifManager;
+import com.taixin.android.onvif.app.logic.OnvifManager;
 public class DeviceListActivity extends Activity {
 
 	private IOnvifManager onvifMgr;
@@ -51,8 +51,18 @@ public class DeviceListActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			/*先清空当前设备列表*/
-			onvifMgr.getOnvifData().getCurrentCameras().clear();
+			
+			if(list.size()>1){
+				/*先清空当前设备列表*/
+				onvifMgr.getOnvifData().getCurrentCameras().clear();
+				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return false;
+			}
+			if(list.size()<=0){
+				return true;
+			}
 			for(int i =0;i<list.size();i++){
 				HashMap<String, String> temp = list.get(i);
 				if(temp.get("flag").equals("true")){
@@ -84,7 +94,7 @@ public class DeviceListActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				ViewHolder holder = (ViewHolder) view.getTag();
+				DeviceViewHolder holder = (DeviceViewHolder) view.getTag();
 				holder.cb.toggle();
 				if(holder.cb.isChecked() == true){
 					list.get(position).put("flag", "true");

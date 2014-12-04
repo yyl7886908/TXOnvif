@@ -6,20 +6,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.R;
 import com.taixin.android.onvif.app.data.LocalSetting;
-import com.taixin.android.onvif.logic.IOnvifManager;
-import com.taixin.android.onvif.logic.OnvifManager;
+import com.taixin.android.onvif.app.logic.IOnvifManager;
+import com.taixin.android.onvif.app.logic.OnvifManager;
 
 public class LocalSettingFragment extends Fragment {
 	private IOnvifManager onvifMgr;
 	private ImageButton saveBtn;
+	//private Button saveBtn;
 	private RadioGroup modeGroup;
 	private RadioGroup streamGroup;
 	private CheckBox autoPlayBox;

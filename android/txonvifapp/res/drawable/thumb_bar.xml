@@ -6,7 +6,7 @@
 
     <!-- 焦点状态 -->
     <item android:state_focused="true"
-        android:drawable="@drawable/thumb_up" />
+        android:drawable="@drawable/thumb_dn" />
     
     <!-- 默认状态 -->
     <item android:drawable="@drawable/thumb_up" />  

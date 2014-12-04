@@ -2,10 +2,14 @@ package com.taixin.android.onvif.app.data;
 
 import java.util.ArrayList;
 
+import com.taixin.android.onvif.sdk.obj.Device;
+
 /**
  *摄像头列表的所有数据
  */
 public class OnvifData {
+	/*搜索到的所有的设备*/
+	private ArrayList<Device> deviceList;
 	/*所有的设备*/
 	private ArrayList<CameraData> cameras;
 	/*目前显示的设备*/
@@ -23,6 +27,15 @@ public class OnvifData {
 		initData();
 	}
 	
+	public ArrayList<Device> getDeviceList() {
+		return deviceList;
+	}
+
+	public void setDeviceList(ArrayList<Device> deviceList) {
+		this.deviceList = deviceList;
+	}
+
+
 	public ArrayList<GridsItemStatus> getGridsItemList() {
 		return gridsItems;
 	}

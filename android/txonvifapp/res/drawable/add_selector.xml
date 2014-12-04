@@ -7,7 +7,7 @@
     <item android:drawable="@drawable/add_focus" 
         android:state_focused="true"
         android:state_pressed="true"></item>
-    <item android:drawable="@drawable/add_focus" 
+    <item android:drawable="@drawable/add_press" 
         android:state_focused="true"
         android:state_pressed="false"></item>
 

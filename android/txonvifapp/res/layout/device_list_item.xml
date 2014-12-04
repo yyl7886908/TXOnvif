@@ -7,10 +7,10 @@
     <ImageView
         android:id="@+id/device_img"
         android:layout_width="100dp"
-        android:layout_height="wrap_content"
+        android:layout_height="100dp"
         android:layout_gravity="center_vertical"
-        android:focusable="false"
-        android:layout_marginLeft="20dp" />
+        android:layout_marginLeft="20dp"
+        android:focusable="false" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -24,27 +24,62 @@
 
             <TextView
                 android:id="@+id/device_title_name"
-                android:layout_width="100dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
                 android:focusable="false"
-                android:text="name："
+                android:gravity="right"
+                android:text="IP地址："
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold" >
             </TextView>
+
             <TextView
                 android:id="@+id/device_title"
-                android:layout_width="300dp"
+                 android:layout_width="400dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="20dp"
-                android:gravity="center_vertical"
                 android:focusable="false"
+                android:gravity="left"
                 android:textColor="@color/white"
-                android:textSize="18sp"
+                android:textSize="20sp"
+                android:textStyle="bold">
+            </TextView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/device_uuid_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:gravity="right"
+                android:text="唯一识别号："
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/device_uuid"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:gravity="left"
+                android:text="38065863-9989-11b4-8329-4419b65ed625"
+                android:textColor="@color/white"
+                android:textSize="20sp"
                 android:textStyle="bold" >
             </TextView>
         </LinearLayout>
@@ -53,78 +88,46 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal" >
-            
-            <TextView
-            android:id="@+id/device_uuid_name"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:text="uuid："
-            android:focusable="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" >
-        </TextView>
-        <TextView
-            android:id="@+id/device_uuid"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:focusable="false"
-            android:text="38065863-9989-11b4-8329-4419b65ed625"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" >
-        </TextView>
-        </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-         <TextView
-            android:id="@+id/device_service_name"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:text="服务地址："
-            android:focusable="false"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" >
-        </TextView>
-        <TextView
-            android:id="@+id/device_service"
-            android:layout_width="300dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
-            android:focusable="false"
-            android:text="http://192.168.1.106/onvif/device_service"
-            android:textColor="@color/white"
-            android:textSize="14sp"
-            android:textStyle="bold" >
-        </TextView>
-        
+            <TextView
+                android:id="@+id/device_service_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:gravity="right"
+                android:text="服务地址："
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" >
+            </TextView>
+
+            <TextView
+                android:id="@+id/device_service"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:focusable="false"
+                android:gravity="left"
+                android:text="http://192.168.1.106/onvif/device_service"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" >
+            </TextView>
         </LinearLayout>
     </LinearLayout>
 
     <CheckBox
         android:id="@+id/device_checkbox"
+        style="@style/custom_checkbox"
         android:layout_width="150dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="300dp"
+        android:layout_gravity="right|center_vertical"
+        android:layout_marginLeft="180dp"
         android:focusable="false"
-        style="@style/custom_checkbox"
-        android:layout_gravity="center"
-        android:textColor="@color/white">
+        android:textColor="@color/white" >
     </CheckBox>
 
 </LinearLayout>

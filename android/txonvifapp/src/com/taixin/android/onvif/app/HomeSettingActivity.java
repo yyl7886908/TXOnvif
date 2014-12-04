@@ -1,5 +1,6 @@
 package com.taixin.android.onvif.app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -11,14 +12,11 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.ImageButton;
 
-import com.taixin.android.onvif.app.listener.ButtonOnFocusListener;
-
 public class HomeSettingActivity extends FragmentActivity {
 	private Fragment[] mFragments;  
 	private FragmentManager fragmentManager;  
 	private FragmentTransaction fragmentTransaction;  
-	private ImageButton localSettingBtn, localPhotoBtn, localVideoBtn;  
-
+	private ImageButton localSettingBtn, localPhotoBtn, localVideoBtn, localOrderRecordBtn;  
 	@Override
 	protected void onCreate(Bundle bundle) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -36,7 +34,7 @@ public class HomeSettingActivity extends FragmentActivity {
 		mFragments[2] = fragmentManager.findFragmentById(R.id.fragement_setting);  
 		fragmentTransaction = fragmentManager.beginTransaction()  
 				.hide(mFragments[0]).hide(mFragments[1]).hide(mFragments[2]);  
-		fragmentTransaction.show(mFragments[0]).commit();  
+		fragmentTransaction.show(mFragments[2]).commit();  
 		setFragmentIndicator();  
 	}
 
@@ -44,10 +42,12 @@ public class HomeSettingActivity extends FragmentActivity {
 		localSettingBtn= (ImageButton) findViewById(R.id.local_setting); 
 		localPhotoBtn= (ImageButton) findViewById(R.id.local_photos);
 		localVideoBtn= (ImageButton) findViewById(R.id.local_videos);
+		localOrderRecordBtn = (ImageButton) findViewById(R.id.local_order_record);
 		myOnClickListener listener = new myOnClickListener();
 		localSettingBtn.setOnClickListener(listener);
 		localPhotoBtn.setOnClickListener(listener);
 		localVideoBtn.setOnClickListener(listener);
+		localOrderRecordBtn.setOnClickListener(listener);
 	}  
 	/*ImageButton点击事件*/
 	class myOnClickListener implements OnClickListener{
@@ -56,12 +56,22 @@ public class HomeSettingActivity extends FragmentActivity {
 			fragmentTransaction = fragmentManager.beginTransaction()  
 					.hide(mFragments[0]).hide(mFragments[1])  
 					.hide(mFragments[2]);
-			if(v == localVideoBtn)
-				fragmentTransaction.show(mFragments[0]).commit();
-			else if(v == localPhotoBtn)
-				fragmentTransaction.show(mFragments[1]).commit();
+			if(v == localVideoBtn){
+				Intent intent = new Intent(HomeSettingActivity.this, CameraVideosListActivity.class);
+				HomeSettingActivity.this.startActivity(intent);
+			}
+			else if(v == localPhotoBtn){
+				Intent intent = new Intent(HomeSettingActivity.this, CameraImagesGridActivity.class);
+				HomeSettingActivity.this.startActivity(intent);
+			}
 			else if(v == localSettingBtn)
 				fragmentTransaction.show(mFragments[2]).commit();
+			else if(v == localOrderRecordBtn){
+				Intent intent = new Intent(HomeSettingActivity.this, OrderRecordActivity.class);
+				HomeSettingActivity.this.startActivity(intent);
+			}
 		}
+		/*检测U盘信息*/
+		
 	}
 }

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="#b0000000"
+    android:orientation="horizontal" >
+
+    <ImageButton
+        android:id="@+id/high_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/high_stream_selector" 
+        android:layout_weight="1"
+        android:background="@color/transparency"
+        />
+
+    <ImageButton
+        android:id="@+id/middle_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/middle_stream_selector" 
+        android:layout_weight="1"
+        android:background="@color/transparency"/>
+
+    <ImageButton
+        android:id="@+id/low_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/low_stream_selector" 
+        android:layout_weight="1"
+        android:background="@color/transparency"/>
+
+</LinearLayout>
