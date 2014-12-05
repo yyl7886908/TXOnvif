@@ -1,0 +1,182 @@
+TIOS_Onvif_demo
+v6
+r1
+cCheck dependencies
+cCpResource /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist
+cProcessPCH /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+cCompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist
+c00000000534750900000000000000096
+t1397182608
+s150
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/SDKSettings.plist
+c0000000053475090000000000000036B
+t1397182608
+s875
+
+N/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/CoreServices/SystemVersion.plist
+c0000000053475091000000000000019E
+t1397182609
+s414
+
+N/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/5.1/include/module.map
+c000000005347512E0000000000000ADC
+t1397182766
+s2780
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o
+t2
+s0
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o
+t2
+s0
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/main.o
+t2
+s0
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch
+t1417746359
+s94444
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist
+t2
+s0
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m
+c000000005481117C00000000000007D7
+t1417744764
+s2007
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch
+c000000005481117C0000000000000158
+t1417744764
+s344
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m
+c000000005481179B00000000000001F7
+t1417746331
+s503
+
+N/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/main.m
+c000000005481117C0000000000000151
+t1417744764
+s337
+
+CBuild AST from /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m
+r0
+
+CBuild AST from /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m
+r0
+
+CBuild AST from /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/main.m
+r0
+
+CCheck dependencies
+r0
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection18"Check dependencies18"Check dependencies2ff888364f31ba41^124b92364f31ba41^---0#1#1#--18"Check dependencies36"63BB0CBD-7700-40C1-A9FF-8107F0E2EFE2-
+
+CCodeSign /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app
+r0
+
+CCompileAssetCatalog /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/Images.xcassets
+r0
+
+CCompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s439439159.448899
+e439439160.088404
+r1
+xCompileC
+xBuild/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o
+x/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m
+xnormal
+xarmv7
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m
+d/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.h
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection92"Compile /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m218"CompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o IOS_Onvif_demo/AppDelegate.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compilere10b73374f31ba41^7fa216384f31ba41^---0#0#1#-19%DVTDocumentLocation2@91"file:///Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m0000000000000000^3913"CompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o IOS_Onvif_demo/AppDelegate.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch armv7 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=gnu99 -fobjc-arc -fmodules -fmodules-cache-path=/Users/taixin/Library/Developer/Xcode/DerivedData/ModuleCache -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Werror=return-type -Wno-implicit-atomic-properties -Werror=deprecated-objc-isa-usage -Werror=objc-root-class -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -miphoneos-version-min=7.1 -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-generated-files.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-own-target-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-all-target-headers.hmap -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-project-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources/armv7 -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources -F/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos -include /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch -MMD -MT dependencies -MF /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.d --serialize-diagnostics /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.dia -c /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/AppDelegate.m -o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/AppDelegate.o36"93413645-061E-4378-AD48-D569AC01ECDC-
+b5E00EDC6-DD13-4114-935A-9247D404B52D
+
+CCompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s439439159.448661
+e439439159.586551
+r0
+xCompileC
+xBuild/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o
+x/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m
+xnormal
+xarmv7
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m
+d/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.h
+o/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m:10:9: error: empty filename
+o#import ""
+o        ^
+o1 error generated.
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection95"Compile /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m224"CompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o IOS_Onvif_demo/ViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler2ffa72374f31ba41^1d2296374f31ba41^-156"/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m:10:9: error: empty filename#import ""        ^1 error generated.1(36%IDEClangDiagnosticActivityLogMessage2@14"Empty filename-439439159#18446744073709551615#0#-2#27"com.apple.dt.IDE.diagnostic23%DVTTextDocumentLocation3@94"file:///Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m0000000000000000^9#8#9#8#174#0#29"Lexical or Preprocessor Issue--0#0#1#-19%DVTDocumentLocation4@94"file:///Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m0000000000000000^3931"CompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o IOS_Onvif_demo/ViewController.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c -arch armv7 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=gnu99 -fobjc-arc -fmodules -fmodules-cache-path=/Users/taixin/Library/Developer/Xcode/DerivedData/ModuleCache -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Werror=return-type -Wno-implicit-atomic-properties -Werror=deprecated-objc-isa-usage -Werror=objc-root-class -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -miphoneos-version-min=7.1 -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-generated-files.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-own-target-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-all-target-headers.hmap -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-project-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources/armv7 -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources -F/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos -include /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch -MMD -MT dependencies -MF /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.d --serialize-diagnostics /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.dia -c /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/ViewController.m -o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/ViewController.o36"6ECDBB7F-785F-4EB6-8B31-CEA99ED73BC5-
+b5E00EDC6-DD13-4114-935A-9247D404B52D
+
+CCompileC Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/Objects-normal/armv7/main.o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/main.m normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+r0
+
+CCompileStoryboard /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/Base.lproj/Main_iPad.storyboard
+r0
+
+CCompileStoryboard /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/Base.lproj/Main_iPhone.storyboard
+r0
+
+CCopyStringsFile /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/en.lproj/InfoPlist.strings IOS_Onvif_demo/en.lproj/InfoPlist.strings
+r0
+
+CCpResource /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist
+s439439158.573389
+e439439158.587420
+r1
+xCpResource
+x/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist
+xBuild/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection73"Copy Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist201"CpResource /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist5ed892364f31ba41^026296364f31ba41^---0#0#1#-19%DVTDocumentLocation2@131"file:///Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist00340484ddffdf42^792"CpResource /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/ResourceRules.plist    cd /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-copy -exclude .DS_Store -exclude CVS -exclude .svn -exclude .git -exclude .hg -resolve-src-symlinks /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/ResourceRules.plist /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app36"A97A2A7E-E184-4DD7-BAC3-DFC86C40E818-
+b5E00EDC6-DD13-4114-935A-9247D404B52D
+
+CGenerateDSYMFile /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app.dSYM /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/IOS_Onvif_demo
+r0
+
+CLd /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/IOS_Onvif_demo normal armv7
+r0
+
+CProcessInfoPlistFile /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/Info.plist /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/IOS_Onvif_demo-Info.plist
+r0
+
+CProcessPCH /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler
+s439439158.588145
+e439439159.447871
+r1
+xProcessPCH
+x/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch
+xIOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch
+xnormal
+xarmv7
+xobjective-c
+xcom.apple.compilers.llvm.clang.1_0.compiler
+d/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch
+lSLF06#21%IDEActivityLogSection1@2#32"com.apple.dt.IDE.BuildLogSection51"Precompile IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch240"ProcessPCH Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler61a596364f31ba41^19aa72374f31ba41^---0#0#1#-19%DVTDocumentLocation2@103"file:///Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch0000000000000000^3793"ProcessPCH Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.compiler    cd /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo    export LANG=en_US.US-ASCII    export PATH="/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin:/Applications/Xcode.app/Contents/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang -x objective-c-header -arch armv7 -fmessage-length=0 -fdiagnostics-show-note-include-stack -fmacro-backtrace-limit=0 -std=gnu99 -fobjc-arc -fmodules -fmodules-cache-path=/Users/taixin/Library/Developer/Xcode/DerivedData/ModuleCache -Wno-trigraphs -fpascal-strings -O0 -Wno-missing-field-initializers -Wno-missing-prototypes -Werror=return-type -Wno-implicit-atomic-properties -Werror=deprecated-objc-isa-usage -Werror=objc-root-class -Wno-receiver-is-weak -Wno-arc-repeated-use-of-weak -Wduplicate-method-match -Wno-missing-braces -Wparentheses -Wswitch -Wunused-function -Wno-unused-label -Wno-unused-parameter -Wunused-variable -Wunused-value -Wempty-body -Wconditional-uninitialized -Wno-unknown-pragmas -Wno-shadow -Wno-four-char-constants -Wno-conversion -Wconstant-conversion -Wint-conversion -Wbool-conversion -Wenum-conversion -Wshorten-64-to-32 -Wpointer-sign -Wno-newline-eof -Wno-selector -Wno-strict-selector-match -Wundeclared-selector -Wno-deprecated-implementations -DDEBUG=1 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk -fstrict-aliasing -Wprotocol -Wdeprecated-declarations -g -Wno-sign-conversion -miphoneos-version-min=7.1 -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-generated-files.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-own-target-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-all-target-headers.hmap -iquote /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo-project-headers.hmap -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/include -I/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources/armv7 -I/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/DerivedSources -F/Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos --serialize-diagnostics /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.dia -MMD -MT dependencies -MF /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.d -c /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch -o /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/PrecompiledHeaders/IOS_Onvif_demo-Prefix-estlhfsvgsrcsqgokwcdpitzjhtu/IOS_Onvif_demo-Prefix.pch.pch36"B7D5641D-9355-4E6E-8C07-E8D1A65B78D4-
+b5E00EDC6-DD13-4114-935A-9247D404B52D
+
+CProcessPCH /Users/taixin/Library/Developer/Xcode/DerivedData/IOS_Onvif_demo-dtmosysmfnuwwyhkrdjmtorogrdt/Index/PrecompiledHeaders/IOS_Onvif_demo-Prefix-arrqxemyubeeebcqvuwnuauduykn_ast/IOS_Onvif_demo-Prefix.pch.pch IOS_Onvif_demo/IOS_Onvif_demo-Prefix.pch normal armv7 objective-c com.apple.compilers.llvm.clang.1_0.astbuilder
+r0
+
+CProcessProductPackaging /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/Entitlements.plist /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Intermediates/IOS_Onvif_demo.build/Debug-iphoneos/IOS_Onvif_demo.build/IOS_Onvif_demo.xcent
+r0
+
+CProcessProductPackaging /Users/taixin/Library/MobileDevice/Provisioning\ Profiles/80FF8290-6FC9-4A57-BF24-0377288D8917.mobileprovision /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app/embedded.mobileprovision
+r0
+
+CTouch /Users/taixin/Desktop/github/TXOnvif/ios/IOS_Onvif_demo/Build/Products/Debug-iphoneos/IOS_Onvif_demo.app
+r0
+

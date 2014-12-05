@@ -1,0 +1,579 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		222F23F91A31427A00D835B9 /* ImagingSetting.m in Sources */ = {isa = PBXBuildFile; fileRef = 222F23F81A31427A00D835B9 /* ImagingSetting.m */; };
+		222F24771A3152CD00D835B9 /* base64.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24531A3152CD00D835B9 /* base64.c */; };
+		222F24781A3152CD00D835B9 /* device.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24551A3152CD00D835B9 /* device.c */; };
+		222F24791A3152CD00D835B9 /* deviceio.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24561A3152CD00D835B9 /* deviceio.c */; };
+		222F247A1A3152CD00D835B9 /* discovery.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24571A3152CD00D835B9 /* discovery.c */; };
+		222F247B1A3152CD00D835B9 /* duration.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24581A3152CD00D835B9 /* duration.c */; };
+		222F247C1A3152CD00D835B9 /* imaging.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24591A3152CD00D835B9 /* imaging.c */; };
+		222F247E1A3152CD00D835B9 /* media.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24681A3152CD00D835B9 /* media.c */; };
+		222F247F1A3152CD00D835B9 /* ptz.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F246A1A3152CD00D835B9 /* ptz.c */; };
+		222F24801A3152CD00D835B9 /* recording.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F246B1A3152CD00D835B9 /* recording.c */; };
+		222F24811A3152CD00D835B9 /* search.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F246C1A3152CD00D835B9 /* search.c */; };
+		222F24821A3152CD00D835B9 /* sha1.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F246D1A3152CD00D835B9 /* sha1.c */; };
+		222F24831A3152CD00D835B9 /* soapC.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F246F1A3152CD00D835B9 /* soapC.c */; };
+		222F24841A3152CD00D835B9 /* soapClient.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24701A3152CD00D835B9 /* soapClient.c */; };
+		222F24851A3152CD00D835B9 /* stdsoap2.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24731A3152CD00D835B9 /* stdsoap2.c */; };
+		222F24861A3152CD00D835B9 /* tx_onvif_sdk.c in Sources */ = {isa = PBXBuildFile; fileRef = 222F24751A3152CD00D835B9 /* tx_onvif_sdk.c */; };
+		225D9FF01A3047620081009F /* DeviceCapability.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D9FEF1A3047620081009F /* DeviceCapability.m */; };
+		225D9FF31A3048460081009F /* DeviceInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D9FF21A3048460081009F /* DeviceInfo.m */; };
+		225D9FF61A3048D90081009F /* MediaProfilesInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D9FF51A3048D90081009F /* MediaProfilesInfo.m */; };
+		225D9FF91A3049A40081009F /* MediaStreamUri.m in Sources */ = {isa = PBXBuildFile; fileRef = 225D9FF81A3049A40081009F /* MediaStreamUri.m */; };
+		22F104E01A3041B500A97926 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F104DF1A3041B500A97926 /* Foundation.framework */; };
+		22F104E51A3041B500A97926 /* IOS_Onivf_Sdk.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 22F104E41A3041B500A97926 /* IOS_Onivf_Sdk.h */; };
+		22F104E71A3041B500A97926 /* IOS_Onivf_Sdk.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F104E61A3041B500A97926 /* IOS_Onivf_Sdk.m */; };
+		22F104EE1A3041B500A97926 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F104ED1A3041B500A97926 /* XCTest.framework */; };
+		22F104EF1A3041B500A97926 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F104DF1A3041B500A97926 /* Foundation.framework */; };
+		22F104F11A3041B500A97926 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F104F01A3041B500A97926 /* UIKit.framework */; };
+		22F104F41A3041B500A97926 /* libIOS_Onivf_Sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 22F104DC1A3041B500A97926 /* libIOS_Onivf_Sdk.a */; };
+		22F104FA1A3041B500A97926 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 22F104F81A3041B500A97926 /* InfoPlist.strings */; };
+		22F104FC1A3041B500A97926 /* IOS_Onivf_SdkTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F104FB1A3041B500A97926 /* IOS_Onivf_SdkTests.m */; };
+		22F1053C1A3044CA00A97926 /* Device.m in Sources */ = {isa = PBXBuildFile; fileRef = 22F1053B1A3044CA00A97926 /* Device.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		22F104F21A3041B500A97926 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22F104D41A3041B500A97926 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 22F104DB1A3041B500A97926;
+			remoteInfo = IOS_Onivf_Sdk;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		22F104DA1A3041B500A97926 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				22F104E51A3041B500A97926 /* IOS_Onivf_Sdk.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		222F23F71A31427A00D835B9 /* ImagingSetting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagingSetting.h; sourceTree = "<group>"; };
+		222F23F81A31427A00D835B9 /* ImagingSetting.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagingSetting.m; sourceTree = "<group>"; };
+		222F24531A3152CD00D835B9 /* base64.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = base64.c; path = ../../../source/onvif/base64.c; sourceTree = "<group>"; };
+		222F24541A3152CD00D835B9 /* base64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = base64.h; path = ../../../source/onvif/base64.h; sourceTree = "<group>"; };
+		222F24551A3152CD00D835B9 /* device.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = device.c; path = ../../../source/onvif/device.c; sourceTree = "<group>"; };
+		222F24561A3152CD00D835B9 /* deviceio.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = deviceio.c; path = ../../../source/onvif/deviceio.c; sourceTree = "<group>"; };
+		222F24571A3152CD00D835B9 /* discovery.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = discovery.c; path = ../../../source/onvif/discovery.c; sourceTree = "<group>"; };
+		222F24581A3152CD00D835B9 /* duration.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = duration.c; path = ../../../source/onvif/duration.c; sourceTree = "<group>"; };
+		222F24591A3152CD00D835B9 /* imaging.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = imaging.c; path = ../../../source/onvif/imaging.c; sourceTree = "<group>"; };
+		222F245C1A3152CD00D835B9 /* device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = device.h; sourceTree = "<group>"; };
+		222F245D1A3152CD00D835B9 /* deviceio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = deviceio.h; sourceTree = "<group>"; };
+		222F245E1A3152CD00D835B9 /* discovery.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = discovery.h; sourceTree = "<group>"; };
+		222F245F1A3152CD00D835B9 /* header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = header.h; sourceTree = "<group>"; };
+		222F24601A3152CD00D835B9 /* imaging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = imaging.h; sourceTree = "<group>"; };
+		222F24611A3152CD00D835B9 /* media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = media.h; sourceTree = "<group>"; };
+		222F24621A3152CD00D835B9 /* ptz.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ptz.h; sourceTree = "<group>"; };
+		222F24631A3152CD00D835B9 /* recording.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = recording.h; sourceTree = "<group>"; };
+		222F24641A3152CD00D835B9 /* search.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = search.h; sourceTree = "<group>"; };
+		222F24651A3152CD00D835B9 /* tx_onvif_define.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tx_onvif_define.h; sourceTree = "<group>"; };
+		222F24661A3152CD00D835B9 /* tx_onvif_sdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = tx_onvif_sdk.h; sourceTree = "<group>"; };
+		222F24681A3152CD00D835B9 /* media.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = media.c; path = ../../../source/onvif/media.c; sourceTree = "<group>"; };
+		222F24691A3152CD00D835B9 /* onvif.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = onvif.h; path = ../../../source/onvif/onvif.h; sourceTree = "<group>"; };
+		222F246A1A3152CD00D835B9 /* ptz.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ptz.c; path = ../../../source/onvif/ptz.c; sourceTree = "<group>"; };
+		222F246B1A3152CD00D835B9 /* recording.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = recording.c; path = ../../../source/onvif/recording.c; sourceTree = "<group>"; };
+		222F246C1A3152CD00D835B9 /* search.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = search.c; path = ../../../source/onvif/search.c; sourceTree = "<group>"; };
+		222F246D1A3152CD00D835B9 /* sha1.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = sha1.c; path = ../../../source/onvif/sha1.c; sourceTree = "<group>"; };
+		222F246E1A3152CD00D835B9 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = ../../../source/onvif/sha1.h; sourceTree = "<group>"; };
+		222F246F1A3152CD00D835B9 /* soapC.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = soapC.c; path = ../../../source/onvif/soapC.c; sourceTree = "<group>"; };
+		222F24701A3152CD00D835B9 /* soapClient.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = soapClient.c; path = ../../../source/onvif/soapClient.c; sourceTree = "<group>"; };
+		222F24711A3152CD00D835B9 /* soapH.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soapH.h; path = ../../../source/onvif/soapH.h; sourceTree = "<group>"; };
+		222F24721A3152CD00D835B9 /* soapStub.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soapStub.h; path = ../../../source/onvif/soapStub.h; sourceTree = "<group>"; };
+		222F24731A3152CD00D835B9 /* stdsoap2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = stdsoap2.c; path = ../../../source/onvif/stdsoap2.c; sourceTree = "<group>"; };
+		222F24741A3152CD00D835B9 /* stdsoap2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = stdsoap2.h; path = ../../../source/onvif/stdsoap2.h; sourceTree = "<group>"; };
+		222F24751A3152CD00D835B9 /* tx_onvif_sdk.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = tx_onvif_sdk.c; path = ../../../source/onvif/tx_onvif_sdk.c; sourceTree = "<group>"; };
+		222F24761A3152CD00D835B9 /* wsdd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = wsdd.h; path = ../../../source/onvif/wsdd.h; sourceTree = "<group>"; };
+		225D9FEE1A3047620081009F /* DeviceCapability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceCapability.h; sourceTree = "<group>"; };
+		225D9FEF1A3047620081009F /* DeviceCapability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceCapability.m; sourceTree = "<group>"; };
+		225D9FF11A3048460081009F /* DeviceInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeviceInfo.h; sourceTree = "<group>"; };
+		225D9FF21A3048460081009F /* DeviceInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeviceInfo.m; sourceTree = "<group>"; };
+		225D9FF41A3048D90081009F /* MediaProfilesInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaProfilesInfo.h; sourceTree = "<group>"; };
+		225D9FF51A3048D90081009F /* MediaProfilesInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaProfilesInfo.m; sourceTree = "<group>"; };
+		225D9FF71A3049A40081009F /* MediaStreamUri.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaStreamUri.h; sourceTree = "<group>"; };
+		225D9FF81A3049A40081009F /* MediaStreamUri.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaStreamUri.m; sourceTree = "<group>"; };
+		22F104DC1A3041B500A97926 /* libIOS_Onivf_Sdk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libIOS_Onivf_Sdk.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		22F104DF1A3041B500A97926 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		22F104E31A3041B500A97926 /* IOS_Onivf_Sdk-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "IOS_Onivf_Sdk-Prefix.pch"; sourceTree = "<group>"; };
+		22F104E41A3041B500A97926 /* IOS_Onivf_Sdk.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = IOS_Onivf_Sdk.h; sourceTree = "<group>"; };
+		22F104E61A3041B500A97926 /* IOS_Onivf_Sdk.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOS_Onivf_Sdk.m; sourceTree = "<group>"; };
+		22F104EC1A3041B500A97926 /* IOS_Onivf_SdkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IOS_Onivf_SdkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		22F104ED1A3041B500A97926 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		22F104F01A3041B500A97926 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		22F104F71A3041B500A97926 /* IOS_Onivf_SdkTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "IOS_Onivf_SdkTests-Info.plist"; sourceTree = "<group>"; };
+		22F104F91A3041B500A97926 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		22F104FB1A3041B500A97926 /* IOS_Onivf_SdkTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOS_Onivf_SdkTests.m; sourceTree = "<group>"; };
+		22F1053A1A3044CA00A97926 /* Device.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Device.h; sourceTree = "<group>"; };
+		22F1053B1A3044CA00A97926 /* Device.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Device.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		22F104D91A3041B500A97926 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22F104E01A3041B500A97926 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22F104E91A3041B500A97926 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22F104EE1A3041B500A97926 /* XCTest.framework in Frameworks */,
+				22F104F41A3041B500A97926 /* libIOS_Onivf_Sdk.a in Frameworks */,
+				22F104F11A3041B500A97926 /* UIKit.framework in Frameworks */,
+				22F104EF1A3041B500A97926 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		222F245B1A3152CD00D835B9 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				222F245C1A3152CD00D835B9 /* device.h */,
+				222F245D1A3152CD00D835B9 /* deviceio.h */,
+				222F245E1A3152CD00D835B9 /* discovery.h */,
+				222F245F1A3152CD00D835B9 /* header.h */,
+				222F24601A3152CD00D835B9 /* imaging.h */,
+				222F24611A3152CD00D835B9 /* media.h */,
+				222F24621A3152CD00D835B9 /* ptz.h */,
+				222F24631A3152CD00D835B9 /* recording.h */,
+				222F24641A3152CD00D835B9 /* search.h */,
+				222F24651A3152CD00D835B9 /* tx_onvif_define.h */,
+				222F24661A3152CD00D835B9 /* tx_onvif_sdk.h */,
+			);
+			name = include;
+			path = ../../../source/onvif/include;
+			sourceTree = "<group>";
+		};
+		22F104D31A3041B500A97926 = {
+			isa = PBXGroup;
+			children = (
+				22F104E11A3041B500A97926 /* IOS_Onivf_Sdk */,
+				22F104F51A3041B500A97926 /* IOS_Onivf_SdkTests */,
+				22F104DE1A3041B500A97926 /* Frameworks */,
+				22F104DD1A3041B500A97926 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		22F104DD1A3041B500A97926 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22F104DC1A3041B500A97926 /* libIOS_Onivf_Sdk.a */,
+				22F104EC1A3041B500A97926 /* IOS_Onivf_SdkTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		22F104DE1A3041B500A97926 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				22F104DF1A3041B500A97926 /* Foundation.framework */,
+				22F104ED1A3041B500A97926 /* XCTest.framework */,
+				22F104F01A3041B500A97926 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		22F104E11A3041B500A97926 /* IOS_Onivf_Sdk */ = {
+			isa = PBXGroup;
+			children = (
+				22F105391A30447E00A97926 /* model */,
+				22F105051A3041CC00A97926 /* onvif */,
+				22F104E41A3041B500A97926 /* IOS_Onivf_Sdk.h */,
+				22F104E61A3041B500A97926 /* IOS_Onivf_Sdk.m */,
+				22F104E21A3041B500A97926 /* Supporting Files */,
+			);
+			path = IOS_Onivf_Sdk;
+			sourceTree = "<group>";
+		};
+		22F104E21A3041B500A97926 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				22F104E31A3041B500A97926 /* IOS_Onivf_Sdk-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22F104F51A3041B500A97926 /* IOS_Onivf_SdkTests */ = {
+			isa = PBXGroup;
+			children = (
+				22F104FB1A3041B500A97926 /* IOS_Onivf_SdkTests.m */,
+				22F104F61A3041B500A97926 /* Supporting Files */,
+			);
+			path = IOS_Onivf_SdkTests;
+			sourceTree = "<group>";
+		};
+		22F104F61A3041B500A97926 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				22F104F71A3041B500A97926 /* IOS_Onivf_SdkTests-Info.plist */,
+				22F104F81A3041B500A97926 /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		22F105051A3041CC00A97926 /* onvif */ = {
+			isa = PBXGroup;
+			children = (
+				222F24531A3152CD00D835B9 /* base64.c */,
+				222F24541A3152CD00D835B9 /* base64.h */,
+				222F24551A3152CD00D835B9 /* device.c */,
+				222F24561A3152CD00D835B9 /* deviceio.c */,
+				222F24571A3152CD00D835B9 /* discovery.c */,
+				222F24581A3152CD00D835B9 /* duration.c */,
+				222F24591A3152CD00D835B9 /* imaging.c */,
+				222F245B1A3152CD00D835B9 /* include */,
+				222F24681A3152CD00D835B9 /* media.c */,
+				222F24691A3152CD00D835B9 /* onvif.h */,
+				222F246A1A3152CD00D835B9 /* ptz.c */,
+				222F246B1A3152CD00D835B9 /* recording.c */,
+				222F246C1A3152CD00D835B9 /* search.c */,
+				222F246D1A3152CD00D835B9 /* sha1.c */,
+				222F246E1A3152CD00D835B9 /* sha1.h */,
+				222F246F1A3152CD00D835B9 /* soapC.c */,
+				222F24701A3152CD00D835B9 /* soapClient.c */,
+				222F24711A3152CD00D835B9 /* soapH.h */,
+				222F24721A3152CD00D835B9 /* soapStub.h */,
+				222F24731A3152CD00D835B9 /* stdsoap2.c */,
+				222F24741A3152CD00D835B9 /* stdsoap2.h */,
+				222F24751A3152CD00D835B9 /* tx_onvif_sdk.c */,
+				222F24761A3152CD00D835B9 /* wsdd.h */,
+			);
+			name = onvif;
+			sourceTree = "<group>";
+		};
+		22F105391A30447E00A97926 /* model */ = {
+			isa = PBXGroup;
+			children = (
+				22F1053A1A3044CA00A97926 /* Device.h */,
+				22F1053B1A3044CA00A97926 /* Device.m */,
+				225D9FEE1A3047620081009F /* DeviceCapability.h */,
+				225D9FEF1A3047620081009F /* DeviceCapability.m */,
+				225D9FF11A3048460081009F /* DeviceInfo.h */,
+				225D9FF21A3048460081009F /* DeviceInfo.m */,
+				225D9FF41A3048D90081009F /* MediaProfilesInfo.h */,
+				225D9FF51A3048D90081009F /* MediaProfilesInfo.m */,
+				225D9FF71A3049A40081009F /* MediaStreamUri.h */,
+				225D9FF81A3049A40081009F /* MediaStreamUri.m */,
+				222F23F71A31427A00D835B9 /* ImagingSetting.h */,
+				222F23F81A31427A00D835B9 /* ImagingSetting.m */,
+			);
+			name = model;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		22F104DB1A3041B500A97926 /* IOS_Onivf_Sdk */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22F104FF1A3041B500A97926 /* Build configuration list for PBXNativeTarget "IOS_Onivf_Sdk" */;
+			buildPhases = (
+				22F104D81A3041B500A97926 /* Sources */,
+				22F104D91A3041B500A97926 /* Frameworks */,
+				22F104DA1A3041B500A97926 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IOS_Onivf_Sdk;
+			productName = IOS_Onivf_Sdk;
+			productReference = 22F104DC1A3041B500A97926 /* libIOS_Onivf_Sdk.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		22F104EB1A3041B500A97926 /* IOS_Onivf_SdkTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 22F105021A3041B500A97926 /* Build configuration list for PBXNativeTarget "IOS_Onivf_SdkTests" */;
+			buildPhases = (
+				22F104E81A3041B500A97926 /* Sources */,
+				22F104E91A3041B500A97926 /* Frameworks */,
+				22F104EA1A3041B500A97926 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				22F104F31A3041B500A97926 /* PBXTargetDependency */,
+			);
+			name = IOS_Onivf_SdkTests;
+			productName = IOS_Onivf_SdkTests;
+			productReference = 22F104EC1A3041B500A97926 /* IOS_Onivf_SdkTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		22F104D41A3041B500A97926 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = taixin;
+			};
+			buildConfigurationList = 22F104D71A3041B500A97926 /* Build configuration list for PBXProject "IOS_Onivf_Sdk" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 22F104D31A3041B500A97926;
+			productRefGroup = 22F104DD1A3041B500A97926 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				22F104DB1A3041B500A97926 /* IOS_Onivf_Sdk */,
+				22F104EB1A3041B500A97926 /* IOS_Onivf_SdkTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		22F104EA1A3041B500A97926 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22F104FA1A3041B500A97926 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		22F104D81A3041B500A97926 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				222F24781A3152CD00D835B9 /* device.c in Sources */,
+				222F24861A3152CD00D835B9 /* tx_onvif_sdk.c in Sources */,
+				222F23F91A31427A00D835B9 /* ImagingSetting.m in Sources */,
+				222F247A1A3152CD00D835B9 /* discovery.c in Sources */,
+				222F247E1A3152CD00D835B9 /* media.c in Sources */,
+				222F247F1A3152CD00D835B9 /* ptz.c in Sources */,
+				225D9FF01A3047620081009F /* DeviceCapability.m in Sources */,
+				222F24831A3152CD00D835B9 /* soapC.c in Sources */,
+				225D9FF91A3049A40081009F /* MediaStreamUri.m in Sources */,
+				222F247B1A3152CD00D835B9 /* duration.c in Sources */,
+				225D9FF61A3048D90081009F /* MediaProfilesInfo.m in Sources */,
+				222F24841A3152CD00D835B9 /* soapClient.c in Sources */,
+				222F24801A3152CD00D835B9 /* recording.c in Sources */,
+				22F104E71A3041B500A97926 /* IOS_Onivf_Sdk.m in Sources */,
+				222F24821A3152CD00D835B9 /* sha1.c in Sources */,
+				225D9FF31A3048460081009F /* DeviceInfo.m in Sources */,
+				222F24791A3152CD00D835B9 /* deviceio.c in Sources */,
+				222F24851A3152CD00D835B9 /* stdsoap2.c in Sources */,
+				222F247C1A3152CD00D835B9 /* imaging.c in Sources */,
+				222F24811A3152CD00D835B9 /* search.c in Sources */,
+				222F24771A3152CD00D835B9 /* base64.c in Sources */,
+				22F1053C1A3044CA00A97926 /* Device.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		22F104E81A3041B500A97926 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22F104FC1A3041B500A97926 /* IOS_Onivf_SdkTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		22F104F31A3041B500A97926 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 22F104DB1A3041B500A97926 /* IOS_Onivf_Sdk */;
+			targetProxy = 22F104F21A3041B500A97926 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		22F104F81A3041B500A97926 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				22F104F91A3041B500A97926 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		22F104FD1A3041B500A97926 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		22F104FE1A3041B500A97926 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		22F105001A3041B500A97926 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/IOS_Onivf_Sdk.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOS_Onivf_Sdk/IOS_Onivf_Sdk-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		22F105011A3041B500A97926 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DSTROOT = /tmp/IOS_Onivf_Sdk.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOS_Onivf_Sdk/IOS_Onivf_Sdk-Prefix.pch";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		22F105031A3041B500A97926 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOS_Onivf_Sdk/IOS_Onivf_Sdk-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "IOS_Onivf_SdkTests/IOS_Onivf_SdkTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		22F105041A3041B500A97926 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "IOS_Onivf_Sdk/IOS_Onivf_Sdk-Prefix.pch";
+				INFOPLIST_FILE = "IOS_Onivf_SdkTests/IOS_Onivf_SdkTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		22F104D71A3041B500A97926 /* Build configuration list for PBXProject "IOS_Onivf_Sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22F104FD1A3041B500A97926 /* Debug */,
+				22F104FE1A3041B500A97926 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22F104FF1A3041B500A97926 /* Build configuration list for PBXNativeTarget "IOS_Onivf_Sdk" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22F105001A3041B500A97926 /* Debug */,
+				22F105011A3041B500A97926 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		22F105021A3041B500A97926 /* Build configuration list for PBXNativeTarget "IOS_Onivf_SdkTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				22F105031A3041B500A97926 /* Debug */,
+				22F105041A3041B500A97926 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 22F104D41A3041B500A97926 /* Project object */;
+}
