@@ -54,6 +54,13 @@
 			remoteGlobalIDString = 22F104DB1A3041B500A97926;
 			remoteInfo = IOS_Onivf_Sdk;
 		};
+		22CACAFF1A317F940000DEDD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 22CACAFB1A317F940000DEDD /* IJKMediaPlayer.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E6903EB917EAF6C500CFD954;
+			remoteInfo = IJKMediaPlayer;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
@@ -78,6 +85,7 @@
 		222F24321A3148FC00D835B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		222F24341A3148FC00D835B9 /* IOS_Onvif_demoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = IOS_Onvif_demoTests.m; sourceTree = "<group>"; };
 		222F24881A31531500D835B9 /* IOS_Onivf_Sdk.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IOS_Onivf_Sdk.xcodeproj; path = ../IOS_Onivf_Sdk/IOS_Onivf_Sdk.xcodeproj; sourceTree = "<group>"; };
+		22CACAFB1A317F940000DEDD /* IJKMediaPlayer.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IJKMediaPlayer.xcodeproj; path = ../IJKMediaPlayer/IJKMediaPlayer.xcodeproj; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -108,6 +116,7 @@
 		222F23FA1A3148FC00D835B9 = {
 			isa = PBXGroup;
 			children = (
+				22CACAFB1A317F940000DEDD /* IJKMediaPlayer.xcodeproj */,
 				222F24881A31531500D835B9 /* IOS_Onivf_Sdk.xcodeproj */,
 				222F240C1A3148FC00D835B9 /* IOS_Onvif_demo */,
 				222F242E1A3148FC00D835B9 /* IOS_Onvif_demoTests */,
@@ -189,6 +198,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		22CACAFC1A317F940000DEDD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				22CACB001A317F940000DEDD /* libIJKMediaPlayer.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -255,6 +272,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = 22CACAFC1A317F940000DEDD /* Products */;
+					ProjectRef = 22CACAFB1A317F940000DEDD /* IJKMediaPlayer.xcodeproj */;
+				},
+				{
 					ProductGroup = 222F24891A31531500D835B9 /* Products */;
 					ProjectRef = 222F24881A31531500D835B9 /* IOS_Onivf_Sdk.xcodeproj */;
 				},
@@ -280,6 +301,13 @@
 			fileType = wrapper.cfbundle;
 			path = IOS_Onivf_SdkTests.xctest;
 			remoteRef = 222F248F1A31531500D835B9 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		22CACB001A317F940000DEDD /* libIJKMediaPlayer.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libIJKMediaPlayer.a;
+			remoteRef = 22CACAFF1A317F940000DEDD /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
