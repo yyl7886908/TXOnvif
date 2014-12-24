@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".PlayerActivity" 
-    android:background="@drawable/camera_default">
+    android:background="@color/black">
 
     <com.taixin.ffmpeg.widget.VideoView
         android:id="@+id/video_view"

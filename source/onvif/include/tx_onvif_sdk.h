@@ -183,6 +183,9 @@ int TX_ONVIF_RECORDING_GetRecordingConfiguration(char *username, char *password,
 
 int TX_ONVIF_RECORDING_GetTrackConfiguration(char *username, char *password, char *recordingService, char* recordToken, char* trackToken);
 
+/*event*/
+int TX_ONVIF_EVENT_GetEventProperties(char *username, char *password, char *deviceService);
+
 /* 设备发现 */
 int  TX_ONVIF_Discovery(char *ip,  int  port, LPTX_ONVIF_REARCH_DEVICEINFO RearchDeviceSet, int *deviceNum);
 

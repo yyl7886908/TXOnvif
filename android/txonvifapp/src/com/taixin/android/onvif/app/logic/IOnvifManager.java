@@ -24,6 +24,10 @@ public interface IOnvifManager {
 	public OnvifData getOnvifData();
 	/*设置context*/
 	public void setContext(Context context);
+	/*获取应用使用的次数*/
+	public int getAppUsingCount();
+	/*对应用的使用次数加1*/
+	public boolean addAppUsingCount();
 	/*检查uuid是否保存在本地，是的话给相关设备的username password 赋值*/
 	public LocalCamera getLocalCameraByUUid(CameraData camera);
 	/*保存用户名和密码*/
@@ -80,4 +84,10 @@ public interface IOnvifManager {
 	
 	public ArrayList<MediaStreamUri> getMediaStreamUriForRecord(String username, String password, String deviceService);
 	
+	/**
+	 * 以下接口和DeviceListActivity有关
+	 */
+	public boolean checkDeviceIsInCurrent(String uuid);
+	/*退出释放所有的资源*/
+	public void resourceTerm();
 }

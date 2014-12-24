@@ -40,6 +40,7 @@ import com.taixin.ffmpeg.widget.VideoView;
 public class OnvifManager implements IOnvifManager {
 
 	private String TAG = "TXOnvif";
+	private String AppUsingCountFileName = "app_using_count";/*app使用的次数*/
 	private String localCameraFileName = "local_camera";/*本地存储摄像头信息列表的文件名*/
 	private String localSettingFileName = "local_setting";/*本地存储设置信息的文件名*/
 	private String previousCameraFileName = "local_previous_camera";/*本地存储上一次连接的摄像头信息文件名*/
@@ -625,6 +626,38 @@ public class OnvifManager implements IOnvifManager {
 		return uris;
 	}
 
-	
+	@Override
+	public int getAppUsingCount() {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(AppUsingCountFileName, Activity.MODE_PRIVATE); 
+		int appUsingCount = mySharedPreferences.getInt("AppUsingCount", 0);
+		return appUsingCount;
+	}
+
+	@Override
+	public boolean addAppUsingCount() {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(AppUsingCountFileName, Activity.MODE_PRIVATE); 
+		SharedPreferences.Editor editor = mySharedPreferences.edit();
+		int appUsingCount = mySharedPreferences.getInt("AppUsingCount", 0);
+        editor.putInt("AppUsingCount", appUsingCount+1);  
+        editor.commit();  
+		return true;
+	}
+
+	@Override
+	public void resourceTerm() {
+		this.getOnvifData().getCameras().clear();
+		this.getOnvifData().getCurrentCameras().clear();
+		this.getOnvifData().getGridsItemList().clear();
+	}
+
+	@Override
+	public boolean checkDeviceIsInCurrent(String uuid) {
+		for(CameraData camera : this.getOnvifData().getCurrentCameras()){
+			if(camera.getDevice().getUuid().equals(uuid)){
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

@@ -1,0 +1,2349 @@
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8180): free(0xbde100)
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0x7fff0350cea0 type=36: not found
+source/onvif/stdsoap2.c(6725): malloc(1288) = 0xbde100
+Pointer enter location=0x7fff0350cea0 array=(nil) size=0 dim=0 type=36 id=1
+Reference 0x7fff0350cea0 type=36 (0 0)
+Lookup location=0x7f1621 type=4: not found
+Pointer enter location=0x7f1621 array=(nil) size=0 dim=0 type=4 id=2
+Reference 0x7f1621 type=4 (0 0)
+Lookup location=0x7fff0350ceb0 type=42: not found
+Pointer enter location=0x7fff0350ceb0 array=(nil) size=0 dim=0 type=42 id=3
+Reference 0x7fff0350ceb0 type=42 (0 0)
+Lookup location=0x7f1621 type=4 id=2
+Reference 0x7f1621 type=4 (2 2)
+Free namespace stack
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xbdf1d0
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/onvif/stdsoap2.c(10154): malloc(256) = 0xbdf7a0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xbde6a0
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xbdf8e0
+Connect/reconnect to host='239.255.255.250' path='/' port=3702
+Opening socket 4 to host='239.255.255.250' port=3702
+Calculating the message size with attachments, current count=2926
+New count is 2926 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20045 count=2926)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xbdf970
+Element begin tag='wsdd:Probe' level='2' id='0' type=''
+Element begin tag='wsdd:Types' level='3' id='0' type=''
+Element ending tag='wsdd:Types'
+Element begin tag='wsdd:Scopes' level='3' id='0' type=''
+Element ending tag='wsdd:Scopes'
+Element ending tag='wsdd:Probe'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20045
+End of send phase
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8163): free(0xbdf7a0)
+source/onvif/stdsoap2.c(8180): free(0xbdf1d0)
+Free pointer hashtable
+source/onvif/stdsoap2.c(6654): free(0xbde100)
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xbdf1d0
+Free ID hashtable
+Read 3122 bytes from socket=4/fd=0
+XML PI <?xml version="1.0" encoding="UTF-8"?>
+Switching to utf-8 encoding
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbde340
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/onvif/stdsoap2.c(10154): malloc(256) = 0xbde3c0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbde500
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbdf800
+Push namespace binding (level=0) 'env' 'http://www.w3.org/2003/05/soap-envelope'
+Push OK ('env' matches 'SOAP-ENV' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xbdf860
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbdfc30
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xbdfd70
+Push namespace binding (level=0) 'soapenc' 'http://www.w3.org/2003/05/soap-encoding'
+Push OK ('soapenc' matches 'SOAP-ENC' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbdfdd0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbdfe50
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbdff90
+Push namespace binding (level=0) 'xsi' 'http://www.w3.org/2001/XMLSchema-instance'
+Push OK ('xsi' matches 'xsi' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xbdfff0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0060
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xbe01a0
+Push namespace binding (level=0) 'xs' 'http://www.w3.org/2001/XMLSchema'
+Push OK ('xs' matches 'xsd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xbe0200
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0270
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xbe03b0
+Push namespace binding (level=0) 'tt' 'http://www.onvif.org/ver10/schema'
+Push OK ('tt' matches 'tt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe0410
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0490
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe05d0
+Push namespace binding (level=0) 'tds' 'http://www.onvif.org/ver10/device/wsdl'
+Push OK ('tds' matches 'tds' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe0630
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe06b0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe07f0
+Push namespace binding (level=0) 'trt' 'http://www.onvif.org/ver10/media/wsdl'
+Push OK ('trt' matches 'trt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe0850
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe08d0
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xbe0a10
+Push namespace binding (level=0) 'timg' 'http://www.onvif.org/ver20/imaging/wsdl'
+Push OK ('timg' matches 'timg' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe0a70
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0af0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe0c30
+Push namespace binding (level=0) 'tev' 'http://www.onvif.org/ver10/events/wsdl'
+Push OK ('tev' matches 'tev' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe0c90
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0d10
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xbe0e50
+Push namespace binding (level=0) 'tptz' 'http://www.onvif.org/ver20/ptz/wsdl'
+Push OK ('tptz' matches 'tptz' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe0eb0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe0f30
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe1070
+Push namespace binding (level=0) 'tan' 'http://www.onvif.org/ver20/analytics/wsdl'
+Push OK ('tan' matches 'tan' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe10d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe1150
+source/onvif/stdsoap2.c(2734): malloc(75) = 0xbe1290
+Push namespace binding (level=0) 'tst' 'http://www.onvif.org/ver10/storage/wsdl'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/storage/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe1320
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe13a0
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xbe14e0
+Push namespace binding (level=0) 'ter' 'http://www.onvif.org/ver10/error'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/error' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xbe1560
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe15d0
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xbe1710
+Push namespace binding (level=0) 'dn' 'http://www.onvif.org/ver10/network/wsdl'
+Push OK ('dn' matches 'tdn' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe1770
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe17f0
+source/onvif/stdsoap2.c(2734): malloc(70) = 0xbe1930
+Push namespace binding (level=0) 'tns1' 'http://www.onvif.org/ver10/topics'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe19b0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe1a30
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe1b70
+Push namespace binding (level=0) 'tmd' 'http://www.onvif.org/ver10/deviceIO/wsdl'
+Push OK ('tmd' matches 'tmd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe1bd0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe1c50
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xbe1d90
+Push namespace binding (level=0) 'wsdl' 'http://schemas.xmlsoap.org/wsdl'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xbe1e10
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe1e90
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xbe1fd0
+Push namespace binding (level=0) 'wsoap12' 'http://schemas.xmlsoap.org/wsdl/soap12'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/soap12' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe2060
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe20e0
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xbe2220
+Push namespace binding (level=0) 'http' 'http://schemas.xmlsoap.org/wsdl/http'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/http' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(55) = 0xbe22b0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2320
+source/onvif/stdsoap2.c(2734): malloc(33) = 0xbe2460
+Push namespace binding (level=0) 'd' 'http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Push OK ('d' matches 'wsdd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xbe24c0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2540
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xbe2680
+Push namespace binding (level=0) 'wsadis' 'http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Push OK ('wsadis' matches 'wsa' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe26e0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2760
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe28a0
+Push namespace binding (level=0) 'xop' 'http://www.w3.org/2004/08/xop/include'
+Push OK ('xop' matches 'xop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe2900
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2980
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xbe2ac0
+Push namespace binding (level=0) 'wsnt' 'http://docs.oasis-open.org/wsn/b-2'
+Push OK ('wsnt' matches 'wsnt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe2b20
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2ba0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe2ce0
+Push namespace binding (level=0) 'wsa' 'http://www.w3.org/2005/08/addressing'
+Push OK ('wsa' matches 'wsa5' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xbe2d40
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2dc0
+source/onvif/stdsoap2.c(2734): malloc(37) = 0xbe2f00
+Push namespace binding (level=0) 'wstop' 'http://docs.oasis-open.org/wsn/t-1'
+Push OK ('wstop' matches 'wstop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xbe2f60
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe2fe0
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xbe3120
+Push namespace binding (level=0) 'wsrf-bf' 'http://docs.oasis-open.org/wsrf/bf-2'
+Push OK ('wsrf-bf' matches 'wsrfbf' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xbe3180
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe3200
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xbe3340
+Push namespace binding (level=0) 'wsntw' 'http://docs.oasis-open.org/wsn/bw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsn/bw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xbe33d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe3450
+source/onvif/stdsoap2.c(2734): malloc(76) = 0xbe3590
+Push namespace binding (level=0) 'wsrf-rw' 'http://docs.oasis-open.org/wsrf/rw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsrf/rw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe3620
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe36a0
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xbe37e0
+Push namespace binding (level=0) 'wsaw' 'http://www.w3.org/2006/05/addressing/wsdl'
+Push NOT OK: no match found for 'http://www.w3.org/2006/05/addressing/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xbe3870
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe38f0
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xbe3a30
+Push namespace binding (level=0) 'wsrf-r' 'http://docs.oasis-open.org/wsrf/r-2'
+Push OK ('wsrf-r' matches 'wsrfr' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe3a90
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe3b10
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe3c50
+Push namespace binding (level=0) 'trc' 'http://www.onvif.org/ver10/recording/wsdl'
+Push OK ('trc' matches 'trc' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe3cb0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe3d30
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe3e70
+Push namespace binding (level=0) 'tse' 'http://www.onvif.org/ver10/search/wsdl'
+Push OK ('tse' matches 'tse' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xbe3ed0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe3f50
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbe4090
+Push namespace binding (level=0) 'trp' 'http://www.onvif.org/ver10/replay/wsdl'
+Push OK ('trp' matches 'trp' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xbe40f0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe4170
+source/onvif/stdsoap2.c(2734): malloc(81) = 0xbe42b0
+Push namespace binding (level=0) 'tnshik' 'http://www.hikvision.com/2011/event/topics'
+Push NOT OK: no match found for 'http://www.hikvision.com/2011/event/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xbe4340
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe43c0
+source/onvif/stdsoap2.c(2734): malloc(83) = 0xbe4500
+Push namespace binding (level=0) 'hikwsd' 'http://www.onvifext.com/onvif/ext/ver10/wsdl'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xbe4590
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe4610
+source/onvif/stdsoap2.c(2734): malloc(85) = 0xbe4750
+Push namespace binding (level=0) 'hikxsd' 'http://www.onvifext.com/onvif/ext/ver10/schema'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/schema' in namespace mapping table (added to stack anyway)
+Tags and (default) namespaces match: 'env:Envelope' 'SOAP-ENV:Envelope'
+Begin element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+source/onvif/stdsoap2.c(14904): malloc(40) = 0xbe47e0
+Tags and (default) namespaces match: 'env:Header' 'SOAP-ENV:Header'
+Begin element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Enter id='' type=29 loc=(nil) size=128 level=0
+source/onvif/stdsoap2.c(7330): malloc(152) = 0xbe4840
+Tags and (default) namespaces match: 'wsadis:MessageID' 'wsa:MessageID'
+Begin element found (level=3) 'wsadis:MessageID'='wsa:MessageID'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xbe4910
+Enter id='' type=4 loc=0xbe4910 size=8 level=0
+End element found (level=3) 'wsadis:MessageID'='wsa:MessageID'
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Reverting to last element 'wsadis:RelatesTo' (level=2)
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Enter id='' type=11 loc=(nil) size=24 level=0
+source/onvif/stdsoap2.c(7330): malloc(48) = 0xbe4990
+Reverting to last element 'wsadis:RelatesTo' (level=2)
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xbe4a00
+Tags and (default) namespaces match: 'wsadis:RelatesTo' 'wsa:RelatesTo'
+Begin element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xbe4a50
+Enter id='' type=4 loc=0xbe4a50 size=8 level=0
+End element found (level=3) 'wsadis:RelatesTo'='wsa:RelatesTo'
+Tags and (default) namespaces match: 'wsadis:To' 'wsa:To'
+Begin element found (level=3) 'wsadis:To'='wsa:To'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(88) = 0xbe4aa0
+Enter id='' type=4 loc=0xbe4aa0 size=8 level=0
+End element found (level=3) 'wsadis:To'='wsa:To'
+Tags and (default) namespaces match: 'wsadis:Action' 'wsa:Action'
+Begin element found (level=3) 'wsadis:Action'='wsa:Action'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xbe4b30
+Enter id='' type=4 loc=0xbe4b30 size=8 level=0
+End element found (level=3) 'wsadis:Action'='wsa:Action'
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xbe4bc0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe4c40
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xbe4d80
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xbe4e00
+Tags and (default) namespaces match: 'd:AppSequence' 'wsdd:AppSequence'
+Begin element found (level=2) 'd:AppSequence'='wsdd:AppSequence'
+Reverting to last element 'd:AppSequence' (level=2)
+Tags and (default) namespaces match: 'd:AppSequence' 'wsdd:AppSequence'
+Begin element found (level=2) 'd:AppSequence'='wsdd:AppSequence'
+Enter id='' type=45 loc=(nil) size=24 level=0
+source/onvif/stdsoap2.c(7330): malloc(48) = 0xbe4f40
+Tags match: 'InstanceId' 'InstanceId'
+Tags match: 'MessageNumber' 'MessageNumber'
+End element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Tags and (default) namespaces match: 'env:Body' 'SOAP-ENV:Body'
+Begin element found (level=2) 'env:Body'='SOAP-ENV:Body'
+Enter id='' type=68 loc=0x7fff0350ce70 size=8 level=0
+Tags and (default) namespaces match: 'd:ProbeMatches' 'wsdd:ProbeMatches'
+Begin element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+Reverting to last element 'd:ProbeMatches' (level=2)
+Tags and (default) namespaces match: 'd:ProbeMatches' 'wsdd:ProbeMatches'
+Begin element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+Enter id='' type=37 loc=(nil) size=16 level=0
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xbe4fb0
+Tags and (default) namespaces match: 'd:ProbeMatch' 'wsdd:ProbeMatch'
+Begin element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xbe5010
+Push block of 96 bytes (96 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(112) = 0xbe5060
+Reverting to last element 'd:ProbeMatch' (level=3)
+Tags and (default) namespaces match: 'd:ProbeMatch' 'wsdd:ProbeMatch'
+Begin element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+Enter id='' type=38 loc=0xbe5070 size=96 level=0
+Tags and (default) namespaces match: 'wsadis:EndpointReference' 'wsa:EndpointReference'
+Begin element found (level=5) 'wsadis:EndpointReference'='wsa:EndpointReference'
+Enter id='' type=7 loc=0xbe5070 size=64 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xbe5110
+Tags and (default) namespaces match: 'wsadis:Address' 'wsa:Address'
+Begin element found (level=6) 'wsadis:Address'='wsa:Address'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xbe5160
+Enter id='' type=4 loc=0xbe5160 size=8 level=0
+End element found (level=6) 'wsadis:Address'='wsa:Address'
+End element found (level=5) 'wsadis:EndpointReference'='wsa:EndpointReference'
+Tags and (default) namespaces match: 'd:Types' 'wsdd:Types'
+Begin element found (level=5) 'd:Types'='wsdd:Types'
+Reading string content, flag=2
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xbe51e0
+Normalized namespace(s) of QNames 'dn:NetworkVideoTransmitter tds:Device'source/onvif/stdsoap2.c(7330): malloc(64) = 0xbe5250
+ into 'tdn:NetworkVideoTransmitter tds:Device'
+Enter id='' type=46 loc=0xbe5250 size=8 level=0
+End element found (level=5) 'd:Types'='wsdd:Types'
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Reverting to last element 'd:Scopes' (level=4)
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Enter id='' type=42 loc=(nil) size=16 level=0
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xbe52d0
+Reverting to last element 'd:Scopes' (level=4)
+Tags and (default) namespaces match: 'd:Scopes' 'wsdd:Scopes'
+Begin element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Reading string content, flag=1
+Enlarging look-aside buffer to append data, old size=256, new size=512
+source/onvif/stdsoap2.c(10154): malloc(512) = 0xbe5330
+source/onvif/stdsoap2.c(10162): free(0xbde3c0)
+source/onvif/stdsoap2.c(7330): malloc(344) = 0xbe5570
+Enter id='' type=47 loc=0xbe5570 size=8 level=0
+End element found (level=5) 'd:Scopes'='wsdd:Scopes'
+Tags and (default) namespaces match: 'd:XAddrs' 'wsdd:XAddrs'
+Begin element found (level=5) 'd:XAddrs'='wsdd:XAddrs'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(120) = 0xbde3f0
+Enter id='' type=47 loc=0xbde3f0 size=8 level=0
+End element found (level=5) 'd:XAddrs'='wsdd:XAddrs'
+Tags and (default) namespaces match: 'd:MetadataVersion' 'wsdd:MetadataVersion'
+Begin element found (level=5) 'd:MetadataVersion'='wsdd:MetadataVersion'
+Enter id='' type=27 loc=0xbe50c8 size=4 level=0
+Element content value='10'
+End element found (level=5) 'd:MetadataVersion'='wsdd:MetadataVersion'
+End element found (level=4) 'd:ProbeMatch'='wsdd:ProbeMatch'
+source/onvif/stdsoap2.c(7330): malloc(120) = 0xbe56d0
+Save all blocks in contiguous memory space of 96 bytes (0xbe5060->0xbe56d0)
+First block
+Copy 96 bytes from 0xbe5070 to 0xbe56d0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xbe5060)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xbe5010)
+End element found (level=3) 'd:ProbeMatches'='wsdd:ProbeMatches'
+End element found (level=2) 'env:Body'='SOAP-ENV:Body'
+End element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+End of receive message ok
+Resolving forwarded data
+Resolution phase
+Resolution done
+Free namespace stack
+source/onvif/stdsoap2.c(8205): free(0xbe4750)
+source/onvif/stdsoap2.c(8205): free(0xbe4500)
+source/onvif/stdsoap2.c(8205): free(0xbe42b0)
+source/onvif/stdsoap2.c(8205): free(0xbe4090)
+source/onvif/stdsoap2.c(8205): free(0xbe3e70)
+source/onvif/stdsoap2.c(8205): free(0xbe3c50)
+source/onvif/stdsoap2.c(8205): free(0xbe3a30)
+source/onvif/stdsoap2.c(8205): free(0xbe37e0)
+source/onvif/stdsoap2.c(8205): free(0xbe3590)
+source/onvif/stdsoap2.c(8205): free(0xbe3340)
+source/onvif/stdsoap2.c(8205): free(0xbe3120)
+source/onvif/stdsoap2.c(8205): free(0xbe2f00)
+source/onvif/stdsoap2.c(8205): free(0xbe2ce0)
+source/onvif/stdsoap2.c(8205): free(0xbe2ac0)
+source/onvif/stdsoap2.c(8205): free(0xbe28a0)
+source/onvif/stdsoap2.c(8205): free(0xbe2680)
+source/onvif/stdsoap2.c(8205): free(0xbe2460)
+source/onvif/stdsoap2.c(8205): free(0xbe2220)
+source/onvif/stdsoap2.c(8205): free(0xbe1fd0)
+source/onvif/stdsoap2.c(8205): free(0xbe1d90)
+source/onvif/stdsoap2.c(8205): free(0xbe1b70)
+source/onvif/stdsoap2.c(8205): free(0xbe1930)
+source/onvif/stdsoap2.c(8205): free(0xbe1710)
+source/onvif/stdsoap2.c(8205): free(0xbe14e0)
+source/onvif/stdsoap2.c(8205): free(0xbe1290)
+source/onvif/stdsoap2.c(8205): free(0xbe1070)
+source/onvif/stdsoap2.c(8205): free(0xbe0e50)
+source/onvif/stdsoap2.c(8205): free(0xbe0c30)
+source/onvif/stdsoap2.c(8205): free(0xbe0a10)
+source/onvif/stdsoap2.c(8205): free(0xbe07f0)
+source/onvif/stdsoap2.c(8205): free(0xbe05d0)
+source/onvif/stdsoap2.c(8205): free(0xbe03b0)
+source/onvif/stdsoap2.c(8205): free(0xbe01a0)
+source/onvif/stdsoap2.c(8205): free(0xbdff90)
+source/onvif/stdsoap2.c(8205): free(0xbdfd70)
+source/onvif/stdsoap2.c(8205): free(0xbdf800)
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8157): free(0xbe4e00)
+source/onvif/stdsoap2.c(8158): free(0xbe4d80)
+source/onvif/stdsoap2.c(8157): free(0xbe4c40)
+source/onvif/stdsoap2.c(8158): free(0xbe4bc0)
+source/onvif/stdsoap2.c(8157): free(0xbde500)
+source/onvif/stdsoap2.c(8158): free(0xbde340)
+source/onvif/stdsoap2.c(8157): free(0xbdfc30)
+source/onvif/stdsoap2.c(8158): free(0xbdf860)
+source/onvif/stdsoap2.c(8157): free(0xbdfe50)
+source/onvif/stdsoap2.c(8158): free(0xbdfdd0)
+source/onvif/stdsoap2.c(8157): free(0xbe0060)
+source/onvif/stdsoap2.c(8158): free(0xbdfff0)
+source/onvif/stdsoap2.c(8157): free(0xbe0270)
+source/onvif/stdsoap2.c(8158): free(0xbe0200)
+source/onvif/stdsoap2.c(8157): free(0xbe0490)
+source/onvif/stdsoap2.c(8158): free(0xbe0410)
+source/onvif/stdsoap2.c(8157): free(0xbe06b0)
+source/onvif/stdsoap2.c(8158): free(0xbe0630)
+source/onvif/stdsoap2.c(8157): free(0xbe08d0)
+source/onvif/stdsoap2.c(8158): free(0xbe0850)
+source/onvif/stdsoap2.c(8157): free(0xbe0af0)
+source/onvif/stdsoap2.c(8158): free(0xbe0a70)
+source/onvif/stdsoap2.c(8157): free(0xbe0d10)
+source/onvif/stdsoap2.c(8158): free(0xbe0c90)
+source/onvif/stdsoap2.c(8157): free(0xbe0f30)
+source/onvif/stdsoap2.c(8158): free(0xbe0eb0)
+source/onvif/stdsoap2.c(8157): free(0xbe1150)
+source/onvif/stdsoap2.c(8158): free(0xbe10d0)
+source/onvif/stdsoap2.c(8157): free(0xbe13a0)
+source/onvif/stdsoap2.c(8158): free(0xbe1320)
+source/onvif/stdsoap2.c(8157): free(0xbe15d0)
+source/onvif/stdsoap2.c(8158): free(0xbe1560)
+source/onvif/stdsoap2.c(8157): free(0xbe17f0)
+source/onvif/stdsoap2.c(8158): free(0xbe1770)
+source/onvif/stdsoap2.c(8157): free(0xbe1a30)
+source/onvif/stdsoap2.c(8158): free(0xbe19b0)
+source/onvif/stdsoap2.c(8157): free(0xbe1c50)
+source/onvif/stdsoap2.c(8158): free(0xbe1bd0)
+source/onvif/stdsoap2.c(8157): free(0xbe1e90)
+source/onvif/stdsoap2.c(8158): free(0xbe1e10)
+source/onvif/stdsoap2.c(8157): free(0xbe20e0)
+source/onvif/stdsoap2.c(8158): free(0xbe2060)
+source/onvif/stdsoap2.c(8157): free(0xbe2320)
+source/onvif/stdsoap2.c(8158): free(0xbe22b0)
+source/onvif/stdsoap2.c(8157): free(0xbe2540)
+source/onvif/stdsoap2.c(8158): free(0xbe24c0)
+source/onvif/stdsoap2.c(8157): free(0xbe2760)
+source/onvif/stdsoap2.c(8158): free(0xbe26e0)
+source/onvif/stdsoap2.c(8157): free(0xbe2980)
+source/onvif/stdsoap2.c(8158): free(0xbe2900)
+source/onvif/stdsoap2.c(8157): free(0xbe2ba0)
+source/onvif/stdsoap2.c(8158): free(0xbe2b20)
+source/onvif/stdsoap2.c(8157): free(0xbe2dc0)
+source/onvif/stdsoap2.c(8158): free(0xbe2d40)
+source/onvif/stdsoap2.c(8157): free(0xbe2fe0)
+source/onvif/stdsoap2.c(8158): free(0xbe2f60)
+source/onvif/stdsoap2.c(8157): free(0xbe3200)
+source/onvif/stdsoap2.c(8158): free(0xbe3180)
+source/onvif/stdsoap2.c(8157): free(0xbe3450)
+source/onvif/stdsoap2.c(8158): free(0xbe33d0)
+source/onvif/stdsoap2.c(8157): free(0xbe36a0)
+source/onvif/stdsoap2.c(8158): free(0xbe3620)
+source/onvif/stdsoap2.c(8157): free(0xbe38f0)
+source/onvif/stdsoap2.c(8158): free(0xbe3870)
+source/onvif/stdsoap2.c(8157): free(0xbe3b10)
+source/onvif/stdsoap2.c(8158): free(0xbe3a90)
+source/onvif/stdsoap2.c(8157): free(0xbe3d30)
+source/onvif/stdsoap2.c(8158): free(0xbe3cb0)
+source/onvif/stdsoap2.c(8157): free(0xbe3f50)
+source/onvif/stdsoap2.c(8158): free(0xbe3ed0)
+source/onvif/stdsoap2.c(8157): free(0xbe4170)
+source/onvif/stdsoap2.c(8158): free(0xbe40f0)
+source/onvif/stdsoap2.c(8157): free(0xbe43c0)
+source/onvif/stdsoap2.c(8158): free(0xbe4340)
+source/onvif/stdsoap2.c(8157): free(0xbe4610)
+source/onvif/stdsoap2.c(8158): free(0xbe4590)
+source/onvif/stdsoap2.c(8163): free(0xbe5330)
+source/onvif/stdsoap2.c(8174): free(0xbe47e0)
+source/onvif/stdsoap2.c(8180): free(0xbdf1d0)
+Free pointer hashtable
+Free ID hashtable
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xbdf1d0
+Free ID hashtable
+Read 0 bytes from socket=4/fd=0
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8180): free(0xbdf1d0)
+Free pointer hashtable
+Free ID hashtable
+Free all soap_malloc() data
+source/onvif/stdsoap2.c(7489): free(0xbe56d0)
+source/onvif/stdsoap2.c(7489): free(0xbde3f0)
+source/onvif/stdsoap2.c(7489): free(0xbe5570)
+source/onvif/stdsoap2.c(7489): free(0xbe52d0)
+source/onvif/stdsoap2.c(7489): free(0xbe5250)
+source/onvif/stdsoap2.c(7489): free(0xbe51e0)
+source/onvif/stdsoap2.c(7489): free(0xbe5160)
+source/onvif/stdsoap2.c(7489): free(0xbe5110)
+source/onvif/stdsoap2.c(7489): free(0xbe4fb0)
+source/onvif/stdsoap2.c(7489): free(0xbe4f40)
+source/onvif/stdsoap2.c(7489): free(0xbe4b30)
+source/onvif/stdsoap2.c(7489): free(0xbe4aa0)
+source/onvif/stdsoap2.c(7489): free(0xbe4a50)
+source/onvif/stdsoap2.c(7489): free(0xbe4a00)
+source/onvif/stdsoap2.c(7489): free(0xbe4990)
+source/onvif/stdsoap2.c(7489): free(0xbe4910)
+source/onvif/stdsoap2.c(7489): free(0xbe4840)
+source/onvif/stdsoap2.c(7489): free(0xbdf970)
+source/onvif/stdsoap2.c(7489): free(0xbdf8e0)
+source/onvif/stdsoap2.c(7489): free(0xbde6a0)
+Done with context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Shutdown socket 4 how=2
+Close socket 4
+Free logfiles
+source/onvif/stdsoap2.c(5151): free(0xbde0b0)
+source/onvif/stdsoap2.c(5151): free(0xbde060)
+source/onvif/stdsoap2.c(5151): free(0xbde010)
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0xbde100 type=4: not found
+source/onvif/stdsoap2.c(6725): malloc(1288) = 0xc06a60
+Pointer enter location=0xbde100 array=(nil) size=0 dim=0 type=4 id=1
+Reference 0xbde100 type=4 (0 0)
+Lookup location=0xbde170 type=183: not found
+Pointer enter location=0xbde170 array=(nil) size=0 dim=0 type=183 id=2
+Reference 0xbde170 type=183 (0 0)
+Lookup location=0xbde1c0 type=112: not found
+Pointer enter location=0xbde1c0 array=(nil) size=0 dim=0 type=112 id=3
+Reference 0xbde1c0 type=112 (0 0)
+Lookup location=0xbde1f0 type=4: not found
+Pointer enter location=0xbde1f0 array=(nil) size=0 dim=0 type=4 id=4
+Reference 0xbde1f0 type=4 (0 0)
+Lookup location=0xbde2e0 type=113: not found
+Pointer enter location=0xbde2e0 array=(nil) size=0 dim=0 type=113 id=5
+Reference 0xbde2e0 type=113 (0 0)
+Lookup location=0xbde390 type=4: not found
+Pointer enter location=0xbde390 array=(nil) size=0 dim=0 type=4 id=6
+Reference 0xbde390 type=4 (0 0)
+Lookup location=0xbde240 type=4: not found
+Pointer enter location=0xbde240 array=(nil) size=0 dim=0 type=4 id=7
+Reference 0xbde240 type=4 (0 0)
+Lookup location=0xbde290 type=4: not found
+Pointer enter location=0xbde290 array=(nil) size=0 dim=0 type=4 id=8
+Reference 0xbde290 type=4 (0 0)
+Lookup location=0x7fff035122f0 type=399: not found
+Pointer enter location=0x7fff035122f0 array=(nil) size=0 dim=0 type=399 id=9
+Reference 0x7fff035122f0 type=399 (0 0)
+Lookup location=0xbde530 type=247: not found
+Free namespace stack
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xc06f70
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element begin tag='wsa:MessageID' level='2' id='0' type=''
+Element ending tag='wsa:MessageID'
+Element begin tag='wsse:Security' level='2' id='0' type=''
+Attribute 'SOAP-ENV:mustUnderstand'='true'
+Element begin tag='wsse:UsernameToken' level='3' id='0' type=''
+Element begin tag='wsse:Username' level='4' id='0' type=''
+Element ending tag='wsse:Username'
+Set attribute Type='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+Allocate attribute Type
+source/onvif/stdsoap2.c(9960): malloc(52) = 0xbde5e0
+source/onvif/stdsoap2.c(10020): malloc(98) = 0xbde650
+Allocate attribute value for Type (0xbde650)
+Element begin tag='wsse:Password' level='4' id='0' type=''
+Element ending tag='wsse:Password'
+Element begin tag='wsse:Nonce' level='4' id='0' type=''
+Element ending tag='wsse:Nonce'
+Element begin tag='wsu:Created' level='4' id='0' type=''
+Element ending tag='wsu:Created'
+Element ending tag='wsse:UsernameToken'
+Element ending tag='wsse:Security'
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Element begin tag='tds:GetCapabilities' level='2' id='0' type=''
+Element begin tag='tds:Category' level='3' id='-1' type=''
+Element ending tag='tds:Category'
+Element ending tag='tds:GetCapabilities'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc07540
+Connect/reconnect to host='192.168.1.103' path='/onvif/device_service' port=80
+Opening socket 4 to host='192.168.1.103' port=80
+Calculating the message size with attachments, current count=3399
+New count is 3399 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=4 mode=0x20001 count=3399)
+HTTP POST to http://192.168.1.103/onvif/device_service
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element begin tag='wsa:MessageID' level='2' id='0' type=''
+Element ending tag='wsa:MessageID'
+Element begin tag='wsse:Security' level='2' id='0' type=''
+Attribute 'SOAP-ENV:mustUnderstand'='true'
+Element begin tag='wsse:UsernameToken' level='3' id='0' type=''
+Element begin tag='wsse:Username' level='4' id='0' type=''
+Element ending tag='wsse:Username'
+Set attribute Type='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+Element begin tag='wsse:Password' level='4' id='0' type=''
+Element ending tag='wsse:Password'
+Element begin tag='wsse:Nonce' level='4' id='0' type=''
+Element ending tag='wsse:Nonce'
+Element begin tag='wsu:Created' level='4' id='0' type=''
+Element ending tag='wsu:Created'
+Element ending tag='wsse:UsernameToken'
+Element ending tag='wsse:Security'
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Element begin tag='tds:GetCapabilities' level='2' id='0' type=''
+Element begin tag='tds:Category' level='3' id='-1' type=''
+Element ending tag='tds:Category'
+Element ending tag='tds:GetCapabilities'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20001
+End of send phase
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8157): free(0xbde650)
+source/onvif/stdsoap2.c(8158): free(0xbde5e0)
+source/onvif/stdsoap2.c(8180): free(0xc06f70)
+Free pointer hashtable
+source/onvif/stdsoap2.c(6654): free(0xc06a60)
+Free ID hashtable
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xc06a60
+Free ID hashtable
+Read 1448 bytes from socket=4/fd=0
+Waiting for HTTP request/response...
+HTTP status: HTTP/1.1 200 OK
+HTTP header: Date: Wed, 24 Dec 2014 14:51:20 GMT
+HTTP header: Server: App-webs/
+HTTP header: Connection: close
+HTTP header: Content-Length: 5880
+HTTP header: Content-Type: application/soap+xml; charset=utf-8
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc07270
+Finished HTTP header parsing, status = 200
+Keep alive connection = 0
+XML PI <?xml version="1.0" encoding="UTF-8"?>
+Switching to utf-8 encoding
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc072e0
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/onvif/stdsoap2.c(10154): malloc(256) = 0xc07360
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc07810
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xbde680
+Push namespace binding (level=0) 'env' 'http://www.w3.org/2003/05/soap-envelope'
+Push OK ('env' matches 'SOAP-ENV' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc074d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc07950
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xc07a90
+Push namespace binding (level=0) 'soapenc' 'http://www.w3.org/2003/05/soap-encoding'
+Push OK ('soapenc' matches 'SOAP-ENC' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc07af0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc07b70
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc07cb0
+Push namespace binding (level=0) 'xsi' 'http://www.w3.org/2001/XMLSchema-instance'
+Push OK ('xsi' matches 'xsi' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc07d10
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc07d80
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc07ec0
+Push namespace binding (level=0) 'xs' 'http://www.w3.org/2001/XMLSchema'
+Push OK ('xs' matches 'xsd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc07f20
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc07f90
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc080d0
+Push namespace binding (level=0) 'tt' 'http://www.onvif.org/ver10/schema'
+Push OK ('tt' matches 'tt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc08130
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc081b0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc082f0
+Push namespace binding (level=0) 'tds' 'http://www.onvif.org/ver10/device/wsdl'
+Push OK ('tds' matches 'tds' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc08350
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc083d0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc08510
+Push namespace binding (level=0) 'trt' 'http://www.onvif.org/ver10/media/wsdl'
+Push OK ('trt' matches 'trt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc08570
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc085f0
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc08730
+Push namespace binding (level=0) 'timg' 'http://www.onvif.org/ver20/imaging/wsdl'
+Push OK ('timg' matches 'timg' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc08790
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc08810
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc08950
+Push namespace binding (level=0) 'tev' 'http://www.onvif.org/ver10/events/wsdl'
+Push OK ('tev' matches 'tev' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc089b0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc08a30
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc08b70
+Push namespace binding (level=0) 'tptz' 'http://www.onvif.org/ver20/ptz/wsdl'
+Push OK ('tptz' matches 'tptz' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc08bd0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc08c50
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc08d90
+Push namespace binding (level=0) 'tan' 'http://www.onvif.org/ver20/analytics/wsdl'
+Push OK ('tan' matches 'tan' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc08df0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc08e70
+source/onvif/stdsoap2.c(2734): malloc(75) = 0xc08fb0
+Push namespace binding (level=0) 'tst' 'http://www.onvif.org/ver10/storage/wsdl'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/storage/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc09040
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc090c0
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xc09200
+Push namespace binding (level=0) 'ter' 'http://www.onvif.org/ver10/error'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/error' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc09280
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc092f0
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc09430
+Push namespace binding (level=0) 'dn' 'http://www.onvif.org/ver10/network/wsdl'
+Push OK ('dn' matches 'tdn' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc09490
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc09510
+source/onvif/stdsoap2.c(2734): malloc(70) = 0xc09650
+Push namespace binding (level=0) 'tns1' 'http://www.onvif.org/ver10/topics'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc096d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc09750
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc09890
+Push namespace binding (level=0) 'tmd' 'http://www.onvif.org/ver10/deviceIO/wsdl'
+Push OK ('tmd' matches 'tmd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc098f0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc09970
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xc09ab0
+Push namespace binding (level=0) 'wsdl' 'http://schemas.xmlsoap.org/wsdl'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc09b30
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc09bb0
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xc09cf0
+Push namespace binding (level=0) 'wsoap12' 'http://schemas.xmlsoap.org/wsdl/soap12'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/soap12' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc09d80
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc09e00
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xc09f40
+Push namespace binding (level=0) 'http' 'http://schemas.xmlsoap.org/wsdl/http'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/http' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(55) = 0xc09fd0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0a040
+source/onvif/stdsoap2.c(2734): malloc(33) = 0xc0a180
+Push namespace binding (level=0) 'd' 'http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Push OK ('d' matches 'wsdd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc0a1e0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0a260
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xc0a3a0
+Push namespace binding (level=0) 'wsadis' 'http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Push OK ('wsadis' matches 'wsa' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc0a400
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0a480
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0a5c0
+Push namespace binding (level=0) 'xop' 'http://www.w3.org/2004/08/xop/include'
+Push OK ('xop' matches 'xop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc0a620
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0a6a0
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc0a7e0
+Push namespace binding (level=0) 'wsnt' 'http://docs.oasis-open.org/wsn/b-2'
+Push OK ('wsnt' matches 'wsnt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc0a840
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0a8c0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0aa00
+Push namespace binding (level=0) 'wsa' 'http://www.w3.org/2005/08/addressing'
+Push OK ('wsa' matches 'wsa5' in namespace table)
+Read 4599 bytes from socket=4/fd=0
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xc0aa60
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0aae0
+source/onvif/stdsoap2.c(2734): malloc(37) = 0xc0ac20
+Push namespace binding (level=0) 'wstop' 'http://docs.oasis-open.org/wsn/t-1'
+Push OK ('wstop' matches 'wstop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc0ac80
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0ad00
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xc0ae40
+Push namespace binding (level=0) 'wsrf-bf' 'http://docs.oasis-open.org/wsrf/bf-2'
+Push OK ('wsrf-bf' matches 'wsrfbf' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xc0aea0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0af20
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xc0b060
+Push namespace binding (level=0) 'wsntw' 'http://docs.oasis-open.org/wsn/bw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsn/bw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc0b0f0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0b170
+source/onvif/stdsoap2.c(2734): malloc(76) = 0xc0b2b0
+Push namespace binding (level=0) 'wsrf-rw' 'http://docs.oasis-open.org/wsrf/rw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsrf/rw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc0b340
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0b3c0
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xc0b500
+Push namespace binding (level=0) 'wsaw' 'http://www.w3.org/2006/05/addressing/wsdl'
+Push NOT OK: no match found for 'http://www.w3.org/2006/05/addressing/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc0b590
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0b610
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xc0b750
+Push namespace binding (level=0) 'wsrf-r' 'http://docs.oasis-open.org/wsrf/r-2'
+Push OK ('wsrf-r' matches 'wsrfr' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc0b7b0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0b830
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0b970
+Push namespace binding (level=0) 'trc' 'http://www.onvif.org/ver10/recording/wsdl'
+Push OK ('trc' matches 'trc' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc0b9d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0ba50
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0bb90
+Push namespace binding (level=0) 'tse' 'http://www.onvif.org/ver10/search/wsdl'
+Push OK ('tse' matches 'tse' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc0bbf0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0bc70
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0bdb0
+Push namespace binding (level=0) 'trp' 'http://www.onvif.org/ver10/replay/wsdl'
+Push OK ('trp' matches 'trp' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc0be10
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0be90
+source/onvif/stdsoap2.c(2734): malloc(81) = 0xc0bfd0
+Push namespace binding (level=0) 'tnshik' 'http://www.hikvision.com/2011/event/topics'
+Push NOT OK: no match found for 'http://www.hikvision.com/2011/event/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc0c060
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0c0e0
+source/onvif/stdsoap2.c(2734): malloc(83) = 0xc0c220
+Push namespace binding (level=0) 'hikwsd' 'http://www.onvifext.com/onvif/ext/ver10/wsdl'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc0c2b0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc0c330
+source/onvif/stdsoap2.c(2734): malloc(85) = 0xc0c470
+Push namespace binding (level=0) 'hikxsd' 'http://www.onvifext.com/onvif/ext/ver10/schema'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/schema' in namespace mapping table (added to stack anyway)
+Tags and (default) namespaces match: 'env:Envelope' 'SOAP-ENV:Envelope'
+Begin element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+source/onvif/stdsoap2.c(14904): malloc(40) = 0xc0c500
+Tags and (default) namespaces match: 'env:Body' 'SOAP-ENV:Body'
+Begin element found (level=2) 'env:Body'='SOAP-ENV:Body'
+Tags and (default) namespaces match: 'tds:GetCapabilitiesResponse' 'tds:GetCapabilitiesResponse'
+Begin element found (level=3) 'tds:GetCapabilitiesResponse'='tds:GetCapabilitiesResponse'
+Enter id='' type=401 loc=0x7fff035122d0 size=8 level=0
+Tags and (default) namespaces match: 'tds:Capabilities' 'tds:Capabilities'
+Begin element found (level=4) 'tds:Capabilities'='tds:Capabilities'
+Reverting to last element 'tds:Capabilities' (level=3)
+Tags and (default) namespaces match: 'tds:Capabilities' 'tds:Capabilities'
+Begin element found (level=4) 'tds:Capabilities'='tds:Capabilities'
+Enter id='' type=402 loc=(nil) size=64 level=0
+source/onvif/stdsoap2.c(7330): malloc(88) = 0xc0c560
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc07520
+Tags and (default) namespaces match: 'tt:Analytics' 'tt:Analytics'
+Begin element found (level=5) 'tt:Analytics'='tt:Analytics'
+Reverting to last element 'tt:Analytics' (level=4)
+Tags and (default) namespaces match: 'tt:Analytics' 'tt:Analytics'
+Begin element found (level=5) 'tt:Analytics'='tt:Analytics'
+Enter id='' type=754 loc=(nil) size=40 level=0
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xc0c620
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0c6a0
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0c6f0
+Enter id='' type=194 loc=0xc0c6f0 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+Tags and (default) namespaces match: 'tt:RuleSupport' 'tt:RuleSupport'
+Begin element found (level=6) 'tt:RuleSupport'='tt:RuleSupport'
+Enter id='' type=196 loc=0xc0c628 size=4 level=0
+Element content value='true'
+End element found (level=6) 'tt:RuleSupport'='tt:RuleSupport'
+Tags and (default) namespaces match: 'tt:AnalyticsModuleSupport' 'tt:AnalyticsModuleSupport'
+Begin element found (level=6) 'tt:AnalyticsModuleSupport'='tt:AnalyticsModuleSupport'
+Enter id='' type=196 loc=0xc0c62c size=4 level=0
+Element content value='true'
+End element found (level=6) 'tt:AnalyticsModuleSupport'='tt:AnalyticsModuleSupport'
+End element found (level=5) 'tt:Analytics'='tt:Analytics'
+Tags and (default) namespaces match: 'tt:Device' 'tt:Device'
+Begin element found (level=5) 'tt:Device'='tt:Device'
+Reverting to last element 'tt:Device' (level=4)
+Tags and (default) namespaces match: 'tt:Device' 'tt:Device'
+Begin element found (level=5) 'tt:Device'='tt:Device'
+Enter id='' type=756 loc=(nil) size=56 level=0
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0c760
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0c7f0
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xc0c840
+Enter id='' type=194 loc=0xc0c840 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+Tags and (default) namespaces match: 'tt:Network' 'tt:Network'
+Begin element found (level=6) 'tt:Network'='tt:Network'
+Reverting to last element 'tt:Network' (level=5)
+Tags and (default) namespaces match: 'tt:Network' 'tt:Network'
+Begin element found (level=6) 'tt:Network'='tt:Network'
+Enter id='' type=784 loc=(nil) size=48 level=0
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc0c8c0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0c940
+Tags and (default) namespaces match: 'tt:IPFilter' 'tt:IPFilter'
+Begin element found (level=7) 'tt:IPFilter'='tt:IPFilter'
+Reverting to last element 'tt:IPFilter' (level=6)
+Tags and (default) namespaces match: 'tt:IPFilter' 'tt:IPFilter'
+Begin element found (level=7) 'tt:IPFilter'='tt:IPFilter'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0c990
+Element content value='true'
+End element found (level=7) 'tt:IPFilter'='tt:IPFilter'
+Tags and (default) namespaces match: 'tt:ZeroConfiguration' 'tt:ZeroConfiguration'
+Begin element found (level=7) 'tt:ZeroConfiguration'='tt:ZeroConfiguration'
+Reverting to last element 'tt:ZeroConfiguration' (level=6)
+Tags and (default) namespaces match: 'tt:ZeroConfiguration' 'tt:ZeroConfiguration'
+Begin element found (level=7) 'tt:ZeroConfiguration'='tt:ZeroConfiguration'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0c9e0
+Element content value='true'
+End element found (level=7) 'tt:ZeroConfiguration'='tt:ZeroConfiguration'
+Tags and (default) namespaces match: 'tt:IPVersion6' 'tt:IPVersion6'
+Begin element found (level=7) 'tt:IPVersion6'='tt:IPVersion6'
+Reverting to last element 'tt:IPVersion6' (level=6)
+Tags and (default) namespaces match: 'tt:IPVersion6' 'tt:IPVersion6'
+Begin element found (level=7) 'tt:IPVersion6'='tt:IPVersion6'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0ca30
+Element content value='true'
+End element found (level=7) 'tt:IPVersion6'='tt:IPVersion6'
+Tags and (default) namespaces match: 'tt:DynDNS' 'tt:DynDNS'
+Begin element found (level=7) 'tt:DynDNS'='tt:DynDNS'
+Reverting to last element 'tt:DynDNS' (level=6)
+Tags and (default) namespaces match: 'tt:DynDNS' 'tt:DynDNS'
+Begin element found (level=7) 'tt:DynDNS'='tt:DynDNS'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0ca80
+Element content value='true'
+End element found (level=7) 'tt:DynDNS'='tt:DynDNS'
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Reverting to last element 'tt:Extension' (level=6)
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Enter id='' type=807 loc=(nil) size=32 level=0
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0cad0
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0cb40
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0cb90
+Reading string content, flag=0
+String content includes tag 'tt:Dot11Configuration' and attributes
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0cbe0
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0cc70
+Reading string content, flag=0
+String content includes tag 'tt:Extension' and attributes
+source/onvif/stdsoap2.c(7330): malloc(136) = 0xc0ccc0
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xc0cd80
+Save all blocks in contiguous memory space of 16 bytes (0xc0cc70->0xc0cd80)
+First block
+Copy 8 bytes from 0xc0cba0 to 0xc0cd80
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0cb90)
+Copy 8 bytes from 0xc0cc80 to 0xc0cd88
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0cc70)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0cb40)
+End element found (level=7) 'tt:Extension'='tt:Extension'
+End element found (level=6) 'tt:Network'='tt:Network'
+Tags and (default) namespaces match: 'tt:System' 'tt:System'
+Begin element found (level=6) 'tt:System'='tt:System'
+Reverting to last element 'tt:System' (level=5)
+Tags and (default) namespaces match: 'tt:System' 'tt:System'
+Begin element found (level=6) 'tt:System'='tt:System'
+Enter id='' type=786 loc=(nil) size=56 level=0
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0cde0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0cb40
+Tags and (default) namespaces match: 'tt:DiscoveryResolve' 'tt:DiscoveryResolve'
+Begin element found (level=7) 'tt:DiscoveryResolve'='tt:DiscoveryResolve'
+Enter id='' type=196 loc=0xc0cde0 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:DiscoveryResolve'='tt:DiscoveryResolve'
+Tags and (default) namespaces match: 'tt:DiscoveryBye' 'tt:DiscoveryBye'
+Begin element found (level=7) 'tt:DiscoveryBye'='tt:DiscoveryBye'
+Enter id='' type=196 loc=0xc0cde4 size=4 level=0
+Element content value='true'
+End element found (level=7) 'tt:DiscoveryBye'='tt:DiscoveryBye'
+Tags and (default) namespaces match: 'tt:RemoteDiscovery' 'tt:RemoteDiscovery'
+Begin element found (level=7) 'tt:RemoteDiscovery'='tt:RemoteDiscovery'
+Enter id='' type=196 loc=0xc0cde8 size=4 level=0
+Element content value='true'
+End element found (level=7) 'tt:RemoteDiscovery'='tt:RemoteDiscovery'
+Tags and (default) namespaces match: 'tt:SystemBackup' 'tt:SystemBackup'
+Begin element found (level=7) 'tt:SystemBackup'='tt:SystemBackup'
+Enter id='' type=196 loc=0xc0cdec size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:SystemBackup'='tt:SystemBackup'
+Tags and (default) namespaces match: 'tt:SystemLogging' 'tt:SystemLogging'
+Begin element found (level=7) 'tt:SystemLogging'='tt:SystemLogging'
+Enter id='' type=196 loc=0xc0cdf0 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:SystemLogging'='tt:SystemLogging'
+Tags and (default) namespaces match: 'tt:FirmwareUpgrade' 'tt:FirmwareUpgrade'
+Begin element found (level=7) 'tt:FirmwareUpgrade'='tt:FirmwareUpgrade'
+Enter id='' type=196 loc=0xc0cdf4 size=4 level=0
+Element content value='true'
+End element found (level=7) 'tt:FirmwareUpgrade'='tt:FirmwareUpgrade'
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0cc70
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0cb90
+Reverting to last element 'tt:SupportedVersions' (level=6)
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Enter id='' type=301 loc=0xc0cba0 size=8 level=0
+Tags and (default) namespaces match: 'tt:Major' 'tt:Major'
+Begin element found (level=8) 'tt:Major'='tt:Major'
+Enter id='' type=1 loc=0xc0cba0 size=4 level=0
+Element content value='2'
+End element found (level=8) 'tt:Major'='tt:Major'
+Tags and (default) namespaces match: 'tt:Minor' 'tt:Minor'
+Begin element found (level=8) 'tt:Minor'='tt:Minor'
+Enter id='' type=1 loc=0xc0cba4 size=4 level=0
+Element content value='20'
+End element found (level=8) 'tt:Minor'='tt:Minor'
+End element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0cf00
+Reverting to last element 'tt:SupportedVersions' (level=6)
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Enter id='' type=301 loc=0xc0cf10 size=8 level=0
+Tags and (default) namespaces match: 'tt:Major' 'tt:Major'
+Begin element found (level=8) 'tt:Major'='tt:Major'
+Enter id='' type=1 loc=0xc0cf10 size=4 level=0
+Element content value='2'
+End element found (level=8) 'tt:Major'='tt:Major'
+Tags and (default) namespaces match: 'tt:Minor' 'tt:Minor'
+Begin element found (level=8) 'tt:Minor'='tt:Minor'
+Enter id='' type=1 loc=0xc0cf14 size=4 level=0
+Element content value='10'
+End element found (level=8) 'tt:Minor'='tt:Minor'
+End element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Push block of 8 bytes (24 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0cf50
+Reverting to last element 'tt:SupportedVersions' (level=6)
+Tags and (default) namespaces match: 'tt:SupportedVersions' 'tt:SupportedVersions'
+Begin element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Enter id='' type=301 loc=0xc0cf60 size=8 level=0
+Tags and (default) namespaces match: 'tt:Major' 'tt:Major'
+Begin element found (level=8) 'tt:Major'='tt:Major'
+Enter id='' type=1 loc=0xc0cf60 size=4 level=0
+Element content value='2'
+End element found (level=8) 'tt:Major'='tt:Major'
+Tags and (default) namespaces match: 'tt:Minor' 'tt:Minor'
+Begin element found (level=8) 'tt:Minor'='tt:Minor'
+Enter id='' type=1 loc=0xc0cf64 size=4 level=0
+Element content value='0'
+End element found (level=8) 'tt:Minor'='tt:Minor'
+End element found (level=7) 'tt:SupportedVersions'='tt:SupportedVersions'
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Reverting to last element 'tt:Extension' (level=6)
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Enter id='' type=815 loc=(nil) size=56 level=0
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0cfa0
+New block sequence (prev=0xc0cc70)
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0d030
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d080
+Reading string content, flag=0
+String content includes tag 'tt:HttpFirmwareUpgrade' and attributes
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0d0d0
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d160
+Reading string content, flag=0
+String content includes tag 'tt:HttpSystemBackup' and attributes
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc0d1b0
+Push block of 8 bytes (24 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d230
+Reading string content, flag=0
+String content includes tag 'tt:HttpSystemLogging' and attributes
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc0d280
+Push block of 8 bytes (32 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d300
+Reading string content, flag=0
+String content includes tag 'tt:HttpSupportInformation' and attributes
+source/onvif/stdsoap2.c(7330): malloc(88) = 0xc0d350
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0d3e0
+Save all blocks in contiguous memory space of 32 bytes (0xc0d300->0xc0d3e0)
+First block
+Copy 8 bytes from 0xc0d090 to 0xc0d3e0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d080)
+Copy 8 bytes from 0xc0d170 to 0xc0d3e8
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d160)
+Copy 8 bytes from 0xc0d240 to 0xc0d3f0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d230)
+Copy 8 bytes from 0xc0d310 to 0xc0d3f8
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d300)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0d030)
+Restore previous block sequence
+End element found (level=7) 'tt:Extension'='tt:Extension'
+source/onvif/stdsoap2.c(7330): malloc(48) = 0xc0d450
+Save all blocks in contiguous memory space of 24 bytes (0xc0cf50->0xc0d450)
+First block
+Copy 8 bytes from 0xc0cba0 to 0xc0d450
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0cb90)
+Copy 8 bytes from 0xc0cf10 to 0xc0d458
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0cf00)
+Copy 8 bytes from 0xc0cf60 to 0xc0d460
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0cf50)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0cc70)
+End element found (level=6) 'tt:System'='tt:System'
+Tags and (default) namespaces match: 'tt:IO' 'tt:IO'
+Begin element found (level=6) 'tt:IO'='tt:IO'
+Reverting to last element 'tt:IO' (level=5)
+Tags and (default) namespaces match: 'tt:IO' 'tt:IO'
+Begin element found (level=6) 'tt:IO'='tt:IO'
+Enter id='' type=788 loc=(nil) size=32 level=0
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0d4c0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0cc70
+Tags and (default) namespaces match: 'tt:InputConnectors' 'tt:InputConnectors'
+Begin element found (level=7) 'tt:InputConnectors'='tt:InputConnectors'
+Reverting to last element 'tt:InputConnectors' (level=6)
+Tags and (default) namespaces match: 'tt:InputConnectors' 'tt:InputConnectors'
+Begin element found (level=7) 'tt:InputConnectors'='tt:InputConnectors'
+Enter id='' type=1 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0cf50
+Element content value='1'
+End element found (level=7) 'tt:InputConnectors'='tt:InputConnectors'
+Tags and (default) namespaces match: 'tt:RelayOutputs' 'tt:RelayOutputs'
+Begin element found (level=7) 'tt:RelayOutputs'='tt:RelayOutputs'
+Reverting to last element 'tt:RelayOutputs' (level=6)
+Tags and (default) namespaces match: 'tt:RelayOutputs' 'tt:RelayOutputs'
+Begin element found (level=7) 'tt:RelayOutputs'='tt:RelayOutputs'
+Enter id='' type=1 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0cf00
+Element content value='1'
+End element found (level=7) 'tt:RelayOutputs'='tt:RelayOutputs'
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Reverting to last element 'tt:Extension' (level=6)
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=7) 'tt:Extension'='tt:Extension'
+Enter id='' type=794 loc=(nil) size=56 level=0
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0d5c0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0cb90
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0d030
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d300
+Reading string content, flag=0
+String content includes tag 'tt:Auxiliary' and attributes
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0d6e0
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d230
+Reading string content, flag=0
+String content includes tag 'tt:AuxiliaryCommands' and attributes
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc0d780
+Push block of 8 bytes (24 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d160
+Reading string content, flag=0
+String content includes tag 'tt:Extension' and attributes
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xc0d840
+source/onvif/stdsoap2.c(7330): malloc(48) = 0xc0d8a0
+Save all blocks in contiguous memory space of 24 bytes (0xc0d160->0xc0d8a0)
+First block
+Copy 8 bytes from 0xc0d310 to 0xc0d8a0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d300)
+Copy 8 bytes from 0xc0d240 to 0xc0d8a8
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d230)
+Copy 8 bytes from 0xc0d170 to 0xc0d8b0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d160)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0d030)
+End element found (level=7) 'tt:Extension'='tt:Extension'
+End element found (level=6) 'tt:IO'='tt:IO'
+Tags and (default) namespaces match: 'tt:Security' 'tt:Security'
+Begin element found (level=6) 'tt:Security'='tt:Security'
+Reverting to last element 'tt:Security' (level=5)
+Tags and (default) namespaces match: 'tt:Security' 'tt:Security'
+Begin element found (level=6) 'tt:Security'='tt:Security'
+Enter id='' type=790 loc=(nil) size=64 level=0
+source/onvif/stdsoap2.c(7330): malloc(88) = 0xc0d910
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0d030
+Tags and (default) namespaces match: 'tt:TLS1.1' 'tt:TLS1.1'
+Begin element found (level=7) 'tt:TLS1.1'='tt:TLS1.1'
+Enter id='' type=196 loc=0xc0d910 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:TLS1.1'='tt:TLS1.1'
+Tags and (default) namespaces match: 'tt:TLS1.2' 'tt:TLS1.2'
+Begin element found (level=7) 'tt:TLS1.2'='tt:TLS1.2'
+Enter id='' type=196 loc=0xc0d914 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:TLS1.2'='tt:TLS1.2'
+Tags and (default) namespaces match: 'tt:OnboardKeyGeneration' 'tt:OnboardKeyGeneration'
+Begin element found (level=7) 'tt:OnboardKeyGeneration'='tt:OnboardKeyGeneration'
+Enter id='' type=196 loc=0xc0d918 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:OnboardKeyGeneration'='tt:OnboardKeyGeneration'
+Tags and (default) namespaces match: 'tt:AccessPolicyConfig' 'tt:AccessPolicyConfig'
+Begin element found (level=7) 'tt:AccessPolicyConfig'='tt:AccessPolicyConfig'
+Enter id='' type=196 loc=0xc0d91c size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:AccessPolicyConfig'='tt:AccessPolicyConfig'
+Tags and (default) namespaces match: 'tt:X.509Token' 'tt:X.509Token'
+Begin element found (level=7) 'tt:X.509Token'='tt:X.509Token'
+Enter id='' type=196 loc=0xc0d920 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:X.509Token'='tt:X.509Token'
+Tags and (default) namespaces match: 'tt:SAMLToken' 'tt:SAMLToken'
+Begin element found (level=7) 'tt:SAMLToken'='tt:SAMLToken'
+Enter id='' type=196 loc=0xc0d924 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:SAMLToken'='tt:SAMLToken'
+Tags and (default) namespaces match: 'tt:KerberosToken' 'tt:KerberosToken'
+Begin element found (level=7) 'tt:KerberosToken'='tt:KerberosToken'
+Enter id='' type=196 loc=0xc0d928 size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:KerberosToken'='tt:KerberosToken'
+Tags and (default) namespaces match: 'tt:RELToken' 'tt:RELToken'
+Begin element found (level=7) 'tt:RELToken'='tt:RELToken'
+Enter id='' type=196 loc=0xc0d92c size=4 level=0
+Element content value='false'
+End element found (level=7) 'tt:RELToken'='tt:RELToken'
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0d160
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0d230
+Reading string content, flag=0
+String content includes tag 'tt:Extension' and attributes
+source/onvif/stdsoap2.c(7330): malloc(248) = 0xc0da30
+source/onvif/stdsoap2.c(7330): malloc(32) = 0xc0db60
+Save all blocks in contiguous memory space of 8 bytes (0xc0d230->0xc0db60)
+First block
+Copy 8 bytes from 0xc0d240 to 0xc0db60
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0d230)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0d160)
+End element found (level=6) 'tt:Security'='tt:Security'
+End element found (level=5) 'tt:Device'='tt:Device'
+Tags and (default) namespaces match: 'tt:Events' 'tt:Events'
+Begin element found (level=5) 'tt:Events'='tt:Events'
+Reverting to last element 'tt:Events' (level=4)
+Tags and (default) namespaces match: 'tt:Events' 'tt:Events'
+Begin element found (level=5) 'tt:Events'='tt:Events'
+Enter id='' type=758 loc=(nil) size=40 level=0
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xc0dbc0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0d160
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0dc70
+Enter id='' type=194 loc=0xc0dc70 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+Tags and (default) namespaces match: 'tt:WSSubscriptionPolicySupport' 'tt:WSSubscriptionPolicySupport'
+Begin element found (level=6) 'tt:WSSubscriptionPolicySupport'='tt:WSSubscriptionPolicySupport'
+Enter id='' type=196 loc=0xc0dbc8 size=4 level=0
+Element content value='true'
+End element found (level=6) 'tt:WSSubscriptionPolicySupport'='tt:WSSubscriptionPolicySupport'
+Tags and (default) namespaces match: 'tt:WSPullPointSupport' 'tt:WSPullPointSupport'
+Begin element found (level=6) 'tt:WSPullPointSupport'='tt:WSPullPointSupport'
+Enter id='' type=196 loc=0xc0dbcc size=4 level=0
+Element content value='true'
+End element found (level=6) 'tt:WSPullPointSupport'='tt:WSPullPointSupport'
+Tags and (default) namespaces match: 'tt:WSPausableSubscriptionManagerInterfaceSupport' 'tt:WSPausableSubscriptionManagerInterfaceSupport'
+Begin element found (level=6) 'tt:WSPausableSubscriptionManagerInterfaceSupport'='tt:WSPausableSubscriptionManagerInterfaceSupport'
+Enter id='' type=196 loc=0xc0dbd0 size=4 level=0
+Element content value='false'
+End element found (level=6) 'tt:WSPausableSubscriptionManagerInterfaceSupport'='tt:WSPausableSubscriptionManagerInterfaceSupport'
+End element found (level=5) 'tt:Events'='tt:Events'
+Tags and (default) namespaces match: 'tt:Imaging' 'tt:Imaging'
+Begin element found (level=5) 'tt:Imaging'='tt:Imaging'
+Reverting to last element 'tt:Imaging' (level=4)
+Tags and (default) namespaces match: 'tt:Imaging' 'tt:Imaging'
+Begin element found (level=5) 'tt:Imaging'='tt:Imaging'
+Enter id='' type=760 loc=(nil) size=16 level=0
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xc0dce0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0d230
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0dd70
+Enter id='' type=194 loc=0xc0dd70 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+End element found (level=5) 'tt:Imaging'='tt:Imaging'
+Tags and (default) namespaces match: 'tt:Media' 'tt:Media'
+Begin element found (level=5) 'tt:Media'='tt:Media'
+Reverting to last element 'tt:Media' (level=4)
+Tags and (default) namespaces match: 'tt:Media' 'tt:Media'
+Begin element found (level=5) 'tt:Media'='tt:Media'
+Enter id='' type=762 loc=(nil) size=48 level=0
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc0dde0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0d300
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0de90
+Enter id='' type=194 loc=0xc0de90 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+Tags and (default) namespaces match: 'tt:StreamingCapabilities' 'tt:StreamingCapabilities'
+Begin element found (level=6) 'tt:StreamingCapabilities'='tt:StreamingCapabilities'
+Reverting to last element 'tt:StreamingCapabilities' (level=5)
+Tags and (default) namespaces match: 'tt:StreamingCapabilities' 'tt:StreamingCapabilities'
+Begin element found (level=6) 'tt:StreamingCapabilities'='tt:StreamingCapabilities'
+Enter id='' type=799 loc=(nil) size=40 level=0
+source/onvif/stdsoap2.c(7330): malloc(64) = 0xc0df00
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0d080
+Tags and (default) namespaces match: 'tt:RTPMulticast' 'tt:RTPMulticast'
+Begin element found (level=7) 'tt:RTPMulticast'='tt:RTPMulticast'
+Reverting to last element 'tt:RTPMulticast' (level=6)
+Tags and (default) namespaces match: 'tt:RTPMulticast' 'tt:RTPMulticast'
+Begin element found (level=7) 'tt:RTPMulticast'='tt:RTPMulticast'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0dfb0
+Element content value='true'
+End element found (level=7) 'tt:RTPMulticast'='tt:RTPMulticast'
+Tags and (default) namespaces match: 'tt:RTP_TCP' 'tt:RTP_TCP'
+Begin element found (level=7) 'tt:RTP_TCP'='tt:RTP_TCP'
+Reverting to last element 'tt:RTP_TCP' (level=6)
+Tags and (default) namespaces match: 'tt:RTP_TCP' 'tt:RTP_TCP'
+Begin element found (level=7) 'tt:RTP_TCP'='tt:RTP_TCP'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0e000
+Element content value='true'
+End element found (level=7) 'tt:RTP_TCP'='tt:RTP_TCP'
+Tags and (default) namespaces match: 'tt:RTP_RTSP_TCP' 'tt:RTP_RTSP_TCP'
+Begin element found (level=7) 'tt:RTP_RTSP_TCP'='tt:RTP_RTSP_TCP'
+Reverting to last element 'tt:RTP_RTSP_TCP' (level=6)
+Tags and (default) namespaces match: 'tt:RTP_RTSP_TCP' 'tt:RTP_RTSP_TCP'
+Begin element found (level=7) 'tt:RTP_RTSP_TCP'='tt:RTP_RTSP_TCP'
+Enter id='' type=196 loc=(nil) size=4 level=0
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0e050
+Element content value='true'
+End element found (level=7) 'tt:RTP_RTSP_TCP'='tt:RTP_RTSP_TCP'
+End element found (level=6) 'tt:StreamingCapabilities'='tt:StreamingCapabilities'
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0e0a0
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0e0f0
+Reading string content, flag=0
+String content includes tag 'tt:Extension' and attributes
+source/onvif/stdsoap2.c(7330): malloc(168) = 0xc0e140
+source/onvif/stdsoap2.c(7330): malloc(32) = 0xc0e220
+Save all blocks in contiguous memory space of 8 bytes (0xc0e0f0->0xc0e220)
+First block
+Copy 8 bytes from 0xc0e100 to 0xc0e220
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0e0f0)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0e0a0)
+End element found (level=5) 'tt:Media'='tt:Media'
+Tags and (default) namespaces match: 'tt:PTZ' 'tt:PTZ'
+Begin element found (level=5) 'tt:PTZ'='tt:PTZ'
+Reverting to last element 'tt:PTZ' (level=4)
+Tags and (default) namespaces match: 'tt:PTZ' 'tt:PTZ'
+Begin element found (level=5) 'tt:PTZ'='tt:PTZ'
+Enter id='' type=764 loc=(nil) size=32 level=0
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0e280
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc0e0a0
+Tags and (default) namespaces match: 'tt:XAddr' 'tt:XAddr'
+Begin element found (level=6) 'tt:XAddr'='tt:XAddr'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc0e320
+Enter id='' type=194 loc=0xc0e320 size=8 level=0
+End element found (level=6) 'tt:XAddr'='tt:XAddr'
+End element found (level=5) 'tt:PTZ'='tt:PTZ'
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=5) 'tt:Extension'='tt:Extension'
+Reverting to last element 'tt:Extension' (level=4)
+Tags and (default) namespaces match: 'tt:Extension' 'tt:Extension'
+Begin element found (level=5) 'tt:Extension'='tt:Extension'
+Enter id='' type=766 loc=(nil) size=80 level=0
+source/onvif/stdsoap2.c(7330): malloc(104) = 0xc0e390
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0e0f0
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0e460
+Reading string content, flag=0
+String content includes tag 'hikxsd:hikCapabilities' and attributes
+Enlarging look-aside buffer to append data, old size=256, new size=512
+source/onvif/stdsoap2.c(10154): malloc(512) = 0xc0e4b0
+source/onvif/stdsoap2.c(10162): free(0xc07360)
+source/onvif/stdsoap2.c(7330): malloc(368) = 0xc0e6f0
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc07390
+Reading string content, flag=0
+String content includes tag 'tt:DeviceIO' and attributes
+source/onvif/stdsoap2.c(7330): malloc(296) = 0xc0e870
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xc07410
+Save all blocks in contiguous memory space of 16 bytes (0xc07390->0xc07410)
+First block
+Copy 8 bytes from 0xc0e470 to 0xc07410
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0e460)
+Copy 8 bytes from 0xc073a0 to 0xc07418
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc07390)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0e0f0)
+End element found (level=5) 'tt:Extension'='tt:Extension'
+End element found (level=4) 'tds:Capabilities'='tds:Capabilities'
+End element found (level=3) 'tds:GetCapabilitiesResponse'='tds:GetCapabilitiesResponse'
+End element found (level=2) 'env:Body'='SOAP-ENV:Body'
+End element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+End of receive message ok
+Resolving forwarded data
+Resolution phase
+Resolution done
+Free namespace stack
+source/onvif/stdsoap2.c(8205): free(0xc0c470)
+source/onvif/stdsoap2.c(8205): free(0xc0c220)
+source/onvif/stdsoap2.c(8205): free(0xc0bfd0)
+source/onvif/stdsoap2.c(8205): free(0xc0bdb0)
+source/onvif/stdsoap2.c(8205): free(0xc0bb90)
+source/onvif/stdsoap2.c(8205): free(0xc0b970)
+source/onvif/stdsoap2.c(8205): free(0xc0b750)
+source/onvif/stdsoap2.c(8205): free(0xc0b500)
+source/onvif/stdsoap2.c(8205): free(0xc0b2b0)
+source/onvif/stdsoap2.c(8205): free(0xc0b060)
+source/onvif/stdsoap2.c(8205): free(0xc0ae40)
+source/onvif/stdsoap2.c(8205): free(0xc0ac20)
+source/onvif/stdsoap2.c(8205): free(0xc0aa00)
+source/onvif/stdsoap2.c(8205): free(0xc0a7e0)
+source/onvif/stdsoap2.c(8205): free(0xc0a5c0)
+source/onvif/stdsoap2.c(8205): free(0xc0a3a0)
+source/onvif/stdsoap2.c(8205): free(0xc0a180)
+source/onvif/stdsoap2.c(8205): free(0xc09f40)
+source/onvif/stdsoap2.c(8205): free(0xc09cf0)
+source/onvif/stdsoap2.c(8205): free(0xc09ab0)
+source/onvif/stdsoap2.c(8205): free(0xc09890)
+source/onvif/stdsoap2.c(8205): free(0xc09650)
+source/onvif/stdsoap2.c(8205): free(0xc09430)
+source/onvif/stdsoap2.c(8205): free(0xc09200)
+source/onvif/stdsoap2.c(8205): free(0xc08fb0)
+source/onvif/stdsoap2.c(8205): free(0xc08d90)
+source/onvif/stdsoap2.c(8205): free(0xc08b70)
+source/onvif/stdsoap2.c(8205): free(0xc08950)
+source/onvif/stdsoap2.c(8205): free(0xc08730)
+source/onvif/stdsoap2.c(8205): free(0xc08510)
+source/onvif/stdsoap2.c(8205): free(0xc082f0)
+source/onvif/stdsoap2.c(8205): free(0xc080d0)
+source/onvif/stdsoap2.c(8205): free(0xc07ec0)
+source/onvif/stdsoap2.c(8205): free(0xc07cb0)
+source/onvif/stdsoap2.c(8205): free(0xc07a90)
+source/onvif/stdsoap2.c(8205): free(0xbde680)
+Shutdown socket 4 how=2
+Close socket 4
+Reinitializing context
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+Free pointer hashtable
+Free ID hashtable
+Lookup location=0xc36230 type=4: not found
+source/onvif/stdsoap2.c(6725): malloc(1288) = 0xc36600
+Pointer enter location=0xc36230 array=(nil) size=0 dim=0 type=4 id=1
+Reference 0xc36230 type=4 (0 0)
+Lookup location=0xc09200 type=183: not found
+Pointer enter location=0xc09200 array=(nil) size=0 dim=0 type=183 id=2
+Reference 0xc09200 type=183 (0 0)
+Lookup location=0xc080d0 type=112: not found
+Pointer enter location=0xc080d0 array=(nil) size=0 dim=0 type=112 id=3
+Reference 0xc080d0 type=112 (0 0)
+Lookup location=0xc09650 type=4: not found
+Pointer enter location=0xc09650 array=(nil) size=0 dim=0 type=4 id=4
+Reference 0xc09650 type=4 (0 0)
+Lookup location=0xc082f0 type=113: not found
+Pointer enter location=0xc082f0 array=(nil) size=0 dim=0 type=113 id=5
+Reference 0xc082f0 type=113 (0 0)
+Lookup location=0xc36330 type=4: not found
+Pointer enter location=0xc36330 array=(nil) size=0 dim=0 type=4 id=6
+Reference 0xc36330 type=4 (0 0)
+Lookup location=0xc09ab0 type=4: not found
+Pointer enter location=0xc09ab0 array=(nil) size=0 dim=0 type=4 id=7
+Reference 0xc09ab0 type=4 (0 0)
+Lookup location=0xc08fb0 type=4: not found
+Pointer enter location=0xc08fb0 array=(nil) size=0 dim=0 type=4 id=8
+Reference 0xc08fb0 type=4 (0 0)
+Lookup location=0x7fff03512643 type=1771: not found
+Pointer enter location=0x7fff03512643 array=(nil) size=0 dim=0 type=1771 id=9
+Reference 0x7fff03512643 type=1771 (0 0)
+Free namespace stack
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xc36b10
+Begin count phase (socket=-1 mode=0x20008 count=0)
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element begin tag='wsa:MessageID' level='2' id='0' type=''
+Element ending tag='wsa:MessageID'
+Element begin tag='wsse:Security' level='2' id='0' type=''
+Attribute 'SOAP-ENV:mustUnderstand'='true'
+Element begin tag='wsse:UsernameToken' level='3' id='0' type=''
+Element begin tag='wsse:Username' level='4' id='0' type=''
+Element ending tag='wsse:Username'
+Set attribute Type='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+Allocate attribute Type
+source/onvif/stdsoap2.c(9960): malloc(52) = 0xbde680
+source/onvif/stdsoap2.c(10020): malloc(98) = 0xc370e0
+Allocate attribute value for Type (0xc370e0)
+Element begin tag='wsse:Password' level='4' id='0' type=''
+Element ending tag='wsse:Password'
+Element begin tag='wsse:Nonce' level='4' id='0' type=''
+Element ending tag='wsse:Nonce'
+Element begin tag='wsu:Created' level='4' id='0' type=''
+Element ending tag='wsu:Created'
+Element ending tag='wsse:UsernameToken'
+Element ending tag='wsse:Security'
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Element begin tag='tev:GetEventProperties' level='2' id='0' type=''
+Element ending tag='tev:GetEventProperties'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End of count phase
+source/onvif/stdsoap2.c(7330): malloc(104) = 0xc37150
+Connect/reconnect to host='192.168.1.103' path='/onvif/Events' port=80
+Opening socket 7 to host='192.168.1.103' port=80
+Calculating the message size with attachments, current count=3373
+New count is 3373 bytes
+Initializing for output
+Free namespace stack
+Begin send phase (socket=7 mode=0x20001 count=3373)
+HTTP POST to http://192.168.1.103/onvif/Events
+Element begin tag='SOAP-ENV:Envelope' level='0' id='0' type=''
+Attribute 'xmlns:SOAP-ENV'='http://www.w3.org/2003/05/soap-envelope'
+Attribute 'xmlns:SOAP-ENC'='http://www.w3.org/2003/05/soap-encoding'
+Attribute 'xmlns:xsi'='http://www.w3.org/2001/XMLSchema-instance'
+Attribute 'xmlns:xsd'='http://www.w3.org/2001/XMLSchema'
+Attribute 'xmlns:wsa'='http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Attribute 'xmlns:wsdd'='http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Attribute 'xmlns:wsa5'='http://www.w3.org/2005/08/addressing'
+Attribute 'xmlns:c14n'='http://www.w3.org/2001/10/xml-exc-c14n#'
+Attribute 'xmlns:wsu'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd'
+Attribute 'xmlns:xenc'='http://www.w3.org/2001/04/xmlenc#'
+Attribute 'xmlns:ds'='http://www.w3.org/2000/09/xmldsig#'
+Attribute 'xmlns:wsse'='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd'
+Attribute 'xmlns:xmime'='http://tempuri.org/xmime.xsd'
+Attribute 'xmlns:xop'='http://www.w3.org/2004/08/xop/include'
+Attribute 'xmlns:wsrfbf'='http://docs.oasis-open.org/wsrf/bf-2'
+Attribute 'xmlns:tt'='http://www.onvif.org/ver10/schema'
+Attribute 'xmlns:wstop'='http://docs.oasis-open.org/wsn/t-1'
+Attribute 'xmlns:wsrfr'='http://docs.oasis-open.org/wsrf/r-2'
+Attribute 'xmlns:ns10'='http://www.onvif.org/ver10/events/wsdl/NotificationConsumerBinding'
+Attribute 'xmlns:ns11'='http://www.onvif.org/ver10/events/wsdl/PullPointBinding'
+Attribute 'xmlns:ns12'='http://www.onvif.org/ver10/events/wsdl/CreatePullPointBinding'
+Attribute 'xmlns:ns13'='http://www.onvif.org/ver10/events/wsdl/PausableSubscriptionManagerBinding'
+Attribute 'xmlns:ns2'='http://www.onvif.org/ver10/network/wsdl/RemoteDiscoveryBinding'
+Attribute 'xmlns:ns3'='http://www.onvif.org/ver10/network/wsdl/DiscoveryLookupBinding'
+Attribute 'xmlns:tdn'='http://www.onvif.org/ver10/network/wsdl'
+Attribute 'xmlns:ns4'='http://www.onvif.org/ver20/analytics/wsdl/RuleEngineBinding'
+Attribute 'xmlns:ns5'='http://www.onvif.org/ver20/analytics/wsdl/AnalyticsEngineBinding'
+Attribute 'xmlns:tan'='http://www.onvif.org/ver20/analytics/wsdl'
+Attribute 'xmlns:ns6'='http://www.onvif.org/ver10/events/wsdl/PullPointSubscriptionBinding'
+Attribute 'xmlns:ns7'='http://www.onvif.org/ver10/events/wsdl/EventBinding'
+Attribute 'xmlns:tev'='http://www.onvif.org/ver10/events/wsdl'
+Attribute 'xmlns:ns8'='http://www.onvif.org/ver10/events/wsdl/SubscriptionManagerBinding'
+Attribute 'xmlns:ns9'='http://www.onvif.org/ver10/events/wsdl/NotificationProducerBinding'
+Attribute 'xmlns:wsnt'='http://docs.oasis-open.org/wsn/b-2'
+Attribute 'xmlns:tad'='http://www.onvif.org/ver10/analyticsdevice/wsdl'
+Attribute 'xmlns:tds'='http://www.onvif.org/ver10/device/wsdl'
+Attribute 'xmlns:timg'='http://www.onvif.org/ver20/imaging/wsdl'
+Attribute 'xmlns:tls'='http://www.onvif.org/ver10/display/wsdl'
+Attribute 'xmlns:tmd'='http://www.onvif.org/ver10/deviceIO/wsdl'
+Attribute 'xmlns:tptz'='http://www.onvif.org/ver20/ptz/wsdl'
+Attribute 'xmlns:trc'='http://www.onvif.org/ver10/recording/wsdl'
+Attribute 'xmlns:trp'='http://www.onvif.org/ver10/replay/wsdl'
+Attribute 'xmlns:trt'='http://www.onvif.org/ver10/media/wsdl'
+Attribute 'xmlns:trv'='http://www.onvif.org/ver10/receiver/wsdl'
+Attribute 'xmlns:tse'='http://www.onvif.org/ver10/search/wsdl'
+Element begin tag='SOAP-ENV:Header' level='1' id='0' type=''
+Element begin tag='wsa:MessageID' level='2' id='0' type=''
+Element ending tag='wsa:MessageID'
+Element begin tag='wsse:Security' level='2' id='0' type=''
+Attribute 'SOAP-ENV:mustUnderstand'='true'
+Element begin tag='wsse:UsernameToken' level='3' id='0' type=''
+Element begin tag='wsse:Username' level='4' id='0' type=''
+Element ending tag='wsse:Username'
+Set attribute Type='http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest'
+Element begin tag='wsse:Password' level='4' id='0' type=''
+Element ending tag='wsse:Password'
+Element begin tag='wsse:Nonce' level='4' id='0' type=''
+Element ending tag='wsse:Nonce'
+Element begin tag='wsu:Created' level='4' id='0' type=''
+Element ending tag='wsu:Created'
+Element ending tag='wsse:UsernameToken'
+Element ending tag='wsse:Security'
+Element ending tag='SOAP-ENV:Header'
+Element begin tag='SOAP-ENV:Body' level='1' id='0' type=''
+Element begin tag='tev:GetEventProperties' level='2' id='0' type=''
+Element ending tag='tev:GetEventProperties'
+Element ending tag='SOAP-ENV:Body'
+Element ending tag='SOAP-ENV:Envelope'
+End send mode=0x20001
+End of send phase
+Initializing for input
+Free namespace stack
+Free any remaining temp blocks
+Free attribute storage
+source/onvif/stdsoap2.c(8157): free(0xc370e0)
+source/onvif/stdsoap2.c(8158): free(0xbde680)
+source/onvif/stdsoap2.c(8180): free(0xc36b10)
+Free pointer hashtable
+source/onvif/stdsoap2.c(6654): free(0xc36600)
+Free ID hashtable
+source/onvif/stdsoap2.c(9008): malloc(1472) = 0xc36600
+Free ID hashtable
+Read 1448 bytes from socket=7/fd=0
+Waiting for HTTP request/response...
+HTTP status: HTTP/1.1 200 OK
+HTTP header: Date: Wed, 24 Dec 2014 14:51:21 GMT
+HTTP header: Server: App-webs/
+HTTP header: Connection: close
+HTTP header: Content-Length: 10363
+HTTP header: Content-Type: application/soap+xml; charset=utf-8
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xbde680
+Finished HTTP header parsing, status = 200
+Keep alive connection = 0
+XML PI <?xml version="1.0" encoding="UTF-8"?>
+Switching to utf-8 encoding
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc36e10
+Enlarging look-aside buffer to append data, old size=0, new size=256
+source/onvif/stdsoap2.c(10154): malloc(256) = 0xc36e60
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc36f70
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc0a7e0
+Push namespace binding (level=0) 'env' 'http://www.w3.org/2003/05/soap-envelope'
+Push OK ('env' matches 'SOAP-ENV' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc37080
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37400
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xc0b750
+Push namespace binding (level=0) 'soapenc' 'http://www.w3.org/2003/05/soap-encoding'
+Push OK ('soapenc' matches 'SOAP-ENC' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc09cf0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37510
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc09f40
+Push namespace binding (level=0) 'xsi' 'http://www.w3.org/2001/XMLSchema-instance'
+Push OK ('xsi' matches 'xsi' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc0b060
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37620
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc0b500
+Push namespace binding (level=0) 'xs' 'http://www.w3.org/2001/XMLSchema'
+Push OK ('xs' matches 'xsd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc0bfd0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37730
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc0c470
+Push namespace binding (level=0) 'tt' 'http://www.onvif.org/ver10/schema'
+Push OK ('tt' matches 'tt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc370d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37840
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc37980
+Push namespace binding (level=0) 'tds' 'http://www.onvif.org/ver10/device/wsdl'
+Push OK ('tds' matches 'tds' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc379e0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37a60
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc37ba0
+Push namespace binding (level=0) 'trt' 'http://www.onvif.org/ver10/media/wsdl'
+Push OK ('trt' matches 'trt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc37c00
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37c80
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc37dc0
+Push namespace binding (level=0) 'timg' 'http://www.onvif.org/ver20/imaging/wsdl'
+Push OK ('timg' matches 'timg' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc37e20
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc37ea0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc37fe0
+Push namespace binding (level=0) 'tev' 'http://www.onvif.org/ver10/events/wsdl'
+Push OK ('tev' matches 'tev' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc38040
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc380c0
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc38200
+Push namespace binding (level=0) 'tptz' 'http://www.onvif.org/ver20/ptz/wsdl'
+Push OK ('tptz' matches 'tptz' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc38260
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc382e0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc38420
+Push namespace binding (level=0) 'tan' 'http://www.onvif.org/ver20/analytics/wsdl'
+Push OK ('tan' matches 'tan' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc38480
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc38500
+source/onvif/stdsoap2.c(2734): malloc(75) = 0xc38640
+Push namespace binding (level=0) 'tst' 'http://www.onvif.org/ver10/storage/wsdl'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/storage/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc386d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc38750
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xc38890
+Push namespace binding (level=0) 'ter' 'http://www.onvif.org/ver10/error'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/error' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(56) = 0xc38910
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc38980
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc38ac0
+Push namespace binding (level=0) 'dn' 'http://www.onvif.org/ver10/network/wsdl'
+Push OK ('dn' matches 'tdn' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc38b20
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc38ba0
+source/onvif/stdsoap2.c(2734): malloc(70) = 0xc38ce0
+Push namespace binding (level=0) 'tns1' 'http://www.onvif.org/ver10/topics'
+Push NOT OK: no match found for 'http://www.onvif.org/ver10/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc38d60
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc38de0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc38f20
+Push namespace binding (level=0) 'tmd' 'http://www.onvif.org/ver10/deviceIO/wsdl'
+Push OK ('tmd' matches 'tmd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc38f80
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39000
+source/onvif/stdsoap2.c(2734): malloc(68) = 0xc39140
+Push namespace binding (level=0) 'wsdl' 'http://schemas.xmlsoap.org/wsdl'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc391c0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39240
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xc39380
+Push namespace binding (level=0) 'wsoap12' 'http://schemas.xmlsoap.org/wsdl/soap12'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/soap12' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc39410
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39490
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xc395d0
+Push namespace binding (level=0) 'http' 'http://schemas.xmlsoap.org/wsdl/http'
+Push NOT OK: no match found for 'http://schemas.xmlsoap.org/wsdl/http' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(55) = 0xc39660
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc396d0
+source/onvif/stdsoap2.c(2734): malloc(33) = 0xc39810
+Push namespace binding (level=0) 'd' 'http://schemas.xmlsoap.org/ws/2005/04/discovery'
+Push OK ('d' matches 'wsdd' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc39870
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc398f0
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xc39a30
+Push namespace binding (level=0) 'wsadis' 'http://schemas.xmlsoap.org/ws/2004/08/addressing'
+Push OK ('wsadis' matches 'wsa' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc39a90
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39b10
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc39c50
+Push namespace binding (level=0) 'xop' 'http://www.w3.org/2004/08/xop/include'
+Push OK ('xop' matches 'xop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc39cb0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39d30
+source/onvif/stdsoap2.c(2734): malloc(36) = 0xc39e70
+Push namespace binding (level=0) 'wsnt' 'http://docs.oasis-open.org/wsn/b-2'
+Push OK ('wsnt' matches 'wsnt' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc39ed0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc39f50
+Read 9083 bytes from socket=7/fd=0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc3a090
+Push namespace binding (level=0) 'wsa' 'http://www.w3.org/2005/08/addressing'
+Push OK ('wsa' matches 'wsa5' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xc3a0f0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3a170
+source/onvif/stdsoap2.c(2734): malloc(37) = 0xc3a2b0
+Push namespace binding (level=0) 'wstop' 'http://docs.oasis-open.org/wsn/t-1'
+Push OK ('wstop' matches 'wstop' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc3a310
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3a390
+source/onvif/stdsoap2.c(2734): malloc(39) = 0xc3a4d0
+Push namespace binding (level=0) 'wsrf-bf' 'http://docs.oasis-open.org/wsrf/bf-2'
+Push OK ('wsrf-bf' matches 'wsrfbf' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xc3a530
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3a5b0
+source/onvif/stdsoap2.c(2734): malloc(73) = 0xc3a6f0
+Push namespace binding (level=0) 'wsntw' 'http://docs.oasis-open.org/wsn/bw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsn/bw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(61) = 0xc3a780
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3a800
+source/onvif/stdsoap2.c(2734): malloc(76) = 0xc3a940
+Push namespace binding (level=0) 'wsrf-rw' 'http://docs.oasis-open.org/wsrf/rw-2'
+Push NOT OK: no match found for 'http://docs.oasis-open.org/wsrf/rw-2' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(58) = 0xc3a9d0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3aa50
+source/onvif/stdsoap2.c(2734): malloc(78) = 0xc3ab90
+Push namespace binding (level=0) 'wsaw' 'http://www.w3.org/2006/05/addressing/wsdl'
+Push NOT OK: no match found for 'http://www.w3.org/2006/05/addressing/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc3ac20
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3aca0
+source/onvif/stdsoap2.c(2734): malloc(38) = 0xc3ade0
+Push namespace binding (level=0) 'wsrf-r' 'http://docs.oasis-open.org/wsrf/r-2'
+Push OK ('wsrf-r' matches 'wsrfr' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc3ae40
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3aec0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc3b000
+Push namespace binding (level=0) 'trc' 'http://www.onvif.org/ver10/recording/wsdl'
+Push OK ('trc' matches 'trc' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc3b060
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3b0e0
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc3b220
+Push namespace binding (level=0) 'tse' 'http://www.onvif.org/ver10/search/wsdl'
+Push OK ('tse' matches 'tse' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(57) = 0xc3b280
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3b300
+source/onvif/stdsoap2.c(2734): malloc(35) = 0xc3b440
+Push namespace binding (level=0) 'trp' 'http://www.onvif.org/ver10/replay/wsdl'
+Push OK ('trp' matches 'trp' in namespace table)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc3b4a0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3b520
+source/onvif/stdsoap2.c(2734): malloc(81) = 0xc3b660
+Push namespace binding (level=0) 'tnshik' 'http://www.hikvision.com/2011/event/topics'
+Push NOT OK: no match found for 'http://www.hikvision.com/2011/event/topics' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc3b6f0
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3b770
+source/onvif/stdsoap2.c(2734): malloc(83) = 0xc3b8b0
+Push namespace binding (level=0) 'hikwsd' 'http://www.onvifext.com/onvif/ext/ver10/wsdl'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/wsdl' in namespace mapping table (added to stack anyway)
+source/onvif/stdsoap2.c(10351): malloc(60) = 0xc3b940
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3b9c0
+source/onvif/stdsoap2.c(2734): malloc(85) = 0xc3bb00
+Push namespace binding (level=0) 'hikxsd' 'http://www.onvifext.com/onvif/ext/ver10/schema'
+Push NOT OK: no match found for 'http://www.onvifext.com/onvif/ext/ver10/schema' in namespace mapping table (added to stack anyway)
+Tags and (default) namespaces match: 'env:Envelope' 'SOAP-ENV:Envelope'
+Begin element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+source/onvif/stdsoap2.c(14904): malloc(40) = 0xc3bb90
+Tags and (default) namespaces match: 'env:Header' 'SOAP-ENV:Header'
+Begin element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Enter id='' type=29 loc=(nil) size=128 level=0
+source/onvif/stdsoap2.c(7330): malloc(152) = 0xc3bbf0
+Tags 'wsa:Action' and 'wsa:Action' match but namespaces differ
+Tags and (default) namespaces match: 'wsa:Action' 'wsa5:Action'
+Begin element found (level=3) 'wsa:Action'='wsa5:Action'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(104) = 0xc3bcc0
+Enter id='' type=4 loc=0xc3bcc0 size=8 level=0
+End element found (level=3) 'wsa:Action'='wsa5:Action'
+End element found (level=2) 'env:Header'='SOAP-ENV:Header'
+Tags and (default) namespaces match: 'env:Body' 'SOAP-ENV:Body'
+Begin element found (level=2) 'env:Body'='SOAP-ENV:Body'
+Tags and (default) namespaces match: 'tev:GetEventPropertiesResponse' 'tev:GetEventPropertiesResponse'
+Begin element found (level=3) 'tev:GetEventPropertiesResponse'='tev:GetEventPropertiesResponse'
+Enter id='' type=1772 loc=0x7fff03512660 size=112 level=0
+Tags and (default) namespaces match: 'tev:TopicNamespaceLocation' 'tev:TopicNamespaceLocation'
+Begin element found (level=4) 'tev:TopicNamespaceLocation'='tev:TopicNamespaceLocation'
+New block sequence (prev=(nil))
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc0b0a0
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc0c010
+Reverting to last element 'tev:TopicNamespaceLocation' (level=3)
+Tags and (default) namespaces match: 'tev:TopicNamespaceLocation' 'tev:TopicNamespaceLocation'
+Begin element found (level=4) 'tev:TopicNamespaceLocation'='tev:TopicNamespaceLocation'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc3bdc0
+Enter id='' type=194 loc=0xc3bdc0 size=8 level=0
+End element found (level=4) 'tev:TopicNamespaceLocation'='tev:TopicNamespaceLocation'
+Tags and (default) namespaces match: 'wsnt:FixedTopicSet' 'wsnt:FixedTopicSet'
+Begin element found (level=4) 'wsnt:FixedTopicSet'='wsnt:FixedTopicSet'
+Enter id='' type=196 loc=0x7fff03512670 size=4 level=0
+Element content value='true'
+End element found (level=4) 'wsnt:FixedTopicSet'='wsnt:FixedTopicSet'
+Tags and (default) namespaces match: 'wstop:TopicSet' 'wstop:TopicSet'
+Begin element found (level=4) 'wstop:TopicSet'='wstop:TopicSet'
+Reverting to last element 'wstop:TopicSet' (level=3)
+Tags and (default) namespaces match: 'wstop:TopicSet' 'wstop:TopicSet'
+Begin element found (level=4) 'wstop:TopicSet'='wstop:TopicSet'
+Enter id='' type=1368 loc=(nil) size=32 level=0
+source/onvif/stdsoap2.c(7330): malloc(56) = 0xc3be40
+source/onvif/stdsoap2.c(7330): malloc(24) = 0xc3beb0
+source/onvif/stdsoap2.c(10351): malloc(59) = 0xc3bf00
+source/onvif/stdsoap2.c(10406): malloc(256) = 0xc3bf80
+New block sequence (prev=0xc0b0a0)
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc3c0c0
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c110
+Reading string content, flag=0
+String content includes tag 'tns1:MediaControl' and attributes
+Enlarging look-aside buffer to append data, old size=256, new size=512
+source/onvif/stdsoap2.c(10154): malloc(512) = 0xc3c160
+source/onvif/stdsoap2.c(10162): free(0xc36e60)
+Enlarging look-aside buffer to append data, old size=512, new size=1024
+source/onvif/stdsoap2.c(10154): malloc(1024) = 0xc3c3a0
+source/onvif/stdsoap2.c(10162): free(0xc3c160)
+source/onvif/stdsoap2.c(7330): malloc(800) = 0xc3c7b0
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc36ec0
+Reading string content, flag=0
+String content includes tag 'tns1:VideoSource' and attributes
+source/onvif/stdsoap2.c(7330): malloc(992) = 0xc3cae0
+Push block of 8 bytes (24 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc36f40
+Reading string content, flag=0
+String content includes tag 'tns1:RuleEngine' and attributes
+Enlarging look-aside buffer to append data, old size=1024, new size=2048
+source/onvif/stdsoap2.c(10154): malloc(2048) = 0xc3ced0
+source/onvif/stdsoap2.c(10162): free(0xc3c3a0)
+Enlarging look-aside buffer to append data, old size=2048, new size=4096
+source/onvif/stdsoap2.c(10154): malloc(4096) = 0xc3d6e0
+source/onvif/stdsoap2.c(10162): free(0xc3ced0)
+source/onvif/stdsoap2.c(7330): malloc(2224) = 0xc3e6f0
+source/onvif/stdsoap2.c(2734): malloc(34) = 0xc3c220
+Push namespace binding (level=4) 'xs' 'http://www.w3.org/2001/XMLSchema'
+Push OK ('xs' matches 'xsd' in namespace table)
+Push block of 8 bytes (32 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c280
+Reading string content, flag=0
+String content includes tag 'tns1:RecordingConfig' and attributes
+source/onvif/stdsoap2.c(7330): malloc(1640) = 0xc3ced0
+Pop namespace binding (level=4) 'xs'
+source/onvif/stdsoap2.c(2767): free(0xc3c220)
+Push block of 8 bytes (40 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c300
+Reading string content, flag=0
+String content includes tag 'tns1:Device' and attributes
+source/onvif/stdsoap2.c(7330): malloc(1872) = 0xc3efb0
+Push block of 8 bytes (48 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c350
+Reading string content, flag=0
+String content includes tag 'tns1:UserAlarm' and attributes
+source/onvif/stdsoap2.c(7330): malloc(120) = 0xc3d570
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc3d620
+Save all blocks in contiguous memory space of 48 bytes (0xc3c350->0xc3d620)
+First block
+Copy 8 bytes from 0xc3c120 to 0xc3d620
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c110)
+Copy 8 bytes from 0xc36ed0 to 0xc3d628
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc36ec0)
+Copy 8 bytes from 0xc36f50 to 0xc3d630
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc36f40)
+Copy 8 bytes from 0xc3c290 to 0xc3d638
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c280)
+Copy 8 bytes from 0xc3c310 to 0xc3d640
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c300)
+Copy 8 bytes from 0xc3c360 to 0xc3d648
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c350)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc3c0c0)
+Restore previous block sequence
+End element found (level=4) 'wstop:TopicSet'='wstop:TopicSet'
+Tags and (default) namespaces match: 'wsnt:TopicExpressionDialect' 'wsnt:TopicExpressionDialect'
+Begin element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+New block sequence (prev=0xc0b0a0)
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc3c0c0
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c350
+Reverting to last element 'wsnt:TopicExpressionDialect' (level=3)
+Tags and (default) namespaces match: 'wsnt:TopicExpressionDialect' 'wsnt:TopicExpressionDialect'
+Begin element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc3c3a0
+Enter id='' type=194 loc=0xc3c3a0 size=8 level=0
+End element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+Tags and (default) namespaces match: 'wsnt:TopicExpressionDialect' 'wsnt:TopicExpressionDialect'
+Begin element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+Push block of 8 bytes (16 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c300
+Reverting to last element 'wsnt:TopicExpressionDialect' (level=3)
+Tags and (default) namespaces match: 'wsnt:TopicExpressionDialect' 'wsnt:TopicExpressionDialect'
+Begin element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(80) = 0xc3c460
+Enter id='' type=194 loc=0xc3c460 size=8 level=0
+End element found (level=4) 'wsnt:TopicExpressionDialect'='wsnt:TopicExpressionDialect'
+Tags and (default) namespaces match: 'tev:MessageContentFilterDialect' 'tev:MessageContentFilterDialect'
+Begin element found (level=4) 'tev:MessageContentFilterDialect'='tev:MessageContentFilterDialect'
+New block sequence (prev=0xc3c0c0)
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc3c280
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc36ec0
+Reverting to last element 'tev:MessageContentFilterDialect' (level=3)
+Tags and (default) namespaces match: 'tev:MessageContentFilterDialect' 'tev:MessageContentFilterDialect'
+Begin element found (level=4) 'tev:MessageContentFilterDialect'='tev:MessageContentFilterDialect'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(88) = 0xc3c550
+Enter id='' type=194 loc=0xc3c550 size=8 level=0
+End element found (level=4) 'tev:MessageContentFilterDialect'='tev:MessageContentFilterDialect'
+Tags and (default) namespaces match: 'tev:MessageContentSchemaLocation' 'tev:MessageContentSchemaLocation'
+Begin element found (level=4) 'tev:MessageContentSchemaLocation'='tev:MessageContentSchemaLocation'
+New block sequence (prev=0xc3c280)
+source/onvif/stdsoap2.c(2127): malloc(24) = 0xc3c110
+Push block of 8 bytes (8 bytes total)
+source/onvif/stdsoap2.c(2149): malloc(24) = 0xc3c610
+Reverting to last element 'tev:MessageContentSchemaLocation' (level=3)
+Tags and (default) namespaces match: 'tev:MessageContentSchemaLocation' 'tev:MessageContentSchemaLocation'
+Begin element found (level=4) 'tev:MessageContentSchemaLocation'='tev:MessageContentSchemaLocation'
+Reading string content, flag=1
+source/onvif/stdsoap2.c(7330): malloc(72) = 0xc3c660
+Enter id='' type=194 loc=0xc3c660 size=8 level=0
+End element found (level=4) 'tev:MessageContentSchemaLocation'='tev:MessageContentSchemaLocation'
+source/onvif/stdsoap2.c(7330): malloc(32) = 0xc3c6e0
+Save all blocks in contiguous memory space of 8 bytes (0xc0c010->0xc3c6e0)
+First block
+Copy 8 bytes from 0xc0c020 to 0xc3c6e0
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc0c010)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc0b0a0)
+Restore previous block sequence
+source/onvif/stdsoap2.c(7330): malloc(40) = 0xc3c740
+Save all blocks in contiguous memory space of 16 bytes (0xc3c300->0xc3c740)
+First block
+Copy 8 bytes from 0xc3c360 to 0xc3c740
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c350)
+Copy 8 bytes from 0xc3c310 to 0xc3c748
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c300)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc3c0c0)
+Restore previous block sequence
+source/onvif/stdsoap2.c(7330): malloc(32) = 0xc3f710
+Save all blocks in contiguous memory space of 8 bytes (0xc36ec0->0xc3f710)
+First block
+Copy 8 bytes from 0xc36ed0 to 0xc3f710
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc36ec0)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc3c280)
+Restore previous block sequence
+source/onvif/stdsoap2.c(7330): malloc(32) = 0xc3f770
+Save all blocks in contiguous memory space of 8 bytes (0xc3c610->0xc3f770)
+First block
+Copy 8 bytes from 0xc3c620 to 0xc3f770
+Next block
+source/onvif/stdsoap2.c(2410): free(0xc3c610)
+End of block sequence, free all remaining blocks
+source/onvif/stdsoap2.c(2456): free(0xc3c110)
+End element found (level=3) 'tev:GetEventPropertiesResponse'='tev:GetEventPropertiesResponse'
+End element found (level=2) 'env:Body'='SOAP-ENV:Body'
+End element found (level=1) 'env:Envelope'='SOAP-ENV:Envelope'
+End of receive message ok
+Resolving forwarded data
+Resolution phase
+Resolution done
+Free namespace stack
+source/onvif/stdsoap2.c(8205): free(0xc3bb00)
+source/onvif/stdsoap2.c(8205): free(0xc3b8b0)
+source/onvif/stdsoap2.c(8205): free(0xc3b660)
+source/onvif/stdsoap2.c(8205): free(0xc3b440)
+source/onvif/stdsoap2.c(8205): free(0xc3b220)
+source/onvif/stdsoap2.c(8205): free(0xc3b000)
+source/onvif/stdsoap2.c(8205): free(0xc3ade0)
+source/onvif/stdsoap2.c(8205): free(0xc3ab90)
+source/onvif/stdsoap2.c(8205): free(0xc3a940)
+source/onvif/stdsoap2.c(8205): free(0xc3a6f0)
+source/onvif/stdsoap2.c(8205): free(0xc3a4d0)
+source/onvif/stdsoap2.c(8205): free(0xc3a2b0)
+source/onvif/stdsoap2.c(8205): free(0xc3a090)
+source/onvif/stdsoap2.c(8205): free(0xc39e70)
+source/onvif/stdsoap2.c(8205): free(0xc39c50)
+source/onvif/stdsoap2.c(8205): free(0xc39a30)
+source/onvif/stdsoap2.c(8205): free(0xc39810)
+source/onvif/stdsoap2.c(8205): free(0xc395d0)
+source/onvif/stdsoap2.c(8205): free(0xc39380)
+source/onvif/stdsoap2.c(8205): free(0xc39140)
+source/onvif/stdsoap2.c(8205): free(0xc38f20)
+source/onvif/stdsoap2.c(8205): free(0xc38ce0)
+source/onvif/stdsoap2.c(8205): free(0xc38ac0)
+source/onvif/stdsoap2.c(8205): free(0xc38890)
+source/onvif/stdsoap2.c(8205): free(0xc38640)
+source/onvif/stdsoap2.c(8205): free(0xc38420)
+source/onvif/stdsoap2.c(8205): free(0xc38200)
+source/onvif/stdsoap2.c(8205): free(0xc37fe0)
+source/onvif/stdsoap2.c(8205): free(0xc37dc0)
+source/onvif/stdsoap2.c(8205): free(0xc37ba0)
+source/onvif/stdsoap2.c(8205): free(0xc37980)
+source/onvif/stdsoap2.c(8205): free(0xc0c470)
+source/onvif/stdsoap2.c(8205): free(0xc0b500)
+source/onvif/stdsoap2.c(8205): free(0xc09f40)
+source/onvif/stdsoap2.c(8205): free(0xc0b750)
+source/onvif/stdsoap2.c(8205): free(0xc0a7e0)
+Shutdown socket 7 how=2
+Close socket 7

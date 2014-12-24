@@ -31,7 +31,7 @@
         android:numColumns="3"
         android:paddingTop="20dp"
         android:verticalSpacing="10dip" 
-        
+        android:listSelector="@drawable/image_grid_selector"
         >
     </GridView>
 

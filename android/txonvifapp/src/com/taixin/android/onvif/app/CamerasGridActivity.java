@@ -10,7 +10,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
@@ -23,6 +26,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.GridViewAdapter.GridViewHolder;
@@ -31,18 +35,22 @@ import com.taixin.android.onvif.app.data.GridsItemStatus;
 import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
+import com.taixin.android.onvif.app.logic.searchDevicesListener;
 import com.taixin.android.onvif.app.util.SerializableUtil;
 import com.taixin.android.onvif.sdk.obj.Device;
 
+public class CamerasGridActivity extends Activity implements searchDevicesListener {
 
-public class CamerasGridActivity extends Activity {
-
+	private Handler handler;
 	private String TAG = "CamerasGridActivity";
 	private GridView cameraGrid;
 	private ImageButton addDeviceButton;
 	private ImageButton homeButton;
 	private IOnvifManager onvifMgr;
 	private GridViewAdapter gAdapter;
+	/*0代表刚进入第一次search 1代表点击button*/
+	private int searchDeviceFlag = 0;
+	private ProgressBar progressBar;
 	/*0 代表this，1代表DeviceListActivity, 2代表LoginActivity*/
 	private int onResumeFlag;
 	private int itemPosition;
@@ -54,7 +62,10 @@ public class CamerasGridActivity extends Activity {
 		setContentView(R.layout.cameras_grid);
 		onvifMgr = OnvifManager.getInstance();
 		onvifMgr.setContext(getApplicationContext());
+		onvifMgr.setListener(this);
+		handler = new Handler();
 		displayView();
+		deviceSearch();
 	}
 
 	@Override
@@ -64,6 +75,7 @@ public class CamerasGridActivity extends Activity {
 
 	@Override
 	protected void onResume() {
+		System.out.println("on resume=====");
 		if(onResumeFlag == 1){
 			checkAfterOnResume();
 		}else if(onResumeFlag == 2){
@@ -76,9 +88,11 @@ public class CamerasGridActivity extends Activity {
 		}
 		super.onResume();
 	}
-
+	
 	private void displayView(){
+		progressBar = (ProgressBar) findViewById(R.id.device_search_loading);
 		addDeviceButton = (ImageButton) findViewById(R.id.add_device_button); 
+		
 		homeButton = (ImageButton) findViewById(R.id.home_button);
 		cameraGrid = (GridView) findViewById(R.id.GridView1);
 		
@@ -129,6 +143,8 @@ public class CamerasGridActivity extends Activity {
 						boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
 						if(isGetCapa && auth){
 							GridViewHolder holder = (GridViewHolder) v.getTag();
+							/*vv背景设置为透明*/
+							holder.vv.setBackgroundColor(R.color.transparency);
 							onvifMgr.play(position, holder.vv);
 						}
 					}
@@ -139,19 +155,17 @@ public class CamerasGridActivity extends Activity {
 					System.out.println("position = "+position);
 					intent.setClass(CamerasGridActivity.this, CameraActivity.class);
 					CamerasGridActivity.this.startActivity(intent);
+					//CamerasGridActivity.this.startActivityForResult(intent, 1);
+					overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 				}
 			} 
 		}); 
 		addDeviceButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				ArrayList<Device> deviceList= onvifMgr.discoverDevices();
-				if(deviceList.size()>0){
-					onResumeFlag = 1;
-					Intent intent = new Intent();
-					intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-					CamerasGridActivity.this.startActivity(intent);
-				}
+				System.out.println("add button is clicked!");
+				searchDeviceFlag = 1;
+				deviceSearch();
 			}
 		});
 		homeButton.setOnClickListener(new OnClickListener(){
@@ -161,10 +175,13 @@ public class CamerasGridActivity extends Activity {
 				CamerasGridActivity.this.startActivity(intent);
 			}
 		});
+		
+		addDeviceButton.requestFocus();
 	}
 
 	/*onresume 后检查数据*/
 	public void checkAfterOnResume(){
+	
 		ArrayList<GridsItemStatus> items = onvifMgr.getOnvifData().getGridsItemList();
 		for(int i = 0;i<items.size();i++){
 			View view = cameraGrid.getChildAt(i);
@@ -180,6 +197,117 @@ public class CamerasGridActivity extends Activity {
 	public void playByItemPosition(int position){
 		View view = cameraGrid.getChildAt(position);
 		GridViewHolder holder = (GridViewHolder) view.getTag();
+		holder.vv.setBackgroundColor(R.color.transparency);
 		onvifMgr.play(position, holder.vv);
+	}
+	
+	/*搜索设备，单独启线程执行*/
+	public void deviceSearch(){
+		progressBar.setVisibility(View.VISIBLE);
+		Thread deviceSearchThread = new Thread(new Runnable(){
+			@Override
+			public void run() {
+				onvifMgr.discoverDevices();				
+			}
+		});
+
+		deviceSearchThread.start();	
+	}
+
+	@Override
+	public void searchEnd() {
+		System.out.println("camera home activity search end call back");
+		ArrayList<Device> deviceList= onvifMgr.getOnvifData().getDeviceList();
+		handler.post(new Runnable(){
+			@Override
+			public void run() {
+				progressBar.setVisibility(View.INVISIBLE);
+			}
+		});
+		
+		if(deviceList.size()<=0){
+			handler.post(new Runnable(){
+				@Override
+				public void run() {
+					Toast toast = Toast.makeText(getApplicationContext(), "没有搜索到设备，请确认摄像头在局域网内", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+			});
+			
+			return;
+		}
+		
+		if(searchDeviceFlag == 1){
+			/*点击button*/
+			searchDeviceFlag = 0;
+			onResumeFlag = 1;
+			Intent intent = new Intent();
+			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+			CamerasGridActivity.this.startActivity(intent);
+		}else{
+			int appUsingCount = onvifMgr.getAppUsingCount();
+			System.out.println("appUsingCount ==="+appUsingCount);
+			if(appUsingCount == 0){
+				onvifMgr.addAppUsingCount();
+				onResumeFlag = 1;
+				Intent intent = new Intent();
+				intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+				CamerasGridActivity.this.startActivity(intent);
+			}else{
+				onvifMgr.addAppUsingCount();
+				handler.post(new Runnable(){
+					@Override
+					public void run() {
+						autoMatchAfterDiscoverEnd();
+					}
+				});
+			}
+		}
+}
+	/*不是第一次使用的时候，搜索完毕自动匹配存储好的密码进行链接*/
+	private void autoMatchAfterDiscoverEnd(){
+		ArrayList<CameraData> cameraList = onvifMgr.getOnvifData().getCameras();//搜索到的所有设备
+		System.out.println("camera List size ==="+cameraList.size());
+		//先清空一下所有的List
+		onvifMgr.getOnvifData().initData();
+		for(CameraData camera : cameraList){
+			LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
+			if(lCamera != null){
+				camera.setUsername(lCamera.getUsername());
+				camera.setPassword(lCamera.getPassword());
+				
+				onvifMgr.getOnvifData().getCurrentCameras().add(camera);
+			}
+		}
+		System.out.println("current size====="+onvifMgr.getOnvifData().getCurrentCameras().size());
+		/*本地没有保存用户名和密码*/
+		if(onvifMgr.getOnvifData().getCurrentCameras().size()<=0){
+			onResumeFlag = 1;
+			Intent intent = new Intent();
+			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+			CamerasGridActivity.this.startActivity(intent);
+		}else{
+			/*本地保存用户名和密码，直接播放*/
+			for(int i = 0; i<onvifMgr.getOnvifData().getCurrentCameras().size(); i++){
+				onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(0);
+				View view = cameraGrid.getChildAt(i);
+				GridViewHolder holder = (GridViewHolder) view.getTag();
+				holder.vv.setBackgroundResource(R.drawable.camera_default);
+				
+				CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(i);
+				String username = camera.getUsername();
+				String password = camera.getPassword();
+				String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(i).getDevice().getDeviceService();
+				boolean isGetCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
+				boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
+				if(isGetCapa && auth){
+					/*vv背景设置为透明*/
+					holder.vv.setBackgroundColor(R.color.transparency);
+					onvifMgr.play(i, holder.vv);
+					cameraGrid.requestFocus();
+				}
+			}
+		}
 	}
 }

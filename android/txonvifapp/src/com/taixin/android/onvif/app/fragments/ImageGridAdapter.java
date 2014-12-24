@@ -50,7 +50,7 @@ public class ImageGridAdapter extends BaseAdapter {
 		}else{
 			holder = (ImageGridViewHolder) convertView.getTag();
 		}
-		holder.imageView.setImageResource(R.drawable.ic_launcher);
+		holder.imageView.setImageResource(R.drawable.ic_launcher2);
 		return convertView;
 	}
 

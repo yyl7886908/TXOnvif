@@ -1,75 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="872px"
-    android:layout_height="556px"
-    android:layout_gravity="center"
-    android:background="@drawable/background"
-    android:orientation="vertical" >
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" 
+    android:background="@color/transparency">
 
-    <TextView
-        android:id="@+id/pop_textview"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:gravity="center_vertical"
-        android:padding="12dp"
-        android:text="@string/app_name"
-        android:textColor="#fff"
-        android:textSize="30sp" />
-
-    <ListView
-        android:id="@+id/camera_videos_list"
-        android:layout_width="match_parent"
-        android:layout_height="427dp"
-        android:paddingTop="20dp"
-        android:layout_above="@+id/pop_linear"
-        android:layout_below="@id/pop_textview"
-        android:layout_marginBottom="2dp"
-        android:divider="@drawable/line"
-        android:fastScrollEnabled="true"
-        android:listSelector="@drawable/item_selector"
-        android:scrollbars="none" />
-
+   <!--  <com.taixin.ffmpeg.widget.VideoView
+        android:id="@+id/tx_playback_video_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_x="10px"
+        android:layout_y="10px"
+        android:background="@color/transparency" />
+ -->
     <LinearLayout
-        android:id="@+id/pop_linear"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/edit_title_back"
-        android:gravity="right|center_vertical"
-        android:orientation="horizontal" >
+        android:layout_width="872px"
+        android:layout_height="556px"
+        android:layout_gravity="center"
+        android:background="@drawable/background"
+        android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/pop_textview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/notice"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:gravity="center_vertical"
+            android:padding="12dp"
+            android:text="@string/app_name"
             android:textColor="#fff"
-            android:textSize="20sp" />
+            android:textSize="30sp" />
 
-        <Button
-            android:id="@+id/pop_list_select"
-            android:layout_width="76dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="12dp"
-            android:background="@drawable/edit_btn_selector"
-            android:gravity="center"
-            android:text="@string/select"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+        <ListView
+            android:id="@+id/camera_videos_list"
+            android:layout_width="match_parent"
+            android:layout_height="427dp"
+            android:layout_above="@+id/pop_linear"
+            android:layout_below="@id/pop_textview"
+            android:layout_marginBottom="2dp"
+            android:divider="@drawable/line"
+            android:fastScrollEnabled="true"
+            android:listSelector="@drawable/item_selector"
+            android:paddingTop="20dp"
+            android:scrollbars="none" />
 
-        <Button
-            android:id="@+id/pop_list_delect"
-            android:layout_width="76dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="24dp"
-            android:background="@drawable/edit_btn_selector"
-            android:gravity="center"
-            android:text="@string/delect"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+        <LinearLayout
+            android:id="@+id/pop_linear"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/edit_title_back"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/notice"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pop_list_select"
+                android:layout_width="76dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edit_btn_selector"
+                android:gravity="center"
+                android:text="@string/select"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/pop_list_delect"
+                android:layout_width="76dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="24dp"
+                android:background="@drawable/edit_btn_selector"
+                android:gravity="center"
+                android:text="@string/delect"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+        </LinearLayout>
     </LinearLayout>
 
-</RelativeLayout>
+</FrameLayout>

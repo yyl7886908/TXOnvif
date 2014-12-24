@@ -10,6 +10,7 @@
 #include "include/imaging.h"
 #include "include/deviceio.h"
 #include "include/recording.h"
+#include "include/event.h"
 
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT      3702
@@ -664,6 +665,15 @@ int TX_ONVIF_RECORDING_GetTrackConfiguration(char *username, char *password, cha
     printf("[%s]-[%d]  recordingService = %s \n", __func__, __LINE__, recordingService);
 #endif
     return ONVIF_RECORDING_GetTrackConfiguration(username, password, recordingService, recordToken, trackToken);    
+}
+
+/*event*/
+int TX_ONVIF_EVENT_GetEventProperties(char *username, char *password, char *deviceService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
+#endif	
+	return ONVIF_EVENT_GetEventProperties(username, password, deviceService);
 }
 
 #ifdef __cplusplus

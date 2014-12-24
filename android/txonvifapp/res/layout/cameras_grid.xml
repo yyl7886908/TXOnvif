@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,32 +7,32 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical" 
-        android:background="@drawable/grid_back">
+        android:background="@drawable/grid_back"
+        android:orientation="vertical" >
 
         <!-- top view layout -->
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1" 
-            android:background="@color/transparency">
+            android:layout_weight="1"
+            android:background="@color/transparency" >
 
             <ImageButton
                 android:id="@+id/add_device_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="75dp"
-                android:src="@drawable/add_selector" 
-                android:background="@color/transparency"/>
+                android:background="@color/transparency"
+                android:src="@drawable/add_selector" />
 
             <ImageButton
                 android:id="@+id/home_button"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginLeft="950dp"
-                android:src="@drawable/home_selector" 
-                android:background="@color/transparency">
+                android:background="@color/transparency"
+                android:src="@drawable/home_selector" >
             </ImageButton>
         </LinearLayout>
 
@@ -59,12 +59,24 @@
                 android:verticalSpacing="@dimen/grid_vertical_spacing" />
         </LinearLayout>
     </LinearLayout>
-
+    <!--
     <com.taixin.ffmpeg.widget.VideoView
         android:id="@+id/myVideoView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="invisible" />
+    -->
 
-</RelativeLayout>
+
+    <!-- 小菊花 -->
+
+    <ProgressBar
+        android:id="@+id/device_search_loading"
+        style="?android:attr/progressBarStyleInverse"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center" />
+
+</FrameLayout>

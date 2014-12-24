@@ -51,10 +51,7 @@ public class DeviceListActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			
 			if(list.size()>1){
-				/*先清空当前设备列表*/
-				onvifMgr.getOnvifData().getCurrentCameras().clear();
 				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
 				toast.setGravity(Gravity.CENTER, 0, 0);
 				toast.show();
@@ -63,20 +60,20 @@ public class DeviceListActivity extends Activity {
 			if(list.size()<=0){
 				return true;
 			}
+
 			for(int i =0;i<list.size();i++){
 				HashMap<String, String> temp = list.get(i);
 				if(temp.get("flag").equals("true")){
 					CameraData device =onvifMgr.getOnvifData().getCameras().get(i);
-					onvifMgr.getOnvifData().getCurrentCameras().add(device);
+					if(!onvifMgr.checkDeviceIsInCurrent(device.getDevice().getUuid())){
+						onvifMgr.getOnvifData().getCurrentCameras().add(device);
+					}else{
+						onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(1);
+						System.out.println("set status 1 ======="+i);
+					}	
 				}
 			}
 			System.out.println("current cameras size = "+onvifMgr.getOnvifData().getCurrentCameras().size());
-			for(GridsItemStatus item : onvifMgr.getOnvifData().getGridsItemList()){
-				item.setStatus(-1);
-			}
-			for(int a = 0; a<onvifMgr.getOnvifData().getCurrentCameras().size(); a++){
-				onvifMgr.getOnvifData().getGridsItemList().get(a).setStatus(0);
-			}
 		}
 		return super.onKeyDown(keyCode, event);
 	}
@@ -113,7 +110,10 @@ public class DeviceListActivity extends Activity {
 			map.put("title", "海康");
 			map.put("uuid", deviceList.get(i).getDevice().getUuid());
 			map.put("deviceService", deviceList.get(i).getDevice().getDeviceService());
-			map.put("flag", "false");
+			if(onvifMgr.checkDeviceIsInCurrent(deviceList.get(i).getDevice().getUuid()))
+				map.put("flag", "true");
+			else
+				map.put("flag", "false");
 			list.add(map);
 		}
 	}

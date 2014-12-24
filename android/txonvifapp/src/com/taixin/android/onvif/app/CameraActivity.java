@@ -1,34 +1,53 @@
 package com.taixin.android.onvif.app;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.util.Log;
+import android.view.Display;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
+import android.view.WindowManager;
+import android.view.WindowManager.LayoutParams;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
+import com.taixin.android.onvif.app.util.FileCreater;
 import com.taixin.android.onvif.app.util.Usb;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
+import com.taixin.ffmpeg.player.ITxRecorder;
+import com.taixin.ffmpeg.player.TXFFMpegRecorder;
 import com.taixin.ffmpeg.widget.VideoView;
 
 public class CameraActivity extends Activity{
+	private String tag = "CameraActivity";
 	/*当前设备在current设备中的位置*/
 	private int position;
 	/*当前设备的信息*/
@@ -44,10 +63,10 @@ public class CameraActivity extends Activity{
 	private String mediaService;
 	private String profileToken;
 	/*控制菜单, 频道切换菜单*/
-	private PopupWindow menu, channelMenu, imageMenu, fileMenu;
+	private PopupWindow menu, channelMenu, imageMenu, fileMenu, recordMenu, photoingMenu;
 	private LayoutInflater inflater;	
 	private View layout;
-	private ImageButton channelSwitchBtn, imageSetBtn, ptzBtn, photoBtn, recordingBtn, fileBtn;
+	private ImageButton channelSwitchBtn, imageSetBtn, ptzBtn, photoBtn, recordingBtn, fileBtn, recordFlagBtn;
 	private ImageButton highBtn, middleBtn, lowBtn;
 	private ImageButton picBtn, videoBtn;
 	private SeekBar chromBar, brightBar, constrastbar;
@@ -58,7 +77,30 @@ public class CameraActivity extends Activity{
 	private boolean cruise = true;
 	private String AUTHUri;/*录制的时候使用*/
 	private boolean recordingFlag = false;
+	/**
+	 * 屏幕录制状态提示
+	 * 
+	 */
+	private ITxRecorder recorder;
+	private View view;// 透明窗体
+	private long startTime;
+	private boolean viewAdded = false;// 透明窗体是否已经显示
+	private WindowManager windowManager;
+	private WindowManager.LayoutParams layoutParams;
+	/** 录制闪烁动画 */
+	private Animation animation;
+	private ImageView iconImage;
+	private TextView tvNotice;
+	private boolean is_pvr_pause=false;
 	
+	/*照片悬浮狂*/
+	private boolean isAdded = false; // 是否已增加悬浮窗
+	private static WindowManager wm;
+	private static WindowManager.LayoutParams params;
+	private Button btn_floatView;
+	private ImageButton photoImageButton;
+	private String photoingImagePath;
+	private ImageView floatImage;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -67,6 +109,10 @@ public class CameraActivity extends Activity{
 		setContentView(R.layout.camera);
 		initData();
 		initMenu();
+		CreatNoticeView();
+		animation = AnimationUtils.loadAnimation(getApplicationContext(),
+				R.anim.pvr_notice);
+		recorder = new TXFFMpegRecorder();
 	}
 
 	public void initData(){
@@ -87,7 +133,8 @@ public class CameraActivity extends Activity{
 			System.out.println("username password deviceservice-->"+username+password+deviceService);
 			boolean getCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
 			if(getCapa){
-				Toast.makeText(this, "获取能力成功", Toast.LENGTH_SHORT).show();;
+				//Toast.makeText(this, "获取能力成功", Toast.LENGTH_SHORT).show();;
+				Log.i(tag, "获取capability成功");
 			}
 		}
 		mediaService = camera.getCapability().getMediaService();
@@ -95,9 +142,10 @@ public class CameraActivity extends Activity{
 		imageService = camera.getCapability().getImagingService();
 		boolean getProf = onvifMgr.getMediaProfiles(username, password, mediaService);
 		if(getProf){
-			Toast.makeText(this, "获取profiles成功", Toast.LENGTH_SHORT).show();;
+			Log.i(tag, "获取profiles成功");
 		}
 		profileToken = camera.getProfiles().get(channelFlag).getToken();
+		
 	}
 
 	@Override
@@ -134,6 +182,8 @@ public class CameraActivity extends Activity{
 		initFileMenu();
 		initChannelMenu();
 		initImageMenu();
+		initRecordMenu();
+		initPhotoingMenu();
 	}
 
 	/*初始化控制菜单*/
@@ -211,6 +261,16 @@ public class CameraActivity extends Activity{
 				String filename = list.get(0)+"/CameraRecordImages/"+getCurrentTime()+".jpg";
 				System.out.println("java photo file name = "+filename);
 				mVideoView.photoImage(filename);
+				photoingImagePath = filename;
+				Toast toast = Toast.makeText(CameraActivity.this, "拍照成功", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				new Handler().postDelayed(new Runnable(){  
+				     public void run() {  
+				    	 showPhotoingMenu();
+				     }  
+				  }, 2*1000); 
+				
 			}else if(v == recordingBtn){
 				if(!recordingFlag){
 					List<String> list = Usb.getUsbDirList();
@@ -222,9 +282,20 @@ public class CameraActivity extends Activity{
 					}
 					String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
 					System.out.println("java recording file name = "+filename);
+					FileCreater.createFile(filename);
 					AUTHUri=onvifMgr.getAuthUriByPosition(position);
-					mVideoView.startRecordingRtspStream(AUTHUri, filename, 0);
+					//vv.startRecordingRtspStream(AUTHUri, filename, 0);
+					recorder.startRecoderRTSPStream(AUTHUri, filename, -1);
 					recordingFlag = true;
+					animation = AnimationUtils.loadAnimation(getApplicationContext(),
+							R.anim.pvr_notice);
+					refreshorShowView();
+				}else{
+					recorder.stopRecordRTSPStream();
+					recordingFlag = false;
+					recordMenu.dismiss();
+					removeView();
+				}
 				}else{
 					mVideoView.stopRecordingRtspStream();
 					recordingFlag = false;
@@ -232,7 +303,6 @@ public class CameraActivity extends Activity{
 				
 			}
 		}
-	}
 	/*初始化file弹出框*/
 	public void initFileMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -435,4 +505,194 @@ public class CameraActivity extends Activity{
 		String   str   =   formatter.format(curDate);
 		return str;
 	}
+	
+	public void initRecordMenu(){
+		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layout = inflater.inflate(R.layout.record_menu, null,false);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			recordMenu = new PopupWindow(layout, 100, 50, true);
+		}else{
+			recordMenu = new PopupWindow(layout, 100, 100, true);
+		}
+		recordMenu.setBackgroundDrawable(new BitmapDrawable());
+		recordMenu.setAnimationStyle(android.R.style.Animation_Dialog);
+		recordFlagBtn = (ImageButton) layout.findViewById(R.id.record_flag_btn);
+		recordFlagBtn.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				recorder.stopRecordRTSPStream();
+				recordingFlag = false;
+				recordMenu.dismiss();
+			}
+
+		});
+	}
+	//显示录制标志菜单
+	private void showRecordMenu(){
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			recordMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 500, -screenH +300);  
+		}else{
+			recordMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 500, -screenH + 300);  
+		}
+		recordMenu.setFocusable(true);
+		recordMenu.update();  
+	}
+	/*悬浮框*/
+	/**
+	 * show notice
+	 * 
+	 */
+	private void CreatNoticeView() {
+		view = LayoutInflater.from(this).inflate(R.layout.noticedialog, null);
+		
+		iconImage = (ImageView) view.findViewById(R.id.notice_iv);
+		tvNotice = (TextView) view.findViewById(R.id.tv_notice);
+		tvNotice.setText("正在录制 ");
+		windowManager = (WindowManager) this.getSystemService(WINDOW_SERVICE);
+		/*
+		 * LayoutParams.TYPE_SYSTEM_ERROR：保证该悬浮窗所有View的最上层
+		 * LayoutParams.FLAG_NOT_FOCUSABLE:该浮动窗不会获得焦点，但可以获得拖动
+		 * PixelFormat.TRANSPARENT：悬浮窗透明
+		 */
+		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
+				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
+//		 layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM; //悬浮窗开始在右下角显示
+//		 layoutParams.gravity = Gravity.RIGHT | Gravity.TOP;
+//		 layoutParams.verticalMargin=80;
+		Display mDisplay=windowManager.getDefaultDisplay();
+//		 layoutParams.horizontalMargin=80;//
+		layoutParams.x = (int) (mDisplay.getWidth()*0.4);
+		
+		layoutParams.y = (int) (-mDisplay.getHeight()*0.6);
+	}
+	
+	/**
+	 * 刷新或显示悬浮窗
+	 */
+	private void refreshorShowView() {
+		iconImage.startAnimation(animation);
+		if (viewAdded) {
+			windowManager.updateViewLayout(view, layoutParams);
+		} else {
+			windowManager.addView(view, layoutParams);
+			viewAdded = true;
+		}
+		startTime = System.currentTimeMillis();
+	}
+
+	/**
+	 * 关闭悬浮窗
+	 */
+	public void removeView() {
+		if (viewAdded) {
+			windowManager.removeView(view);
+			viewAdded = false;
+			animation.cancel();
+			tvNotice.setText(" 正在录制 ");
+		}
+	}
+	
+	/*拍照特效*/
+	/**
+	 * 创建悬浮窗
+	 */
+	private void createFloatView(String filename) {
+		btn_floatView = new Button(getApplicationContext());
+		btn_floatView.setText("悬浮窗");
+		photoImageButton = new ImageButton(getApplicationContext());
+		ImageView iv = new ImageView(getApplicationContext());
+		//photoImageButton.setBackgroundColor(R.color.blue);
+		Bitmap bitmap = getLoacalBitmap("/storage/external_storage/sda/CameraRecordImages/2014_12_24_09_02_26.jpg"); //从本地取图片
+		iv .setImageBitmap(bitmap);
+		photoImageButton.setImageBitmap(bitmap);
+		//photoImageButton.setImageURI(Uri.parse(filename));
+		System.out.println("filename = "+filename);
+        wm = (WindowManager) getApplicationContext()
+        	.getSystemService(Context.WINDOW_SERVICE);
+        params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
+				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
+        Display mDisplay=wm.getDefaultDisplay();
+        params.x = (int) (mDisplay.getWidth()*0.8);
+        params.y = (int) (-mDisplay.getHeight()*3);
+        // 设置window type
+        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+        params.format = PixelFormat.RGBA_8888; // 设置图片格式，效果为背景透明
+        // 设置悬浮窗的长得宽
+        params.width = 200;
+        params.height = 100;
+        wm.addView(iv, params);
+        isAdded = true;
+        photoImageButton.setFocusable(true);
+        photoImageButton.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				System.out.println("photoImageButton  clicked===");
+			}
+        	
+        });
+	}
+	/**
+	* 加载本地图片
+	* http://bbs.3gstdy.com
+	* @param url
+	* @return
+	*/
+	public  Bitmap getLoacalBitmap(String url) {
+	     try {
+	          FileInputStream fis = new FileInputStream(url);
+	          return BitmapFactory.decodeStream(fis);
+	     } catch (FileNotFoundException e) {
+	          e.printStackTrace();
+	          return null;
+	     }
+	}
+	
+	/*初始化channel弹出框*/
+	public void initPhotoingMenu(){
+		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layout = inflater.inflate(R.layout.float_photoing_menu, null,false);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			photoingMenu = new PopupWindow(layout, srceenW -1200, 130, true);
+		}else{
+			photoingMenu = new PopupWindow(layout, srceenW -900, 150, true);
+		}
+		photoingMenu.setFocusable(true);
+		photoingMenu.setBackgroundDrawable(new BitmapDrawable());
+		photoingMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
+		floatImage= (ImageView) layout.findViewById(R.id.floatPhotoView);
+		
+//		photoImageButton.setOnClickListener(new OnClickListener(){
+//			@Override
+//			public void onClick(View v) {
+//				System.out.println("photoImageButton onClick=======");
+//			}
+//		});
+	}
+	//显示照相悬浮矿
+		private void showPhotoingMenu(){
+			Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
+			floatImage.setImageBitmap(bitmap);
+			int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+			int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+			if(srceenW > 1800 && screenH > 1000){
+				photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH);  
+			}else{
+				photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH );  
+			}
+			photoingMenu.setFocusable(true);
+			photoingMenu.update();  
+			 new Handler().postDelayed(new Runnable(){  
+			     public void run() {  
+			    	 photoingMenu.dismiss();
+			     }  
+			  }, 2*1000); 
+		}
 }

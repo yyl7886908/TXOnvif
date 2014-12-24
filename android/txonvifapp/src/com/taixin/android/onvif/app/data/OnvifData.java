@@ -14,6 +14,8 @@ public class OnvifData {
 	private ArrayList<CameraData> cameras;
 	/*目前显示的设备*/
 	private ArrayList<CameraData> currentCameras;
+//	/*跟四宫格对应的摄像头顺序,鉴权后的摄像头*/
+//	private ArrayList<CameraData> 
 	/*四宫格数据*/
 	private ArrayList<GridsItemStatus> gridsItems;
 	/*本地存储的使用过的camera数据*/
@@ -77,7 +79,7 @@ public class OnvifData {
 	}
 	
 	/*初始化currentCameras 和gridsItems数据*/
-	private void initData(){
+	public void initData(){
 		currentCameras = new ArrayList<CameraData>(GirdItemNum);
 		
 		gridsItems = new ArrayList<GridsItemStatus>(GirdItemNum);

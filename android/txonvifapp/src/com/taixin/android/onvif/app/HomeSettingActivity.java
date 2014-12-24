@@ -59,10 +59,12 @@ public class HomeSettingActivity extends FragmentActivity {
 			if(v == localVideoBtn){
 				Intent intent = new Intent(HomeSettingActivity.this, CameraVideosListActivity.class);
 				HomeSettingActivity.this.startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
 			else if(v == localPhotoBtn){
 				Intent intent = new Intent(HomeSettingActivity.this, CameraImagesGridActivity.class);
 				HomeSettingActivity.this.startActivity(intent);
+				overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
 			}
 			else if(v == localSettingBtn)
 				fragmentTransaction.show(mFragments[2]).commit();
@@ -72,6 +74,5 @@ public class HomeSettingActivity extends FragmentActivity {
 			}
 		}
 		/*检测U盘信息*/
-		
 	}
 }

@@ -4,9 +4,12 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.taixin.android.onvif.app.util.Usb;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
@@ -16,7 +19,7 @@ import android.widget.Toast;
 
 public class CameraImagesGridActivity extends Activity {
 
-	private final static String imagePath = "/storage/external_storage/sda1/CameraRecordImages";
+	//private final static String imagePath = "/storage/external_storage/sda1/CameraRecordImages";
 	private CameraImagesAdapter mAdapter;
 	private GridView imagesGrid;
 	private List<File> imageList;
@@ -56,6 +59,13 @@ public class CameraImagesGridActivity extends Activity {
 	
 	/*获取当前的录制照片文件信息*/
 	public List<File> getCameraImagesFile(){
+		List<String> list = Usb.getUsbDirList();
+		if(list.size()<=0){
+			Toast toast = Toast.makeText(CameraImagesGridActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
+		}
+		String imagePath = list.get(0)+"/CameraRecordImages/";
 		File file = new File(imagePath);
 		ArrayList<File> fileList  = new ArrayList<File>();
 		File files[] = file.listFiles();

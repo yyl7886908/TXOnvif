@@ -108,6 +108,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private ImageView iconImage;
 	private TextView tvNotice;
 	private boolean is_pvr_pause=false;
+	
 	@Override
 	protected void onCreate(Bundle bundle) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);

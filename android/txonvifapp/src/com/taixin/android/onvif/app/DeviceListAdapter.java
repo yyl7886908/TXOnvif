@@ -63,6 +63,7 @@ public class DeviceListAdapter extends BaseAdapter {
 		}
 		holder.uuid.setText(list.get(position).get("uuid").toString());
 		holder.deviceService.setText(list.get(position).get("deviceService").toString());
+		//if(onvifMgr.get)
 		holder.cb.setChecked(list.get(position).get("flag").equals("true"));
 		holder.img.setImageResource(R.drawable.camera);
 		String str[] = list.get(position).get("deviceService").toString().split("/");

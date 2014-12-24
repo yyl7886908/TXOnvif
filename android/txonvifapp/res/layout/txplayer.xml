@@ -3,7 +3,7 @@
     android:layout_height="fill_parent" 
     android:background="@color/transparency">
 
-    <com.taixin.android.onvif.app.view.VideoView
+    <com.taixin.ffmpeg.widget.VideoView
         android:id="@+id/tx_video_view"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -11,4 +11,11 @@
         android:layout_y="10px" 
         android:background="@color/transparency"/>
 
+    <TextView 
+        android:id="@+id/tx_playback_flag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="录像"
+        android:textColor="@color/red"
+        />
 </FrameLayout>

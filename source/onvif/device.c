@@ -1059,10 +1059,16 @@ int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_T
                 /* 给capability结构体赋值 */
                 strcpy(capabilityInfo->analytics, capa_resp.Capabilities->Analytics->XAddr);
                 strcpy(capabilityInfo->device, capa_resp.Capabilities->Device->XAddr);
-                strcpy(capabilityInfo->events, capa_resp.Capabilities->Events->XAddr);
+		if(capa_resp.Capabilities->Events->XAddr != NULL)
+                	strcpy(capabilityInfo->events, capa_resp.Capabilities->Events->XAddr);
+		else
+			strcpy(capabilityInfo->events, "");
                 strcpy(capabilityInfo->imaging,  capa_resp.Capabilities->Imaging->XAddr);
                 strcpy(capabilityInfo->media,  capa_resp.Capabilities->Media->XAddr);
-                strcpy(capabilityInfo->ptz, capa_resp.Capabilities->PTZ->XAddr);
+		if(capa_resp.Capabilities->PTZ->XAddr!= NULL)
+			strcpy(capabilityInfo->ptz, capa_resp.Capabilities->PTZ->XAddr);
+		else
+			strcpy(capabilityInfo->ptz, "");
             }
              
         }

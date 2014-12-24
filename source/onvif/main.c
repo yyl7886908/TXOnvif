@@ -14,6 +14,7 @@ char searchService[128];
 char deviceService[128];
 char mediaService[128];
 char ptzService[128];
+char eventService[128];
 char imagingService[128];
 char deviceioService[128];
 char videoSourceToken[128];
@@ -28,6 +29,7 @@ void varInit()
     memset(searchService, 0, sizeof(searchService));
     memset(profileToken, 0, sizeof(profileToken));
     memset(deviceioService, 0, sizeof(deviceioService));
+	memset(eventService, 0, sizeof(eventService));
     /* PASSWORD = ""; */
     printf("var init OK!\n");
     printf("---------------------------------------------------->\n");
@@ -77,7 +79,9 @@ void onvif_getCapabilities()
     sprintf(deviceService, capabilityInfo.device);
     sprintf(imagingService, capabilityInfo.imaging);
     sprintf(deviceioService, capabilityInfo.deviceio);
+    sprintf(eventService, capabilityInfo.events);
     printf("deviceioService = %s\n", deviceioService);
+	printf("eventService = %s\n", eventService);
     printf("---------------------------------------------------->\n\n\n");
 }
 
@@ -392,11 +396,14 @@ int main()
     onvif_discovery1();
     /* onvif_sleep(); */
     onvif_getCapabilities();
-    onvif_media_getProfiles(); 
+    //onvif_media_getProfiles(); 
 
-    onvif_media_getStreamURI(); 
+    //onvif_media_getStreamURI(); 
     /* onvif_imaging_GetServiceCapabilities(); */
     /* onvif_imaging_GetImagingSettings2(); */
     /* onvif_imaging_SetImagingSettings(); */
     /* onvif_imaging_GetImagingSettings2(); */
+	onvif_sleep();
+	int ret = TX_ONVIF_EVENT_GetEventProperties(USERNAME, PASSWORD, eventService);
+	printf("ret ==== %d\n", ret);
 }
