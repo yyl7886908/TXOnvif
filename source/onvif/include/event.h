@@ -14,7 +14,17 @@ extern "C"{
 
 #include "tx_onvif_define.h"
 
-int ONVIF_EVENT_GetEventProperties(char *username, char *password, char *deviceService);
+int ONVIF_EVENT_GetEventProperties(char *username, char *password, char *eventService);
+
+int ONVIF_EVENT_GetServiceCapabilities(char *username, char *password, char *eventService);
+
+int ONVIF_EVENT_CreatePullPointSubscription(char *username, char *password, char *eventService,  LPTX_ONVIF_EVENT_SUBSCRIPTION subscription);
+
+int ONVIF_EVENT_PullMessages(char *username, char *password, char *eventService);
+
+int ONVIF_EVENT_Unsubscribe(char *username, char *password, char *eventService);
+
+int ONVIF_EVENT_Renew(char *username, char *password, char *eventService);
 
 //ONVIF_GetEventProperties() 
 

@@ -10,6 +10,7 @@
 #include "include/imaging.h"
 #include "include/deviceio.h"
 #include "include/recording.h"
+#include "include/event.h"
 
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT      3702
@@ -673,6 +674,46 @@ int TX_ONVIF_EVENT_GetEventProperties(char *username, char *password, char *devi
     printf("[%s]-[%d]  deviceService = %s \n", __func__, __LINE__, deviceService);
 #endif	
 	return ONVIF_EVENT_GetEventProperties(username, password, deviceService);
+}
+
+int TX_ONVIF_EVENT_GetServiceCapabilities(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_GetServiceCapabilities(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_CreatePullPointSubscription(char *username, char *password, char *eventService,  LPTX_ONVIF_EVENT_SUBSCRIPTION subscription)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_CreatePullPointSubscription(username, password, eventService, subscription);
+}
+
+int TX_ONVIF_EVENT_PullMessages(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_PullMessages(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_Unsubscribe(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_Unsubscribe(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_Renew(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_Renew(username, password, eventService);
 }
 
 #ifdef __cplusplus

@@ -7,6 +7,7 @@
 #ifndef __TX_ONVIF_STRUCT_H__
 #define __TX_ONVIF_STRUCT_H__
 
+#include <time.h>
 #ifndef bool
 
 #define bool int
@@ -261,6 +262,16 @@ typedef struct
 
 /* ptz */
 
+
+/*event*/
+
+typedef struct
+{
+    char Address[128];             
+    time_t CurrentTime;     
+    time_t TerminationTime;           
+}
+    TX_ONVIF_EVENT_SUBSCRIPTION, *LPTX_ONVIF_EVENT_SUBSCRIPTION;
 
 
 #endif

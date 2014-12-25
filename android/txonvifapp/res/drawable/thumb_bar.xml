@@ -2,13 +2,13 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- 按下状态 -->
     <item android:state_pressed="true"
-        android:drawable="@drawable/thumb_dn" />
+        android:drawable="@drawable/progress_bar_focus" />
 
     <!-- 焦点状态 -->
     <item android:state_focused="true"
-        android:drawable="@drawable/thumb_dn" />
+        android:drawable="@drawable/progress_bar_focus" />
     
     <!-- 默认状态 -->
-    <item android:drawable="@drawable/thumb_up" />  
+    <item android:drawable="@drawable/progress_bar_normal" />  
     
 </selector> 

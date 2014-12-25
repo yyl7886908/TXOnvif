@@ -4,8 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.taixin.android.onvif.app.util.Usb;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +14,8 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.GridView;
 import android.widget.Toast;
+
+import com.taixin.android.onvif.app.util.Usb;
 
 public class CameraImagesGridActivity extends Activity {
 
@@ -35,7 +35,8 @@ public class CameraImagesGridActivity extends Activity {
 		imagesGrid = (GridView) findViewById(R.id.camera_images_grid);
 		imageList = this.getCameraImagesFile();
 		if(imageList.size() <= 0 || imageList == null){
-			Toast.makeText(this, "没有发现图片文件", Toast.LENGTH_LONG).show();
+			Toast toast = Toast.makeText(this, "没有照片文件", Toast.LENGTH_SHORT);
+			toast.show();
 		}else{
 			mAdapter = new CameraImagesAdapter(imageList, this);
 			imagesGrid.setAdapter(mAdapter);
@@ -69,13 +70,16 @@ public class CameraImagesGridActivity extends Activity {
 		File file = new File(imagePath);
 		ArrayList<File> fileList  = new ArrayList<File>();
 		File files[] = file.listFiles();
-		if(files == null || files.length<=0)
-			Toast.makeText(this, "file is null", Toast.LENGTH_LONG).show();
+		if(files == null || files.length<=0){
+
+		}
 		if(files!=null){
-			for(File f : files){
+//			for(File f : files){
+//				fileList.add(f);
+//			}
+			for(int i = files.length-1; i>=0;i--){
+				File f = files[i];
 				fileList.add(f);
-				System.out.println("each file name = "+f.getName());
-				System.out.println("each file path = "+f.getPath());
 			}
 		}
 		System.out.println("file list size = "+fileList.size());

@@ -39,7 +39,7 @@ import android.widget.Toast;
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
-import com.taixin.android.onvif.app.util.FileCreater;
+import com.taixin.android.onvif.app.util.FileUtil;
 import com.taixin.android.onvif.app.util.Usb;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
 import com.taixin.ffmpeg.player.ITxRecorder;
@@ -48,6 +48,7 @@ import com.taixin.ffmpeg.widget.VideoView;
 
 public class CameraActivity extends Activity{
 	private String tag = "CameraActivity";
+	private String photoFolder = "/CameraRecordImages/";
 	/*当前设备在current设备中的位置*/
 	private int position;
 	/*当前设备的信息*/
@@ -258,7 +259,8 @@ public class CameraActivity extends Activity{
 					toast.show();
 					return;
 				}
-				String filename = list.get(0)+"/CameraRecordImages/"+getCurrentTime()+".jpg";
+				String filename = list.get(0)+photoFolder+getCurrentTime()+".jpg";
+				
 				System.out.println("java photo file name = "+filename);
 				mVideoView.photoImage(filename);
 				photoingImagePath = filename;
@@ -282,7 +284,7 @@ public class CameraActivity extends Activity{
 					}
 					String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
 					System.out.println("java recording file name = "+filename);
-					FileCreater.createFile(filename);
+					FileUtil.createFile(filename);
 					AUTHUri=onvifMgr.getAuthUriByPosition(position);
 					//vv.startRecordingRtspStream(AUTHUri, filename, 0);
 					recorder.startRecoderRTSPStream(AUTHUri, filename, -1);

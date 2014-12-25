@@ -35,13 +35,11 @@ public class DeviceListAdapter extends BaseAdapter {
 
 	@Override
 	public Object getItem(int position) {
-		// TODO 自动生成的方法存根
 		return list.get(position);
 	}
 
 	@Override
 	public long getItemId(int position) {
-		// TODO 自动生成的方法存根
 		return position;
 	}
 
@@ -63,7 +61,6 @@ public class DeviceListAdapter extends BaseAdapter {
 		}
 		holder.uuid.setText(list.get(position).get("uuid").toString());
 		holder.deviceService.setText(list.get(position).get("deviceService").toString());
-		//if(onvifMgr.get)
 		holder.cb.setChecked(list.get(position).get("flag").equals("true"));
 		holder.img.setImageResource(R.drawable.camera);
 		String str[] = list.get(position).get("deviceService").toString().split("/");

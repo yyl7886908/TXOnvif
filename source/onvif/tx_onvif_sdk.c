@@ -676,6 +676,46 @@ int TX_ONVIF_EVENT_GetEventProperties(char *username, char *password, char *devi
 	return ONVIF_EVENT_GetEventProperties(username, password, deviceService);
 }
 
+int TX_ONVIF_EVENT_GetServiceCapabilities(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_GetServiceCapabilities(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_CreatePullPointSubscription(char *username, char *password, char *eventService,  LPTX_ONVIF_EVENT_SUBSCRIPTION subscription)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_CreatePullPointSubscription(username, password, eventService, subscription);
+}
+
+int TX_ONVIF_EVENT_PullMessages(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_PullMessages(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_Unsubscribe(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_Unsubscribe(username, password, eventService);
+}
+
+int TX_ONVIF_EVENT_Renew(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif	
+	return ONVIF_EVENT_Renew(username, password, eventService);
+}
+
 #ifdef __cplusplus
 }
 #endif

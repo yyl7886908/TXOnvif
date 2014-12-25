@@ -16,12 +16,13 @@
             android:id="@+id/sedu"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="亮度" />
+            android:text="亮度" 
+            />
 
         <SeekBar
             android:id="@+id/bright_seekbar"
             android:layout_width="250dp"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:max="10"
             android:progress="5"
             android:secondaryProgress="5"

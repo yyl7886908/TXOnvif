@@ -67,6 +67,7 @@ public class DeviceListActivity extends Activity {
 					CameraData device =onvifMgr.getOnvifData().getCameras().get(i);
 					if(!onvifMgr.checkDeviceIsInCurrent(device.getDevice().getUuid())){
 						onvifMgr.getOnvifData().getCurrentCameras().add(device);
+						onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(1);
 					}else{
 						onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(1);
 						System.out.println("set status 1 ======="+i);

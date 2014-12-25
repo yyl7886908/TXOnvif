@@ -7,6 +7,7 @@ import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Display;
+import android.view.KeyEvent;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
@@ -56,6 +57,16 @@ public class TXPlayer extends Activity {
 		super.onDestroy();
 	}
 	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			if( isAdded){
+				wm.removeView(playBackFlag);
+				isAdded = false;
+			}
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 	/**
 	 * 创建悬浮窗
 	 */

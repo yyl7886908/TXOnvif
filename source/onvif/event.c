@@ -178,3 +178,293 @@ int ONVIF_EVENT_GetEventProperties(char *username, char *password, char *eventSe
     
     return retval;
 }
+
+int ONVIF_EVENT_GetServiceCapabilities(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tev__GetServiceCapabilities ep_req;
+    struct _tev__GetServiceCapabilitiesResponse ep_resq;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+ sprintf(soap_endpoint, "%s", eventService);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/GetServiceCapabilities";
+
+    do
+    {
+        soap_call___ns7__GetServiceCapabilities(soap, soap_endpoint, soap_action, &ep_req, &ep_resq);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              printf("[%s][%d]  GetServiceCapabilities success !\n", __func__, __LINE__);
+	     
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}
+
+int ONVIF_EVENT_CreatePullPointSubscription(char *username, char *password, char *eventService,  LPTX_ONVIF_EVENT_SUBSCRIPTION subscription)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif
+    int retval = 0;
+    struct soap *soap = NULL;
+    struct _tev__CreatePullPointSubscription req;
+    struct _tev__CreatePullPointSubscriptionResponse resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+   sprintf(soap_endpoint, "%s", eventService);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionRequest";
+	
+    do
+    {
+	printf("before  soap_call___ns7__CreatePullPointSubscription\n");
+        soap_call___ns7__CreatePullPointSubscription(soap, soap_endpoint, soap_action, &req, &resp);
+	printf("after  soap_call___ns7__CreatePullPointSubscription\n");
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f   2014-12-24T08:24:38Z
+        {         
+              //
+		printf("[%s][%d]  CreatePullPointSubscription success !\n", __func__, __LINE__);
+#ifdef DEBUG
+                printf("SubscriptionReference->Address = %s\n", resp.SubscriptionReference.Address);
+		printf("TerminationTime- = %lu\n", resp.wsnt__TerminationTime);
+#endif
+		 /* 给subscription结构体赋值 */
+                strcpy(subscription->Address, resp.SubscriptionReference.Address);
+                subscription->CurrentTime = resp.wsnt__CurrentTime;
+		subscription->TerminationTime =  resp.wsnt__TerminationTime;
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    printf("======retval ====== %d\n", retval);
+    return retval;
+}
+
+int ONVIF_EVENT_PullMessages(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _tev__PullMessages req;
+    struct _tev__PullMessagesResponse resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+ sprintf(soap_endpoint, "%s", eventService);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = NULL;
+
+    do
+    {
+        soap_call___ns6__PullMessages(soap, soap_endpoint, soap_action, &req, &resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f   2014-12-24T08:24:38Z
+        {         
+              printf("[%s][%d]  PullMessages success !\n", __func__, __LINE__);
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}
+
+/*测试失败*/
+int ONVIF_EVENT_Unsubscribe(char *username, char *password, char *eventService)
+{
+	#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _wsnt__Unsubscribe req;
+    struct _wsnt__UnsubscribeResponse resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+ sprintf(soap_endpoint, "%s", eventService);
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    const char *soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionRequest";
+
+    do
+    {
+        soap_call___ns8__Unsubscribe(soap, soap_endpoint, soap_action, &req, &resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f   2014-12-24T08:24:38Z
+        {         
+              //
+		printf("[%s][%d]  Unsubscribe success !\n", __func__, __LINE__);
+
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}
+
+/*测试失败*/
+int ONVIF_EVENT_Renew(char *username, char *password, char *eventService)
+{
+#ifdef DEBUG
+    printf("[%s]-[%d]  eventService = %s \n", __func__, __LINE__, eventService);
+#endif
+    int retval = 0;
+    struct soap *soap = NULL;
+    
+    struct _wsnt__Renew req;
+    struct _wsnt__RenewResponse resp;
+
+        
+    struct SOAP_ENV__Header header;
+
+    UserInfo_S stUserInfo;
+    memset(&stUserInfo, 0, sizeof(UserInfo_S));
+ 
+    //\u6b63\u786e\u7684\u7528\u6237\u540d\u548c\u9519\u8bef\u7684\u5bc6\u7801
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
+
+    char *soap_endpoint = (char *)malloc(256);
+    memset(soap_endpoint, '\0', 256);
+
+	req.TerminationTime = "2014-12-24T08:24:38Z";
+
+ sprintf(soap_endpoint, "%s", "http://192.168.1.103/onvif/Events/PullSubManager_2014-12-24T08:16:04Z_0");
+    
+    memset(&header,0,sizeof(header));
+    soap = ONVIF_Initsoap(&header, NULL, NULL, 10, &stUserInfo);
+
+    //\u6b64\u53e5\u4e5f\u53ef\u4ee5\u4e0d\u8981\uff0c\u56e0\u4e3a\u5728\u63a5\u53e3soap_call___tds__GetCapabilities\u4e2d\u5224\u65ad\u4e86\uff0c\u5982\u679c\u6b64\u503c\u4e3aNULL,\u5219\u4f1a\u7ed9\u5b83\u8d4b\u503c
+    //const char *soap_action = "http://www.onvif.org/ver10/events/wsdl/EventPortType/CreatePullPointSubscriptionRequest";
+    const char *soap_action = NULL;
+
+    do
+    {
+        soap_call___ns8__Renew(soap, soap_endpoint, soap_action, &req, &resp);
+        if (soap->error)
+        {
+                printf("[%s][%d]--->>> soap error: %d, %s, %s\n", __func__, __LINE__, soap->error, *soap_faultcode(soap), *soap_faultstring(soap));
+                retval = soap->error;
+                return retval;
+        }
+        else   //\u83b7\u53d6\u53c2\u6570\u6210\u529f
+        {         
+              //
+		printf("[%s][%d]  Renew success !\n", __func__, __LINE__);
+
+        }
+    }while(0);
+
+    soap_destroy(soap);
+    free(soap_endpoint);
+    soap_endpoint = NULL;
+    
+    return retval;
+}

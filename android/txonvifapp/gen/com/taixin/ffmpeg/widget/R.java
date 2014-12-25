@@ -18,23 +18,23 @@ public final class R {
 		public static final int mediacontroller_play_button = 0x7f02004f;
 		public static final int mediacontroller_seekbar01 = 0x7f020050;
 		public static final int mediacontroller_seekbar02 = 0x7f020051;
-		public static final int scrubber_control_disabled_holo = 0x7f020076;
-		public static final int scrubber_control_focused_holo = 0x7f020077;
-		public static final int scrubber_control_normal_holo = 0x7f020078;
-		public static final int scrubber_control_pressed_holo = 0x7f020079;
-		public static final int scrubber_control_selector_holo = 0x7f02007a;
-		public static final int scrubber_primary_holo = 0x7f02007b;
-		public static final int scrubber_progress_horizontal_holo_dark = 0x7f02007c;
-		public static final int scrubber_secondary_holo = 0x7f02007d;
-		public static final int scrubber_track_holo_dark = 0x7f02007e;
+		public static final int scrubber_control_disabled_holo = 0x7f02007b;
+		public static final int scrubber_control_focused_holo = 0x7f02007c;
+		public static final int scrubber_control_normal_holo = 0x7f02007d;
+		public static final int scrubber_control_pressed_holo = 0x7f02007e;
+		public static final int scrubber_control_selector_holo = 0x7f02007f;
+		public static final int scrubber_primary_holo = 0x7f020080;
+		public static final int scrubber_progress_horizontal_holo_dark = 0x7f020081;
+		public static final int scrubber_secondary_holo = 0x7f020082;
+		public static final int scrubber_track_holo_dark = 0x7f020083;
 	}
 	public static final class id {
-		public static final int mediacontroller_file_name = 0x7f0a006a;
-		public static final int mediacontroller_play_pause = 0x7f0a0066;
-		public static final int mediacontroller_seekbar = 0x7f0a0069;
-		public static final int mediacontroller_time_current = 0x7f0a0067;
-		public static final int mediacontroller_time_total = 0x7f0a0068;
-		public static final int record_flag_view = 0x7f0a0073;
+		public static final int mediacontroller_file_name = 0x7f0a006e;
+		public static final int mediacontroller_play_pause = 0x7f0a006a;
+		public static final int mediacontroller_seekbar = 0x7f0a006d;
+		public static final int mediacontroller_time_current = 0x7f0a006b;
+		public static final int mediacontroller_time_total = 0x7f0a006c;
+		public static final int record_flag_view = 0x7f0a0077;
 	}
 	public static final class layout {
 		public static final int mediacontroller = 0x7f030019;

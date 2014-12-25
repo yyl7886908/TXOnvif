@@ -1,5 +1,7 @@
 package com.taixin.android.onvif.app;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -7,11 +9,14 @@ import java.util.List;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -19,11 +24,11 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -40,6 +45,7 @@ import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.logic.searchDevicesListener;
+import com.taixin.android.onvif.app.util.FileUtil;
 import com.taixin.android.onvif.app.util.Usb;
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
@@ -50,6 +56,12 @@ import com.taixin.ffmpeg.widget.VideoView;
 public class CameraHomeActivity extends Activity implements searchDevicesListener{
 
 	private String TAG = "CamerasGridActivity";
+	// 定义一个变量，来标识是否退出
+    private static boolean isExit = false;
+	private String photoFolder = "/CameraRecordImages/";
+	private String videoFolder = "/CameraRecordVideos/";
+	private int videoViewWidth;
+	private int videoViewHeight;
 	private Handler handler;
 	private ImageButton addDeviceButton;
 	private ImageButton homeButton;
@@ -59,7 +71,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private ITxRecorder recorder;
 	/*0代表刚进入第一次search 1代表点击button*/
 	private int searchDeviceFlag = 0;
-	/*0 代表this，1代表DeviceListActivity, 2代表LoginActivity*/
+	/*0 代表this，1代表DeviceListActivity, 2代表LoginActivity, 3代表浏览FileActivity*/
 	private int onResumeFlag;
 	private int itemPosition;
 	/*代表默认的固定位置0*/
@@ -78,7 +90,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private String ptzService;
 	private String mediaService;
 	private String profileToken;
-	private PopupWindow menu, channelMenu, imageMenu, fileMenu, recordMenu;
+	private PopupWindow menu, channelMenu, imageMenu, fileMenu, recordMenu,photoingMenu;
 	private LayoutInflater inflater;	
 	private View layout;
 	private ImageButton channelSwitchBtn, imageSetBtn, ptzBtn, photoBtn, recordingBtn, fileBtn, recordFlagBtn;
@@ -108,6 +120,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private ImageView iconImage;
 	private TextView tvNotice;
 	private boolean is_pvr_pause=false;
+	private String photoingImagePath;
+	private ImageView floatImage;
 	
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -124,9 +138,14 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		CreatNoticeView();
 		animation = AnimationUtils.loadAnimation(getApplicationContext(),
 				R.anim.pvr_notice);
-		handler = new Handler();
+		handler = new Handler() {
+	        @Override
+	        public void handleMessage(Message msg) {
+	            super.handleMessage(msg);
+	            isExit = false;
+	        }
+	    };   
 	}
-
 	@Override
 	protected void onResume() {
 		if(onResumeFlag == 1){
@@ -140,6 +159,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			}else{	
 				Toast.makeText(this, "请先登陆", Toast.LENGTH_SHORT).show();
 			}
+		}else if(onResumeFlag ==3){
+			fileMenu.dismiss();
 		}
 		super.onResume();
 	}
@@ -164,6 +185,16 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 					onvifMgr.ptzUp(username, password, ptzService, profileToken);
 					return true;
 				case KeyEvent.KEYCODE_DPAD_DOWN:
+					if(fileMenu.isShowing()){
+						System.out.println("fileMenu is showing=======");
+						fileMenu.dismiss();
+						return true;
+					}
+					if(channelMenu.isShowing()){
+						System.out.println("channelMenu is showing=======");
+						channelMenu.dismiss();
+						return true;
+					}
 					onvifMgr.ptzDown(username, password, ptzService, profileToken);
 					return true;
 				case KeyEvent.KEYCODE_MENU:	
@@ -177,8 +208,12 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 					return true;
 				}
 			}
+		}else{
+			if(keyCode == KeyEvent.KEYCODE_BACK){
+				this.exit();
+				return false;
+			}
 		}
-
 		return super.onKeyDown(keyCode, event);
 	}
 
@@ -238,8 +273,14 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private void setVVDefault(){
 		addDeviceButton.setVisibility(View.VISIBLE);
 		homeButton.setVisibility(View.VISIBLE);
-		FrameLayout.LayoutParams layoutParams=  
-				new FrameLayout.LayoutParams(900, 500); 
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		FrameLayout.LayoutParams layoutParams = null;
+		if(srceenW > 1800 && screenH > 1000){
+			layoutParams= new FrameLayout.LayoutParams(videoViewWidth, videoViewHeight); 
+		}else{
+			layoutParams= new FrameLayout.LayoutParams(900, 500); 
+		}
 		vv.setLayoutParams(layoutParams);
 		System.out.println("layoutParams width = "+layoutParams.width);
 		System.out.println("layoutParams height = "+layoutParams.height);
@@ -255,8 +296,11 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		if(camera.getCapability() == null || camera.getCapability().equals(null)){
 			System.out.println("username password deviceservice-->"+username+password+deviceService);
 			boolean getCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
-			if(getCapa){
-				Toast.makeText(this, "获取能力成功", Toast.LENGTH_SHORT).show();;
+			if(!getCapa){
+				Toast toast = Toast.makeText(this, "鉴权失败！！！", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return;
 			}
 		}
 		mediaService = camera.getCapability().getMediaService();
@@ -264,7 +308,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		imageService = camera.getCapability().getImagingService();
 		boolean getProf = onvifMgr.getMediaProfiles(username, password, mediaService);
 		if(getProf){
-			Toast.makeText(this, "获取profiles成功", Toast.LENGTH_SHORT).show();;
+			//Toast.makeText(this, "获取profiles成功", Toast.LENGTH_SHORT).show();;
 		}
 		profileToken = camera.getProfiles().get(channelFlag).getToken();
 	}
@@ -314,6 +358,17 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				progressBar.setVisibility(View.INVISIBLE);
 			}
 		});
+		if(deviceList.size()<=0){
+			handler.post(new Runnable(){
+				@Override
+				public void run() {
+					Toast toast = Toast.makeText(getApplicationContext(), "没有搜索到设备，请确认摄像头在局域网内", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+			});
+			return;
+		}
 
 		if(deviceList.size()>0){
 			if(searchDeviceFlag == 0){
@@ -335,6 +390,9 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 								@Override
 								public void run() {
 									onvifMgr.play(position, vv);
+									videoViewWidth = vv.getWidth();
+									videoViewHeight = vv.getHeight();
+									System.out.println("===================w = "+videoViewWidth+"=======h = "+videoViewHeight);
 								}
 							});
 							cameraStatus = 1;
@@ -370,10 +428,20 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			String password = camera.getPassword();
 			String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getDeviceService();
 			boolean isGetCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
-			boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
-			if(isGetCapa && auth){
-				onvifMgr.play(position, vv);
-				cameraStatus = 1;
+			//boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
+			if(isGetCapa){
+				if(onvifMgr.getMediaStreamUri(username, password, deviceService)){
+					onvifMgr.play(position, vv);
+					cameraStatus = 1;
+				}else{
+					Toast toast = Toast.makeText(getApplicationContext(), "获取视频流地址失败	", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}
+			}else {
+				Toast toast = Toast.makeText(getApplicationContext(), "鉴权失败", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
 			}
 		}
 	}
@@ -385,6 +453,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		initChannelMenu();
 		initImageMenu();
 		initRecordMenu();
+		initPhotoingMenu();
 	}
 
 	public void initCtrlMenu(){
@@ -459,9 +528,20 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 					toast.show();
 					return;
 				}
+				String folder = list.get(0)+photoFolder;
+				FileUtil.createDir(folder);
 				String filename = list.get(0)+"/CameraRecordImages/"+getCurrentTime()+".jpg";
-				System.out.println("java photo file name = "+filename);
+				FileUtil.createFile(filename);
 				vv.photoImage(filename);
+				photoingImagePath = filename;
+				Toast toast = Toast.makeText(CameraHomeActivity.this, "拍照成功", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				new Handler().postDelayed(new Runnable(){  
+				     public void run() {  
+				    	 showPhotoingMenu();
+				     }  
+				  }, 2*1000); 
 			}else if(v == recordingBtn){
 				if(!recordingFlag){
 					List<String> list = Usb.getUsbDirList();
@@ -471,7 +551,10 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 						toast.show();
 						return;
 					}
-					String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
+					String folder = list.get(0)+videoFolder;
+					FileUtil.createDir(folder);
+					String filename = list.get(0)+videoFolder+getCurrentTime()+".avi";
+					FileUtil.createFile(filename);
 					System.out.println("java recording file name = "+filename);
 					AUTHUri=onvifMgr.getAuthUriByPosition(position);
 					//vv.startRecordingRtspStream(AUTHUri, filename, 0);
@@ -585,11 +668,27 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		@Override
 		public void onClick(View v) {
 			if(v == picBtn){
-				Intent intent = new Intent(CameraHomeActivity.this, CameraImagesGridActivity.class);
-				CameraHomeActivity.this.startActivity(intent);
+				List<String> list = Usb.getUsbDirList();
+				if(list.size()<=0){
+					Toast toast = Toast.makeText(CameraHomeActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}else{
+					onResumeFlag = 3;
+					Intent intent = new Intent(CameraHomeActivity.this, CameraImagesGridActivity.class);
+					CameraHomeActivity.this.startActivity(intent);
+				}	
 			}else if(v == videoBtn){
-				Intent intent = new Intent(CameraHomeActivity.this, CameraVideosListActivity.class);
-				CameraHomeActivity.this.startActivity(intent);
+				List<String> list = Usb.getUsbDirList();
+				if(list.size()<=0){
+					Toast toast = Toast.makeText(CameraHomeActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+				}else{
+					onResumeFlag = 3;
+					Intent intent = new Intent(CameraHomeActivity.this, CameraVideosListActivity.class);
+					CameraHomeActivity.this.startActivity(intent);
+				}	
 			}
 		}
 	}
@@ -672,7 +771,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
 		if(srceenW > 1800 && screenH > 1000){
-			imageMenu = new PopupWindow(layout, srceenW -600, 300, true);;    
+			imageMenu = new PopupWindow(layout, srceenW -600, 400, true);;    
 		}else{
 			imageMenu = new PopupWindow(layout, srceenW -600, 250, true);
 		}
@@ -691,7 +790,11 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private void showImageMenu(){
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		imageMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 300, -screenH/3*2);  
+		if(srceenW > 1800 && screenH > 1000){
+			imageMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 300, -screenH+200);  
+		}else{
+			imageMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 300, -screenH/3*2);  
+		}
 		imageMenu.update();  
 	}
 
@@ -706,6 +809,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
 				if(ret)
 					Toast.makeText(CameraHomeActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+					imageMenu.dismiss();
 			}
 		}
 	}
@@ -784,4 +888,76 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			tvNotice.setText(" 正在录制 ");
 		}
 	}
+	
+	/*初始化channel弹出框*/
+	public void initPhotoingMenu(){
+		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
+		layout = inflater.inflate(R.layout.float_photoing_menu, null,false);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			photoingMenu = new PopupWindow(layout, srceenW -1200, 130, true);
+		}else{
+			photoingMenu = new PopupWindow(layout, srceenW -900, 150, true);
+		}
+		photoingMenu.setFocusable(true);
+		photoingMenu.setBackgroundDrawable(new BitmapDrawable());
+		photoingMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
+		floatImage= (ImageView) layout.findViewById(R.id.floatPhotoView);
+		
+//		photoImageButton.setOnClickListener(new OnClickListener(){
+//			@Override
+//			public void onClick(View v) {
+//				System.out.println("photoImageButton onClick=======");
+//			}
+//		});
+	}
+	//显示照相悬浮矿
+		private void showPhotoingMenu(){
+			Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
+			floatImage.setImageBitmap(bitmap);
+			int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+			int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+			if(srceenW > 1800 && screenH > 1000){
+				photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH);  
+			}else{
+				photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH );  
+			}
+			photoingMenu.setFocusable(true);
+			photoingMenu.update();  
+			 new Handler().postDelayed(new Runnable(){  
+			     public void run() {  
+			    	 photoingMenu.dismiss();
+			     }  
+			  }, 2*1000); 
+		}
+		
+		/**
+		* 加载本地图片
+		* http://bbs.3gstdy.com
+		* @param url
+		* @return
+		*/
+		public  Bitmap getLoacalBitmap(String url) {
+		     try {
+		          FileInputStream fis = new FileInputStream(url);
+		          return BitmapFactory.decodeStream(fis);
+		     } catch (FileNotFoundException e) {
+		          e.printStackTrace();
+		          return null;
+		     }
+		}
+		/*按两次退出键退出*/
+		private void exit() {
+	        if (!isExit) {
+	            isExit = true;
+	            Toast.makeText(getApplicationContext(), "再按一次退出程序",
+	                    Toast.LENGTH_SHORT).show();
+	            // 利用handler延迟发送更改状态信息
+	            handler.sendEmptyMessageDelayed(0, 2000);
+	        } else {
+	            finish();
+	            System.exit(0);
+	        }
+	    }
 }
