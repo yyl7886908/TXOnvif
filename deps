@@ -8,8 +8,11 @@
 	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
 ./objects/duration.o: ./source/onvif/duration.c
 	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+<<<<<<< HEAD
 ./objects/event.o: ./source/onvif/event.c
 	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
+=======
+>>>>>>> acf125865fc1543eef18f262abcda54d80227ca1
 ./objects/imaging.o: ./source/onvif/imaging.c
 	gcc -DDEBUG $(CFLAGS) -c -o $@ $^
 ./objects/main.o: ./source/onvif/main.c

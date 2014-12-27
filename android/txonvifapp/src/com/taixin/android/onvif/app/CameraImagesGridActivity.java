@@ -15,6 +15,7 @@ import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -60,6 +61,37 @@ public class CameraImagesGridActivity extends Activity {
 					bundle.putString("filepath",file.getPath());
 					intent.putExtras(bundle);
 					CameraImagesGridActivity.this.startActivity(intent);
+				}
+			});
+			
+			imagesGrid.setOnItemLongClickListener(new OnItemLongClickListener(){
+				@Override
+				public boolean onItemLongClick(AdapterView<?> parent,
+						View view,final int position, long id) {
+					final File file = imageList.get(position);
+					System.out.println("file name ==="+file.getPath());
+					 // 弹出确认框  
+                    Builder builder = new Builder(CameraImagesGridActivity.this);  
+                    builder.setTitle("提示");  
+                    builder.setMessage("确定要删除该文件(" + file.getName() + ")吗?");  
+                    builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {  
+                        @Override  
+                        public void onClick(DialogInterface dialog, int which) {  
+                            // 将SD卡中的文件删除  
+                        	if (file.exists()) {  
+                                file.delete();  
+                            }  
+                        	imageList.remove(position);
+        					mAdapter.notifyDataSetChanged();  
+                        }  
+                    });  
+                    builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {  
+                        @Override  
+                        public void onClick(DialogInterface dialog, int which) {  
+                        }  
+                    });  
+                    builder.create().show();  
+					return true;
 				}
 			});
 		}
