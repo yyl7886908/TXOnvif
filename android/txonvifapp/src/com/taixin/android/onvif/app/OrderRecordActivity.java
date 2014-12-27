@@ -168,7 +168,7 @@ public class OrderRecordActivity extends Activity {
 							Toast toast = Toast.makeText(getApplicationContext(), "预约成功！", Toast.LENGTH_LONG);
 							toast.setGravity(Gravity.CENTER, 0, 0);
 							toast.show();
-							//startRecordService();
+							startRecordService();
 							//startRecording();
 						}else{
 							Toast toast = Toast.makeText(getApplicationContext(), "预约失败！", Toast.LENGTH_LONG);

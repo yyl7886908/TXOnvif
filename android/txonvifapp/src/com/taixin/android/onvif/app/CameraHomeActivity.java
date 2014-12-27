@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -30,6 +32,7 @@ import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -119,9 +122,14 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private Animation animation;
 	private ImageView iconImage;
 	private TextView tvNotice;
+	private TextView tvNoticeTime;
+	private Chronometer chronometer;  /*计时器*/ 
 	private boolean is_pvr_pause=false;
 	private String photoingImagePath;
 	private ImageView floatImage;
+	public Timer mTimer ;// 定时器
+	private int timeCtn;
+	private int timeCountFlag =1;
 	
 	@Override
 	protected void onCreate(Bundle bundle) {
@@ -142,16 +150,34 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	        @Override
 	        public void handleMessage(Message msg) {
 	            super.handleMessage(msg);
-	            isExit = false;
+	            if(msg.what == timeCountFlag){
+	            	long nowTime = System.currentTimeMillis();
+	            	SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+	            	Date date = new Date(nowTime - startTime);
+	            	System.out.println(formatter.format(date));
+	            	String str=formatter.format(date);
+	            	tvNoticeTime.setText(str);
+	            }else{
+	            	 isExit = false;
+	            }
 	        }
 	    };   
 	}
 	@Override
 	protected void onResume() {
+		super.onResume();
+		System.out.println("onResume ======= onResumeFlag = "+onResumeFlag);
 		if(onResumeFlag == 1){
-			vv.requestFocus();
-			cameraStatus = 0;
-			playVV();
+			System.out.println("onvifMgr size ===="+onvifMgr.getOnvifData().getCurrentCameras().size());
+			if(onvifMgr.getOnvifData().getCurrentCameras().size() <= 0){
+				System.out.println("================");
+				vv.stopPlayback();
+				return;
+			}else{
+				vv.requestFocus();
+				cameraStatus = 0;
+				playVV();
+			}
 		}else if(onResumeFlag == 2){
 			if(onvifMgr.getOnvifData().getCurrentCameras().get(position).isAuth()){
 				/*认证，获取视频流OK*/
@@ -162,7 +188,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}else if(onResumeFlag ==3){
 			fileMenu.dismiss();
 		}
-		super.onResume();
+		//super.onResume();
 	}
 
 	@Override
@@ -534,14 +560,11 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				FileUtil.createFile(filename);
 				vv.photoImage(filename);
 				photoingImagePath = filename;
-				Toast toast = Toast.makeText(CameraHomeActivity.this, "拍照成功", Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
 				new Handler().postDelayed(new Runnable(){  
 				     public void run() {  
 				    	 showPhotoingMenu();
 				     }  
-				  }, 2*1000); 
+				  }, 500); 
 			}else if(v == recordingBtn){
 				if(!recordingFlag){
 					List<String> list = Usb.getUsbDirList();
@@ -553,7 +576,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 					}
 					String folder = list.get(0)+videoFolder;
 					FileUtil.createDir(folder);
-					String filename = list.get(0)+videoFolder+getCurrentTime()+".avi";
+					String filename = list.get(0)+videoFolder+getCurrentTime()+".ts";
 					FileUtil.createFile(filename);
 					System.out.println("java recording file name = "+filename);
 					AUTHUri=onvifMgr.getAuthUriByPosition(position);
@@ -840,10 +863,13 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	 */
 	private void CreatNoticeView() {
 		view = LayoutInflater.from(this).inflate(R.layout.noticedialog, null);
-		
 		iconImage = (ImageView) view.findViewById(R.id.notice_iv);
 		tvNotice = (TextView) view.findViewById(R.id.tv_notice);
 		tvNotice.setText("正在录制 ");
+		tvNotice.setBackgroundColor(R.color.black);
+		tvNoticeTime = (TextView) view.findViewById(R.id.tv_notice_time);
+		tvNoticeTime.setText("21:00");
+		tvNoticeTime.setBackgroundColor(R.color.black);
 		windowManager = (WindowManager) this.getSystemService(WINDOW_SERVICE);
 		/*
 		 * LayoutParams.TYPE_SYSTEM_ERROR：保证该悬浮窗所有View的最上层
@@ -853,16 +879,26 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
 				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
-//		 layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM; //悬浮窗开始在右下角显示
-//		 layoutParams.gravity = Gravity.RIGHT | Gravity.TOP;
-//		 layoutParams.verticalMargin=80;
 		Display mDisplay=windowManager.getDefaultDisplay();
-//		 layoutParams.horizontalMargin=80;//
+
 		layoutParams.x = (int) (mDisplay.getWidth()*0.4);
 		
 		layoutParams.y = (int) (-mDisplay.getHeight()*0.6);
 	}
 	
+	public void timerTask() {
+		//创建定时线程执行更新任务
+		tvNoticeTime.setText("00:00");
+		mTimer = new Timer();
+		timeCtn = 0;
+		mTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage( timeCountFlag);// 向Handler发送消息
+				timeCtn++;
+			}
+		}, 1000, 1000);// 定时任务
+	}
 	/**
 	 * 刷新或显示悬浮窗
 	 */
@@ -875,6 +911,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			viewAdded = true;
 		}
 		startTime = System.currentTimeMillis();
+		timerTask();
 	}
 
 	/**
@@ -886,6 +923,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			viewAdded = false;
 			animation.cancel();
 			tvNotice.setText(" 正在录制 ");
+			mTimer.cancel();
 		}
 	}
 	
@@ -929,7 +967,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			     public void run() {  
 			    	 photoingMenu.dismiss();
 			     }  
-			  }, 2*1000); 
+			  }, 1*1000); 
 		}
 		
 		/**

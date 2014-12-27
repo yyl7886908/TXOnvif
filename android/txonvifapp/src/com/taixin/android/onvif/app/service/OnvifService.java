@@ -1,9 +1,11 @@
 package com.taixin.android.onvif.app.service;
 
-import java.sql.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -20,13 +22,13 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.R;
 import com.taixin.android.onvif.app.data.LocalCamera;
+import com.taixin.android.onvif.app.data.OrderRecordData;
 import com.taixin.android.onvif.app.data.OrderRecordModel;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
@@ -47,8 +49,9 @@ public class OnvifService extends Service {
 	private TimerTask task;
 	private Handler handler;
 	private final Timer timer = new Timer(); 
-	private final static int Time_Is_Reaching = 1;/*录制的时间到了*/
-	private final static int Time_Now = 2; /*当前时间*/
+	private final static int Start_Time_Is_Reaching = 1;/*录制的时间到了*/
+	private final static int Stop_Time_Is_Reaching = 2;/*录制的时间到了*/
+	//private final static int Time_Now = 2; /*当前时间*/
 	private ITxRecorder recorder;
 	/**
 	 * 屏幕录制状态提示
@@ -64,33 +67,41 @@ public class OnvifService extends Service {
 	private ImageView iconImage;
 	private TextView tvNotice;
 	private boolean is_pvr_pause=false;
+	private boolean isRecording;
  
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		onvifMgr = OnvifManager.getInstance();
 		recorder = new TXFFMpegRecorder();
-		startRecording();
+		
 		startTask();
-		timer.schedule(task, 0, 60*1000);   
+		timer.schedule(task, 0, 10*1000);   
 		handler = new Handler(){
 			@Override  
 			public void handleMessage(Message msg) {  
 				switch(msg.what)
 				{
-				case Time_Is_Reaching:
+				case Start_Time_Is_Reaching:
 					/*时间到，开始获取摄像头的信息开始录制*/
-					Toast toast2 = Toast.makeText(getApplicationContext(), "时间到!!!开始录制", Toast.LENGTH_LONG);
-					toast2.setGravity(Gravity.CENTER, 0, 0);
-					toast2.show();
+					Toast toast = Toast.makeText(getApplicationContext(), "时间到!!!开始录制", Toast.LENGTH_LONG);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					startRecording();
+					break;
+				case Stop_Time_Is_Reaching:
+					/*时间到，开始获取摄像头的信息开始录制*/
+					Toast toast1 = Toast.makeText(getApplicationContext(), "时间到!!!结束录制", Toast.LENGTH_LONG);
+					toast1.setGravity(Gravity.CENTER, 0, 0);
+					toast1.show();
+					stopRecording();
 					break;
 				}
+				
 				super.handleMessage(msg);  
 			}   
 		};
 		
-		animation = AnimationUtils.loadAnimation(getApplicationContext(),
-				R.anim.pvr_notice);
 	}
 
 	@Override
@@ -109,19 +120,21 @@ public class OnvifService extends Service {
 		task = new TimerTask() {  
 			@Override  
 			public void run() {  
-				getOrderTime();
+				CheckOrderTime();
 			}  
 		};  
 	}
 
-	public boolean getOrderTime(){
-		OrderRecordModel model = onvifMgr.getOrderedRecordModel();
-		if(model == null)
+	public boolean CheckOrderTime(){
+		//OrderRecordModel model = onvifMgr.getOrderedRecordModel();
+		OrderRecordData data = onvifMgr.getOrderedRecordData();
+		if(data == null)
 			return false;
 		try {
 			SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");       
 			Date curDate = new Date(System.currentTimeMillis());//获取当前时间  
 			final String curTime = formatter.format(curDate);
+			System.out.println("current time =========="+curTime);
 			handler.post(new Runnable(){
 				@Override
 				public void run() {
@@ -130,11 +143,52 @@ public class OnvifService extends Service {
 					toast.show();
 				}
 			});
-			if(curTime.equals(model.getStartTime())){
-				handler.sendEmptyMessage(Time_Is_Reaching);	
+			
+			
+			if((curTime.equals(data.getStartTime()) || ( compareTime(data.getStartTime(), curTime) && compareTime(curTime, data.getEndTime()))) && checkCurrentTime(data)  && !isRecording){
+				handler.sendEmptyMessage(Start_Time_Is_Reaching);	
+				return true;
+			}else if(isRecording && compareTime( data.getEndTime(),curTime)){
+				handler.sendEmptyMessage(Stop_Time_Is_Reaching);	
 				return true;
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	/*查看当前时间周几是否需要录制*/
+	private boolean checkCurrentTime(OrderRecordData data){
+		int weekDay = java.util.Calendar.getInstance().get(java.util.Calendar.DAY_OF_WEEK);/*礼拜天是1，礼拜一是2...礼拜六是 7!*/
+		if(weekDay == 2 && data.isZhouyiCheck())
+			return true;
+		else if(weekDay == 3 && data.isZhouerCheck())
+			return true;
+		else if(weekDay == 4 && data.isZhousanCheck())
+			return true;
+		else if(weekDay == 5 && data.isZhousiCheck())
+			return true;
+		else if(weekDay == 6 && data.isZhouwuCheck())
+			return true;
+		else if(weekDay == 7 && data.isZhouliuCheck())
+			return true;
+		else if(weekDay == 1 && data.isZhouqiCheck())
+			return true;
+		return false;
+	}
+	
+	/*检查开始时间是否小于结束时间*/
+	private boolean compareTime(String time1, String time2){
+		java.util.Date nowdate=new java.util.Date(); 
+		SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.CHINA);
+		try {
+			Date d1  = sdf.parse(time1);
+			Date d2 =sdf.parse(time2);
+			boolean flag = d1.before(d2);
+			if(flag)
+				return true;
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return false;
@@ -209,8 +263,9 @@ public class OnvifService extends Service {
 			toast.show();
 			return false;
 		}
-		String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
+		String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".ts";
 		recorder.startRecoderRTSPStream(authuri, filename, time);
+		isRecording = true;
 		return true;
 	}
 
@@ -222,58 +277,9 @@ public class OnvifService extends Service {
 		return str;
 	}
 
-	/*悬浮框*/
-	/**
-	 * show notice
-	 * 
-	 */
-	private void CreatNoticeView() {
-		view = LayoutInflater.from(this).inflate(R.layout.noticedialog, null);
-		
-		iconImage = (ImageView) view.findViewById(R.id.notice_iv);
-		tvNotice = (TextView) view.findViewById(R.id.tv_notice);
-		windowManager = (WindowManager) this.getSystemService(WINDOW_SERVICE);
-		/*
-		 * LayoutParams.TYPE_SYSTEM_ERROR：保证该悬浮窗所有View的最上层
-		 * LayoutParams.FLAG_NOT_FOCUSABLE:该浮动窗不会获得焦点，但可以获得拖动
-		 * PixelFormat.TRANSPARENT：悬浮窗透明
-		 */
-		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
-				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
-//		 layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM; //悬浮窗开始在右下角显示
-//		 layoutParams.gravity = Gravity.RIGHT | Gravity.TOP;
-//		 layoutParams.verticalMargin=80;
-		Display mDisplay=windowManager.getDefaultDisplay();
-//		 layoutParams.horizontalMargin=80;//
-		layoutParams.x = (int) (mDisplay.getWidth()*0.4);
-		
-		layoutParams.y = (int) (-mDisplay.getHeight()*0.5);
-	}
-	
-	/**
-	 * 刷新或显示悬浮窗
-	 */
-	private void refreshorShowView() {
-		iconImage.startAnimation(animation);
-		if (viewAdded) {
-			windowManager.updateViewLayout(view, layoutParams);
-		} else {
-			windowManager.addView(view, layoutParams);
-			viewAdded = true;
-		}
-		startTime = System.currentTimeMillis();
-	}
-
-	/**
-	 * 关闭悬浮窗
-	 */
-	public void removeView() {
-		if (viewAdded) {
-			windowManager.removeView(view);
-			viewAdded = false;
-			animation.cancel();
-			tvNotice.setText(" 正在录制 00:00:00");
-		}
+	/*停止录制*/
+	public void stopRecording(){
+		recorder.stopRecordRTSPStream();
+		isRecording = false;
 	}
 }

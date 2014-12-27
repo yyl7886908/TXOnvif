@@ -57,9 +57,19 @@ public class DeviceListActivity extends Activity {
 				toast.show();
 				return false;
 			}
-			if(list.size()<=0){
-				return true;
+			onvifMgr.getOnvifData().getCurrentCameras().clear();
+			ArrayList<GridsItemStatus> gridsItem= onvifMgr.getOnvifData().getGridsItemList();
+			for(GridsItemStatus item : gridsItem){
+				item.setStatus(-1);
 			}
+//			if(list.size()<=0){
+//				onvifMgr.getOnvifData().getCurrentCameras().clear();
+//				ArrayList<GridsItemStatus> gridsItem= onvifMgr.getOnvifData().getGridsItemList();
+//				for(GridsItemStatus item : gridsItem){
+//					item.setStatus(-1);
+//				}
+//				return true;
+//			}
 
 			for(int i =0;i<list.size();i++){
 				HashMap<String, String> temp = list.get(i);

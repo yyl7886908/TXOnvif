@@ -25,16 +25,6 @@
             android:layout_gravity="center"/>
         
     </LinearLayout>
-    
-    <CheckBox
-        android:id="@+id/record_video_checkbox"
-        style="@style/custom_checkbox"
-        android:layout_width="150dp"
-        android:layout_height="50dp"
-        android:layout_gravity="right|center_vertical"
-        android:layout_marginLeft="80dp"
-        android:focusable="true"
-        android:textColor="@color/white" >
-    </CheckBox>
+
 
 </RelativeLayout>

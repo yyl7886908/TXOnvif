@@ -59,6 +59,8 @@
         </activity>
         <activity android:name="com.taixin.android.onvif.app.OrderRecordActivity" >
         </activity>
+        <activity android:name="com.taixin.android.onvif.app.orderRecordActivity" >
+        </activity>
 
         <receiver android:name="com.taixin.android.onvif.app.service.bootReceiver" >
             <intent-filter>

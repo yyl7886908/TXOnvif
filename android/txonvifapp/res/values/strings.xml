@@ -77,7 +77,8 @@
     <string name="yes">是</string>
     <string name="no">否</string>
     <string name="delect">删除</string>
+    <string name="delete_all">删除全部</string>
     <string name="select">全选</string>
-    <string name="notice">提示:长按确定键选择/取消选择，菜单键浏览录制文件</string>
-		<string name="record_mode">录制模式</string>
+    <string name="notice">提示:长按确定键删除录制文件</string>
+		<string name="record_mode">定时录制</string>
 </resources>

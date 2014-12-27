@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -23,6 +27,7 @@ public class CameraImagesGridActivity extends Activity {
 	private CameraImagesAdapter mAdapter;
 	private GridView imagesGrid;
 	private List<File> imageList;
+	private Button deleteAllButton;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,6 +37,8 @@ public class CameraImagesGridActivity extends Activity {
 	}
 	
 	public void initData(){
+		deleteAllButton = (Button) this.findViewById(R.id.image_delete_button);
+		deleteAllButton.setOnClickListener(new MyOnClickListener());
 		imagesGrid = (GridView) findViewById(R.id.camera_images_grid);
 		imageList = this.getCameraImagesFile();
 		if(imageList.size() <= 0 || imageList == null){
@@ -85,4 +92,33 @@ public class CameraImagesGridActivity extends Activity {
 		System.out.println("file list size = "+fileList.size());
 		return fileList;
 	}
+	
+	class  MyOnClickListener implements OnClickListener{
+		@Override
+		public void onClick(View v) {
+			// 弹出确认框  
+            Builder builder = new Builder(CameraImagesGridActivity.this);  
+            builder.setTitle("提示");  
+            builder.setMessage("确定要删除所有文件吗?");  
+      
+            builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener(){
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					for(File file : imageList){
+						file.delete();
+					}
+					imageList.clear();
+					mAdapter.notifyDataSetChanged();
+				}
+
+            });
+            builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {  
+                @Override  
+                public void onClick(DialogInterface dialog, int which) {  
+                	
+                }  
+            });  
+            builder.create().show();  	
+		}
+	};
 }

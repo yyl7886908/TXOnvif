@@ -69,7 +69,10 @@ public class HomeSettingActivity extends FragmentActivity {
 			else if(v == localSettingBtn)
 				fragmentTransaction.show(mFragments[2]).commit();
 			else if(v == localOrderRecordBtn){
-				Intent intent = new Intent(HomeSettingActivity.this, OrderRecordActivity.class);
+//				Intent intent = new Intent(HomeSettingActivity.this, OrderRecordActivity.class);
+//				HomeSettingActivity.this.startActivity(intent);
+				
+				Intent intent = new Intent(HomeSettingActivity.this, orderRecordActivity.class);
 				HomeSettingActivity.this.startActivity(intent);
 			}
 		}

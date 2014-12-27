@@ -49,7 +49,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/pop_list_select"
+            android:id="@+id/video_select_button"
             android:layout_width="114dp"
             android:layout_height="60dp"
             android:layout_marginRight="18dp"
@@ -60,7 +60,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/pop_list_delect"
+            android:id="@+id/video_delete_button"
             android:layout_width="114dp"
             android:layout_height="60dp"
             android:layout_marginLeft="18dp"

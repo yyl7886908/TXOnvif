@@ -21,6 +21,7 @@ import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.data.LocalSetting;
 import com.taixin.android.onvif.app.data.OnvifData;
+import com.taixin.android.onvif.app.data.OrderRecordData;
 import com.taixin.android.onvif.app.data.OrderRecordModel;
 import com.taixin.android.onvif.app.data.VideoInfo;
 import com.taixin.android.onvif.app.util.SerializableUtil;
@@ -45,6 +46,7 @@ public class OnvifManager implements IOnvifManager {
 	private String localSettingFileName = "local_setting";/*本地存储设置信息的文件名*/
 	private String previousCameraFileName = "local_previous_camera";/*本地存储上一次连接的摄像头信息文件名*/
 	private String orderRecordModeFileName = "local_order_record_model";/*本地预约录制的对象保存文件*/
+	private String orderRecordDataFileName = "local_order_record_data";/*本地预约录制的对象保存文件*/
 	private static OnvifManager instance;
 	public static OnvifManager getInstance(){
 		if(instance == null){
@@ -632,7 +634,7 @@ public class OnvifManager implements IOnvifManager {
 		int appUsingCount = mySharedPreferences.getInt("AppUsingCount", 0);
 		return appUsingCount;
 	}
-
+	
 	@Override
 	public boolean addAppUsingCount() {
 		SharedPreferences mySharedPreferences = context.getSharedPreferences(AppUsingCountFileName, Activity.MODE_PRIVATE); 
@@ -658,6 +660,42 @@ public class OnvifManager implements IOnvifManager {
 			}
 		}
 		return false;
+	}
+
+	@Override
+	public boolean saveOrderRecordData(OrderRecordData data) {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordDataFileName, Activity.MODE_PRIVATE); 
+		String strtmp;
+		try {
+			strtmp = SerializableUtil.obj2Str(data);
+			SharedPreferences.Editor editor = mySharedPreferences.edit();
+			editor.putString("local_order_record_data",strtmp);
+			editor.commit();
+			System.out.println("save order_record_mode Info success!!!!");
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public OrderRecordData getOrderedRecordData() {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordDataFileName, 
+				Activity.MODE_PRIVATE); 
+		String str = mySharedPreferences.getString("local_order_record_data", "default");
+		if(!str.equals("default")){
+			try {
+				OrderRecordData rData = (OrderRecordData) SerializableUtil.str2Obj(str);
+				System.out.println("get local_order_record_model = "+rData.getUuid());
+				return rData;
+			} catch (StreamCorruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 
 }

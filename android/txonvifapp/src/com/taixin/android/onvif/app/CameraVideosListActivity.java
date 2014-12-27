@@ -5,10 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.app.AlertDialog.Builder;  
+import android.content.DialogInterface;  
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -23,7 +22,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.taixin.android.onvif.app.CameraVideoListAdapter.CameraViewHolder;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.player.TXPlayer;
@@ -36,8 +34,7 @@ public class CameraVideosListActivity extends Activity {
 	/*视频文件存储路径*/
 	private String videoFolder = "/CameraRecordVideos/";
 	private IOnvifManager onvifMgr;
-	private List<String> items = null;//存放名称    
-    private List<String> paths = null;//存放路径    
+	private List<File> fileList;
 	private ListView listView;
 	private TextView videoTitle;
 	private TextView videSize;
@@ -118,25 +115,74 @@ public class CameraVideosListActivity extends Activity {
 				}
 			}else if(button == deleteButton){
 				System.out.println("删除  button  已经全选");
-				mAdapter.setNeedDelete(true);
-				mAdapter.notifyDataSetChanged();
+				// 弹出确认框  
+                Builder builder = new Builder(CameraVideosListActivity.this);  
+                builder.setTitle("提示");  
+                builder.setMessage("确定要删除所有文件吗?");  
+          
+                builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener(){
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						for(File file : fileList){
+							file.delete();
+						}
+						fileList.clear();
+						mAdapter.notifyDataSetChanged();
+					}
+
+                });
+                builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {  
+                    @Override  
+                    public void onClick(DialogInterface dialog, int which) {  
+                    	
+                    }  
+                });  
+
+                builder.create().show();  
+				
 			}
 		}
 	}
 
 	private void initListView(){
-		final List<File> list = this.getCameraVideosFile();
-		if(list.size() <= 0 || list == null){
+		fileList = this.getCameraVideosFile();
+		if(fileList.size() <= 0 || fileList == null){
 			Toast toast = Toast.makeText(CameraVideosListActivity.this, "没有发现视频文件", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}else{
-			mAdapter = new CameraVideoListAdapter(list, this);
+			mAdapter = new CameraVideoListAdapter(fileList, this);
 			listView.setAdapter(mAdapter);
 			listView.setOnItemLongClickListener(new OnItemLongClickListener(){
 				@Override
 				public boolean onItemLongClick(AdapterView<?> parent,
-						View view, int position, long id) {
+						View view,final int position, long id) {
+					final File file = fileList.get(position);
+					System.out.println("file name ==="+file.getPath());
+					 // 弹出确认框  
+                    Builder builder = new Builder(CameraVideosListActivity.this);  
+                    builder.setTitle("提示");  
+                    builder.setMessage("确定要删除该文件(" + file.getName() + ")吗?");  
+                    builder.setPositiveButton("确定", new android.content.DialogInterface.OnClickListener() {  
+                        @Override  
+                        public void onClick(DialogInterface dialog, int which) {  
+                            // 将SD卡中的文件删除  
+                        	if (file.exists()) {  
+                                file.delete();  
+                            }  
+                        	fileList.remove(position);
+        					mAdapter.notifyDataSetChanged();  
+                        }  
+                    });  
+                    builder.setNegativeButton("取消", new android.content.DialogInterface.OnClickListener() {  
+                        @Override  
+                        public void onClick(DialogInterface dialog, int which) {  
+                        }  
+                    });  
+  
+                    builder.create().show();  
+					
+					
 					return false;
 				}
 			});
@@ -145,7 +191,7 @@ public class CameraVideosListActivity extends Activity {
 				@Override
 				public void onItemClick(AdapterView<?> parent, View view,
 						int position, long id) {
-					File file = list.get(position);
+					File file = fileList.get(position);
 					openFile(file);
 				}
 			});

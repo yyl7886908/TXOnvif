@@ -35,48 +35,33 @@
         >
     </GridView>
 
-    <!--
-    android:descendantFocusability="afterDescendants"
-        android:listSelector="@drawable/item_selector"
-         <LinearLayout
-        android:id="@+id/pop_linear"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/edit_title_back"
-        android:gravity="right|center_vertical"
-        android:orientation="horizontal" >
-
-        <TextView
+    <LinearLayout
+            android:id="@+id/pop_linear"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="@string/notice"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/edit_title_back"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal" >
 
-        <Button
-            android:id="@+id/pop_list_select"
-            android:layout_width="76dp"
-            android:layout_height="40dp"
-            android:layout_marginRight="12dp"
-            android:background="@drawable/edit_btn_selector"
-            android:gravity="center"
-            android:text="@string/select"
-            android:textColor="#fff"
-            android:textSize="20sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/notice"
+                android:textColor="#fff"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/pop_list_delect"
-            android:layout_width="76dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="24dp"
-            android:background="@drawable/edit_btn_selector"
-            android:gravity="center"
-            android:text="@string/delect"
-            android:textColor="#fff"
-            android:textSize="20sp" />
-    </LinearLayout>
- -->
+            <Button
+                android:id="@+id/image_delete_button"
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginRight="12dp"
+                android:background="@drawable/edit_btn_selector"
+                android:gravity="center"
+                android:text="@string/delete_all"
+                android:textColor="#fff"
+                android:textSize="20sp" />
+         
+        </LinearLayout>
 </RelativeLayout>

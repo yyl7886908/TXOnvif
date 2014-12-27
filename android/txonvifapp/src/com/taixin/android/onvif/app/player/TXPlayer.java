@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.Window;
@@ -20,12 +21,11 @@ import com.taixin.ffmpeg.widget.MediaController;
 import com.taixin.ffmpeg.widget.VideoView;
 
 public class TXPlayer extends Activity {
-
+	private String tag = "TXPlayer play recorder";
 	private VideoView videoView;
 	private String videoPath;
 	private MediaController mMediaController;
-	
-	
+
 	/*悬浮狂*/
 	private boolean isAdded = false; // 是否已增加悬浮窗
 	private static WindowManager wm;
@@ -56,7 +56,7 @@ public class TXPlayer extends Activity {
 	protected void onDestroy() {
 		super.onDestroy();
 	}
-	
+
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if(keyCode == KeyEvent.KEYCODE_BACK){
@@ -64,9 +64,24 @@ public class TXPlayer extends Activity {
 				wm.removeView(playBackFlag);
 				isAdded = false;
 			}
-		}
+		}else if(keyCode == KeyEvent.KEYCODE_DPAD_LEFT){
+			Log.i(tag, "left button is clicked===");
+			mMediaController.fastBack();
+			return false;  
+		}  else if(keyCode == KeyEvent.KEYCODE_DPAD_RIGHT){
+			Log.i(tag, "right button is clicked===");
+			mMediaController.fastForwad();
+			return false;  
+		}  else if(keyCode == KeyEvent.KEYCODE_DPAD_CENTER){
+			Log.i(tag, "center button is clicked===");
+			mMediaController.doPauseResume();
+			return false;  
+		}  
 		return super.onKeyDown(keyCode, event);
 	}
+	
+
+
 	/**
 	 * 创建悬浮窗
 	 */
@@ -74,30 +89,23 @@ public class TXPlayer extends Activity {
 		btn_floatView = new Button(getApplicationContext());
 		btn_floatView.setText("悬浮窗");
 		playBackFlag = new TextView(getApplicationContext());
-        playBackFlag.setText("录像");
-        playBackFlag.setTextColor(R.color.red);
-        playBackFlag.setTextSize(40);
-        wm = (WindowManager) getApplicationContext()
-        	.getSystemService(Context.WINDOW_SERVICE);
-        params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+		playBackFlag.setText("录像");
+		playBackFlag.setTextColor(R.color.red);
+		playBackFlag.setTextSize(40);
+		wm = (WindowManager) getApplicationContext()
+				.getSystemService(Context.WINDOW_SERVICE);
+		params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
 				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
-        Display mDisplay=wm.getDefaultDisplay();
-//		 layoutParams.horizontalMargin=80;//
-        params.x = (int) (mDisplay.getWidth()*0.8);
-		
-        params.y = (int) (-mDisplay.getHeight()*3);
-        // 设置window type
-        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-    
-        params.format = PixelFormat.RGBA_8888; // 设置图片格式，效果为背景透明
-        
-        // 设置悬浮窗的长得宽
-        params.width = 200;
-        params.height = 100;
-        
-        wm.addView(playBackFlag, params);
-        isAdded = true;
+		Display mDisplay=wm.getDefaultDisplay();
+		params.x = (int) (mDisplay.getWidth()*0.8);
+		params.y = (int) (-mDisplay.getHeight()*3);
+		params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+		params.format = PixelFormat.RGBA_8888; // 设置图片格式，效果为背景透明
+		params.width = 200;
+		params.height = 100;
+		wm.addView(playBackFlag, params);
+		isAdded = true;
 	}
-	
+
 }

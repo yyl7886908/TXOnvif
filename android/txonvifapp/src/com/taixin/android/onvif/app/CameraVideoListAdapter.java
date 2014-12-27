@@ -55,14 +55,15 @@ public class CameraVideoListAdapter extends BaseAdapter {
 			convertView.setTag(holder);
 		}else{
 			holder = (CameraViewHolder) convertView.getTag();
-			if(isNeedDelete){
-				System.out.println("get view  isNeedDelete");
-				if(holder.item_select_ok.VISIBLE == View.VISIBLE){
-					File file = list.get(position);
-					context.getContentResolver().delete(Uri.parse(file.getPath()), null, null);
-					//file.delete();
-				}
-			}
+//			if(isNeedDelete){
+//				System.out.println("get view  isNeedDelete");
+//				if(holder.item_select_ok.VISIBLE == View.VISIBLE){
+//					File file = list.get(position);
+//					//context.getContentResolver().delete(Uri.parse(file.getPath()), null, null);
+//					file.delete();
+//					list.remove(position);
+//				}
+//			}
 		}
 		if(isSelectedAll){
 			holder.item_select_ok.setVisibility(View.VISIBLE);

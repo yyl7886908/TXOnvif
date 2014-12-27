@@ -10,6 +10,7 @@ import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.data.LocalSetting;
 import com.taixin.android.onvif.app.data.OnvifData;
+import com.taixin.android.onvif.app.data.OrderRecordData;
 import com.taixin.android.onvif.app.data.OrderRecordModel;
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
@@ -73,10 +74,14 @@ public interface IOnvifManager {
 	/**
 	 * 下面预约和定时函数录制相关
 	 */
-	/*预约录制保存对象*/
+	/*预约录制保存对象 淘汰*/
 	public boolean saveOrderRecordModel(OrderRecordModel oRecord);
-	/*读取所有预约录制的对象*/
+	/*预约录制保存新对象*/
+	public boolean saveOrderRecordData(OrderRecordData data);
+	/*读取所有预约录制的对象 淘汰*/
 	public OrderRecordModel getOrderedRecordModel();
+	/*读取所有预约录制的数据*/
+	public OrderRecordData getOrderedRecordData();
 	
 	/*此处为录制单独开启一部分获取信息接口*/
 	/*检查uuid是否保存在本地，是的话给相关设备的username password 赋值*/
