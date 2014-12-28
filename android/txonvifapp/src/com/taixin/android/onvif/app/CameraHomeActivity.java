@@ -40,6 +40,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -101,7 +102,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private ImageButton picBtn, videoBtn;
 	private ImageView recordFlagView;
 	private SeekBar chromBar, brightBar, constrastbar;
-	private Button imageSaveBtn;
+	//private Button imageSaveBtn;
 	/*第几路视频*/
 	private int channelFlag = 0;
 	private boolean isCruising = false;
@@ -805,9 +806,13 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		brightBar = (SeekBar) layout.findViewById(R.id.bright_seekbar);
 		chromBar = (SeekBar) layout.findViewById(R.id.chrom_seekbar);
 		constrastbar = (SeekBar) layout.findViewById(R.id.contrast_seekbar);
-		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
-		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
-		imageSaveBtn.setOnClickListener(listener);
+		seekBarListener barListener = new seekBarListener();
+		brightBar.setOnSeekBarChangeListener(barListener);
+		chromBar.setOnSeekBarChangeListener(barListener);
+		constrastbar.setOnSeekBarChangeListener(barListener);
+//		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
+//		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
+//		imageSaveBtn.setOnClickListener(listener);
 	}
 	//显示控制菜单
 	private void showImageMenu(){
@@ -820,22 +825,45 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}
 		imageMenu.update();  
 	}
+	
+	class  seekBarListener implements OnSeekBarChangeListener{
 
-	class ImageMenuOnClickListener implements OnClickListener{
 		@Override
-		public void onClick(View v) {
-			if(v == imageSaveBtn){
-				float bright = brightBar.getProgress()*10;
-				float chrom = chromBar.getProgress()*10;
-				float constrast = constrastbar.getProgress()*10;
-				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
-				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
-				if(ret)
-					Toast.makeText(CameraHomeActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-					imageMenu.dismiss();
-			}
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
+			float bright = brightBar.getProgress()*10;
+			float chrom = chromBar.getProgress()*10;
+			float constrast = constrastbar.getProgress()*10;
+			String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+			boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+			if(ret)
+				System.out.println("=================image setting  sucess！！！");
+		}
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+			
+		}
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+			
 		}
 	}
+
+//	class ImageMenuOnClickListener implements OnClickListener{
+//		@Override
+//		public void onClick(View v) {
+//			if(v == imageSaveBtn){
+//				float bright = brightBar.getProgress()*10;
+//				float chrom = chromBar.getProgress()*10;
+//				float constrast = constrastbar.getProgress()*10;
+//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+//				if(ret)
+//					Toast.makeText(CameraHomeActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+//					imageMenu.dismiss();
+//			}
+//		}
+//	}
 
 	/*检测U盘安装情况*/
 	public void checkUDisk(){
