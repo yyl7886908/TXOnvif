@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -51,6 +52,7 @@ import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.logic.searchDevicesListener;
 import com.taixin.android.onvif.app.util.FileUtil;
 import com.taixin.android.onvif.app.util.Usb;
+import com.taixin.android.onvif.app.util.timeUtil;
 import com.taixin.android.onvif.sdk.obj.Device;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
 import com.taixin.ffmpeg.player.ITxRecorder;
@@ -153,10 +155,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				super.handleMessage(msg);
 				if(msg.what == timeCountFlag){
 					long nowTime = System.currentTimeMillis();
-					SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
-					Date date = new Date(nowTime - startTime);
-					System.out.println(formatter.format(date));
-					String str=formatter.format(date);
+					SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+					String str=timeUtil.formatTime((int)(nowTime - startTime)/1000);
 					tvNoticeTime.setText(str);
 				}else{
 					isExit = false;
@@ -649,26 +649,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		fileMenuOnClickListener listener = new fileMenuOnClickListener();
 		picBtn.setOnClickListener(listener);
 		videoBtn.setOnClickListener(listener);
-		picBtn.setOnKeyListener(new OnKeyListener(){
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-					fileMenu.dismiss();
-					return true;
-				}
-				return false;
-			}
-		});
-		videoBtn.setOnKeyListener(new OnKeyListener(){
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-					fileMenu.dismiss();
-					return true;
-				}
-				return false;
-			}
-		});
+		picBtn.setOnKeyListener(new myOnKeyListener());
+		videoBtn.setOnKeyListener(new myOnKeyListener());
 	}
 
 	/*初始化channel弹出框*/
@@ -692,36 +674,9 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		highBtn.setOnClickListener(listener);
 		middleBtn.setOnClickListener(listener);
 		lowBtn.setOnClickListener(listener);
-		highBtn.setOnKeyListener(new OnKeyListener(){
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-					channelMenu.dismiss();
-					return true;
-				}
-				return false;
-			}
-		});
-		middleBtn.setOnKeyListener(new OnKeyListener(){
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-					channelMenu.dismiss();
-					return true;
-				}
-				return false;
-			}
-		});
-		lowBtn.setOnKeyListener(new OnKeyListener(){
-			@Override
-			public boolean onKey(View v, int keyCode, KeyEvent event) {
-				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
-					channelMenu.dismiss();
-					return true;
-				}
-				return false;
-			}
-		});
+		highBtn.setOnKeyListener(new myOnKeyListener());
+		middleBtn.setOnKeyListener(new myOnKeyListener());
+		lowBtn.setOnKeyListener(new myOnKeyListener());
 	}
 	//显示控制菜单
 	private void showCtrlMenu(){
@@ -866,7 +821,6 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				}
 				return false;
 			}
-			
 		});
 		//		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
 		//		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
@@ -974,7 +928,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 
 	public void timerTask() {
 		//创建定时线程执行更新任务
-		tvNoticeTime.setText("00:00");
+		tvNoticeTime.setText("00:00:00");
 		mTimer = new Timer();
 		timeCtn = 0;
 		mTimer.schedule(new TimerTask() {
@@ -996,6 +950,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			windowManager.addView(view, layoutParams);
 			viewAdded = true;
 		}
+
 		startTime = System.currentTimeMillis();
 		timerTask();
 	}
@@ -1085,8 +1040,24 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}
 	}
 
-	//		/*menu on key down listener */
-	//		class menuOnKeyDownListener implements OnKeyDownListener{
-	//			
-	//		}
+	/*on key listener*/
+	class myOnKeyListener implements OnKeyListener{
+		@Override
+		public boolean onKey(View v, int keyCode, KeyEvent event) {
+			ImageButton b = (ImageButton)v;
+			if(b==picBtn || b==videoBtn){
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					fileMenu.dismiss();
+					return true;
+				}
+			}else if(b == highBtn ||b==middleBtn || b == lowBtn){
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					channelMenu.dismiss();
+					return true;
+				}
+			}
+			return false;
+		}
+
+	}
 }
