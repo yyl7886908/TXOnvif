@@ -79,6 +79,6 @@
     <string name="delect">删除</string>
     <string name="delete_all">删除全部</string>
     <string name="select">全选</string>
-    <string name="notice">提示:长按确定键删除录制文件</string>
+    <string name="notice">提示:长按确认键删除录制文件</string>
 		<string name="record_mode">定时录制</string>
 </resources>

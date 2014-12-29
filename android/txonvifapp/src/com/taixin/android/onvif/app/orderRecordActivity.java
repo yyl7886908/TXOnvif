@@ -76,7 +76,7 @@ public class orderRecordActivity extends Activity{
 		startTimeP.setCurrentMinute(Integer.parseInt(startT[1]));
 		endTimeP.setCurrentHour(Integer.parseInt(endT[0]));
 		endTimeP.setCurrentMinute(Integer.parseInt(endT[1]));
-		if(data.isZhouerCheck())
+		if(data.isZhouyiCheck())
 			cb1.setChecked(true);
 		if(data.isZhouerCheck())
 			cb2.setChecked(true);
@@ -207,6 +207,9 @@ public class orderRecordActivity extends Activity{
 				}
 				/*存储数据*/
 				storagingRecordInfo(startTime, endTime);
+				Toast toast = Toast.makeText(getApplicationContext(), "保存成功", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
 				startRecordService();
 			}
 		}

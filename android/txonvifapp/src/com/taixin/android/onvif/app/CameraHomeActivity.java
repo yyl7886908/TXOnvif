@@ -26,12 +26,12 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -61,7 +61,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 
 	private String TAG = "CamerasGridActivity";
 	// 定义一个变量，来标识是否退出
-    private static boolean isExit = false;
+	private static boolean isExit = false;
 	private String photoFolder = "/CameraRecordImages/";
 	private String videoFolder = "/CameraRecordVideos/";
 	private int videoViewWidth;
@@ -97,7 +97,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private PopupWindow menu, channelMenu, imageMenu, fileMenu, recordMenu,photoingMenu;
 	private LayoutInflater inflater;	
 	private View layout;
-	private ImageButton channelSwitchBtn, imageSetBtn, ptzBtn, photoBtn, recordingBtn, fileBtn, recordFlagBtn;
+	private ImageButton channelSwitchBtn, imageSetBtn, photoBtn, recordingBtn, fileBtn, recordFlagBtn;
 	private ImageButton highBtn, middleBtn, lowBtn;
 	private ImageButton picBtn, videoBtn;
 	private ImageView recordFlagView;
@@ -109,7 +109,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	private boolean cruise = true;
 	private String AUTHUri;/*录制的时候使用*/
 	private boolean recordingFlag = false;
-	
+
 	/**
 	 * 屏幕录制状态提示
 	 * 
@@ -131,7 +131,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	public Timer mTimer ;// 定时器
 	private int timeCtn;
 	private int timeCountFlag =1;
-	
+
 	@Override
 	protected void onCreate(Bundle bundle) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -148,21 +148,21 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		animation = AnimationUtils.loadAnimation(getApplicationContext(),
 				R.anim.pvr_notice);
 		handler = new Handler() {
-	        @Override
-	        public void handleMessage(Message msg) {
-	            super.handleMessage(msg);
-	            if(msg.what == timeCountFlag){
-	            	long nowTime = System.currentTimeMillis();
-	            	SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
-	            	Date date = new Date(nowTime - startTime);
-	            	System.out.println(formatter.format(date));
-	            	String str=formatter.format(date);
-	            	tvNoticeTime.setText(str);
-	            }else{
-	            	 isExit = false;
-	            }
-	        }
-	    };   
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				if(msg.what == timeCountFlag){
+					long nowTime = System.currentTimeMillis();
+					SimpleDateFormat formatter = new SimpleDateFormat("mm:ss");
+					Date date = new Date(nowTime - startTime);
+					System.out.println(formatter.format(date));
+					String str=formatter.format(date);
+					tvNoticeTime.setText(str);
+				}else{
+					isExit = false;
+				}
+			}
+		};   
 	}
 	@Override
 	protected void onResume() {
@@ -199,6 +199,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		System.out.println(" onKeyDown========="+KeyEvent.KEYCODE_DPAD_DOWN);
 		if(vvIsFullScreen){
 			if(!menu.isShowing()){
 				switch(keyCode){
@@ -212,16 +213,6 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 					onvifMgr.ptzUp(username, password, ptzService, profileToken);
 					return true;
 				case KeyEvent.KEYCODE_DPAD_DOWN:
-					if(fileMenu.isShowing()){
-						System.out.println("fileMenu is showing=======");
-						fileMenu.dismiss();
-						return true;
-					}
-					if(channelMenu.isShowing()){
-						System.out.println("channelMenu is showing=======");
-						channelMenu.dismiss();
-						return true;
-					}
 					onvifMgr.ptzDown(username, password, ptzService, profileToken);
 					return true;
 				case KeyEvent.KEYCODE_MENU:	
@@ -496,13 +487,14 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		menu.setFocusable(true);
 		menu.setBackgroundDrawable(new BitmapDrawable());
 		menu.setAnimationStyle(android.R.style.Animation_Dialog);  
+
 		ctrlMenuOnClickListener listener = new ctrlMenuOnClickListener();
 		channelSwitchBtn = (ImageButton) layout.findViewById(R.id.channel_switch_btn);
 		channelSwitchBtn.setOnClickListener(listener);
 		imageSetBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
 		imageSetBtn.setOnClickListener(listener);
-		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
-		ptzBtn.setOnClickListener(listener);
+		//	ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
+		//ptzBtn.setOnClickListener(listener);
 		photoBtn = (ImageButton) layout.findViewById(R.id.photo_button);
 		photoBtn.setOnClickListener(listener);
 		recordingBtn = (ImageButton) layout.findViewById(R.id.recording_button);
@@ -539,15 +531,17 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				}
 				else 
 					imageMenu.dismiss();
-			}else if(v == ptzBtn){
-				if(cruise){
-					//onvifMgr.ptzCruise(username, password, ptzService, profileToken, cruise);
-					cruise = false;
-				}else{
-					//onvifMgr.ptzCruise(username, password, ptzService, profileToken,cruise);
-					cruise = true;
-				}
-			}else if(v == photoBtn){
+			}
+			//			else if(v == ptzBtn){
+			//				if(cruise){
+			//					//onvifMgr.ptzCruise(username, password, ptzService, profileToken, cruise);
+			//					cruise = false;
+			//				}else{
+			//					//onvifMgr.ptzCruise(username, password, ptzService, profileToken,cruise);
+			//					cruise = true;
+			//				}
+			//			}
+			else if(v == photoBtn){
 				List<String> list = Usb.getUsbDirList();
 				if(list.size()<=0){
 					Toast toast = Toast.makeText(CameraHomeActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
@@ -562,10 +556,10 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 				vv.photoImage(filename);
 				photoingImagePath = filename;
 				new Handler().postDelayed(new Runnable(){  
-				     public void run() {  
-				    	 showPhotoingMenu();
-				     }  
-				  }, 500); 
+					public void run() {  
+						showPhotoingMenu();
+					}  
+				}, 500); 
 			}else if(v == recordingBtn){
 				if(!recordingFlag){
 					List<String> list = Usb.getUsbDirList();
@@ -597,7 +591,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			}
 		}
 	}
-	
+
 	public void initRecordMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		layout = inflater.inflate(R.layout.record_menu, null,false);
@@ -637,6 +631,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	public void initFileMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		layout = inflater.inflate(R.layout.file_ctrl_menu, null,false);
+		LinearLayout layMenu = (LinearLayout) layout.findViewById(R.id.fileCtrlMenuLay);
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
 		if(srceenW > 1800 && screenH > 1000){
@@ -644,14 +639,36 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}else{
 			fileMenu = new PopupWindow(layout, srceenW -600, 80, true);
 		}
+
 		fileMenu.setFocusable(true);
 		fileMenu.setBackgroundDrawable(new BitmapDrawable());
 		fileMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
+		fileMenu.setOutsideTouchable(true);
 		picBtn = (ImageButton) layout.findViewById(R.id.pic_button);
 		videoBtn = (ImageButton) layout.findViewById(R.id.video_button);
 		fileMenuOnClickListener listener = new fileMenuOnClickListener();
 		picBtn.setOnClickListener(listener);
 		videoBtn.setOnClickListener(listener);
+		picBtn.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					fileMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
+		videoBtn.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					fileMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 
 	/*初始化channel弹出框*/
@@ -675,6 +692,36 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		highBtn.setOnClickListener(listener);
 		middleBtn.setOnClickListener(listener);
 		lowBtn.setOnClickListener(listener);
+		highBtn.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					channelMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
+		middleBtn.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					channelMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
+		lowBtn.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					channelMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 	//显示控制菜单
 	private void showCtrlMenu(){
@@ -795,7 +842,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
 		if(srceenW > 1800 && screenH > 1000){
-			imageMenu = new PopupWindow(layout, srceenW -600, 400, true);;    
+			imageMenu = new PopupWindow(layout, srceenW -600, 300, true);;    
 		}else{
 			imageMenu = new PopupWindow(layout, srceenW -600, 250, true);
 		}
@@ -810,9 +857,20 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		brightBar.setOnSeekBarChangeListener(barListener);
 		chromBar.setOnSeekBarChangeListener(barListener);
 		constrastbar.setOnSeekBarChangeListener(barListener);
-//		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
-//		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
-//		imageSaveBtn.setOnClickListener(listener);
+		constrastbar.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					imageMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+			
+		});
+		//		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
+		//		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
+		//		imageSaveBtn.setOnClickListener(listener);
 	}
 	//显示控制菜单
 	private void showImageMenu(){
@@ -825,7 +883,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}
 		imageMenu.update();  
 	}
-	
+
 	class  seekBarListener implements OnSeekBarChangeListener{
 
 		@Override
@@ -841,29 +899,29 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		}
 		@Override
 		public void onStartTrackingTouch(SeekBar seekBar) {
-			
+
 		}
 		@Override
 		public void onStopTrackingTouch(SeekBar seekBar) {
-			
+
 		}
 	}
 
-//	class ImageMenuOnClickListener implements OnClickListener{
-//		@Override
-//		public void onClick(View v) {
-//			if(v == imageSaveBtn){
-//				float bright = brightBar.getProgress()*10;
-//				float chrom = chromBar.getProgress()*10;
-//				float constrast = constrastbar.getProgress()*10;
-//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
-//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
-//				if(ret)
-//					Toast.makeText(CameraHomeActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-//					imageMenu.dismiss();
-//			}
-//		}
-//	}
+	//	class ImageMenuOnClickListener implements OnClickListener{
+	//		@Override
+	//		public void onClick(View v) {
+	//			if(v == imageSaveBtn){
+	//				float bright = brightBar.getProgress()*10;
+	//				float chrom = chromBar.getProgress()*10;
+	//				float constrast = constrastbar.getProgress()*10;
+	//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+	//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+	//				if(ret)
+	//					Toast.makeText(CameraHomeActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+	//					imageMenu.dismiss();
+	//			}
+	//		}
+	//	}
 
 	/*检测U盘安装情况*/
 	public void checkUDisk(){
@@ -883,7 +941,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		String   str   =   formatter.format(curDate);
 		return str;
 	}
-	
+
 	/*悬浮框*/
 	/**
 	 * show notice
@@ -910,10 +968,10 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		Display mDisplay=windowManager.getDefaultDisplay();
 
 		layoutParams.x = (int) (mDisplay.getWidth()*0.4);
-		
+
 		layoutParams.y = (int) (-mDisplay.getHeight()*0.6);
 	}
-	
+
 	public void timerTask() {
 		//创建定时线程执行更新任务
 		tvNoticeTime.setText("00:00");
@@ -954,7 +1012,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			mTimer.cancel();
 		}
 	}
-	
+
 	/*初始化channel弹出框*/
 	public void initPhotoingMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -970,60 +1028,65 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 		photoingMenu.setBackgroundDrawable(new BitmapDrawable());
 		photoingMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
 		floatImage= (ImageView) layout.findViewById(R.id.floatPhotoView);
-		
-//		photoImageButton.setOnClickListener(new OnClickListener(){
-//			@Override
-//			public void onClick(View v) {
-//				System.out.println("photoImageButton onClick=======");
-//			}
-//		});
+
+		//		photoImageButton.setOnClickListener(new OnClickListener(){
+		//			@Override
+		//			public void onClick(View v) {
+		//				System.out.println("photoImageButton onClick=======");
+		//			}
+		//		});
 	}
 	//显示照相悬浮矿
-		private void showPhotoingMenu(){
-			Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
-			floatImage.setImageBitmap(bitmap);
-			int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
-			int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-			if(srceenW > 1800 && screenH > 1000){
-				photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH);  
-			}else{
-				photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH );  
-			}
-			photoingMenu.setFocusable(true);
-			photoingMenu.update();  
-			 new Handler().postDelayed(new Runnable(){  
-			     public void run() {  
-			    	 photoingMenu.dismiss();
-			     }  
-			  }, 1*1000); 
+	private void showPhotoingMenu(){
+		Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
+		floatImage.setImageBitmap(bitmap);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH);  
+		}else{
+			photoingMenu.showAsDropDown(this.findViewById(R.id.homeVideoView), 900, -screenH );  
 		}
-		
-		/**
-		* 加载本地图片
-		* http://bbs.3gstdy.com
-		* @param url
-		* @return
-		*/
-		public  Bitmap getLoacalBitmap(String url) {
-		     try {
-		          FileInputStream fis = new FileInputStream(url);
-		          return BitmapFactory.decodeStream(fis);
-		     } catch (FileNotFoundException e) {
-		          e.printStackTrace();
-		          return null;
-		     }
+		photoingMenu.setFocusable(true);
+		photoingMenu.update();  
+		new Handler().postDelayed(new Runnable(){  
+			public void run() {  
+				photoingMenu.dismiss();
+			}  
+		}, 1*1000); 
+	}
+
+	/**
+	 * 加载本地图片
+	 * http://bbs.3gstdy.com
+	 * @param url
+	 * @return
+	 */
+	public  Bitmap getLoacalBitmap(String url) {
+		try {
+			FileInputStream fis = new FileInputStream(url);
+			return BitmapFactory.decodeStream(fis);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
 		}
-		/*按两次退出键退出*/
-		private void exit() {
-	        if (!isExit) {
-	            isExit = true;
-	            Toast.makeText(getApplicationContext(), "再按一次退出程序",
-	                    Toast.LENGTH_SHORT).show();
-	            // 利用handler延迟发送更改状态信息
-	            handler.sendEmptyMessageDelayed(0, 2000);
-	        } else {
-	            finish();
-	            System.exit(0);
-	        }
-	    }
+	}
+	/*按两次退出键退出*/
+	private void exit() {
+		if (!isExit) {
+			isExit = true;
+			Toast.makeText(getApplicationContext(), "再按一次退出程序",
+					Toast.LENGTH_SHORT).show();
+			// 利用handler延迟发送更改状态信息
+			handler.sendEmptyMessageDelayed(0, 2000);
+		} else {
+			finish();
+			System.exit(0);
+		}
+	}
+
+	//		/*menu on key down listener */
+	//		class menuOnKeyDownListener implements OnKeyDownListener{
+	//			
+	//		}
 }

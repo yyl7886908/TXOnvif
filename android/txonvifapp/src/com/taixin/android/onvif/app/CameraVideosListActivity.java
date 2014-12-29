@@ -147,7 +147,7 @@ public class CameraVideosListActivity extends Activity {
 	private void initListView(){
 		fileList = this.getCameraVideosFile();
 		if(fileList.size() <= 0 || fileList == null){
-			Toast toast = Toast.makeText(CameraVideosListActivity.this, "没有发现视频文件", Toast.LENGTH_LONG);
+			Toast toast = Toast.makeText(CameraVideosListActivity.this, "没有视频文件", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}else{

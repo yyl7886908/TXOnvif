@@ -574,41 +574,41 @@ public class OnvifManager implements IOnvifManager {
 		return imageList;
 	}
 
-	@Override
-	public boolean saveOrderRecordModel(OrderRecordModel oRecord) {
-		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, Activity.MODE_PRIVATE); 
-		String strtmp;
-		try {
-			strtmp = SerializableUtil.obj2Str(oRecord);
-			SharedPreferences.Editor editor = mySharedPreferences.edit();
-			editor.putString("local_order_record_model",strtmp);
-			editor.commit();
-			System.out.println("save order_record_mode Info success!!!!");
-			return true;
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return false;
-	}
-
-	@Override
-	public OrderRecordModel getOrderedRecordModel() {
-		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, 
-				Activity.MODE_PRIVATE); 
-		String str = mySharedPreferences.getString("local_order_record_model", "default");
-		if(!str.equals("default")){
-			try {
-				OrderRecordModel rMode = (OrderRecordModel) SerializableUtil.str2Obj(str);
-				System.out.println("get local_order_record_model = "+rMode.getUuid());
-				return rMode;
-			} catch (StreamCorruptedException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-		return null;
-	}
+//	@Override
+//	public boolean saveOrderRecordModel(OrderRecordModel oRecord) {
+//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, Activity.MODE_PRIVATE); 
+//		String strtmp;
+//		try {
+//			strtmp = SerializableUtil.obj2Str(oRecord);
+//			SharedPreferences.Editor editor = mySharedPreferences.edit();
+//			editor.putString("local_order_record_model",strtmp);
+//			editor.commit();
+//			System.out.println("save order_record_mode Info success!!!!");
+//			return true;
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return false;
+//	}
+//
+//	@Override
+//	public OrderRecordModel getOrderedRecordModel() {
+//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, 
+//				Activity.MODE_PRIVATE); 
+//		String str = mySharedPreferences.getString("local_order_record_model", "default");
+//		if(!str.equals("default")){
+//			try {
+//				OrderRecordModel rMode = (OrderRecordModel) SerializableUtil.str2Obj(str);
+//				System.out.println("get local_order_record_model = "+rMode.getUuid());
+//				return rMode;
+//			} catch (StreamCorruptedException e) {
+//				e.printStackTrace();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//		return null;
+//	}
 
 	@Override
 	public LocalCamera getLocalCameraByUUidForRecord(String uuid) {

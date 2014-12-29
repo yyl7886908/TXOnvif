@@ -22,7 +22,6 @@
         android:id="@+id/camera_videos_list"
         android:layout_width="match_parent"
         android:layout_height="640dp"
-        android:paddingTop="30dp"
         android:layout_above="@+id/pop_linear"
         android:layout_below="@id/pop_textview"
         android:layout_marginBottom="3dp"

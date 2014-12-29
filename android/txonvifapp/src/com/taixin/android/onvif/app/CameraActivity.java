@@ -206,8 +206,8 @@ public class CameraActivity extends Activity{
 		channelSwitchBtn.setOnClickListener(listener);
 		imageSetBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
 		imageSetBtn.setOnClickListener(listener);
-		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
-		ptzBtn.setOnClickListener(listener);
+//		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
+//		ptzBtn.setOnClickListener(listener);
 		photoBtn = (ImageButton) layout.findViewById(R.id.photo_button);
 		photoBtn.setOnClickListener(listener);
 		recordingBtn = (ImageButton) layout.findViewById(R.id.recording_button);
@@ -462,7 +462,7 @@ public class CameraActivity extends Activity{
 		brightBar = (SeekBar) layout.findViewById(R.id.bright_seekbar);
 		chromBar = (SeekBar) layout.findViewById(R.id.chrom_seekbar);
 		constrastbar = (SeekBar) layout.findViewById(R.id.contrast_seekbar);
-		imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
+		//imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
 		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
 		imageSaveBtn.setOnClickListener(listener);
 	}

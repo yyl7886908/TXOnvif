@@ -84,14 +84,14 @@ public class OnvifService extends Service {
 				{
 				case Start_Time_Is_Reaching:
 					/*时间到，开始获取摄像头的信息开始录制*/
-					Toast toast = Toast.makeText(getApplicationContext(), "时间到!!!开始录制", Toast.LENGTH_LONG);
+					Toast toast = Toast.makeText(getApplicationContext(), "开始定时录制", Toast.LENGTH_LONG);
 					toast.setGravity(Gravity.CENTER, 0, 0);
 					toast.show();
 					startRecording();
 					break;
 				case Stop_Time_Is_Reaching:
 					/*时间到，开始获取摄像头的信息开始录制*/
-					Toast toast1 = Toast.makeText(getApplicationContext(), "时间到!!!结束录制", Toast.LENGTH_LONG);
+					Toast toast1 = Toast.makeText(getApplicationContext(), "结束定时录制", Toast.LENGTH_LONG);
 					toast1.setGravity(Gravity.CENTER, 0, 0);
 					toast1.show();
 					stopRecording();
@@ -135,14 +135,14 @@ public class OnvifService extends Service {
 			Date curDate = new Date(System.currentTimeMillis());//获取当前时间  
 			final String curTime = formatter.format(curDate);
 			System.out.println("current time =========="+curTime);
-			handler.post(new Runnable(){
-				@Override
-				public void run() {
-					Toast toast = Toast.makeText(getApplicationContext(), "当前时间是："+curTime, Toast.LENGTH_LONG);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-				}
-			});
+//			handler.post(new Runnable(){
+//				@Override
+//				public void run() {
+////					Toast toast = Toast.makeText(getApplicationContext(), "当前时间是："+curTime, Toast.LENGTH_LONG);
+////					toast.setGravity(Gravity.CENTER, 0, 0);
+////					toast.show();
+//				}
+//			});
 			
 			
 			if((curTime.equals(data.getStartTime()) || ( compareTime(data.getStartTime(), curTime) && compareTime(curTime, data.getEndTime()))) && checkCurrentTime(data)  && !isRecording){
@@ -196,7 +196,7 @@ public class OnvifService extends Service {
 
 	/*获取要定时录制的摄像头信息, 开始录制*/
 	public boolean startRecording(){
-		OrderRecordModel model = onvifMgr.getOrderedRecordModel();
+		OrderRecordData model = onvifMgr.getOrderedRecordData();
 		System.out.println("startRecording model =="+model.getUuid());
 		LocalCamera lCamera = onvifMgr.getLocalCameraByUUidForRecord(model.getUuid());
 		String username = "";
@@ -208,6 +208,9 @@ public class OnvifService extends Service {
 			password = lCamera.getPassword();
 		}else{
 			System.out.println("没有找到用户名和密码");
+			Toast toast = Toast.makeText(getApplicationContext(), "定时录制没有找到用户名和密码", Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER, 0, 0);
+			toast.show();
 			return false;
 		}
 		System.out.println("startRecording username =="+username);
@@ -219,7 +222,7 @@ public class OnvifService extends Service {
 		System.out.println("after discover=====");
 		if(devices.size()<=0 || devices == null){
 			System.out.println("没有搜到一个设备！");
-			Toast toast = Toast.makeText(getApplicationContext(), "没有搜到要任何一个设备", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(getApplicationContext(), "定时录制没有搜到要任何一个设备", Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 			return false;

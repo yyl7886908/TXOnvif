@@ -24,9 +24,7 @@
             android:layout_height="wrap_content"
             android:max="10"
             android:progress="5"
-            android:secondaryProgress="5"
-            android:progressDrawable="@drawable/bg_bar" 
-            android:thumb="@drawable/thumb_bar" />
+            android:secondaryProgress="5" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
@@ -47,9 +45,7 @@
             android:layout_height="wrap_content"
             android:max="10"
             android:progress="5"
-            android:secondaryProgress="5" 
-            android:progressDrawable="@drawable/bg_bar" 
-            android:thumb="@drawable/thumb_bar"/>
+            android:secondaryProgress="5" />
     </LinearLayout>
 
     
@@ -73,23 +69,7 @@
             android:layout_height="wrap_content"
             android:max="10"
             android:progress="5"
-            android:secondaryProgress="5"  
-            android:progressDrawable="@drawable/bg_bar" 
-            android:thumb="@drawable/thumb_bar"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingTop="20dp"
-        android:layout_gravity="center" >
-
-        <Button
-            android:id="@+id/imgae_save_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" 
-            android:background="@drawable/image_save_button"/>
+            android:secondaryProgress="5"  />
     </LinearLayout>
 
 </LinearLayout>

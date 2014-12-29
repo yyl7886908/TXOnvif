@@ -44,6 +44,7 @@ public class CameraImagesGridActivity extends Activity {
 		imageList = this.getCameraImagesFile();
 		if(imageList.size() <= 0 || imageList == null){
 			Toast toast = Toast.makeText(this, "没有照片文件", Toast.LENGTH_SHORT);
+			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}else{
 			mAdapter = new CameraImagesAdapter(imageList, this);

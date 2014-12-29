@@ -29,7 +29,6 @@
         android:fastScrollEnabled="true"
         android:gravity="center"
         android:numColumns="3"
-        android:paddingTop="30dp"
         android:verticalSpacing="10dip" 
         
         >

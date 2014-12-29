@@ -75,11 +75,11 @@ public interface IOnvifManager {
 	 * 下面预约和定时函数录制相关
 	 */
 	/*预约录制保存对象 淘汰*/
-	public boolean saveOrderRecordModel(OrderRecordModel oRecord);
+	//public boolean saveOrderRecordModel(OrderRecordModel oRecord);
 	/*预约录制保存新对象*/
 	public boolean saveOrderRecordData(OrderRecordData data);
 	/*读取所有预约录制的对象 淘汰*/
-	public OrderRecordModel getOrderedRecordModel();
+	//public OrderRecordModel getOrderedRecordModel();
 	/*读取所有预约录制的数据*/
 	public OrderRecordData getOrderedRecordData();
 	
