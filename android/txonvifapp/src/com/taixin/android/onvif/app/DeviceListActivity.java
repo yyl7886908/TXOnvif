@@ -51,25 +51,11 @@ public class DeviceListActivity extends Activity {
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
-			if(list.size()>1){
-				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
-				return false;
-			}
 			onvifMgr.getOnvifData().getCurrentCameras().clear();
 			ArrayList<GridsItemStatus> gridsItem= onvifMgr.getOnvifData().getGridsItemList();
 			for(GridsItemStatus item : gridsItem){
 				item.setStatus(-1);
 			}
-//			if(list.size()<=0){
-//				onvifMgr.getOnvifData().getCurrentCameras().clear();
-//				ArrayList<GridsItemStatus> gridsItem= onvifMgr.getOnvifData().getGridsItemList();
-//				for(GridsItemStatus item : gridsItem){
-//					item.setStatus(-1);
-//				}
-//				return true;
-//			}
 
 			for(int i =0;i<list.size();i++){
 				HashMap<String, String> temp = list.get(i);
@@ -84,7 +70,12 @@ public class DeviceListActivity extends Activity {
 					}	
 				}
 			}
-			System.out.println("current cameras size = "+onvifMgr.getOnvifData().getCurrentCameras().size());
+			if(onvifMgr.getOnvifData().getCurrentCameras().size()>1){
+				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return false;
+			}
 		}
 		return super.onKeyDown(keyCode, event);
 	}

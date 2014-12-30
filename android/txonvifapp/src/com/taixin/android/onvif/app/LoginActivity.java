@@ -28,6 +28,8 @@ public class LoginActivity extends Activity {
 	private CheckBox rem_pw, auto_login;  
 	private Button btn_login;    
 	private String userNameValue,passwordValue;  
+	private String defaultUser = "admin";
+	private String defaultPass = "12345";
 	private int position;
 	private IOnvifManager onvifMgr;
 	@Override
@@ -57,7 +59,11 @@ public class LoginActivity extends Activity {
 		btn_login.setOnClickListener(new OnClickListener() {  
 			public void onClick(View v) {  
 				userNameValue = userName.getText().toString();  
+				if(userNameValue == null || userNameValue.length()<=0)
+					userNameValue = defaultUser;
 				passwordValue = password.getText().toString();  
+				if(passwordValue == null || passwordValue.length() <= 0)
+					passwordValue = defaultPass;
 				//登录成功和记住密码框为选中状态才保存用户信息  
 				String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getDeviceService();
 				boolean isGetCapa = onvifMgr.getDeviceCapabilities(userNameValue, passwordValue, deviceService);
@@ -81,7 +87,7 @@ public class LoginActivity extends Activity {
 						toast.show();
 					}
 					else{
-						toast = Toast.makeText(LoginActivity.this,"保存成功", Toast.LENGTH_LONG); 
+						toast = Toast.makeText(LoginActivity.this,"保存失败", Toast.LENGTH_LONG); 
 						toast.setGravity(Gravity.CENTER, 0, 0);
 						toast.show();
 					}
