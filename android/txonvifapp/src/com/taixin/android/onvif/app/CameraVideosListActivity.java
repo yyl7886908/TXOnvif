@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.AlertDialog.Builder;
+import android.content.DialogInterface;
 import android.content.Intent;
-import android.app.AlertDialog.Builder;  
-import android.content.DialogInterface;  
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -24,7 +24,7 @@ import android.widget.Toast;
 
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
-import com.taixin.android.onvif.app.player.TXPlayer;
+import com.taixin.android.onvif.app.player.txplayer;
 import com.taixin.android.onvif.app.util.Usb;
 
 /*显示录制视频的列表*/
@@ -66,7 +66,8 @@ public class CameraVideosListActivity extends Activity {
 		Intent intent = new Intent();
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		intent.putExtra("videopath", f.getPath());
-		intent.setClass(this, TXPlayer.class);
+		//intent.setClass(this, TXPlayer.class);
+		intent.setClass(this, txplayer.class);
 		startActivity(intent);
 		overridePendingTransition(android.R.anim.fade_in,android.R.anim.fade_out);
 	}

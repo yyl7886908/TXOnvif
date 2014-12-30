@@ -759,6 +759,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 	/*username uri password 拼接,得到可以认证的RTSP视频流地址*/
 	public String getAuthUri(String username, String password, String uri){
 		//String authUri = "";
+		if(uri.contains("@"))
+			return uri;
 		String uris[] = uri.split("//");
 		String authUri = uris[0]+"//"+username+":"+password+"@"+uris[1];
 		this.AUTHUri = authUri;

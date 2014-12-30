@@ -373,8 +373,9 @@ public final class R {
         public static final int ordering_record=0x7f03001c;
         public static final int record_flag=0x7f03001d;
         public static final int record_menu=0x7f03001e;
-        public static final int txplayer=0x7f03001f;
-        public static final int video_play_layout=0x7f030020;
+        public static final int sysplayer=0x7f03001f;
+        public static final int txplayer=0x7f030020;
+        public static final int video_play_layout=0x7f030021;
     }
     public static final class string {
         public static final int about=0x7f050023;

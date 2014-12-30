@@ -91,11 +91,11 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 
 	    header->wsse__Security->UsernameToken->Nonce = (char*)malloc(64);
 	    memset(header->wsse__Security->UsernameToken->Nonce, '\0', 64);
-	    strcpy(header->wsse__Security->UsernameToken->Nonce,"LKqI6G/AikKCQrN0zqZFlg=="); //\u6ce8\u610f\u8fd9\u91cc
+	    strcpy(header->wsse__Security->UsernameToken->Nonce,"T7bnhBnCaM5Q64W6J0Z/jg=="); //\u6ce8\u610f\u8fd9\u91cc
 
 	    header->wsse__Security->UsernameToken->wsu__Created = (char*)malloc(64);
 	    memset(header->wsse__Security->UsernameToken->wsu__Created, '\0', 64);
-	    strcpy(header->wsse__Security->UsernameToken->wsu__Created,"2010-09-16T07:50:45Z");
+	    strcpy(header->wsse__Security->UsernameToken->wsu__Created,"2014-12-29T08:23:43Z");
 
 	    strcpy(header->wsse__Security->UsernameToken->Username, pUserInfo->username);
 	    header->wsse__Security->UsernameToken->Password = (struct _wsse__Password *)malloc(sizeof(struct _wsse__Password));

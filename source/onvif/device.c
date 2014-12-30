@@ -91,11 +91,12 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 
 	    header->wsse__Security->UsernameToken->Nonce = (char*)malloc(64);
 	    memset(header->wsse__Security->UsernameToken->Nonce, '\0', 64);
-	    strcpy(header->wsse__Security->UsernameToken->Nonce,"LKqI6G/AikKCQrN0zqZFlg=="); //\u6ce8\u610f\u8fd9\u91cc
+        strcpy(header->wsse__Security->UsernameToken->Nonce,"T7bnhBnCaM5Q64W6J0Z/jg==");
+	    /* strcpy(header->wsse__Security->UsernameToken->Nonce,"LKqI6G/AikKCQrN0zqZFlg=="); //\u6ce8\u610f\u8fd9\u91cc */
 
 	    header->wsse__Security->UsernameToken->wsu__Created = (char*)malloc(64);
 	    memset(header->wsse__Security->UsernameToken->wsu__Created, '\0', 64);
-	    strcpy(header->wsse__Security->UsernameToken->wsu__Created,"2010-09-16T07:50:45Z");
+	    strcpy(header->wsse__Security->UsernameToken->wsu__Created,"2014-12-29T08:23:43Z");
 
 	    strcpy(header->wsse__Security->UsernameToken->Username, pUserInfo->username);
 	    header->wsse__Security->UsernameToken->Password = (struct _wsse__Password *)malloc(sizeof(struct _wsse__Password));
@@ -104,6 +105,7 @@ static struct soap* ONVIF_Initsoap(struct SOAP_ENV__Header *header, const char *
 	    strcpy(header->wsse__Security->UsernameToken->Password->Type,\
 	            "http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-username-token-profile-1.0#PasswordDigest");
 	    header->wsse__Security->UsernameToken->Password->__item = (char*)malloc(128);
+
 	    ONVIF_GenrateDigest((unsigned char*)header->wsse__Security->UsernameToken->Password->__item,\
 	            (unsigned char*)pUserInfo->password,header->wsse__Security->UsernameToken->Nonce,header->wsse__Security->UsernameToken->wsu__Created);
 
@@ -1013,8 +1015,8 @@ int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_T
     UserInfo_S stUserInfo;
     memset(&stUserInfo, 0, sizeof(UserInfo_S));
 
-    strcpy(stUserInfo.username, "admin");
-    strcpy(stUserInfo.password, "12345");
+    strcpy(stUserInfo.username, username);
+    strcpy(stUserInfo.password, password);
 
     soap = ONVIF_Initsoap(&header, NULL, NULL, 5, &stUserInfo);
     char *soap_endpoint = (char *)malloc(256);
@@ -1057,18 +1059,37 @@ int ONVIF_DEVICE_GetCapabilities(char *username, char *password, TX_Capability_T
 #endif
                 
                 /* 给capability结构体赋值 */
-                strcpy(capabilityInfo->analytics, capa_resp.Capabilities->Analytics->XAddr);
-                strcpy(capabilityInfo->device, capa_resp.Capabilities->Device->XAddr);
-		if(capa_resp.Capabilities->Events->XAddr != NULL)
+                printf("0\n");
+                /* if(capa_resp.Capabilities->Analytics->XAddr == NULL){ */
+                /*     printf("11111\n"); */
+                /*     strcpy(capabilityInfo->analytics, capa_resp.Capabilities->Analytics->XAddr); */
+                /* }else{ */
+                /*     printf("222\n"); */
+                /*     strcpy(capabilityInfo->analytics,"NULL"); */
+                /* } */
+                printf("1\n");
+                if(capa_resp.Capabilities->Device->XAddr != NULL)
+                    strcpy(capabilityInfo->device, capa_resp.Capabilities->Device->XAddr);
+                else
+                    strcpy(capabilityInfo->device,"");
+                printf("2\n");
+                if(capa_resp.Capabilities->Events->XAddr != NULL)
                 	strcpy(capabilityInfo->events, capa_resp.Capabilities->Events->XAddr);
-		else
-			strcpy(capabilityInfo->events, "");
-                strcpy(capabilityInfo->imaging,  capa_resp.Capabilities->Imaging->XAddr);
-                strcpy(capabilityInfo->media,  capa_resp.Capabilities->Media->XAddr);
-		if(capa_resp.Capabilities->PTZ->XAddr!= NULL)
-			strcpy(capabilityInfo->ptz, capa_resp.Capabilities->PTZ->XAddr);
-		else
-			strcpy(capabilityInfo->ptz, "");
+                else
+                    strcpy(capabilityInfo->events, "");
+                printf("3\n");
+                if(capa_resp.Capabilities->Imaging->XAddr != NULL)
+                    strcpy(capabilityInfo->imaging,  capa_resp.Capabilities->Imaging->XAddr);
+                else
+                    strcpy(capabilityInfo->imaging, "");
+                if(capa_resp.Capabilities->Media->XAddr != NULL)
+                    strcpy(capabilityInfo->media,  capa_resp.Capabilities->Media->XAddr);
+                else
+                    strcpy(capabilityInfo->media, "");
+                if(capa_resp.Capabilities->PTZ->XAddr!= NULL)
+                    strcpy(capabilityInfo->ptz, capa_resp.Capabilities->PTZ->XAddr);
+                else
+                    strcpy(capabilityInfo->ptz, "");
             }
              
         }

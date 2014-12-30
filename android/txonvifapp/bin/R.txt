@@ -348,8 +348,9 @@ int layout order_record 0x7f03001b
 int layout ordering_record 0x7f03001c
 int layout record_flag 0x7f03001d
 int layout record_menu 0x7f03001e
-int layout txplayer 0x7f03001f
-int layout video_play_layout 0x7f030020
+int layout sysplayer 0x7f03001f
+int layout txplayer 0x7f030020
+int layout video_play_layout 0x7f030021
 int string about 0x7f050023
 int string add 0x7f05002b
 int string add_success 0x7f05002e

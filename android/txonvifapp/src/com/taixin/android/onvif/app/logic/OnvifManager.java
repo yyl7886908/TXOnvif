@@ -485,6 +485,8 @@ public class OnvifManager implements IOnvifManager {
 
 	/*username uri password 拼接,得到可以认证的RTSP视频流地址*/
 	public String getAuthUri(String username, String password, String uri){
+		if(uri.contains("@"))
+			return uri;
 		String authUri = "";
 		String uris[] = uri.split("//");
 		authUri = uris[0]+"//"+username+":"+password+"@"+uris[1];

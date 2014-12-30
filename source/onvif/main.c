@@ -7,7 +7,7 @@
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT     3702
 #define   USERNAME                  "admin"
-#define   PASSWORD                 "12345"
+#define   PASSWORD                 "admin"
 
 
 char searchService[128];
@@ -411,28 +411,15 @@ int main()
     onvif_discovery1();
     /* onvif_sleep(); */
     onvif_getCapabilities();
-    //onvif_media_getProfiles(); 
+    onvif_media_getProfiles();
 //onvif_event_CreatePullPointSubscription();
-    //onvif_media_getStreamURI(); 
-    /* onvif_imaging_GetServiceCapabilities(); */
-    /* onvif_imaging_GetImagingSettings2(); */
+    onvif_media_getStreamURI();
+    onvif_imaging_GetServiceCapabilities();
+    onvif_imaging_GetImagingSettings2();
     /* onvif_imaging_SetImagingSettings(); */
-    /* onvif_imaging_GetImagingSettings2(); */
+    onvif_imaging_GetImagingSettings2();
 	onvif_sleep();
-	int ret2 = TX_ONVIF_EVENT_GetEventProperties(USERNAME, PASSWORD, eventService);
-	printf("ret2 ==== %d\n", ret2);
-	onvif_sleep();
+
 	int ret3 = TX_ONVIF_EVENT_GetServiceCapabilities(USERNAME, PASSWORD, eventService);
-	printf("ret2 ==== %d\n", ret3);
-onvif_event_CreatePullPointSubscription();
-	/*
-	onvif_sleep();
-	int ret3 = TX_ONVIF_EVENT_CreatePullPointSubscription(USERNAME, PASSWORD, eventService);
-	printf("ret3 ==== %d\n", ret3);
-	onvif_sleep();
-	/*int ret4 = TX_ONVIF_EVENT_Unsubscribe(USERNAME, PASSWORD, eventService);
-	printf("ret4 ==== %d\n", ret4);
-	int ret5 = TX_ONVIF_EVENT_PullMessages(USERNAME, PASSWORD, eventService);
-	printf("ret5 ==== %d\n", ret5);*/
 
 }
