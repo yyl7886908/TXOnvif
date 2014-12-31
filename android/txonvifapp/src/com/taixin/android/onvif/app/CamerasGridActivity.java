@@ -52,7 +52,9 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 	private int searchDeviceFlag = 0;
 	private ProgressBar progressBar;
 	/*0 代表this，1代表DeviceListActivity, 2代表LoginActivity*/
-	private int onResumeFlag;
+	private int onResumeFlag = 0;
+	private int onResumeFlagFromdevice = 1;
+	private int onResumeFlagFromLogin = 2;
 	private int itemPosition;
 	private String authUri;
 	@Override
@@ -75,17 +77,44 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 
 	@Override
 	protected void onResume() {
-		System.out.println("on resume=====");
-		if(onResumeFlag == 1){
-			checkAfterOnResume();
-		}else if(onResumeFlag == 2){
-			if(onvifMgr.getOnvifData().getCurrentCameras().get(itemPosition).isAuth()){
-				/*认证，获取视频流OK*/
-				playByItemPosition(itemPosition);
-			}else{	
-				Toast.makeText(this, "请先登陆", Toast.LENGTH_SHORT).show();
+		System.out.println("on resume====="+onResumeFlag);
+		if(onResumeFlag == onResumeFlagFromdevice){
+			CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(0);
+			if(camera.isAuth()){
+				/*直接播放*/
+				Log.i(TAG, "onResumeFlagFromdevice ====camera is auth");
+			}else{
+				/*开始认证*/
+				Log.i(TAG, "onResumeFlagFromdevice ====camera is not auth");
+				LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
+				
+				if(lCamera == null){
+					/*本地没有保存，输入用户密码*/
+					Log.i(TAG, "onResumeFlagFromdevice lCamera====null");
+					onResumeFlag = onResumeFlagFromLogin;
+					Intent intent = new Intent();
+					intent.putExtra("grid_item_position", itemPosition);
+					intent.setClass(CamerasGridActivity.this, LoginActivity.class);
+					CamerasGridActivity.this.startActivity(intent);
+				}else{
+					/*认证播放*/
+					
+				}
 			}
+		}else if(onResumeFlag == onResumeFlagFromLogin){
+			/*播放*/
+			this.playByItemPosition(itemPosition);
 		}
+//		if(onResumeFlag == 1){
+//			checkAfterOnResume();
+//		}else if(onResumeFlag == 2){
+//			if(onvifMgr.getOnvifData().getCurrentCameras().get(itemPosition).isAuth()){
+//				/*认证，获取视频流OK*/
+//				playByItemPosition(itemPosition);
+//			}else{	
+//				Toast.makeText(this, "请先登陆", Toast.LENGTH_SHORT).show();
+//			}
+//		}
 		super.onResume();
 	}
 	
@@ -124,6 +153,11 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 				if(status == -1){
 					/*无设备*/
 					Toast.makeText(getApplicationContext(), "请先添加设备", Toast.LENGTH_SHORT).show();
+					onResumeFlag = onResumeFlagFromdevice;
+					Intent intent = new Intent();
+					intent.putExtra("grid_item_position", itemPosition);
+					intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+					CamerasGridActivity.this.startActivity(intent); 
 				}else if(status == 0){
 					/*有设备，没有播放,获取设备能力和播放地址，先登陆*/
 					/*查看本地有没有存取用户名和密码*/
@@ -225,45 +259,45 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			}
 		});
 		
-		if(deviceList.size()<=0){
-			handler.post(new Runnable(){
-				@Override
-				public void run() {
-					Toast toast = Toast.makeText(getApplicationContext(), "没有搜索到设备，请确认摄像头在局域网内", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-				}
-			});
-			
-			return;
-		}
-		
-		if(searchDeviceFlag == 1){
-			/*点击button*/
-			searchDeviceFlag = 0;
-			onResumeFlag = 1;
-			Intent intent = new Intent();
-			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-			CamerasGridActivity.this.startActivity(intent);
-		}else{
-			int appUsingCount = onvifMgr.getAppUsingCount();
-			System.out.println("appUsingCount ==="+appUsingCount);
-			if(appUsingCount == 0){
-				onvifMgr.addAppUsingCount();
-				onResumeFlag = 1;
-				Intent intent = new Intent();
-				intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-				CamerasGridActivity.this.startActivity(intent);
-			}else{
-				onvifMgr.addAppUsingCount();
-				handler.post(new Runnable(){
-					@Override
-					public void run() {
-						autoMatchAfterDiscoverEnd();
-					}
-				});
-			}
-		}
+//		if(deviceList.size()<=0){
+//			handler.post(new Runnable(){
+//				@Override
+//				public void run() {
+//					Toast toast = Toast.makeText(getApplicationContext(), "没有搜索到设备，请确认摄像头在局域网内", Toast.LENGTH_SHORT);
+//					toast.setGravity(Gravity.CENTER, 0, 0);
+//					toast.show();
+//				}
+//			});
+//			
+//			return;
+//		}
+//		
+//		if(searchDeviceFlag == 1){
+//			/*点击button*/
+//			searchDeviceFlag = 0;
+//			onResumeFlag = 1;
+//			Intent intent = new Intent();
+//			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+//			CamerasGridActivity.this.startActivity(intent);
+//		}else{
+//			int appUsingCount = onvifMgr.getAppUsingCount();
+//			System.out.println("appUsingCount ==="+appUsingCount);
+//			if(appUsingCount == 0){
+//				onvifMgr.addAppUsingCount();
+//				onResumeFlag = 1;
+//				Intent intent = new Intent();
+//				intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+//				CamerasGridActivity.this.startActivity(intent);
+//			}else{
+//				onvifMgr.addAppUsingCount();
+//				handler.post(new Runnable(){
+//					@Override
+//					public void run() {
+//						autoMatchAfterDiscoverEnd();
+//					}
+//				});
+//			}
+//		}
 }
 	/*不是第一次使用的时候，搜索完毕自动匹配存储好的密码进行链接*/
 	private void autoMatchAfterDiscoverEnd(){

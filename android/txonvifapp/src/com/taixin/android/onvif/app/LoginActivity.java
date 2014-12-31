@@ -17,6 +17,7 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
@@ -29,7 +30,7 @@ public class LoginActivity extends Activity {
 	private Button btn_login;    
 	private String userNameValue,passwordValue;  
 	private String defaultUser = "admin";
-	private String defaultPass = "12345";
+	private String defaultPass = "admin";
 	private int position;
 	private IOnvifManager onvifMgr;
 	@Override
@@ -65,31 +66,31 @@ public class LoginActivity extends Activity {
 				if(passwordValue == null || passwordValue.length() <= 0)
 					passwordValue = defaultPass;
 				//登录成功和记住密码框为选中状态才保存用户信息  
-				String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getDeviceService();
+				CameraData camera = onvifMgr.getCameraDataByIndex(position);
+				String deviceService = camera.getDevice().getDeviceService();
 				boolean isGetCapa = onvifMgr.getDeviceCapabilities(userNameValue, passwordValue, deviceService);
 				boolean auth = onvifMgr.getMediaStreamUri(userNameValue, passwordValue, deviceService);
 				Toast toast;
 				if(isGetCapa && auth){
 					//onvifMgr.getOnvifData().getGridsItemList().get(position).setAuth(true);
-					onvifMgr.getOnvifData().getCurrentCameras().get(position).setAuth(true);
-					onvifMgr.getOnvifData().getCurrentCameras().get(position).setUsername(userNameValue);
-					onvifMgr.getOnvifData().getCurrentCameras().get(position).setPassword(passwordValue);
+					camera.setAuth(true);
+					camera.setUsername(userNameValue);
+					camera.setPassword(passwordValue);
 					Toast.makeText(LoginActivity.this,"登录成功", Toast.LENGTH_LONG).show(); 
 					//storageLocalData();
-					String uuid = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getUuid();
+					String uuid = camera.getDevice().getUuid();
 					LocalCamera lCamera = new LocalCamera();
 					lCamera.setUuid(uuid);
 					lCamera.setPassword(passwordValue);
 					lCamera.setUsername(userNameValue);
 					if(onvifMgr.saveNewCameraToLocal(lCamera)){
-						toast = Toast.makeText(LoginActivity.this,"保存成功", Toast.LENGTH_LONG); 
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
+						Toast.makeText(LoginActivity.this,"保存密码成功", Toast.LENGTH_SHORT).show();
 					}
 					else{
-						toast = Toast.makeText(LoginActivity.this,"保存失败", Toast.LENGTH_LONG); 
-						toast.setGravity(Gravity.CENTER, 0, 0);
-						toast.show();
+						Toast.makeText(LoginActivity.this,"保存密码失败", Toast.LENGTH_SHORT).show();
+					}
+					if(onvifMgr.saveGridItemCameraToLocal(position, uuid)){
+						Toast.makeText(LoginActivity.this,"保存uuid成功", Toast.LENGTH_SHORT).show();
 					}
 					finish();
 				}else{

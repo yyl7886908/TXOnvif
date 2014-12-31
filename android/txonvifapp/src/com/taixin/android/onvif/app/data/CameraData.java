@@ -17,8 +17,14 @@ public class CameraData {
 	private ArrayList<MediaProfilesInfo> profiles;
 	private ArrayList<MediaStreamUri> streamUri;
 	private boolean isAuth = false;
+	private int index = -1; /*对应的gird item的索引*/
 	
-	
+	public int getIndex() {
+		return index;
+	}
+	public void setIndex(int index) {
+		this.index = index;
+	}
 	public boolean isAuth() {
 		return isAuth;
 	}

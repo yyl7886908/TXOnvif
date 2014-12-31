@@ -42,6 +42,7 @@ public class OnvifManager implements IOnvifManager {
 
 	private String TAG = "TXOnvif";
 	private String AppUsingCountFileName = "app_using_count";/*app使用的次数*/
+	private String GridItemCameraFileName = "grid_item_camera";/*gird item 对应的camera*/
 	private String localCameraFileName = "local_camera";/*本地存储摄像头信息列表的文件名*/
 	private String localSettingFileName = "local_setting";/*本地存储设置信息的文件名*/
 	private String previousCameraFileName = "local_previous_camera";/*本地存储上一次连接的摄像头信息文件名*/
@@ -263,7 +264,7 @@ public class OnvifManager implements IOnvifManager {
 		}
 		return null;
 	}
-	
+
 
 	@Override
 	public boolean saveNewCameraToLocal(LocalCamera camera) {
@@ -496,13 +497,14 @@ public class OnvifManager implements IOnvifManager {
 	@Override
 	public void play(int position,VideoView vv) {
 		LocalSetting localSet = this.getLocalSetting();
-		String username = onvfData.getCurrentCameras().get(position).getUsername();
-		String password = onvfData.getCurrentCameras().get(position).getPassword();
+		CameraData camera = this.getCameraDataByIndex(position);
+		String username = camera.getUsername();
+		String password = camera.getPassword();
 		String uri = "";
 		if(localSet.isMainStream())
-			uri = onvfData.getCurrentCameras().get(position).getStreamUri().get(0).getStreamURI();
+			uri = camera.getStreamUri().get(1).getStreamURI();
 		else
-			uri = onvfData.getCurrentCameras().get(position).getStreamUri().get(1).getStreamURI();
+			uri = camera.getStreamUri().get(1).getStreamURI();
 		String autuUri = getAuthUri(username, password, uri);
 		vv.setVideoPath(autuUri);
 		vv.requestFocus();
@@ -522,7 +524,7 @@ public class OnvifManager implements IOnvifManager {
 		String authUri = getAuthUri(username, password, uri);
 		return authUri;
 	}
-	
+
 	@Override
 	public List<HashMap<String, String>> getImages() {
 		// 指定要查询的uri资源
@@ -576,41 +578,41 @@ public class OnvifManager implements IOnvifManager {
 		return imageList;
 	}
 
-//	@Override
-//	public boolean saveOrderRecordModel(OrderRecordModel oRecord) {
-//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, Activity.MODE_PRIVATE); 
-//		String strtmp;
-//		try {
-//			strtmp = SerializableUtil.obj2Str(oRecord);
-//			SharedPreferences.Editor editor = mySharedPreferences.edit();
-//			editor.putString("local_order_record_model",strtmp);
-//			editor.commit();
-//			System.out.println("save order_record_mode Info success!!!!");
-//			return true;
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//		return false;
-//	}
-//
-//	@Override
-//	public OrderRecordModel getOrderedRecordModel() {
-//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, 
-//				Activity.MODE_PRIVATE); 
-//		String str = mySharedPreferences.getString("local_order_record_model", "default");
-//		if(!str.equals("default")){
-//			try {
-//				OrderRecordModel rMode = (OrderRecordModel) SerializableUtil.str2Obj(str);
-//				System.out.println("get local_order_record_model = "+rMode.getUuid());
-//				return rMode;
-//			} catch (StreamCorruptedException e) {
-//				e.printStackTrace();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		return null;
-//	}
+	//	@Override
+	//	public boolean saveOrderRecordModel(OrderRecordModel oRecord) {
+	//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, Activity.MODE_PRIVATE); 
+	//		String strtmp;
+	//		try {
+	//			strtmp = SerializableUtil.obj2Str(oRecord);
+	//			SharedPreferences.Editor editor = mySharedPreferences.edit();
+	//			editor.putString("local_order_record_model",strtmp);
+	//			editor.commit();
+	//			System.out.println("save order_record_mode Info success!!!!");
+	//			return true;
+	//		} catch (IOException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return false;
+	//	}
+	//
+	//	@Override
+	//	public OrderRecordModel getOrderedRecordModel() {
+	//		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordModeFileName, 
+	//				Activity.MODE_PRIVATE); 
+	//		String str = mySharedPreferences.getString("local_order_record_model", "default");
+	//		if(!str.equals("default")){
+	//			try {
+	//				OrderRecordModel rMode = (OrderRecordModel) SerializableUtil.str2Obj(str);
+	//				System.out.println("get local_order_record_model = "+rMode.getUuid());
+	//				return rMode;
+	//			} catch (StreamCorruptedException e) {
+	//				e.printStackTrace();
+	//			} catch (IOException e) {
+	//				e.printStackTrace();
+	//			}
+	//		}
+	//		return null;
+	//	}
 
 	@Override
 	public LocalCamera getLocalCameraByUUidForRecord(String uuid) {
@@ -622,7 +624,7 @@ public class OnvifManager implements IOnvifManager {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public ArrayList<MediaStreamUri> getMediaStreamUriForRecord(String username, String password,
 			String deviceService) {
@@ -636,14 +638,14 @@ public class OnvifManager implements IOnvifManager {
 		int appUsingCount = mySharedPreferences.getInt("AppUsingCount", 0);
 		return appUsingCount;
 	}
-	
+
 	@Override
 	public boolean addAppUsingCount() {
 		SharedPreferences mySharedPreferences = context.getSharedPreferences(AppUsingCountFileName, Activity.MODE_PRIVATE); 
 		SharedPreferences.Editor editor = mySharedPreferences.edit();
 		int appUsingCount = mySharedPreferences.getInt("AppUsingCount", 0);
-        editor.putInt("AppUsingCount", appUsingCount+1);  
-        editor.commit();  
+		editor.putInt("AppUsingCount", appUsingCount+1);  
+		editor.commit();  
 		return true;
 	}
 
@@ -700,4 +702,22 @@ public class OnvifManager implements IOnvifManager {
 		return null;
 	}
 
+	@Override
+	public boolean saveGridItemCameraToLocal(int itemIndex, String uuid) {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(GridItemCameraFileName, Activity.MODE_PRIVATE); 
+		SharedPreferences.Editor editor = mySharedPreferences.edit();
+		editor.putString(String.valueOf(itemIndex), uuid);
+		editor.commit();
+		return true;
+	}
+
+	@Override
+	public CameraData getCameraDataByIndex(int itemIndex) {
+		ArrayList<CameraData> deviceList = onvfData.getCameras();
+		for(CameraData camera : deviceList){
+			if(camera.getIndex() == itemIndex)
+				return camera;
+		}
+		return null;
+	}
 }

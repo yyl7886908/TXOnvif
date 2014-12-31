@@ -14,7 +14,7 @@
         android:label="@string/app_name" >
 
         <!-- android:name="com.taixin.android.onvif.app.MainActivity" -->
-        <!-- 
+        
         <activity
             android:name="com.taixin.android.onvif.app.CamerasGridActivity"
             android:label="@string/app_name"
@@ -25,7 +25,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-         -->
+         
+         <!-- 
         <activity
             android:name="com.taixin.android.onvif.app.CameraHomeActivity"
             android:label="@string/app_name"
@@ -36,7 +37,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-          
+          -->
         <activity android:name="com.taixin.android.onvif.app.DeviceListActivity" >
         </activity>
         <activity android:name="com.taixin.android.onvif.app.CameraActivity" >

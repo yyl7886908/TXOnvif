@@ -29,16 +29,16 @@ public class DeviceListActivity extends Activity {
 	private CheckBox cb;
 	private DeviceListAdapter mAdapter;
 	private ArrayList<HashMap<String, String>> list;
-	String titleData[] = new String[]{
-			"海康", "汉邦"
-	};
 	String uuidData[] = null;
 	String serviceData[] = null;
+	private int position;
 	@Override
 	protected void onCreate(Bundle bundle) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(bundle);
 		setContentView(R.layout.device_list);
+		Bundle extras = getIntent().getExtras(); 
+		position = extras.getInt("grid_item_position");
 		onvifMgr = OnvifManager.getInstance();
 		displayDeviceList();
 	}
@@ -52,29 +52,21 @@ public class DeviceListActivity extends Activity {
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK) {
 			onvifMgr.getOnvifData().getCurrentCameras().clear();
-			ArrayList<GridsItemStatus> gridsItem= onvifMgr.getOnvifData().getGridsItemList();
-			for(GridsItemStatus item : gridsItem){
-				item.setStatus(-1);
-			}
-
 			for(int i =0;i<list.size();i++){
 				HashMap<String, String> temp = list.get(i);
 				if(temp.get("flag").equals("true")){
 					CameraData device =onvifMgr.getOnvifData().getCameras().get(i);
 					if(!onvifMgr.checkDeviceIsInCurrent(device.getDevice().getUuid())){
+						device.setIndex(position);
 						onvifMgr.getOnvifData().getCurrentCameras().add(device);
-						onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(1);
-					}else{
-						onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(1);
-						System.out.println("set status 1 ======="+i);
-					}	
+					}
 				}
-			}
-			if(onvifMgr.getOnvifData().getCurrentCameras().size()>1){
-				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
-				return false;
+				if(onvifMgr.getOnvifData().getCurrentCameras().size()>1){
+					Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
+					toast.setGravity(Gravity.CENTER, 0, 0);
+					toast.show();
+					return false;
+				}
 			}
 		}
 		return super.onKeyDown(keyCode, event);

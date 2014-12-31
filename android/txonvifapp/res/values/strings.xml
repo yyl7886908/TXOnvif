@@ -4,7 +4,7 @@
     <string name="username">admin</string>
     <string name="password">12345</string>
     <string name="default_username">默认帐号admin</string>
-    <string name="default_password">默认密码12345</string>
+    <string name="default_password">默认密码admin</string>
     <string name="app_name">安防</string>
     <string name="image_grid_name">相片</string>
     <string name="video_grid_name">录像</string>

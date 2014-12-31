@@ -95,4 +95,9 @@ public interface IOnvifManager {
 	public boolean checkDeviceIsInCurrent(String uuid);
 	/*退出释放所有的资源*/
 	public void resourceTerm();
+	
+	/*四格视频的相关接口*/
+	public boolean saveGridItemCameraToLocal(int itemIndex, String uuid);/*保存每个gird item 对应的摄像头uuid*/
+	/*根据item index 获取摄像头列表里面对应的摄像头*/
+	public CameraData getCameraDataByIndex(int itemIndex);
 }
