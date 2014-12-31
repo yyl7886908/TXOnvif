@@ -172,7 +172,7 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			System.out.println("onvifMgr size ===="+onvifMgr.getOnvifData().getCurrentCameras().size());
 			if(onvifMgr.getOnvifData().getCurrentCameras().size() <= 0){
 				System.out.println("================");
-				vv.stopPlayback();
+				//vv.stopPlayback();
 				return;
 			}else{
 				vv.requestFocus();
