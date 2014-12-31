@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.taixin.android.onvif.app.DeviceListAdapter.DeviceViewHolder;
+import com.taixin.android.onvif.app.GridViewAdapter.GridViewHolder;
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.data.GridsItemStatus;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
@@ -56,17 +57,21 @@ public class DeviceListActivity extends Activity {
 				HashMap<String, String> temp = list.get(i);
 				if(temp.get("flag").equals("true")){
 					CameraData device =onvifMgr.getOnvifData().getCameras().get(i);
-					if(!onvifMgr.checkDeviceIsInCurrent(device.getDevice().getUuid())){
-						device.setIndex(position);
-						onvifMgr.getOnvifData().getCurrentCameras().add(device);
-					}
+					onvifMgr.getOnvifData().getCurrentCameras().add(device);
 				}
-				if(onvifMgr.getOnvifData().getCurrentCameras().size()>1){
-					Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
-					toast.setGravity(Gravity.CENTER, 0, 0);
-					toast.show();
-					return false;
-				}
+			}
+			CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(0);
+			if(!onvifMgr.checkoutDeviceIsVisible(camera.getDevice().getUuid())){
+				Toast toast = Toast.makeText(getApplicationContext(), "该设备已经被添加，请选择其他", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return false;
+			}
+			if(onvifMgr.getOnvifData().getCurrentCameras().size()>1){
+				Toast toast = Toast.makeText(getApplicationContext(), "只能选择一个设备", Toast.LENGTH_SHORT);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return false;
 			}
 		}
 		return super.onKeyDown(keyCode, event);
@@ -89,11 +94,23 @@ public class DeviceListActivity extends Activity {
 				holder.cb.toggle();
 				if(holder.cb.isChecked() == true){
 					list.get(position).put("flag", "true");
+					setOtherCheckBoxFlase(position);
 				}else{
 					list.get(position).put("flag", "false");
 				}
 			}
 		});
+	}
+
+	private void setOtherCheckBoxFlase(int index){
+		for(int i =0;i <onvifMgr.getOnvifData().getCameras().size(); i++){
+			if(index != i){
+				View view = listView.getChildAt(i);
+				DeviceViewHolder holder = (DeviceViewHolder) view.getTag();
+				holder.cb.setChecked(false);
+				list.get(i).put("flag", "false");
+			}
+		}
 	}
 
 	// 初始化数据

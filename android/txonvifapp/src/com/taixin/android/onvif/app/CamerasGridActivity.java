@@ -24,8 +24,10 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.FrameLayout;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -43,6 +45,10 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 
 	private Handler handler;
 	private String TAG = "CamerasGridActivity";
+	private String photoFolder = "/CameraRecordImages/";
+	private String videoFolder = "/CameraRecordVideos/";
+	private int videoViewWidth;
+	private int videoViewHeight;
 	private GridView cameraGrid;
 	private ImageButton addDeviceButton;
 	private ImageButton homeButton;
@@ -55,6 +61,10 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 	private int onResumeFlag = 0;
 	private int onResumeFlagFromdevice = 1;
 	private int onResumeFlagFromLogin = 2;
+	private int gridItemNoDevice = 0;
+	private int gridItemIsNotOnLine = 1;
+	private int gridItemIsPlaying = 2;
+	private int gridItemIsNotPlaying = 3;
 	private int itemPosition;
 	private String authUri;
 	@Override
@@ -105,16 +115,6 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			/*播放*/
 			this.playByItemPosition(itemPosition);
 		}
-//		if(onResumeFlag == 1){
-//			checkAfterOnResume();
-//		}else if(onResumeFlag == 2){
-//			if(onvifMgr.getOnvifData().getCurrentCameras().get(itemPosition).isAuth()){
-//				/*认证，获取视频流OK*/
-//				playByItemPosition(itemPosition);
-//			}else{	
-//				Toast.makeText(this, "请先登陆", Toast.LENGTH_SHORT).show();
-//			}
-//		}
 		super.onResume();
 	}
 	
@@ -148,49 +148,44 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 		});
 		cameraGrid.setOnItemClickListener(new OnItemClickListener() { 
 			public void onItemClick(AdapterView<?> parent, View v, int position, long id) { 
-				int status = onvifMgr.getOnvifData().getGridsItemList().get(position).getStatus();
 				itemPosition = position;
-				if(status == -1){
-					/*无设备*/
-					Toast.makeText(getApplicationContext(), "请先添加设备", Toast.LENGTH_SHORT).show();
-					onResumeFlag = onResumeFlagFromdevice;
-					Intent intent = new Intent();
-					intent.putExtra("grid_item_position", itemPosition);
-					intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-					CamerasGridActivity.this.startActivity(intent); 
-				}else if(status == 0){
-					/*有设备，没有播放,获取设备能力和播放地址，先登陆*/
-					/*查看本地有没有存取用户名和密码*/
-					CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(position);
-					LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
-					if(lCamera == null){
-						onResumeFlag = 2;
-						Intent intent = new Intent();
-						intent.putExtra("grid_item_position", position);
-						intent.setClass(CamerasGridActivity.this, LoginActivity.class);
-						CamerasGridActivity.this.startActivity(intent);
+				String uuid = onvifMgr.getGirdItemCameraUUid(position);
+				if(uuid != null){
+					/*已经添加设备，开始搜索有没有上线*/
+					CameraData camera = onvifMgr.checkIsOnLine(uuid);
+					if(camera == null){
+						Toast toast = Toast.makeText(getApplicationContext(), "设备没有上线", Toast.LENGTH_SHORT);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
 					}else{
-						String username = camera.getUsername();
-						String password = camera.getPassword();
-						String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(position).getDevice().getDeviceService();
-						boolean isGetCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
-						boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
-						if(isGetCapa && auth){
-							GridViewHolder holder = (GridViewHolder) v.getTag();
-							/*vv背景设置为透明*/
-							holder.vv.setBackgroundColor(R.color.transparency);
-							onvifMgr.play(position, holder.vv);
+						/*获取设备信息，开始播放*/
+						GridViewHolder holder = (GridViewHolder) v.getTag();
+						if(holder.vv.isPlaying()){
+							/*全屏*/
+							/*正在播放*/
+							Intent intent = new Intent();
+							intent.putExtra("grid_item_position", position);
+							System.out.println("position = "+position);
+							intent.setClass(CamerasGridActivity.this, CameraActivity.class);
+							CamerasGridActivity.this.startActivity(intent);
+							overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+						}else{
+							playByItemPosition(position);
 						}
 					}
-				}else if(status == 1){
-					/*正在播放*/
-					Intent intent = new Intent();
-					intent.putExtra("grid_item_position", position);
-					System.out.println("position = "+position);
-					intent.setClass(CamerasGridActivity.this, CameraActivity.class);
-					CamerasGridActivity.this.startActivity(intent);
-					//CamerasGridActivity.this.startActivityForResult(intent, 1);
-					overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out);
+				}else{
+					/*无设备,先查看有无可用的设备*/
+					if(onvifMgr.checkoutVisibleCamera()){
+						onResumeFlag = onResumeFlagFromdevice;
+						Intent intent = new Intent();
+						intent.putExtra("grid_item_position", itemPosition);
+						intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
+						CamerasGridActivity.this.startActivity(intent); 
+					}else{
+						Toast toast = Toast.makeText(getApplicationContext(), "没有可用设备", Toast.LENGTH_SHORT);
+						toast.setGravity(Gravity.CENTER, 0, 0);
+						toast.show();
+					}
 				}
 			} 
 		}); 
@@ -213,26 +208,22 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 		addDeviceButton.requestFocus();
 	}
 
-	/*onresume 后检查数据*/
-	public void checkAfterOnResume(){
-	
-		ArrayList<GridsItemStatus> items = onvifMgr.getOnvifData().getGridsItemList();
-		for(int i = 0;i<items.size();i++){
-			View view = cameraGrid.getChildAt(i);
-			GridViewHolder holder = (GridViewHolder) view.getTag();
-			holder.vv.setBackgroundResource(Color.TRANSPARENT);
-			if(items.get(i).getStatus() == 0){
-				holder.vv.setBackgroundResource(R.drawable.camera_default);
-			}
-		}
-	}
-
 	/*播放*/
 	public void playByItemPosition(int position){
-		View view = cameraGrid.getChildAt(position);
-		GridViewHolder holder = (GridViewHolder) view.getTag();
-		holder.vv.setBackgroundColor(R.color.transparency);
-		onvifMgr.play(position, holder.vv);
+		for(int i = 0;i <4;i++){
+			View view = cameraGrid.getChildAt(i);
+			GridViewHolder holder = (GridViewHolder) view.getTag();
+			if(i == position){
+				holder.vv.setBackgroundColor(R.color.transparency);
+				onvifMgr.play(position, holder.vv);
+			}
+			else{
+				if(onvifMgr.getOnvifData().getGridsItemList().get(i).getStatus() == gridItemIsPlaying){
+					holder.vv.stopPlayback();
+					holder.vv.setBackgroundColor(R.color.black);
+				}
+			}
+		}
 	}
 	
 	/*搜索设备，单独启线程执行*/
@@ -268,9 +259,9 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			if(uuid != null){
 				/*是否在线*/
 				CameraData camera = onvifMgr.checkIsOnLine(uuid);
-				camera.setIndex(i);
 				if(camera != null){
 					/*检查用户名密码，开始播放*/
+					camera.setIndex(i);
 					LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
 					if(lCamera != null){
 						camera.setUsername(lCamera.getUsername());
@@ -279,57 +270,43 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 						boolean isGetCapa = onvifMgr.getDeviceCapabilities(lCamera.getUsername(), lCamera.getPassword(), deviceService);
 						boolean auth = onvifMgr.getMediaStreamUri(lCamera.getUsername(), lCamera.getPassword(), deviceService);
 						if(isGetCapa && auth){
-							
 							this.playByItemPosition(i);
 						}
 					}
+				}else{
+					/*设备没有在线*/
+					onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(gridItemIsNotOnLine);
 				}
 			}
 		}
 	}
-	/*不是第一次使用的时候，搜索完毕自动匹配存储好的密码进行链接*/
-	private void autoMatchAfterDiscoverEnd(){
-		ArrayList<CameraData> cameraList = onvifMgr.getOnvifData().getCameras();//搜索到的所有设备
-		System.out.println("camera List size ==="+cameraList.size());
-		//先清空一下所有的List
-		onvifMgr.getOnvifData().initData();
-		for(CameraData camera : cameraList){
-			LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
-			if(lCamera != null){
-				camera.setUsername(lCamera.getUsername());
-				camera.setPassword(lCamera.getPassword());
-				
-				onvifMgr.getOnvifData().getCurrentCameras().add(camera);
-			}
-		}
-		System.out.println("current size====="+onvifMgr.getOnvifData().getCurrentCameras().size());
-		/*本地没有保存用户名和密码*/
-		if(onvifMgr.getOnvifData().getCurrentCameras().size()<=0){
-			onResumeFlag = 1;
-			Intent intent = new Intent();
-			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-			CamerasGridActivity.this.startActivity(intent);
+	/*video view全屏其他控件隐藏*/
+	private void setVVFullScreen(int itemIndex){
+		addDeviceButton.setVisibility(View.GONE);
+		homeButton.setVisibility(View.GONE);
+		FrameLayout.LayoutParams layoutParams=  
+				new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT); 
+		View view = cameraGrid.getChildAt(itemIndex);
+		GridViewHolder holder = (GridViewHolder) view.getTag();
+		holder.vv.setLayoutParams(layoutParams);
+	}
+	/*video view 全屏状态返回*/
+	private void setVVDefault(int itemIndex){
+		addDeviceButton.setVisibility(View.VISIBLE);
+		homeButton.setVisibility(View.VISIBLE);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		FrameLayout.LayoutParams layoutParams = null;
+		if(srceenW > 1800 && screenH > 1000){
+			layoutParams= new FrameLayout.LayoutParams(videoViewWidth, videoViewHeight); 
 		}else{
-			/*本地保存用户名和密码，直接播放*/
-			for(int i = 0; i<onvifMgr.getOnvifData().getCurrentCameras().size(); i++){
-				onvifMgr.getOnvifData().getGridsItemList().get(i).setStatus(0);
-				View view = cameraGrid.getChildAt(i);
-				GridViewHolder holder = (GridViewHolder) view.getTag();
-				holder.vv.setBackgroundResource(R.drawable.camera_default);
-				
-				CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(i);
-				String username = camera.getUsername();
-				String password = camera.getPassword();
-				String deviceService = onvifMgr.getOnvifData().getCurrentCameras().get(i).getDevice().getDeviceService();
-				boolean isGetCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
-				boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
-				if(isGetCapa && auth){
-					/*vv背景设置为透明*/
-					holder.vv.setBackgroundColor(R.color.transparency);
-					onvifMgr.play(i, holder.vv);
-					cameraGrid.requestFocus();
-				}
-			}
+			layoutParams= new FrameLayout.LayoutParams(900, 500); 
 		}
+		View view = cameraGrid.getChildAt(itemIndex);
+		GridViewHolder holder = (GridViewHolder) view.getTag();
+		holder.vv.setLayoutParams(layoutParams);
+		holder.vv.setLayoutParams(layoutParams);
+		System.out.println("layoutParams width = "+layoutParams.width);
+		System.out.println("layoutParams height = "+layoutParams.height);
 	}
 }

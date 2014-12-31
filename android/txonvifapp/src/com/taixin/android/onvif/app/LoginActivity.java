@@ -66,7 +66,7 @@ public class LoginActivity extends Activity {
 				if(passwordValue == null || passwordValue.length() <= 0)
 					passwordValue = defaultPass;
 				//登录成功和记住密码框为选中状态才保存用户信息  
-				CameraData camera = onvifMgr.getCameraDataByIndex(position);
+				CameraData camera = onvifMgr.getOnvifData().getCurrentCameras().get(0);
 				String deviceService = camera.getDevice().getDeviceService();
 				boolean isGetCapa = onvifMgr.getDeviceCapabilities(userNameValue, passwordValue, deviceService);
 				boolean auth = onvifMgr.getMediaStreamUri(userNameValue, passwordValue, deviceService);
@@ -90,6 +90,7 @@ public class LoginActivity extends Activity {
 						Toast.makeText(LoginActivity.this,"保存密码失败", Toast.LENGTH_SHORT).show();
 					}
 					if(onvifMgr.saveGridItemCameraToLocal(position, uuid)){
+						camera.setIndex(position);
 						Toast.makeText(LoginActivity.this,"保存uuid成功", Toast.LENGTH_SHORT).show();
 					}
 					finish();

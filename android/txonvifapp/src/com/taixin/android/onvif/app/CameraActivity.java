@@ -71,7 +71,7 @@ public class CameraActivity extends Activity{
 	private ImageButton highBtn, middleBtn, lowBtn;
 	private ImageButton picBtn, videoBtn;
 	private SeekBar chromBar, brightBar, constrastbar;
-	private Button imageSaveBtn;
+	//private Button imageSaveBtn;
 	/*第几路视频*/
 	private int channelFlag = 0;
 	private boolean isCruising = false;
@@ -126,7 +126,7 @@ public class CameraActivity extends Activity{
 	}
 	/*获取设备的信息*/
 	public void getDeviceInfo(){
-		camera = onvifMgr.getOnvifData().getCurrentCameras().get(position);
+		camera = onvifMgr.getCameraDataByIndex(position);
 		password = camera.getPassword();
 		username = camera.getUsername();
 		deviceService = camera.getDevice().getDeviceService();
@@ -413,6 +413,8 @@ public class CameraActivity extends Activity{
 	/*username uri password 拼接,得到可以认证的RTSP视频流地址*/
 	public String getAuthUri(String username, String password, String uri){
 		//String authUri = "";
+		if(uri.contains("@"))
+			return uri;
 		String uris[] = uri.split("//");
 		String authUri = uris[0]+"//"+username+":"+password+"@"+uris[1];
 		this.AUTHUri = authUri;
@@ -463,8 +465,8 @@ public class CameraActivity extends Activity{
 		chromBar = (SeekBar) layout.findViewById(R.id.chrom_seekbar);
 		constrastbar = (SeekBar) layout.findViewById(R.id.contrast_seekbar);
 		//imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
-		ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
-		imageSaveBtn.setOnClickListener(listener);
+		//ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
+		//imageSaveBtn.setOnClickListener(listener);
 	}
 	//显示控制菜单
 	private void showImageMenu(){
@@ -474,20 +476,20 @@ public class CameraActivity extends Activity{
 		imageMenu.update();  
 	}
 
-	class ImageMenuOnClickListener implements OnClickListener{
-		@Override
-		public void onClick(View v) {
-			if(v == imageSaveBtn){
-				float bright = brightBar.getProgress()*10;
-				float chrom = chromBar.getProgress()*10;
-				float constrast = constrastbar.getProgress()*10;
-				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
-				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
-				if(ret)
-					Toast.makeText(CameraActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-			}
-		}
-	}
+//	class ImageMenuOnClickListener implements OnClickListener{
+//		@Override
+//		public void onClick(View v) {
+//			if(v == imageSaveBtn){
+//				float bright = brightBar.getProgress()*10;
+//				float chrom = chromBar.getProgress()*10;
+//				float constrast = constrastbar.getProgress()*10;
+//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+//				if(ret)
+//					Toast.makeText(CameraActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+//			}
+//		}
+//	}
 
 	/*检测U盘安装情况*/
 	public void checkUDisk(){

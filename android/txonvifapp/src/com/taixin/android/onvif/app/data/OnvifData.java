@@ -18,6 +18,9 @@ public class OnvifData {
 //	private ArrayList<CameraData> 
 	/*四宫格数据*/
 	private ArrayList<GridsItemStatus> gridsItems;
+	private int gridItemNoDevice = 0;
+	private int gridItemIsNotPlaying = 1;
+	private int gridItemIsPlaying = 2;
 	/*本地存储的使用过的camera数据*/
 	private ArrayList<LocalCamera> localCameras;
 	/*本地存储的LocalSetting数据*/
@@ -85,7 +88,7 @@ public class OnvifData {
 		gridsItems = new ArrayList<GridsItemStatus>(GirdItemNum);
 		for(int i =0;i<GirdItemNum;i++){
 			GridsItemStatus item = new GridsItemStatus();
-			item.setStatus(-1);
+			item.setStatus(gridItemNoDevice);
 			gridsItems.add(item);
 		}
 		localCameras = new ArrayList<LocalCamera>();

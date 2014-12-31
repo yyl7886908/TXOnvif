@@ -102,8 +102,10 @@ public interface IOnvifManager {
 	public CameraData getCameraDataByIndex(int itemIndex);
 	/*获取本地存储的grid item信息*/
 	public String getGirdItemCameraUUid(int itemIndex);
-	/*搜索结束后遍历所有的设备，自动播放已经保存的设备*/
-	public void autoPlayAfterSearch();
 	/*是否在线*/
 	public CameraData checkIsOnLine(String uuid);
+	/*检测有无可用的摄像头设备，指在线没有被添加的*/
+	public boolean checkoutVisibleCamera();
+	/*查看在线某个设备是否已经被添加*/
+	public boolean checkoutDeviceIsVisible(String uuid);
 }

@@ -48,6 +48,10 @@ public class OnvifManager implements IOnvifManager {
 	private String previousCameraFileName = "local_previous_camera";/*本地存储上一次连接的摄像头信息文件名*/
 	private String orderRecordModeFileName = "local_order_record_model";/*本地预约录制的对象保存文件*/
 	private String orderRecordDataFileName = "local_order_record_data";/*本地预约录制的对象保存文件*/
+	private int gridItemNoDevice = 0;
+	private int gridItemIsNotOnLine = 1;
+	private int gridItemIsPlaying = 2;
+	private int gridItemIsNotPlaying = 3;
 	private static OnvifManager instance;
 	public static OnvifManager getInstance(){
 		if(instance == null){
@@ -498,6 +502,7 @@ public class OnvifManager implements IOnvifManager {
 	public void play(int position,VideoView vv) {
 		LocalSetting localSet = this.getLocalSetting();
 		CameraData camera = this.getCameraDataByIndex(position);
+		camera.setIndex(position);
 		String username = camera.getUsername();
 		String password = camera.getPassword();
 		String uri = "";
@@ -509,7 +514,6 @@ public class OnvifManager implements IOnvifManager {
 		vv.setVideoPath(autuUri);
 		vv.requestFocus();
 		vv.start();
-		onvfData.getGridsItemList().get(position).setStatus(1);
 	}
 	@Override
 	public String getAuthUriByPosition(int position) {
@@ -731,22 +735,6 @@ public class OnvifManager implements IOnvifManager {
 		else
 			return uuid;
 	}
-
-	@Override
-	public void autoPlayAfterSearch() {
-		for(int i = 0; i<4;i++){
-			String uuid = this.getGirdItemCameraUUid(i);
-			if(uuid != null){
-				/*是否在线*/
-				CameraData camera = this.checkIsOnLine(uuid);
-				if(camera != null){
-					/*检查用户名密码，开始播放*/
-					LocalCamera lCamera = this.getLocalCameraByUUid(camera);
-					
-				}
-			}
-		}
-	}
 	
 	/*是否在线*/
 	public CameraData checkIsOnLine(String uuid){
@@ -755,5 +743,27 @@ public class OnvifManager implements IOnvifManager {
 				return camera;
 		}
 		return null;
+	}
+
+	@Override
+	public boolean checkoutVisibleCamera() {
+		for(CameraData camera : onvfData.getCameras()){
+			if(camera.getIndex() == -1)
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean checkoutDeviceIsVisible(String uuid) {
+		for(CameraData camera : onvfData.getCameras()){
+			if(camera.getDevice().getUuid().equals(uuid) ){
+				System.out.println("index ========---------------------====="+camera.getIndex());
+				if(camera.getIndex() == -1)
+					return true;
+			}
+				
+		}
+		return false;
 	}
 }
