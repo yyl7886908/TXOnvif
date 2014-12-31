@@ -256,49 +256,37 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			@Override
 			public void run() {
 				progressBar.setVisibility(View.INVISIBLE);
+				autoPlayAfterSearch();
 			}
 		});
 		
-//		if(deviceList.size()<=0){
-//			handler.post(new Runnable(){
-//				@Override
-//				public void run() {
-//					Toast toast = Toast.makeText(getApplicationContext(), "没有搜索到设备，请确认摄像头在局域网内", Toast.LENGTH_SHORT);
-//					toast.setGravity(Gravity.CENTER, 0, 0);
-//					toast.show();
-//				}
-//			});
-//			
-//			return;
-//		}
-//		
-//		if(searchDeviceFlag == 1){
-//			/*点击button*/
-//			searchDeviceFlag = 0;
-//			onResumeFlag = 1;
-//			Intent intent = new Intent();
-//			intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-//			CamerasGridActivity.this.startActivity(intent);
-//		}else{
-//			int appUsingCount = onvifMgr.getAppUsingCount();
-//			System.out.println("appUsingCount ==="+appUsingCount);
-//			if(appUsingCount == 0){
-//				onvifMgr.addAppUsingCount();
-//				onResumeFlag = 1;
-//				Intent intent = new Intent();
-//				intent.setClass(CamerasGridActivity.this, DeviceListActivity.class);
-//				CamerasGridActivity.this.startActivity(intent);
-//			}else{
-//				onvifMgr.addAppUsingCount();
-//				handler.post(new Runnable(){
-//					@Override
-//					public void run() {
-//						autoMatchAfterDiscoverEnd();
-//					}
-//				});
-//			}
-//		}
 }
+	/*搜索完毕自动播放*/
+	public void autoPlayAfterSearch() {
+		for(int i = 0; i<4;i++){
+			String uuid = onvifMgr.getGirdItemCameraUUid(i);
+			if(uuid != null){
+				/*是否在线*/
+				CameraData camera = onvifMgr.checkIsOnLine(uuid);
+				camera.setIndex(i);
+				if(camera != null){
+					/*检查用户名密码，开始播放*/
+					LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
+					if(lCamera != null){
+						camera.setUsername(lCamera.getUsername());
+						camera.setPassword(lCamera.getPassword());
+						String deviceService = camera.getDevice().getDeviceService();
+						boolean isGetCapa = onvifMgr.getDeviceCapabilities(lCamera.getUsername(), lCamera.getPassword(), deviceService);
+						boolean auth = onvifMgr.getMediaStreamUri(lCamera.getUsername(), lCamera.getPassword(), deviceService);
+						if(isGetCapa && auth){
+							
+							this.playByItemPosition(i);
+						}
+					}
+				}
+			}
+		}
+	}
 	/*不是第一次使用的时候，搜索完毕自动匹配存储好的密码进行链接*/
 	private void autoMatchAfterDiscoverEnd(){
 		ArrayList<CameraData> cameraList = onvifMgr.getOnvifData().getCameras();//搜索到的所有设备

@@ -100,4 +100,10 @@ public interface IOnvifManager {
 	public boolean saveGridItemCameraToLocal(int itemIndex, String uuid);/*保存每个gird item 对应的摄像头uuid*/
 	/*根据item index 获取摄像头列表里面对应的摄像头*/
 	public CameraData getCameraDataByIndex(int itemIndex);
+	/*获取本地存储的grid item信息*/
+	public String getGirdItemCameraUUid(int itemIndex);
+	/*搜索结束后遍历所有的设备，自动播放已经保存的设备*/
+	public void autoPlayAfterSearch();
+	/*是否在线*/
+	public CameraData checkIsOnLine(String uuid);
 }

@@ -720,4 +720,40 @@ public class OnvifManager implements IOnvifManager {
 		}
 		return null;
 	}
+
+	@Override
+	public String getGirdItemCameraUUid(int itemIndex) {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(GridItemCameraFileName, Activity.MODE_PRIVATE); 
+		SharedPreferences.Editor editor = mySharedPreferences.edit();
+		String uuid = mySharedPreferences.getString(String.valueOf(itemIndex), "default");
+		if(uuid.equals("default"))
+			return null;
+		else
+			return uuid;
+	}
+
+	@Override
+	public void autoPlayAfterSearch() {
+		for(int i = 0; i<4;i++){
+			String uuid = this.getGirdItemCameraUUid(i);
+			if(uuid != null){
+				/*是否在线*/
+				CameraData camera = this.checkIsOnLine(uuid);
+				if(camera != null){
+					/*检查用户名密码，开始播放*/
+					LocalCamera lCamera = this.getLocalCameraByUUid(camera);
+					
+				}
+			}
+		}
+	}
+	
+	/*是否在线*/
+	public CameraData checkIsOnLine(String uuid){
+		for(CameraData camera : onvfData.getCameras()){
+			if(camera.getDevice().getUuid().equals(uuid))
+				return camera;
+		}
+		return null;
+	}
 }
