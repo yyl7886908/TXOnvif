@@ -183,6 +183,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			if(onvifMgr.getOnvifData().getCurrentCameras().get(position).isAuth()){
 				/*认证，获取视频流OK*/
 				onvifMgr.play(position, vv);
+				videoViewWidth = vv.getWidth();
+				videoViewHeight = vv.getHeight();
 			}else{	
 				Toast.makeText(this, "请先登陆", Toast.LENGTH_SHORT).show();
 			}
@@ -404,6 +406,9 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 						boolean isGetCapa = onvifMgr.getDeviceCapabilities(username, password, deviceService);
 						boolean auth = onvifMgr.getMediaStreamUri(username, password, deviceService);
 						if(isGetCapa && auth){
+							videoViewWidth = vv.getWidth();
+							videoViewHeight = vv.getHeight();
+							System.out.println("=before play==================w = "+videoViewWidth+"=======h = "+videoViewHeight);
 							handler.post(new Runnable(){
 								@Override
 								public void run() {
@@ -450,6 +455,8 @@ public class CameraHomeActivity extends Activity implements searchDevicesListene
 			if(isGetCapa){
 				if(onvifMgr.getMediaStreamUri(username, password, deviceService)){
 					onvifMgr.play(position, vv);
+					videoViewWidth = vv.getWidth();
+					videoViewHeight = vv.getHeight();
 					cameraStatus = 1;
 				}else{
 					Toast toast = Toast.makeText(getApplicationContext(), "获取视频流地址失败	", Toast.LENGTH_SHORT);
