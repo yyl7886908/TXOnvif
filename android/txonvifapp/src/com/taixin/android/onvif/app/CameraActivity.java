@@ -5,6 +5,8 @@ import java.io.FileNotFoundException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import android.app.Activity;
 import android.content.Context;
@@ -16,6 +18,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -23,6 +26,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnKeyListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.WindowManager.LayoutParams;
@@ -35,12 +39,16 @@ import android.widget.PopupWindow;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
+import com.taixin.android.onvif.app.CameraHomeActivity.myOnKeyListener;
+import com.taixin.android.onvif.app.CameraHomeActivity.seekBarListener;
 import com.taixin.android.onvif.app.data.CameraData;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.util.FileUtil;
 import com.taixin.android.onvif.app.util.Usb;
+import com.taixin.android.onvif.app.util.timeUtil;
 import com.taixin.android.onvif.sdk.obj.ImagingSetting;
 import com.taixin.ffmpeg.player.ITxRecorder;
 import com.taixin.ffmpeg.player.TXFFMpegRecorder;
@@ -48,9 +56,10 @@ import com.taixin.ffmpeg.widget.VideoView;
 
 public class CameraActivity extends Activity{
 	private String tag = "CameraActivity";
-	private String photoFolder = "/CameraRecordImages/";
 	/*当前设备在current设备中的位置*/
 	private int position;
+	private String photoFolder = "/CameraRecordImages/";
+	private String videoFolder = "/CameraRecordVideos/";
 	/*当前设备的信息*/
 	private CameraData camera;
 	private VideoView mVideoView;
@@ -92,8 +101,10 @@ public class CameraActivity extends Activity{
 	private Animation animation;
 	private ImageView iconImage;
 	private TextView tvNotice;
+	private TextView tvNoticeTime;
 	private boolean is_pvr_pause=false;
-	
+	public Timer mTimer ;// 定时器
+	private int timeCtn;
 	/*照片悬浮狂*/
 	private boolean isAdded = false; // 是否已增加悬浮窗
 	private static WindowManager wm;
@@ -102,6 +113,8 @@ public class CameraActivity extends Activity{
 	private ImageButton photoImageButton;
 	private String photoingImagePath;
 	private ImageView floatImage;
+	private int timeCountFlag =1;
+	private Handler handler;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -114,6 +127,18 @@ public class CameraActivity extends Activity{
 		animation = AnimationUtils.loadAnimation(getApplicationContext(),
 				R.anim.pvr_notice);
 		recorder = new TXFFMpegRecorder();
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				if(msg.what == timeCountFlag){
+					long nowTime = System.currentTimeMillis();
+					SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss");
+					String str=timeUtil.formatTime((int)(nowTime - startTime)/1000);
+					tvNoticeTime.setText(str);
+				}
+			}
+		};   
 	}
 
 	public void initData(){
@@ -146,7 +171,6 @@ public class CameraActivity extends Activity{
 			Log.i(tag, "获取profiles成功");
 		}
 		profileToken = camera.getProfiles().get(channelFlag).getToken();
-		
 	}
 
 	@Override
@@ -206,8 +230,8 @@ public class CameraActivity extends Activity{
 		channelSwitchBtn.setOnClickListener(listener);
 		imageSetBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
 		imageSetBtn.setOnClickListener(listener);
-//		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
-//		ptzBtn.setOnClickListener(listener);
+		//		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
+		//		ptzBtn.setOnClickListener(listener);
 		photoBtn = (ImageButton) layout.findViewById(R.id.photo_button);
 		photoBtn.setOnClickListener(listener);
 		recordingBtn = (ImageButton) layout.findViewById(R.id.recording_button);
@@ -259,20 +283,18 @@ public class CameraActivity extends Activity{
 					toast.show();
 					return;
 				}
-				String filename = list.get(0)+photoFolder+getCurrentTime()+".jpg";
-				
-				System.out.println("java photo file name = "+filename);
+				String folder = list.get(0)+photoFolder+String.valueOf(position)+"/";
+				FileUtil.createDir(folder);
+				String filename = list.get(0)+photoFolder+String.valueOf(position)+"/"+getCurrentTime()+".jpg";
+				FileUtil.createFile(filename);
 				mVideoView.photoImage(filename);
 				photoingImagePath = filename;
-				Toast toast = Toast.makeText(CameraActivity.this, "拍照成功", Toast.LENGTH_SHORT);
-				toast.setGravity(Gravity.CENTER, 0, 0);
-				toast.show();
 				new Handler().postDelayed(new Runnable(){  
-				     public void run() {  
-				    	 showPhotoingMenu();
-				     }  
-				  }, 2*1000); 
-				
+					public void run() {  
+						showPhotoingMenu();
+					}  
+				}, 500); 
+
 			}else if(v == recordingBtn){
 				if(!recordingFlag){
 					List<String> list = Usb.getUsbDirList();
@@ -282,9 +304,11 @@ public class CameraActivity extends Activity{
 						toast.show();
 						return;
 					}
-					String filename = list.get(0)+"/CameraRecordVideos/"+getCurrentTime()+".avi";
-					System.out.println("java recording file name = "+filename);
+					String folder = list.get(0)+videoFolder+String.valueOf(position);
+					FileUtil.createDir(folder);
+					String filename = list.get(0)+videoFolder+String.valueOf(position)+"/"+getCurrentTime()+".ts";
 					FileUtil.createFile(filename);
+					System.out.println("java recording file name = "+filename);
 					AUTHUri=onvifMgr.getAuthUriByPosition(position);
 					//vv.startRecordingRtspStream(AUTHUri, filename, 0);
 					recorder.startRecoderRTSPStream(AUTHUri, filename, -1);
@@ -297,14 +321,10 @@ public class CameraActivity extends Activity{
 					recordingFlag = false;
 					recordMenu.dismiss();
 					removeView();
-				}
-				}else{
-					mVideoView.stopRecordingRtspStream();
-					recordingFlag = false;
-				}
-				
+				}	
 			}
 		}
+	}
 	/*初始化file弹出框*/
 	public void initFileMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -324,8 +344,10 @@ public class CameraActivity extends Activity{
 		fileMenuOnClickListener listener = new fileMenuOnClickListener();
 		picBtn.setOnClickListener(listener);
 		videoBtn.setOnClickListener(listener);
+		picBtn.setOnKeyListener(new myOnKeyListener());
+		videoBtn.setOnKeyListener(new myOnKeyListener());
 	}
-	
+
 	/*初始化channel弹出框*/
 	public void initChannelMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -347,6 +369,9 @@ public class CameraActivity extends Activity{
 		highBtn.setOnClickListener(listener);
 		middleBtn.setOnClickListener(listener);
 		lowBtn.setOnClickListener(listener);
+		highBtn.setOnKeyListener(new myOnKeyListener());
+		middleBtn.setOnKeyListener(new myOnKeyListener());
+		lowBtn.setOnKeyListener(new myOnKeyListener());
 	}
 	//显示控制菜单
 	private void showCtrlMenu(){
@@ -363,11 +388,22 @@ public class CameraActivity extends Activity{
 	class fileMenuOnClickListener implements OnClickListener{
 		@Override
 		public void onClick(View v) {
+			List<String> list = Usb.getUsbDirList();
+			if(list.size()<=0){
+				Toast toast = Toast.makeText(CameraActivity.this, "请先插入U盘", Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER, 0, 0);
+				toast.show();
+				return;
+			}
+			String photofolder = list.get(0)+photoFolder+String.valueOf(position)+"/";
+			String videofolder = list.get(0)+videoFolder+String.valueOf(position)+"/";
 			if(v == picBtn){
 				Intent intent = new Intent(CameraActivity.this, CameraImagesGridActivity.class);
+				intent.putExtra("folder_path", photofolder);
 				CameraActivity.this.startActivity(intent);
 			}else if(v == videoBtn){
 				Intent intent = new Intent(CameraActivity.this, CameraVideosListActivity.class);
+				intent.putExtra("folder_path", videofolder);
 				CameraActivity.this.startActivity(intent);
 			}
 		}
@@ -391,7 +427,7 @@ public class CameraActivity extends Activity{
 			}
 		}
 	}
-	
+
 	/*根据id切换视频流*/
 	public void switchChannelById(int id){
 		String uri = null;
@@ -428,10 +464,10 @@ public class CameraActivity extends Activity{
 		}else{
 			channelMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);   
 		}
-		
+
 		channelMenu.update(); 
 	}
-	
+
 	private void showFileMenu(){
 		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
 		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -440,7 +476,7 @@ public class CameraActivity extends Activity{
 		}else{
 			fileMenu.showAsDropDown(this.findViewById(R.id.video_view), 300, -screenH/2);   
 		}
-		
+
 		fileMenu.update(); 
 	}
 	/**
@@ -457,16 +493,27 @@ public class CameraActivity extends Activity{
 		}else{
 			imageMenu = new PopupWindow(layout, srceenW -600, 250, true);
 		}
-		
+
 		imageMenu.setFocusable(true);
 		imageMenu.setBackgroundDrawable(new BitmapDrawable());
 		imageMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
 		brightBar = (SeekBar) layout.findViewById(R.id.bright_seekbar);
 		chromBar = (SeekBar) layout.findViewById(R.id.chrom_seekbar);
 		constrastbar = (SeekBar) layout.findViewById(R.id.contrast_seekbar);
-		//imageSaveBtn= (Button) layout.findViewById(R.id.imgae_save_btn);
-		//ImageMenuOnClickListener listener = new ImageMenuOnClickListener();
-		//imageSaveBtn.setOnClickListener(listener);
+		seekBarListener barListener = new seekBarListener();
+		brightBar.setOnSeekBarChangeListener(barListener);
+		chromBar.setOnSeekBarChangeListener(barListener);
+		constrastbar.setOnSeekBarChangeListener(barListener);
+		constrastbar.setOnKeyListener(new OnKeyListener(){
+			@Override
+			public boolean onKey(View v, int keyCode, KeyEvent event) {
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					imageMenu.dismiss();
+					return true;
+				}
+				return false;
+			}
+		});
 	}
 	//显示控制菜单
 	private void showImageMenu(){
@@ -476,20 +523,20 @@ public class CameraActivity extends Activity{
 		imageMenu.update();  
 	}
 
-//	class ImageMenuOnClickListener implements OnClickListener{
-//		@Override
-//		public void onClick(View v) {
-//			if(v == imageSaveBtn){
-//				float bright = brightBar.getProgress()*10;
-//				float chrom = chromBar.getProgress()*10;
-//				float constrast = constrastbar.getProgress()*10;
-//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
-//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
-//				if(ret)
-//					Toast.makeText(CameraActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
-//			}
-//		}
-//	}
+	//	class ImageMenuOnClickListener implements OnClickListener{
+	//		@Override
+	//		public void onClick(View v) {
+	//			if(v == imageSaveBtn){
+	//				float bright = brightBar.getProgress()*10;
+	//				float chrom = chromBar.getProgress()*10;
+	//				float constrast = constrastbar.getProgress()*10;
+	//				String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+	//				boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+	//				if(ret)
+	//					Toast.makeText(CameraActivity.this, "设置成功", Toast.LENGTH_SHORT).show();
+	//			}
+	//		}
+	//	}
 
 	/*检测U盘安装情况*/
 	public void checkUDisk(){
@@ -509,7 +556,7 @@ public class CameraActivity extends Activity{
 		String   str   =   formatter.format(curDate);
 		return str;
 	}
-	
+
 	public void initRecordMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
 		layout = inflater.inflate(R.layout.record_menu, null,false);
@@ -552,10 +599,13 @@ public class CameraActivity extends Activity{
 	 */
 	private void CreatNoticeView() {
 		view = LayoutInflater.from(this).inflate(R.layout.noticedialog, null);
-		
 		iconImage = (ImageView) view.findViewById(R.id.notice_iv);
 		tvNotice = (TextView) view.findViewById(R.id.tv_notice);
 		tvNotice.setText("正在录制 ");
+		tvNotice.setBackgroundColor(R.color.black);
+		tvNoticeTime = (TextView) view.findViewById(R.id.tv_notice_time);
+		tvNoticeTime.setText("21:00");
+		tvNoticeTime.setBackgroundColor(R.color.black);
 		windowManager = (WindowManager) this.getSystemService(WINDOW_SERVICE);
 		/*
 		 * LayoutParams.TYPE_SYSTEM_ERROR：保证该悬浮窗所有View的最上层
@@ -565,16 +615,25 @@ public class CameraActivity extends Activity{
 		layoutParams = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
 				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
-//		 layoutParams.gravity = Gravity.RIGHT|Gravity.BOTTOM; //悬浮窗开始在右下角显示
-//		 layoutParams.gravity = Gravity.RIGHT | Gravity.TOP;
-//		 layoutParams.verticalMargin=80;
 		Display mDisplay=windowManager.getDefaultDisplay();
-//		 layoutParams.horizontalMargin=80;//
+
 		layoutParams.x = (int) (mDisplay.getWidth()*0.4);
-		
+
 		layoutParams.y = (int) (-mDisplay.getHeight()*0.6);
 	}
-	
+	public void timerTask() {
+		//创建定时线程执行更新任务
+		tvNoticeTime.setText("00:00:00");
+		mTimer = new Timer();
+		timeCtn = 0;
+		mTimer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				handler.sendEmptyMessage( timeCountFlag);// 向Handler发送消息
+				timeCtn++;
+			}
+		}, 1000, 1000);// 定时任务
+	}
 	/**
 	 * 刷新或显示悬浮窗
 	 */
@@ -586,7 +645,9 @@ public class CameraActivity extends Activity{
 			windowManager.addView(view, layoutParams);
 			viewAdded = true;
 		}
+
 		startTime = System.currentTimeMillis();
+		timerTask();
 	}
 
 	/**
@@ -598,9 +659,10 @@ public class CameraActivity extends Activity{
 			viewAdded = false;
 			animation.cancel();
 			tvNotice.setText(" 正在录制 ");
+			mTimer.cancel();
 		}
 	}
-	
+
 	/*拍照特效*/
 	/**
 	 * 创建悬浮窗
@@ -616,47 +678,47 @@ public class CameraActivity extends Activity{
 		photoImageButton.setImageBitmap(bitmap);
 		//photoImageButton.setImageURI(Uri.parse(filename));
 		System.out.println("filename = "+filename);
-        wm = (WindowManager) getApplicationContext()
-        	.getSystemService(Context.WINDOW_SERVICE);
-        params = new LayoutParams(LayoutParams.WRAP_CONTENT,
+		wm = (WindowManager) getApplicationContext()
+				.getSystemService(Context.WINDOW_SERVICE);
+		params = new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT, LayoutParams.TYPE_SYSTEM_ERROR,
 				LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSPARENT);
-        Display mDisplay=wm.getDefaultDisplay();
-        params.x = (int) (mDisplay.getWidth()*0.8);
-        params.y = (int) (-mDisplay.getHeight()*3);
-        // 设置window type
-        params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
-        params.format = PixelFormat.RGBA_8888; // 设置图片格式，效果为背景透明
-        // 设置悬浮窗的长得宽
-        params.width = 200;
-        params.height = 100;
-        wm.addView(iv, params);
-        isAdded = true;
-        photoImageButton.setFocusable(true);
-        photoImageButton.setOnClickListener(new OnClickListener(){
+		Display mDisplay=wm.getDefaultDisplay();
+		params.x = (int) (mDisplay.getWidth()*0.8);
+		params.y = (int) (-mDisplay.getHeight()*3);
+		// 设置window type
+		params.type = WindowManager.LayoutParams.TYPE_SYSTEM_ALERT;
+		params.format = PixelFormat.RGBA_8888; // 设置图片格式，效果为背景透明
+		// 设置悬浮窗的长得宽
+		params.width = 200;
+		params.height = 100;
+		wm.addView(iv, params);
+		isAdded = true;
+		photoImageButton.setFocusable(true);
+		photoImageButton.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
 				System.out.println("photoImageButton  clicked===");
 			}
-        	
-        });
+
+		});
 	}
 	/**
-	* 加载本地图片
-	* http://bbs.3gstdy.com
-	* @param url
-	* @return
-	*/
+	 * 加载本地图片
+	 * http://bbs.3gstdy.com
+	 * @param url
+	 * @return
+	 */
 	public  Bitmap getLoacalBitmap(String url) {
-	     try {
-	          FileInputStream fis = new FileInputStream(url);
-	          return BitmapFactory.decodeStream(fis);
-	     } catch (FileNotFoundException e) {
-	          e.printStackTrace();
-	          return null;
-	     }
+		try {
+			FileInputStream fis = new FileInputStream(url);
+			return BitmapFactory.decodeStream(fis);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
-	
+
 	/*初始化channel弹出框*/
 	public void initPhotoingMenu(){
 		inflater = (LayoutInflater) this.getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -672,31 +734,73 @@ public class CameraActivity extends Activity{
 		photoingMenu.setBackgroundDrawable(new BitmapDrawable());
 		photoingMenu.setAnimationStyle(android.R.style.Animation_Dialog); 
 		floatImage= (ImageView) layout.findViewById(R.id.floatPhotoView);
-		
-//		photoImageButton.setOnClickListener(new OnClickListener(){
-//			@Override
-//			public void onClick(View v) {
-//				System.out.println("photoImageButton onClick=======");
-//			}
-//		});
+
+		//		photoImageButton.setOnClickListener(new OnClickListener(){
+		//			@Override
+		//			public void onClick(View v) {
+		//				System.out.println("photoImageButton onClick=======");
+		//			}
+		//		});
 	}
 	//显示照相悬浮矿
-		private void showPhotoingMenu(){
-			Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
-			floatImage.setImageBitmap(bitmap);
-			int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
-			int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-			if(srceenW > 1800 && screenH > 1000){
-				photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH);  
-			}else{
-				photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH );  
-			}
-			photoingMenu.setFocusable(true);
-			photoingMenu.update();  
-			 new Handler().postDelayed(new Runnable(){  
-			     public void run() {  
-			    	 photoingMenu.dismiss();
-			     }  
-			  }, 2*1000); 
+	private void showPhotoingMenu(){
+		Bitmap bitmap = getLoacalBitmap(photoingImagePath); //从本地取图片
+		floatImage.setImageBitmap(bitmap);
+		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
+		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
+		if(srceenW > 1800 && screenH > 1000){
+			photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH);  
+		}else{
+			photoingMenu.showAsDropDown(this.findViewById(R.id.video_view), 900, -screenH );  
 		}
+		photoingMenu.setFocusable(true);
+		photoingMenu.update();  
+		new Handler().postDelayed(new Runnable(){  
+			public void run() {  
+				photoingMenu.dismiss();
+			}  
+		}, 2*1000); 
+	}
+	
+	/*on key listener*/
+	class myOnKeyListener implements OnKeyListener{
+		@Override
+		public boolean onKey(View v, int keyCode, KeyEvent event) {
+			ImageButton b = (ImageButton)v;
+			if(b==picBtn || b==videoBtn){
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					fileMenu.dismiss();
+					return true;
+				}
+			}else if(b == highBtn ||b==middleBtn || b == lowBtn){
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					channelMenu.dismiss();
+					return true;
+				}
+			}
+			return false;
+		}
+	}
+	class  seekBarListener implements OnSeekBarChangeListener{
+
+		@Override
+		public void onProgressChanged(SeekBar seekBar, int progress,
+				boolean fromUser) {
+			float bright = brightBar.getProgress()*10;
+			float chrom = chromBar.getProgress()*10;
+			float constrast = constrastbar.getProgress()*10;
+			String videoSourceToken = camera.getProfiles().get(channelFlag).getVideoSourceToken();
+			boolean ret = onvifMgr.setImagingSetting(username, password, imageService, videoSourceToken, bright, chrom, constrast);
+			if(ret)
+				System.out.println("=================image setting  sucess！！！");
+		}
+		@Override
+		public void onStartTrackingTouch(SeekBar seekBar) {
+
+		}
+		@Override
+		public void onStopTrackingTouch(SeekBar seekBar) {
+
+		}
+	}
 }

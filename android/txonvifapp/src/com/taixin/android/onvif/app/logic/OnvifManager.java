@@ -518,13 +518,14 @@ public class OnvifManager implements IOnvifManager {
 	@Override
 	public String getAuthUriByPosition(int position) {
 		LocalSetting localSet = this.getLocalSetting();
-		String username = onvfData.getCurrentCameras().get(position).getUsername();
-		String password = onvfData.getCurrentCameras().get(position).getPassword();
+		CameraData camera = this.getCameraDataByIndex(position);
+		String username = camera.getUsername();
+		String password = camera.getPassword();
 		String uri = "";
 		if(localSet.isMainStream())
-			uri = onvfData.getCurrentCameras().get(position).getStreamUri().get(0).getStreamURI();
+			uri = camera.getStreamUri().get(0).getStreamURI();
 		else
-			uri = onvfData.getCurrentCameras().get(position).getStreamUri().get(1).getStreamURI();
+			uri = camera.getStreamUri().get(1).getStreamURI();
 		String authUri = getAuthUri(username, password, uri);
 		return authUri;
 	}

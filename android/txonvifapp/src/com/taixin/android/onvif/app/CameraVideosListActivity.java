@@ -32,7 +32,8 @@ public class CameraVideosListActivity extends Activity {
 
 	private String tag = "CameraVideosListActivity";
 	/*视频文件存储路径*/
-	private String videoFolder = "/CameraRecordVideos/";
+	//private String videoFolder = "/CameraRecordVideos/";
+	private String folderPath ;
 	private IOnvifManager onvifMgr;
 	private List<File> fileList;
 	private ListView listView;
@@ -47,6 +48,8 @@ public class CameraVideosListActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.camera_videos);
 		onvifMgr = OnvifManager.getInstance();
+		Bundle extras = getIntent().getExtras(); 
+		folderPath = extras.getString("folder_path");
 		initData();
 	}
 
@@ -80,10 +83,9 @@ public class CameraVideosListActivity extends Activity {
 			toast.show();
 		}
 		//String videoPath = list.get(0)+videoFolder;
-		String videoPath = list.get(0)+"/CameraRecordVideos/";
-		String imagePath = list.get(0)+"/CameraRecordImages/";
-		Log.i(tag, "video path = "+videoPath);
-		File file = new File(videoPath);
+		//String videoPath = list.get(0)+"/CameraRecordVideos/";
+		Log.i(tag, "video path = "+folderPath);
+		File file = new File(folderPath);
 		ArrayList<File> fileList  = new ArrayList<File>();
 		File files[] = file.listFiles();
 		if(files == null || files.length<=0)

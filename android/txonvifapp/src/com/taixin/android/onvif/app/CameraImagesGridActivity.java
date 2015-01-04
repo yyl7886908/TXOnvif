@@ -26,6 +26,7 @@ public class CameraImagesGridActivity extends Activity {
 
 	//private final static String imagePath = "/storage/external_storage/sda1/CameraRecordImages";
 	private CameraImagesAdapter mAdapter;
+	private String folderPath ;
 	private GridView imagesGrid;
 	private List<File> imageList;
 	private Button deleteAllButton;
@@ -34,6 +35,8 @@ public class CameraImagesGridActivity extends Activity {
 		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.camera_images_gird);
+		Bundle extras = getIntent().getExtras(); 
+		folderPath = extras.getString("folder_path");
 		initData();
 	}
 	
@@ -106,8 +109,7 @@ public class CameraImagesGridActivity extends Activity {
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();
 		}
-		String imagePath = list.get(0)+"/CameraRecordImages/";
-		File file = new File(imagePath);
+		File file = new File(folderPath);
 		ArrayList<File> fileList  = new ArrayList<File>();
 		File files[] = file.listFiles();
 		if(files == null || files.length<=0){

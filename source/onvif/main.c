@@ -7,7 +7,7 @@
 #define	MULTICAST_IP           "239.255.255.250"
 #define	MULTICAST_PORT     3702
 #define   USERNAME                  "admin"
-#define   PASSWORD                 "888888"
+#define   PASSWORD                 "admin"
 
 
 char searchService[128];

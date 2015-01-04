@@ -2,6 +2,7 @@ package com.taixin.android.onvif.app;
 
 import java.io.IOException;
 import java.io.StreamCorruptedException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -39,11 +41,14 @@ import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.logic.searchDevicesListener;
 import com.taixin.android.onvif.app.util.SerializableUtil;
+import com.taixin.android.onvif.app.util.timeUtil;
 import com.taixin.android.onvif.sdk.obj.Device;
 
 public class CamerasGridActivity extends Activity implements searchDevicesListener {
 
 	private Handler handler;
+	// 定义一个变量，来标识是否退出
+	private static boolean isExit = false;
 	private String TAG = "CamerasGridActivity";
 	private String photoFolder = "/CameraRecordImages/";
 	private String videoFolder = "/CameraRecordVideos/";
@@ -75,7 +80,13 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 		onvifMgr = OnvifManager.getInstance();
 		onvifMgr.setContext(getApplicationContext());
 		onvifMgr.setListener(this);
-		handler = new Handler();
+		handler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {
+				super.handleMessage(msg);
+				isExit = false;
+			}
+		};  
 		displayView();
 		deviceSearch();
 	}
@@ -83,6 +94,16 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		if(keyCode == KeyEvent.KEYCODE_BACK){
+			this.exit();
+			return false;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 
 	@Override
@@ -97,7 +118,7 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 				/*开始认证*/
 				Log.i(TAG, "onResumeFlagFromdevice ====camera is not auth");
 				LocalCamera lCamera = onvifMgr.getLocalCameraByUUid(camera);
-				
+
 				if(lCamera == null){
 					/*本地没有保存，输入用户密码*/
 					Log.i(TAG, "onResumeFlagFromdevice lCamera====null");
@@ -108,7 +129,7 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 					CamerasGridActivity.this.startActivity(intent);
 				}else{
 					/*认证播放*/
-					
+
 				}
 			}
 		}else if(onResumeFlag == onResumeFlagFromLogin){
@@ -117,14 +138,14 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 		}
 		super.onResume();
 	}
-	
+
 	private void displayView(){
 		progressBar = (ProgressBar) findViewById(R.id.device_search_loading);
 		addDeviceButton = (ImageButton) findViewById(R.id.add_device_button); 
-		
+
 		homeButton = (ImageButton) findViewById(R.id.home_button);
 		cameraGrid = (GridView) findViewById(R.id.GridView1);
-		
+
 		gAdapter = new GridViewAdapter(this);
 		cameraGrid.setAdapter(gAdapter); 
 		cameraGrid.setOnItemSelectedListener(new OnItemSelectedListener(){
@@ -204,7 +225,7 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 				CamerasGridActivity.this.startActivity(intent);
 			}
 		});
-		
+
 		addDeviceButton.requestFocus();
 	}
 
@@ -225,7 +246,7 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			}
 		}
 	}
-	
+
 	/*搜索设备，单独启线程执行*/
 	public void deviceSearch(){
 		progressBar.setVisibility(View.VISIBLE);
@@ -247,11 +268,12 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			@Override
 			public void run() {
 				progressBar.setVisibility(View.INVISIBLE);
+				cameraGrid.requestFocus();
 				autoPlayAfterSearch();
 			}
 		});
-		
-}
+
+	}
 	/*搜索完毕自动播放*/
 	public void autoPlayAfterSearch() {
 		for(int i = 0; i<4;i++){
@@ -280,33 +302,19 @@ public class CamerasGridActivity extends Activity implements searchDevicesListen
 			}
 		}
 	}
-	/*video view全屏其他控件隐藏*/
-	private void setVVFullScreen(int itemIndex){
-		addDeviceButton.setVisibility(View.GONE);
-		homeButton.setVisibility(View.GONE);
-		FrameLayout.LayoutParams layoutParams=  
-				new FrameLayout.LayoutParams(FrameLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.FILL_PARENT); 
-		View view = cameraGrid.getChildAt(itemIndex);
-		GridViewHolder holder = (GridViewHolder) view.getTag();
-		holder.vv.setLayoutParams(layoutParams);
-	}
-	/*video view 全屏状态返回*/
-	private void setVVDefault(int itemIndex){
-		addDeviceButton.setVisibility(View.VISIBLE);
-		homeButton.setVisibility(View.VISIBLE);
-		int srceenW =  this.getWindowManager().getDefaultDisplay().getWidth(); 
-		int screenH = this.getWindowManager().getDefaultDisplay().getHeight();
-		FrameLayout.LayoutParams layoutParams = null;
-		if(srceenW > 1800 && screenH > 1000){
-			layoutParams= new FrameLayout.LayoutParams(videoViewWidth, videoViewHeight); 
-		}else{
-			layoutParams= new FrameLayout.LayoutParams(900, 500); 
+
+
+	/*按两次退出键退出*/
+	private void exit() {
+		if (!isExit) {
+			isExit = true;
+			Toast.makeText(getApplicationContext(), "再按一次退出程序",
+					Toast.LENGTH_SHORT).show();
+			// 利用handler延迟发送更改状态信息
+			handler.sendEmptyMessageDelayed(0, 2000);
+		} else {
+			finish();
+			System.exit(0);
 		}
-		View view = cameraGrid.getChildAt(itemIndex);
-		GridViewHolder holder = (GridViewHolder) view.getTag();
-		holder.vv.setLayoutParams(layoutParams);
-		holder.vv.setLayoutParams(layoutParams);
-		System.out.println("layoutParams width = "+layoutParams.width);
-		System.out.println("layoutParams height = "+layoutParams.height);
 	}
 }
