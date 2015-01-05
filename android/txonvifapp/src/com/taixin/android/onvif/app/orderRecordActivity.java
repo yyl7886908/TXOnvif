@@ -35,6 +35,7 @@ public class orderRecordActivity extends Activity{
 	private IOnvifManager onvifMgr;
 	private ITxRecorder recorder;
 	private Button OKButton;
+	private int position;/*对应的摄像头的索引*/
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,8 @@ public class orderRecordActivity extends Activity{
 		setContentView(R.layout.ordering_record);
 		onvifMgr = OnvifManager.getInstance();
 		recorder = new TXFFMpegRecorder();
+		Bundle extras = getIntent().getExtras(); 
+		position = extras.getInt("grid_item_position");
 		displayView();
 	}
 	
@@ -64,7 +67,7 @@ public class orderRecordActivity extends Activity{
 	}
 	/*获取本地存储的定时录制数据，显示到UI*/
 	private void setRecordDataToUI(){
-		OrderRecordData data = onvifMgr.getOrderedRecordData();
+		OrderRecordData data = onvifMgr.getOrderRecordDataByIndex(position);
 		if(data == null)
 			return;
 		Log.i(tag, "local record start time ===="+data.getStartTime());
@@ -150,6 +153,7 @@ public class orderRecordActivity extends Activity{
 	private boolean storagingRecordInfo(String startTime, String endTime){
 		LocalCamera preCamera = onvifMgr.getPreviousCameraInfo();
 		OrderRecordData rData = new OrderRecordData();
+		rData.setItemIndex(position);
 		if(preCamera == null){
 			Toast toast = Toast.makeText(getApplicationContext(), "获取上一次连接设备信息失败，请先连接摄像头", Toast.LENGTH_LONG);
 			toast.setGravity(Gravity.CENTER, 0, 0);
@@ -175,7 +179,7 @@ public class orderRecordActivity extends Activity{
 			rData.setZhouliuCheck(true);
 		if(cb7.isChecked())
 			rData.setZhouqiCheck(true);
-		if(!onvifMgr.saveOrderRecordData(rData)){
+		if(!onvifMgr.saveOrderRecordDataByIndex(rData)){
 			Toast toast = Toast.makeText(getApplicationContext(), "存储失败", Toast.LENGTH_SHORT);
 			toast.setGravity(Gravity.CENTER, 0, 0);
 			toast.show();

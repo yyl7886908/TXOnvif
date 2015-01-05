@@ -4,7 +4,18 @@ import java.io.Serializable;
 
 public class OrderRecordData implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private String uuid;
+	private int itemIndex;
+	public int getItemIndex() {
+		return itemIndex;
+	}
+	public void setItemIndex(int itemIndex) {
+		this.itemIndex = itemIndex;
+	}
 	private String startTime;/*开始时间*/
 	private int duration;/*时长*/
 	private String endTime;/*结束时间*/

@@ -22,8 +22,6 @@ import com.taixin.android.onvif.app.data.LocalCamera;
 import com.taixin.android.onvif.app.data.LocalSetting;
 import com.taixin.android.onvif.app.data.OnvifData;
 import com.taixin.android.onvif.app.data.OrderRecordData;
-import com.taixin.android.onvif.app.data.OrderRecordModel;
-import com.taixin.android.onvif.app.data.VideoInfo;
 import com.taixin.android.onvif.app.util.SerializableUtil;
 import com.taixin.android.onvif.sdk.SimpleOnvif;
 import com.taixin.android.onvif.sdk.TXOnvif;
@@ -736,7 +734,7 @@ public class OnvifManager implements IOnvifManager {
 		else
 			return uuid;
 	}
-	
+
 	/*是否在线*/
 	public CameraData checkIsOnLine(String uuid){
 		for(CameraData camera : onvfData.getCameras()){
@@ -763,8 +761,62 @@ public class OnvifManager implements IOnvifManager {
 				if(camera.getIndex() == -1)
 					return true;
 			}
-				
 		}
 		return false;
+	}
+
+	@Override
+	public boolean saveOrderRecordDataByIndex(OrderRecordData data) {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordDataFileName, Activity.MODE_PRIVATE); 
+		String strtmp;
+		try {
+			strtmp = SerializableUtil.obj2Str(data);
+			SharedPreferences.Editor editor = mySharedPreferences.edit();
+			editor.putString(String.valueOf(data.getItemIndex()),strtmp);
+			editor.commit();
+			System.out.println("save order_record_mode Info success!!!!");
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	@Override
+	public ArrayList<OrderRecordData> getAllOrderRecordData() {
+		ArrayList<OrderRecordData> list  = new ArrayList<OrderRecordData>();
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordDataFileName, Activity.MODE_PRIVATE); 
+		SharedPreferences.Editor editor = mySharedPreferences.edit();
+		for(int i = 0; i< 4; i++){
+			String str = mySharedPreferences.getString(String.valueOf(i), "default");
+			if(!str.equals("default")){
+				try {
+					OrderRecordData data =  (OrderRecordData) SerializableUtil.str2Obj(str);
+					list.add(data);
+				} catch (StreamCorruptedException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public OrderRecordData getOrderRecordDataByIndex(int index) {
+		SharedPreferences mySharedPreferences = context.getSharedPreferences(orderRecordDataFileName, Activity.MODE_PRIVATE); 
+		String str = mySharedPreferences.getString(String.valueOf(index), "default");
+		if(!str.equals("default")){
+			try {
+				OrderRecordData data =  (OrderRecordData) SerializableUtil.str2Obj(str);
+				return data;
+			} catch (StreamCorruptedException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		return null;
 	}
 }

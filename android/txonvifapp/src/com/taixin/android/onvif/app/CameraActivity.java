@@ -37,13 +37,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 
-import com.taixin.android.onvif.app.CameraHomeActivity.myOnKeyListener;
-import com.taixin.android.onvif.app.CameraHomeActivity.seekBarListener;
 import com.taixin.android.onvif.app.data.CameraData;
+import com.taixin.android.onvif.app.data.OrderRecordData;
 import com.taixin.android.onvif.app.logic.IOnvifManager;
 import com.taixin.android.onvif.app.logic.OnvifManager;
 import com.taixin.android.onvif.app.util.FileUtil;
@@ -230,14 +229,22 @@ public class CameraActivity extends Activity{
 		channelSwitchBtn.setOnClickListener(listener);
 		imageSetBtn = (ImageButton) layout.findViewById(R.id.image_setting_btn);
 		imageSetBtn.setOnClickListener(listener);
-		//		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
-		//		ptzBtn.setOnClickListener(listener);
+		ptzBtn = (ImageButton) layout.findViewById(R.id.ptz_button);
+		ptzBtn.setOnClickListener(listener);
 		photoBtn = (ImageButton) layout.findViewById(R.id.photo_button);
 		photoBtn.setOnClickListener(listener);
 		recordingBtn = (ImageButton) layout.findViewById(R.id.recording_button);
 		recordingBtn.setOnClickListener(listener);
 		fileBtn = (ImageButton) layout.findViewById(R.id.file_button);
 		fileBtn.setOnClickListener(listener);
+		myOnKeyListener keyListener = new myOnKeyListener();
+		fileBtn.setOnKeyListener(keyListener);
+		ptzBtn.setOnKeyListener(keyListener);
+		photoBtn.setOnKeyListener(keyListener);
+		recordingBtn.setOnKeyListener(keyListener);
+		imageSetBtn.setOnKeyListener(keyListener);
+		channelSwitchBtn.setOnKeyListener(keyListener);
+		
 	}
 	/*控制菜单按钮的点击事件*/
 	class ctrlMenuOnClickListener implements OnClickListener{
@@ -268,13 +275,10 @@ public class CameraActivity extends Activity{
 				else 
 					imageMenu.dismiss();
 			}else if(v == ptzBtn){
-				if(cruise){
-					//onvifMgr.ptzCruise(username, password, ptzService, profileToken, cruise);
-					cruise = false;
-				}else{
-					//onvifMgr.ptzCruise(username, password, ptzService, profileToken,cruise);
-					cruise = true;
-				}
+				/*转为定时录制*/
+				Intent intent = new Intent(CameraActivity.this, orderRecordActivity.class);
+				intent.putExtra("grid_item_position", position);
+				CameraActivity.this.startActivity(intent);
 			}else if(v == photoBtn){
 				List<String> list = Usb.getUsbDirList();
 				if(list.size()<=0){
@@ -761,7 +765,7 @@ public class CameraActivity extends Activity{
 			}  
 		}, 2*1000); 
 	}
-	
+
 	/*on key listener*/
 	class myOnKeyListener implements OnKeyListener{
 		@Override
@@ -777,7 +781,12 @@ public class CameraActivity extends Activity{
 					channelMenu.dismiss();
 					return true;
 				}
-			}
+			}else if(b == fileBtn || b==ptzBtn || b == photoBtn || b == recordingBtn || b == imageSetBtn ||b==channelSwitchBtn)
+				if(keyCode == KeyEvent.KEYCODE_DPAD_DOWN){
+					//if(menu.isShowing())
+						menu.dismiss();
+					return true;
+				}
 			return false;
 		}
 	}

@@ -74,12 +74,10 @@ public interface IOnvifManager {
 	/**
 	 * 下面预约和定时函数录制相关
 	 */
-	/*预约录制保存对象 淘汰*/
-	//public boolean saveOrderRecordModel(OrderRecordModel oRecord);
+
 	/*预约录制保存新对象*/
 	public boolean saveOrderRecordData(OrderRecordData data);
-	/*读取所有预约录制的对象 淘汰*/
-	//public OrderRecordModel getOrderedRecordModel();
+
 	/*读取所有预约录制的数据*/
 	public OrderRecordData getOrderedRecordData();
 	
@@ -108,4 +106,11 @@ public interface IOnvifManager {
 	public boolean checkoutVisibleCamera();
 	/*查看在线某个设备是否已经被添加*/
 	public boolean checkoutDeviceIsVisible(String uuid);
+	/*四路定时录制*/
+	/*预约录制保存新对象*/
+	public boolean saveOrderRecordDataByIndex(OrderRecordData data);
+	/*获取所有定时录制的信息*/
+	public ArrayList<OrderRecordData> getAllOrderRecordData();
+	/*根据索引获取对应的摄像头定时录制信息*/
+	public OrderRecordData getOrderRecordDataByIndex(int index);
 }
